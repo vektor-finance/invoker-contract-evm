@@ -1,6 +1,6 @@
-on: ["push", "pull_request"]
+name: main
 
-name: main workflow
+on: ["push", "pull_request"]
 
 env:
   # ETHERSCAN_TOKEN:
