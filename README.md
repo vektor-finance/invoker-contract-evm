@@ -1,5 +1,7 @@
 # invoker-contract-evm
 
+[![main](https://github.com/vektor-finance/invoker-contract-evm/actions/workflows/main.yaml/badge.svg)](https://github.com/vektor-finance/invoker-contract-evm/actions/workflows/main.yaml)
+
 This is a [Brownie](https://github.com/iamdefinitelyahuman/brownie) project template preconfigured for:
 
 - Continuous integration with [Github Actions](https://help.github.com/en/actions)
