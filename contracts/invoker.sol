@@ -18,4 +18,9 @@ contract Invoker {
     function invoke(address _to, bytes calldata _data, uint256 _value) external payable returns (bytes memory) {
         return _to.functionCallWithValue(_data, _value);
     }
+
+    function invokeDelegate(address _to, bytes calldata _data) external payable returns (bytes memory) {
+        return _to.functionDelegateCall(_data);
+    }
+
 }
