@@ -15,7 +15,7 @@ contract Invoker {
         owner = msg.sender;
     }
 
-    function invoke(address _to, bytes calldata _data) external returns (bytes memory) {
-        return _to.functionDelegateCall(_data);
+    function invoke(address _to, bytes calldata _data, uint256 _value) external payable returns (bytes memory) {
+        return _to.functionCallWithValue(_data, _value);
     }
 }

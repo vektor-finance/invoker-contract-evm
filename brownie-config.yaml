@@ -1,9 +1,8 @@
 compiler:
     solc:
-        remappings:
-          - "@openzeppelin=OpenZeppelin/openzeppelin-contracts@4.2.0"
+      version: null
+      remappings:
+        - "@openzeppelin=OpenZeppelin/openzeppelin-contracts@4.2.0"
 
 networks:
   default: mainnet-fork
-
-dotenv: .env
