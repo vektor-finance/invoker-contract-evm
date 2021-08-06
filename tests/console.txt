@@ -1,0 +1,11 @@
+router = Contract.from_explorer('0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D')
+dai = Contract.from_explorer('0x6B175474E89094C44Da98b954EedeAC495271d0F')
+usdc = Contract.from_explorer('0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48')
+weth = Contract.from_explorer('0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2')
+user=accounts[0]
+invoker = accounts[0].deploy(Invoker)
+
+invoker.invokeDelegate(router.address, router.swapExactETHForTokens.encode_input(2700*1e18, [weth.address, dai.address], user, 1659715115), {'from': user, 'value': 1e18})
+dai.approve(router.address,2000*1e18,{'from':user})
+
+calldata_dai_usdc = router.swapExactTokensForTokens.encode_input(1000*1e18, 0, [dai.address, usdc.address], user, 1659715115)
