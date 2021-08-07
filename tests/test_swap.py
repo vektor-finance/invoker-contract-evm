@@ -64,7 +64,7 @@ def test_swap_dai_usdc_via_delegate_invoker_individually(user, dai, usdc, cswap,
 @pytest.mark.require_network("mainnet-fork")
 def test_swap_dai_usdc_via_delegate_invoker_combo(user, dai, usdc, cswap, cmove, WETH, uni_router, invoker):
     #Get the user some Dai to play with
-    calldata = uni_router.swapExactETHForTokens.encode_input(2700*1e6, [WETH.address, dai.address], user, deadline)
+    calldata = uni_router.swapExactETHForTokens.encode_input(2700*1e18, [WETH.address, dai.address], user, deadline)
     invoker.invokeDelegate(uni_router.address, calldata, {'from': user, 'value': 1e18})
     assert dai.balanceOf(user) > 2700 * 1e18
 
