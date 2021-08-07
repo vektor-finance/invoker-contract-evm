@@ -15,12 +15,20 @@ contract Invoker {
         owner = msg.sender;
     }
 
-    function invoke(address _to, bytes calldata _data, uint256 _value) external payable returns (bytes memory) {
+    function invokeStatic(address _to, bytes calldata _data, uint256 _value) external payable returns (bytes memory) {
         return _to.functionCallWithValue(_data, _value);
     }
 
     function invokeDelegate(address _to, bytes calldata _data) external payable returns (bytes memory) {
         return _to.functionDelegateCall(_data);
+    }
+
+    function invoke(address[] calldata _tos, bytes[] calldata _datas) external payable returns(bytes[] memory output) {
+        require(_tos.length == _datas.length, "to+data length not equal");
+        output = new bytes[](_tos.length);
+        for (uint256 i=0; i<_tos.length; i++) {
+            output[i] = _tos[i].functionDelegateCall(_datas[i]);
+        }
     }
 
 }

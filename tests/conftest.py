@@ -21,4 +21,10 @@ def WETH():
 def dai():
     yield Contract.from_explorer("0x6B175474E89094C44Da98b954EedeAC495271d0F")
 
-    
+@pytest.fixture(scope="session")
+def usdc():
+    yield Contract.from_explorer("0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48")
+
+@pytest.fixture(scope="session")
+def link():
+    yield Contract.from_explorer("0x514910771AF9Ca656af840dff83E8264EcF986CA")
