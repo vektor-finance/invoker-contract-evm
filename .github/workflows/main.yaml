@@ -3,7 +3,7 @@ name: main
 on: ["push", "pull_request"]
 
 env:
-  # ETHERSCAN_TOKEN:
+  ETHERSCAN_TOKEN: ${{ secrets.ETHERSCAN_TOKEN }}
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   WEB3_INFURA_PROJECT_ID: ${{ secrets.WEB3_INFURA_PROJECT_ID }}
 
