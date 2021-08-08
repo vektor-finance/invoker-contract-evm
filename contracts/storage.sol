@@ -25,6 +25,14 @@ contract Storage {
         return uint256(cache[_key]);
     }
 
+    function readBool(bytes32 _key) public view returns (bool) {
+        if(cache[_key] == bytes32(uint256(1))) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     // WRITE OPERATIONS
 
     function write(bytes32 _key, bytes32 _value) public {
@@ -37,5 +45,13 @@ contract Storage {
 
     function writeAddress(bytes32 _key, address _value) public {
         cache[_key] = bytes32(uint256(uint160(_value)));
+    }
+
+    function writeBool(bytes32 _key, bool _value) public {
+        if(_value) {
+            cache[_key] = bytes32(uint256(1));
+        } else {
+            cache[_key] = bytes32(uint256(0));
+        }
     }
 }
