@@ -8,7 +8,7 @@ pragma solidity ^0.8.6;
 import "../../interfaces/IERC20.sol";
 
 contract CMove {
-    
+
     function move(IERC20 _token, address _from, address _to, uint256 _amount) external returns (bool) {
         return _token.transferFrom(_from, _to, _amount);
     }
