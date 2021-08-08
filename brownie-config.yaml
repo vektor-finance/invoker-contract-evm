@@ -5,4 +5,4 @@ compiler:
         - "@openzeppelin=OpenZeppelin/openzeppelin-contracts@4.2.0"
 
 networks:
-  default: mainnet-fork
+  default: hardhat-fork
