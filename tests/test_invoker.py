@@ -1,6 +1,5 @@
-import pytest
-
 import brownie
+import pytest
 from brownie import Invoker, accounts
 
 

@@ -1,5 +1,4 @@
 import pytest
-
 from brownie import Storage, accounts
 from brownie.convert import to_bytes
 from brownie.test import given, strategy
