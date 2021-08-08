@@ -1,6 +1,6 @@
 name: main
 
-on: ["push", "pull_request"]
+on: [push, pull_request]
 
 env:
   ETHERSCAN_TOKEN: ${{ secrets.ETHERSCAN_TOKEN }}
@@ -20,9 +20,9 @@ env:
 
 jobs:
 
-  tests:
+  lint_and_tests:
+    name: Install Dependencies, run lint and deploy
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v2
 
@@ -49,8 +49,14 @@ jobs:
           path: ${{ env.CACHED_DEPENDENCY_PATHS }}
           key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
 
-      - name: Install Requirements
+      - name: Install requirements
         run: pip install -r requirements.txt
+
+      - name: Install pre-commit hooks
+        run: pre-commit install
+
+      - name: Run pre-commit checks
+        run: pre-commit run --all-files
 
       - name: Run Tests
         run: brownie test
