@@ -23,6 +23,7 @@ jobs:
   lint_and_tests:
     name: Install Dependencies, run lint and deploy
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v2
 
