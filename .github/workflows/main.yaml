@@ -28,7 +28,7 @@ env:
 jobs:
 
   lint_and_tests:
-    name: Install Dependencies, run lint and deploy
+    name: Install dependencies, run lint and tests
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
