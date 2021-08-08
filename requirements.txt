@@ -1,5 +1,5 @@
 black==21.7b0
-eth-brownie @ git+https://github.com/eth-brownie/brownie
+eth-brownie @ git+https://github.com/eth-brownie/brownie@master
 flake8==3.9.2
 isort==5.9.3
 pre-commit==2.14.0
