@@ -12,6 +12,8 @@ contract Invoker is Storage{
     address public owner;
     using Address for address;
 
+    // Could probably replace this with the openzeppelin ownable contract
+    // Although no access control currently in place
     constructor() {
         owner = msg.sender;
     }

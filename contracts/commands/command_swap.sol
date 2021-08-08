@@ -5,9 +5,7 @@
 
 pragma solidity ^0.8.6;
 
-interface IERC20 {
-    function approve(address spender, uint256 amount) external returns (bool);
-}
+import '../../interfaces/IERC20.sol';
 
 interface IROUTER {
     function swapExactTokensForTokens(
