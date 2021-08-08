@@ -27,7 +27,7 @@ contract Invoker is Storage{
     }
 
     function invoke(address[] calldata _tos, bytes[] calldata _datas) external payable returns(bytes[] memory output) {
-        require(_tos.length == _datas.length, "to+data length not equal");
+        require(_tos.length == _datas.length); // dev: to+data length not equal
         output = new bytes[](_tos.length);
         for (uint256 i=0; i<_tos.length; i++) {
             output[i] = _tos[i].functionDelegateCall(_datas[i]);
