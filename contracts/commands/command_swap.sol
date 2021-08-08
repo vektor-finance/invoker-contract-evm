@@ -5,9 +5,7 @@
 
 pragma solidity ^0.8.6;
 
-interface IERC20 {
-    function approve(address spender, uint256 amount) external returns (bool);
-}
+import "../../interfaces/IERC20.sol";
 
 interface IROUTER {
     function swapExactTokensForTokens(
@@ -21,11 +19,12 @@ interface IROUTER {
 
 contract CSwap {
     
-    function swapExactTokensForTokens(uint256 amountIn, uint256 amountOutMin, address[] calldata path) external returns (uint[] memory amounts){
+    function swapExactTokensForTokens(uint256 amountIn, uint256 amountOutMin, address[] calldata path) external {
         require(path.length>1,"invalid path");
         IROUTER router = IROUTER(0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D);
         IERC20 tokenIn = IERC20(path[0]);
         tokenIn.approve(address(router), amountIn);
+        // solhint-disable-next-line not-rely-on-time
         router.swapExactTokensForTokens(amountIn, amountOutMin, path, msg.sender, block.timestamp+1); 
     }
 
