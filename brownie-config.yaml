@@ -1,8 +1,8 @@
 compiler:
-    solc:
-      version: null
-      remappings:
-        - "@openzeppelin=OpenZeppelin/openzeppelin-contracts@4.2.0"
+  solc:
+    version: null
+    remappings:
+      - "@openzeppelin=OpenZeppelin/openzeppelin-contracts@4.2.0"
 
 networks:
   default: hardhat-fork
