@@ -40,7 +40,7 @@ To add convenience commands you can check out [virtualenvwrapper](https://virtua
 This project uses [Hardhat](https://hardhat.org/) to fork the blockchain for testing.
 
 ```bash
-npm install --save-dev hardhat@dtt
+yarn install
 ```
 
 ### Configuring Pre-commit

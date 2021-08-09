@@ -7,3 +7,6 @@ reports/
 venv/
 
 .env
+
+# JavaScript
+node_modules/
