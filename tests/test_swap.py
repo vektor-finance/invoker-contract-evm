@@ -24,7 +24,7 @@ def isolation(fn_isolation):
     pass
 
 
-@pytest.mark.require_network("mainnet-fork")
+@pytest.mark.require_network("hardhat-fork")
 def test_buy_dai(user, dai, WETH, uni_router):
     path = [WETH.address, dai.address]
     uni_router.swapExactETHForTokens(
@@ -33,7 +33,7 @@ def test_buy_dai(user, dai, WETH, uni_router):
     assert dai.balanceOf(user) > 2700 * 1e18
 
 
-@pytest.mark.require_network("mainnet-fork")
+@pytest.mark.require_network("hardhat-fork")
 def test_buy_dai_via_invoker(user, dai, WETH, uni_router, invoker):
     path = [WETH.address, dai.address]
     calldata = uni_router.swapExactETHForTokens.encode_input(2700 * 1e18, path, user, deadline)
@@ -41,7 +41,7 @@ def test_buy_dai_via_invoker(user, dai, WETH, uni_router, invoker):
     assert dai.balanceOf(user) > 2700 * 1e18
 
 
-@pytest.mark.require_network("mainnet-fork")
+@pytest.mark.require_network("hardhat-fork")
 def test_buy_dai_via_delegate_invoker(user, dai, WETH, uni_router, invoker):
     path = [WETH.address, dai.address]
     calldata = uni_router.swapExactETHForTokens.encode_input(2700 * 1e18, path, user, deadline)
@@ -49,7 +49,7 @@ def test_buy_dai_via_delegate_invoker(user, dai, WETH, uni_router, invoker):
     assert dai.balanceOf(user) > 2700 * 1e18
 
 
-@pytest.mark.require_network("mainnet-fork")
+@pytest.mark.require_network("hardhat-fork")
 def test_swap_dai_usdc_via_delegate_invoker_individually(
     user, dai, usdc, cswap, cmove, WETH, uni_router, invoker
 ):
@@ -77,7 +77,7 @@ def test_swap_dai_usdc_via_delegate_invoker_individually(
     assert usdc.balanceOf(user) > 996 * 1e6
 
 
-@pytest.mark.require_network("mainnet-fork")
+@pytest.mark.require_network("hardhat-fork")
 def test_swap_dai_usdc_via_delegate_invoker_combo(
     user, dai, usdc, cswap, cmove, WETH, uni_router, invoker
 ):
@@ -91,6 +91,12 @@ def test_swap_dai_usdc_via_delegate_invoker_combo(
     # Approve invoker to spend 1000 Dai
     dai.approve(invoker.address, 1000 * 1e18, {"from": user})
     assert dai.allowance(user, invoker.address) == 1000 * 1e18
+
+    # Move 1000 Dai to invoker and swap for USDC
+    calldata_move = cmove.move.encode_input(dai.address, user, invoker.address, 1000 * 1e18)
+    calldata_swap = cswap.swapExactTokensForTokens.encode_input(
+        1000 * 1e18, 0, [dai.address, usdc.address]
+    )
 
     # Move 1000 Dai to invoker and swap for USDC
     calldata_move = cmove.move.encode_input(dai.address, user, invoker.address, 1000 * 1e18)
