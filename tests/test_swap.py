@@ -74,7 +74,7 @@ def test_swap_dai_usdc_via_delegate_invoker_individually(
         1000 * 1e18, 0, [dai.address, usdc.address]
     )
     invoker.invokeDelegate(cswap.address, calldata_swap, {"from": user})
-    assert usdc.balanceOf(user) > 996 * 1e6
+    assert usdc.balanceOf(user) > 995 * 1e6
 
 
 @pytest.mark.require_network("hardhat-fork")
@@ -105,4 +105,4 @@ def test_swap_dai_usdc_via_delegate_invoker_combo(
     )
 
     invoker.invoke([cmove.address, cswap.address], [calldata_move, calldata_swap], {"from": user})
-    assert usdc.balanceOf(user) > 996 * 1e6
+    assert usdc.balanceOf(user) > 995 * 1e6
