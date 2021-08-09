@@ -1,7 +1,7 @@
 {
   "license": "UNLICENSED",
   "scripts": {
-    "uml": "sol2uml ./contracts -o ./uml.svg"
+    "uml": "sol2uml ./contracts,./interfaces -o ./uml.svg"
   },
   "devDependencies": {
     "sol2uml": "^1.1.29",
