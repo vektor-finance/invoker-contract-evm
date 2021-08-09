@@ -82,3 +82,11 @@ To run only brownie tests:
 ```bash
 brownie test
 ```
+
+## Contracts Architecture
+
+### UML Diagram
+
+![UML diagram of smart contracts](uml.png?raw=true "UML")
+
+To generate a new diagram run `yarn run uml`.
