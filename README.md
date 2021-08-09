@@ -2,44 +2,37 @@
 
 [![main](https://github.com/vektor-finance/invoker-contract-evm/actions/workflows/main.yaml/badge.svg)](https://github.com/vektor-finance/invoker-contract-evm/actions/workflows/main.yaml)
 
-## Getting Started
+Solidity contracts for Vektor's EVM invoker.
+
+## Overview
+
+TODO
+
+## Testing and Development
 
 ### Environment Variables
 
-This project requires you have an API key for:
+For testing, this project requires you have an API key for:
 
 - [Etherscan](https://etherscan.io/apis)
 - [Infura](https://infura.io/)
 
 Both are free to create.
 
-### Creating a Virtual Environment and installing Python dependencies
+### Dependencies
 
-It is **strongly recommended** use a virtual environment with this project. This ensures that dependencies are strictly contained within your project and will not alter or affect your other development environment.
+- [python3](https://www.python.org/downloads/release/python/) - tested with version `3.8.6`.
+- [brownie](https://github.com/iamdefinitelyahuman/brownie) - tested with version `1.16.0`.
+- [hardhat](https://hardhat.org/) - tested with version `2.6.0`.
 
-To create a new virtual environment and install the required dependencies:
+### Setup
+
+To get started, first create and initialize a Python [virtual environment](https://docs.python.org/3/library/venv.html). Next, clone the repo and install the developer dependencies:
 
 ```bash
-python3 -m venv venv
-source venv/bin/activate
+git clone https://github.com/vektorfinance/invoker-contract-evm.git
+cd invoker-contract-evm
 pip install -r requirements.txt
-```
-
-In future sessions, activate the virtual environment with:
-
-```bash
-source venv/bin/activate
-```
-
-To learn more about `venv`, see the official [Python documentation](https://docs.python.org/3/library/venv.html).
-
-To add convenience commands you can check out [virtualenvwrapper](https://virtualenvwrapper.readthedocs.io/en/latest/).
-
-### Installing Hardhat
-
-This project uses [Hardhat](https://hardhat.org/) to fork the blockchain for testing.
-
-```bash
 yarn install
 ```
 
@@ -61,23 +54,9 @@ You can also run them ad-hoc with:
 pre-commit run --all-files
 ```
 
-## Running the Tests
+### Running the Tests
 
-This project uses [tox](https://tox.readthedocs.io/en/latest/) to standardize the local and remote testing environments.
-
-To run all of your project's unit tests and perform linting checks:
-
-```bash
-tox
-```
-
-To run only the linting checks:
-
-```bash
-tox -e lint
-```
-
-To run only brownie tests:
+To run the entire suite:
 
 ```bash
 brownie test
