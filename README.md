@@ -87,6 +87,6 @@ brownie test
 
 ### UML Diagram
 
-![UML diagram of smart contracts](uml.png?raw=true "UML")
+![UML diagram of smart contracts](./uml.svg)
 
-To generate a new diagram run `yarn run uml`.
+To generate a new diagram run `yarn uml`.
