@@ -17,6 +17,14 @@ repos:
     rev: 5.9.3
     hooks:
       - id: isort
+  - repo: local
+    hooks:
+      - id: husky-run-pre-commit
+        name: husky
+        language: system
+        entry: yarn run pre-commit
+        pass_filenames: false
+        always_run: true
 
 default_language_version:
   python: python3.8
