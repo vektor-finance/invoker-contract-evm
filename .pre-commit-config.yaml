@@ -17,6 +17,14 @@ repos:
     rev: 5.9.3
     hooks:
       - id: isort
+  - repo: local
+    hooks:
+      - id: yarn-run-pre-commit
+        name: yarn lint
+        language: system
+        entry: yarn pre-commit
+        pass_filenames: false
+        always_run: true
 
 default_language_version:
   python: python3.8
