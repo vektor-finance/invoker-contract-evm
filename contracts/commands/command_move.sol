@@ -11,10 +11,10 @@ import "../../interfaces/IStorage.sol";
 contract CMove {
     function move(
         IERC20 _token,
-        address _from,
         address _to,
         uint256 _amount
     ) external returns (bool) {
+        address _from = msg.sender;
         return _token.transferFrom(_from, _to, _amount);
     }
     // Need to add pre + post balance checks
