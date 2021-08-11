@@ -4,17 +4,17 @@ from brownie import Contract
 # User accounts
 
 
-@pytest.fixture
+@pytest.fixture(scope="module")
 def deployer(accounts):
     yield accounts[0]
 
 
-@pytest.fixture
+@pytest.fixture(scope="module")
 def alice(accounts):
     return accounts[1]
 
 
-@pytest.fixture
+@pytest.fixture(scope="module")
 def bob(accounts):
     return accounts[2]
 
