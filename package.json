@@ -2,12 +2,20 @@
   "license": "UNLICENSED",
   "scripts": {
     "uml": "sol2uml ./contracts,./interfaces -o ./uml.svg",
-    "lint:solidity": "solhint '**/*.sol'"
+    "lint": "run-s lint:prettier lint:solhint",
+    "lint:prettier": "prettier --check \"{contracts,interfaces}/**/*.sol\"",
+    "lint:solhint": "solhint '**/*.sol'",
+    "fix": "run-s fix:prettier",
+    "fix:prettier": "prettier --write \"{contracts,interfaces}/**/*.sol\""
   },
   "devDependencies": {
     "glob-parent": "^5.1.2",
     "hardhat": "^2.6.0",
+    "npm-run-all": "4.1.5",
+    "prettier": "^2.3.2",
+    "prettier-plugin-solidity": "^1.0.0-beta.17",
     "sol2uml": "^1.1.29",
-    "solhint": "^3.3.6"
+    "solhint": "^3.3.6",
+    "solhint-plugin-prettier": "^0.0.5"
   }
 }
