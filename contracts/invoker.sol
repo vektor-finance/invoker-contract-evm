@@ -5,7 +5,7 @@
 pragma solidity ^0.8.6;
 
 import "./utils/Address.sol";
-import "./storage.sol";
+import "./Storage.sol";
 
 import "@openzeppelin/contracts/access/AccessControl.sol";
 

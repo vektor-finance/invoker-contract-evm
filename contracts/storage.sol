@@ -8,7 +8,7 @@
 
 pragma solidity ^0.8.6;
 
-import "../interfaces/Istorage.sol";
+import "../interfaces/IStorage.sol";
 
 contract Storage is IStorage{
     mapping(bytes32 => bytes32) private cache;
