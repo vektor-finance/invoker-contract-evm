@@ -5,17 +5,19 @@
 
 pragma solidity ^0.8.6;
 
-import "../../interfaces/IERC20.sol";
 import "../../interfaces/IStorage.sol";
+import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 
 contract CMove {
+    using SafeERC20 for IERC20;
+
     function move(
         IERC20 _token,
         address _to,
         uint256 _amount
-    ) external returns (bool) {
+    ) external {
         address _from = msg.sender;
-        return _token.transferFrom(_from, _to, _amount);
+        _token.transferFrom(_from, _to, _amount);
     }
     // Need to add pre + post balance checks
 }
