@@ -26,7 +26,7 @@ contract Storage {
     }
 
     function readBool(bytes32 _key) public view returns (bool) {
-        if(cache[_key] == bytes32(uint256(1))) {
+        if (cache[_key] == bytes32(uint256(1))) {
             return true;
         } else {
             return false;
@@ -48,7 +48,7 @@ contract Storage {
     }
 
     function writeBool(bytes32 _key, bool _value) public {
-        if(_value) {
+        if (_value) {
             cache[_key] = bytes32(uint256(1));
         } else {
             cache[_key] = bytes32(uint256(0));
