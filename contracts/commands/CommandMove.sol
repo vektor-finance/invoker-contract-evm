@@ -16,10 +16,13 @@ contract CMove {
         address _to,
         uint256 _amount
     ) external {
+        uint256 balanceBefore = _token.balanceOf(_to);
         address _from = msg.sender;
         _token.transferFrom(_from, _to, _amount);
+        uint256 balanceAfter = _token.balanceOf(_to);
+        // Solidity compiler 0.8 has built in overflow checks
+        require(balanceAfter == balanceBefore + _amount, "CMove: Invalid balance");
     }
-    // Need to add pre + post balance checks
 }
 
 // Need to consider moving non-erc20 tokens eg erc721 / 1155
