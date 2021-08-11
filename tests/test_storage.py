@@ -1,5 +1,4 @@
 import pytest
-from brownie import Storage, accounts
 from brownie.convert import to_bytes
 from brownie.test import given, strategy
 
@@ -11,13 +10,8 @@ NULL_ADDRESS = "0x0000000000000000000000000000000000000000"
 
 
 @pytest.fixture(scope="module")
-def storage():
-    return accounts[0].deploy(Storage)
-
-
-@pytest.fixture(scope="module")
-def user():
-    return accounts[0]
+def storage(deployer, Storage):
+    return deployer.deploy(Storage)
 
 
 @pytest.fixture(autouse=True)
@@ -30,8 +24,8 @@ def test_null(storage):
 
 
 @given(address=strategy("address"))
-def test_set_sender(storage, address, user):
-    storage.writeAddress(KECCAK_MSGSENDER, address, {"from": user})
+def test_set_sender(storage, address, deployer):
+    storage.writeAddress(KECCAK_MSGSENDER, address, {"from": deployer})
     assert storage.readAddress(KECCAK_MSGSENDER) == address
 
 
@@ -40,20 +34,20 @@ def test_ensure_reset(storage):
 
 
 @given(value=strategy("uint256"))
-def test_set_value(storage, value, user):
-    storage.writeUint256(KECCAK_BALANCE, value, {"from": user})
+def test_set_value(storage, value, deployer):
+    storage.writeUint256(KECCAK_BALANCE, value, {"from": deployer})
     assert storage.readUint256(KECCAK_BALANCE) == value
 
 
 @given(test_bytes=strategy("bytes32"))
-def test_set_bytes(storage, test_bytes, user):
-    storage.write(KECCAK_BYTES, test_bytes, {"from": user})
+def test_set_bytes(storage, test_bytes, deployer):
+    storage.write(KECCAK_BYTES, test_bytes, {"from": deployer})
     assert to_bytes(storage.read(KECCAK_BYTES)) == test_bytes
 
 
-def test_set_true_then_false(storage, user):
-    storage.writeBool(KECCAK_BOOL, True, {"from": user})
+def test_set_true_then_false(storage, deployer):
+    storage.writeBool(KECCAK_BOOL, True, {"from": deployer})
     assert storage.readBool(KECCAK_BOOL)
 
-    storage.writeBool(KECCAK_BOOL, False, {"from": user})
+    storage.writeBool(KECCAK_BOOL, False, {"from": deployer})
     assert not storage.readBool(KECCAK_BOOL)
