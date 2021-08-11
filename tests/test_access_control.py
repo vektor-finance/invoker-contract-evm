@@ -1,21 +1,6 @@
 import brownie
 import pytest
-from brownie import CMove, Invoker, accounts
-from helpers import get_dai_for_user
-
-# Roles
-APPROVED_COMMAND = "410a6a8d01da3028e7c041b5925a6d26ed38599db21a26cf9a5e87c68941f98a"
-# keccak256("APPROVED_COMMAND_IMPLEMENTATION")
-
-
-@pytest.fixture(scope="module")
-def invoker():
-    return accounts[0].deploy(Invoker)
-
-
-@pytest.fixture(scope="module")
-def cmove():
-    return accounts[0].deploy(CMove)
+from helpers import APPROVED_COMMAND, get_dai_for_user
 
 
 @pytest.fixture(autouse=True)
@@ -23,27 +8,35 @@ def shared_setup(fn_isolation):
     pass
 
 
-def test_owner(invoker):
-    assert invoker.hasRole("0x00", accounts[0])
+def test_owner(invoker, deployer):
+    assert invoker.hasRole("0x00", deployer)
 
 
-def test_should_revert_if_command_not_approved(invoker, cmove, dai, user, weth, uni_router):
-    get_dai_for_user(dai, user, weth, uni_router)
-    calldata = cmove.move.encode_input(dai.address, user.address, invoker.address, 100 * 1e18)
+@pytest.fixture
+def invokerNoApproval(deployer, Invoker):
+    yield deployer.deploy(Invoker)
+
+
+def test_should_revert_if_command_not_approved(
+    invokerNoApproval, cmove, dai, deployer, weth, uni_router
+):
+    invoker = invokerNoApproval
+    get_dai_for_user(dai, deployer, weth, uni_router)
+    calldata = cmove.move.encode_input(dai.address, deployer.address, invoker.address, 100 * 1e18)
     with brownie.reverts("Command not approved"):
-        invoker.invoke([cmove.address], [calldata], {"from": accounts[0]})
+        invoker.invoke([cmove.address], [calldata], {"from": deployer})
 
 
-def test_should_permit_approved_commands(invoker, cmove, dai, user, weth, uni_router):
-    get_dai_for_user(dai, user, weth, uni_router)
-    invoker.grantRole(APPROVED_COMMAND, cmove.address, {"from": accounts[0]})
-    calldata = cmove.move.encode_input(dai.address, user.address, invoker.address, 100 * 1e18)
-    dai.approve(invoker.address, 100 * 1e18, {"from": user})
-    assert dai.allowance(user, invoker.address) == 100 * 1e18
-    invoker.invoke([cmove.address], [calldata], {"from": accounts[0]})
+def test_should_permit_approved_commands(invoker, cmove, dai, weth, uni_router, deployer):
+    get_dai_for_user(dai, deployer, weth, uni_router)
+    invoker.grantRole(APPROVED_COMMAND, cmove.address, {"from": deployer})
+    calldata = cmove.move.encode_input(dai.address, deployer.address, invoker.address, 100 * 1e18)
+    dai.approve(invoker.address, 100 * 1e18, {"from": deployer})
+    assert dai.allowance(deployer, invoker.address) == 100 * 1e18
+    invoker.invoke([cmove.address], [calldata], {"from": deployer})
     assert dai.balanceOf(invoker.address) == 100 * 1e18
 
 
-def test_non_admin_users_cant_approve_commands(invoker, cmove):
+def test_non_admin_users_cant_approve_commands(invoker, cmove, alice):
     with brownie.reverts():
-        invoker.grantRole(APPROVED_COMMAND, cmove.address, {"from": accounts[1]})
+        invoker.grantRole(APPROVED_COMMAND, cmove.address, {"from": alice})
