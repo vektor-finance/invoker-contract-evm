@@ -9,7 +9,7 @@ import "./storage.sol";
 
 import "@openzeppelin/contracts/access/AccessControl.sol";
 
-contract Invoker is Storage, AccessControl{
+contract Invoker is Storage, AccessControl {
 
     using Address for address;
 
@@ -24,7 +24,7 @@ contract Invoker is Storage, AccessControl{
     }
 
     function invokeDelegate(address _to, bytes calldata _data) public payable returns (bytes memory) {
-        require(hasRole(APPROVED_COMMAND_IMPLEMENTATION, _to),"Command not approved");
+        require(hasRole(APPROVED_COMMAND_IMPLEMENTATION, _to), "Command not approved");
         return _to.functionDelegateCall(_data);
     }
 

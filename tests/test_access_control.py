@@ -1,8 +1,7 @@
-import time
-
 import brownie
 import pytest
 from brownie import CMove, Invoker, accounts
+from helpers import get_dai_for_user
 
 # Roles
 APPROVED_COMMAND = "410a6a8d01da3028e7c041b5925a6d26ed38599db21a26cf9a5e87c68941f98a"
@@ -25,26 +24,18 @@ def shared_setup(fn_isolation):
 
 
 def test_owner(invoker):
-    assert invoker.hasRole("0x00", accounts[0]) is True
+    assert invoker.hasRole("0x00", accounts[0])
 
 
-def get_dai_for_user(dai, user, WETH, uni_router):
-    path = [WETH.address, dai.address]
-    uni_router.swapExactETHForTokens(
-        2700 * 1e18, path, user, int(time.time()) + 1, {"from": user, "value": 1e18}
-    )
-    assert dai.balanceOf(user) > 1 * 1e18
-
-
-def test_should_revert_if_command_not_approved(invoker, cmove, dai, user, WETH, uni_router):
-    get_dai_for_user(dai, user, WETH, uni_router)
+def test_should_revert_if_command_not_approved(invoker, cmove, dai, user, weth, uni_router):
+    get_dai_for_user(dai, user, weth, uni_router)
     calldata = cmove.move.encode_input(dai.address, user.address, invoker.address, 100 * 1e18)
     with brownie.reverts("Command not approved"):
         invoker.invoke([cmove.address], [calldata], {"from": accounts[0]})
 
 
-def test_should_permit_approved_commands(invoker, cmove, dai, user, WETH, uni_router):
-    get_dai_for_user(dai, user, WETH, uni_router)
+def test_should_permit_approved_commands(invoker, cmove, dai, user, weth, uni_router):
+    get_dai_for_user(dai, user, weth, uni_router)
     invoker.grantRole(APPROVED_COMMAND, cmove.address, {"from": accounts[0]})
     calldata = cmove.move.encode_input(dai.address, user.address, invoker.address, 100 * 1e18)
     dai.approve(invoker.address, 100 * 1e18, {"from": user})

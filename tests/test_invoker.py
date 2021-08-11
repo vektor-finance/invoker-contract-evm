@@ -14,7 +14,7 @@ def shared_setup(fn_isolation):
 
 
 def test_owner(invoker):
-    assert invoker.hasRole("0x00", accounts[0]) is True
+    assert invoker.hasRole("0x00", accounts[0])
 
 
 def test_should_revert_if_unequal_length(invoker, dai):

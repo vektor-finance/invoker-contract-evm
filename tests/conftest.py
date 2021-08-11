@@ -18,7 +18,7 @@ def uni_dai_eth():
 
 
 @pytest.fixture(scope="session")
-def WETH():
+def weth():
     yield Contract.from_explorer("0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2")
 
 
