@@ -7,12 +7,10 @@
     "lint:solhint": "solhint '**/*.sol'",
     "fix": "run-s fix:prettier",
     "fix:prettier": "prettier --write \"{contracts,interfaces}/**/*.sol\"",
-    "prepare": "husky install",
     "pre-commit": "lint-staged"
   },
   "devDependencies": {
     "hardhat": "^2.6.0",
-    "husky": "^7.0.1",
     "lint-staged": "11.0.0",
     "npm-run-all": "4.1.5",
     "prettier": "^2.3.2",

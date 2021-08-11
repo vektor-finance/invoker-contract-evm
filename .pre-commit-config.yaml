@@ -19,10 +19,10 @@ repos:
       - id: isort
   - repo: local
     hooks:
-      - id: husky-run-pre-commit
-        name: husky
+      - id: yarn-run-pre-commit
+        name: yarn lint
         language: system
-        entry: node_modules/.bin/husky pre-commit
+        entry: yarn pre-commit
         pass_filenames: false
         always_run: true
 
