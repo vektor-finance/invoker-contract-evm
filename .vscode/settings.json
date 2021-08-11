@@ -1,0 +1,7 @@
+{
+  "editor.formatOnSave": true,
+  "[solidity]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "python.formatting.provider": "black"
+}
