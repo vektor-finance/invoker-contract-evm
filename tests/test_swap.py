@@ -1,12 +1,18 @@
+import time
+
 import pytest
 from brownie import CMove, CSwap, Invoker, accounts
 
 deadline = 1659715115
+APPROVED_COMMAND = "410a6a8d01da3028e7c041b5925a6d26ed38599db21a26cf9a5e87c68941f98a"
 
 
 @pytest.fixture(scope="module")
-def invoker():
-    return accounts[0].deploy(Invoker)
+def invoker(cmove, cswap):
+    contract = accounts[0].deploy(Invoker)
+    contract.grantRole(APPROVED_COMMAND, cmove.address, {"from": accounts[0]})  # approve commands
+    contract.grantRole(APPROVED_COMMAND, cswap.address, {"from": accounts[0]})
+    return contract
 
 
 @pytest.fixture(scope="module")
@@ -41,24 +47,30 @@ def test_buy_dai_via_invoker(user, dai, WETH, uni_router, invoker):
     assert dai.balanceOf(user) > 2700 * 1e18
 
 
+# This test won't work now, as we won't allow users to interact directly with uniswap
+"""
 @pytest.mark.require_network("hardhat-fork")
 def test_buy_dai_via_delegate_invoker(user, dai, WETH, uni_router, invoker):
     path = [WETH.address, dai.address]
     calldata = uni_router.swapExactETHForTokens.encode_input(2700 * 1e18, path, user, deadline)
     invoker.invokeDelegate(uni_router.address, calldata, {"from": user, "value": 1e18})
     assert dai.balanceOf(user) > 2700 * 1e18
+"""
+
+
+def get_dai_for_user(dai, user, WETH, uni_router):
+    path = [WETH.address, dai.address]
+    uni_router.swapExactETHForTokens(
+        2700 * 1e18, path, user, int(time.time()) + 1, {"from": user, "value": 1e18}
+    )
+    assert dai.balanceOf(user) > 1 * 1e18
 
 
 @pytest.mark.require_network("hardhat-fork")
 def test_swap_dai_usdc_via_delegate_invoker_individually(
     user, dai, usdc, cswap, cmove, WETH, uni_router, invoker
 ):
-    # Get the user some Dai to play with
-    calldata = uni_router.swapExactETHForTokens.encode_input(
-        2700 * 1e6, [WETH.address, dai.address], user, deadline
-    )
-    invoker.invokeDelegate(uni_router.address, calldata, {"from": user, "value": 1e18})
-    assert dai.balanceOf(user) > 2700 * 1e18
+    get_dai_for_user(dai, user, WETH, uni_router)
 
     # Approve invoker to spend 1000 Dai
     dai.approve(invoker.address, 1000 * 1e18, {"from": user})
@@ -81,12 +93,7 @@ def test_swap_dai_usdc_via_delegate_invoker_individually(
 def test_swap_dai_usdc_via_delegate_invoker_combo(
     user, dai, usdc, cswap, cmove, WETH, uni_router, invoker
 ):
-    # Get the user some Dai to play with
-    calldata = uni_router.swapExactETHForTokens.encode_input(
-        2700 * 1e18, [WETH.address, dai.address], user, deadline
-    )
-    invoker.invokeDelegate(uni_router.address, calldata, {"from": user, "value": 1e18})
-    assert dai.balanceOf(user) > 2700 * 1e18
+    get_dai_for_user(dai, user, WETH, uni_router)
 
     # Approve invoker to spend 1000 Dai
     dai.approve(invoker.address, 1000 * 1e18, {"from": user})

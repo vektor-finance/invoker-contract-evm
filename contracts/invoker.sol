@@ -7,30 +7,33 @@ pragma solidity ^0.8.6;
 import "./utils/Address.sol";
 import "./storage.sol";
 
-contract Invoker is Storage{
+import "@openzeppelin/contracts/access/AccessControl.sol";
 
-    address public owner;
+contract Invoker is Storage, AccessControl{
+
     using Address for address;
 
-    // Could probably replace this with the openzeppelin ownable contract
-    // Although no access control currently in place
+    bytes32 public constant APPROVED_COMMAND_IMPLEMENTATION = keccak256("APPROVED_COMMAND_IMPLEMENTATION");
+
     constructor() {
-        owner = msg.sender;
+        _setupRole(DEFAULT_ADMIN_ROLE, msg.sender);
     }
 
     function invokeStatic(address _to, bytes calldata _data, uint256 _value) external payable returns (bytes memory) {
         return _to.functionCallWithValue(_data, _value);
     }
 
-    function invokeDelegate(address _to, bytes calldata _data) external payable returns (bytes memory) {
+    function invokeDelegate(address _to, bytes calldata _data) public payable returns (bytes memory) {
+        require(hasRole(APPROVED_COMMAND_IMPLEMENTATION, _to),"Command not approved");
         return _to.functionDelegateCall(_data);
     }
 
     function invoke(address[] calldata _tos, bytes[] calldata _datas) external payable returns(bytes[] memory output) {
-        require(_tos.length == _datas.length, 'dev: to+data length not equal'); // dev: to+data length not equal
+        require(_tos.length == _datas.length, "dev: to+data length not equal"); // dev: to+data length not equal
         output = new bytes[](_tos.length);
         for (uint256 i=0; i<_tos.length; i++) {
-            output[i] = _tos[i].functionDelegateCall(_datas[i]);
+            // output[i] = _tos[i].functionDelegateCall(_datas[i]);
+            output[i] = invokeDelegate(_tos[i], _datas[i]);
         }
     }
 
