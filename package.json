@@ -4,7 +4,7 @@
     "uml": "sol2uml ./contracts,./interfaces -o ./uml.svg",
     "lint": "run-s lint:prettier lint:solhint",
     "lint:prettier": "prettier --check \"{contracts,interfaces}/**/*.sol\"",
-    "lint:solhint": "solhint '**/*.sol'",
+    "lint:solhint": "solhint '*.sol'",
     "fix": "run-s fix:prettier",
     "fix:prettier": "prettier --write \"{contracts,interfaces}/**/*.sol\"",
     "pre-commit": "lint-staged"
@@ -20,8 +20,8 @@
     "solhint-plugin-prettier": "^0.0.5"
   },
   "lint-staged": {
-    "*.{sol}": [
-      "solhint '**/*.sol'"
+    "*.sol": [
+      "solhint '*.sol'"
     ],
     "*.{sol,json}": [
       "prettier --write"
