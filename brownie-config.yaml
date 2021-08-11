@@ -6,3 +6,6 @@ compiler:
 
 networks:
   default: hardhat-fork
+
+dependencies:
+  - OpenZeppelin/openzeppelin-contracts@4.2.0
