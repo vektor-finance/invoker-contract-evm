@@ -30,7 +30,7 @@ contract CMove {
         address _from = msg.sender;
         _token.transferFrom(_from, _to, _amount);
         uint256 balanceAfter = _token.balanceOf(_to);
-        require(balanceAfter == balanceBefore + _amount, "CMove: Invalid balance");
+        require(balanceAfter == balanceBefore + _amount, "CMove: Invalid balance after move");
     }
 }
 
