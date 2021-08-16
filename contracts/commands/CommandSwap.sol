@@ -48,10 +48,14 @@ contract CSwap {
             This is intentional to allow users to make multiple ETH transfers
             Note: User deposits ETH, but WETH given to invoker contract
                 You can then MOVE this WETH
+            Validation checks to support wrapping of native tokens that may not conform to WETH9
         @param _amount The amount of ETH to wrap (in Wei)
     **/
     function wrapEth(uint256 _amount) external payable {
+        uint256 balanceBefore = WETH.balanceOf(address(this));
         WETH.deposit{value: _amount}();
+        uint256 balanceAfter = WETH.balanceOf(address(this));
+        require(balanceAfter == balanceBefore + _amount, "CSwap: Error wrapping ETH");
     }
 
     /**
@@ -60,9 +64,13 @@ contract CSwap {
             Note: The WETH must be located on the invoker contract
                 The returned ETH will be sent to the invoker contract
                 This will then need to be MOVED to the user
+            Validation checks to support unwrapping of native tokens that may not conform to WETH9
         @param _amount The amount of WETH to unwrap (in Wei)
     **/
     function unwrapEth(uint256 _amount) external {
+        uint256 balanceBefore = address(this).balance;
         WETH.withdraw(_amount);
+        uint256 balanceAfter = address(this).balance;
+        require(balanceAfter == balanceBefore + _amount, "CSwap: Error unwrapping WETH");
     }
 }
