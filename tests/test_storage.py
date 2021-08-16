@@ -14,11 +14,6 @@ def storage(deployer, Storage):
     return deployer.deploy(Storage)
 
 
-@pytest.fixture(autouse=True)
-def shared_setup(fn_isolation):
-    pass
-
-
 def test_null(storage):
     assert storage.read("") == "0x"
 
