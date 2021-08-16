@@ -21,7 +21,7 @@ contract CMove {
         @param _to  The address you wish to send the tokens to
         @param _amount The amount of tokens to transfer
     **/
-    function move(
+    function moveERC20(
         IERC20 _token,
         address _to,
         uint256 _amount
@@ -30,7 +30,7 @@ contract CMove {
         address _from = msg.sender;
         _token.transferFrom(_from, _to, _amount);
         uint256 balanceAfter = _token.balanceOf(_to);
-        require(balanceAfter == balanceBefore + _amount, "CMove: Invalid balance after move");
+        require(balanceAfter == balanceBefore + _amount, "CMove: Deflationary token");
     }
 }
 
