@@ -33,6 +33,13 @@ contract CMove {
         require(balanceAfter == balanceBefore + _amount, "CMove: Deflationary token");
     }
 
+    /**
+        @notice Allows a user to move their ETH to another address
+        @dev The transferred amount of eth is specified by _amount rather than msg.value
+            This is intentional to allow users to make multiple ETH transfers
+        @param _to The address you wish to send ETH to
+        @param _amount The amount of ETH to transfer (in Wei)
+    **/
     function moveEth(address _to, uint256 _amount) external payable {
         //solhint-disable-next-line avoid-low-level-calls
         (bool success, ) = _to.call{value: _amount}(new bytes(0));
