@@ -1,7 +1,11 @@
 import pytest
 from brownie import Contract
 
+
 # User accounts
+@pytest.fixture(autouse=True)
+def isolation(fn_isolation):
+    pass
 
 
 @pytest.fixture(scope="module")
@@ -11,19 +15,19 @@ def deployer(accounts):
 
 @pytest.fixture(scope="module")
 def alice(accounts):
-    return accounts[1]
+    yield accounts[1]
 
 
 @pytest.fixture(scope="module")
 def bob(accounts):
-    return accounts[2]
+    yield accounts[2]
 
 
 # Deploy vektor contracts
 APPROVED_COMMAND = "410a6a8d01da3028e7c041b5925a6d26ed38599db21a26cf9a5e87c68941f98a"
 
 
-@pytest.fixture(scope="module")
+@pytest.fixture(scope="module", autouse=True)
 def invoker(deployer, Invoker, cmove, cswap):
     contract = deployer.deploy(Invoker)
     contract.grantRole(APPROVED_COMMAND, cmove.address, {"from": deployer})  # approve commands
@@ -31,12 +35,12 @@ def invoker(deployer, Invoker, cmove, cswap):
     yield contract
 
 
-@pytest.fixture(scope="module")
+@pytest.fixture(scope="module", autouse=True)
 def cswap(deployer, CSwap):
     yield deployer.deploy(CSwap)
 
 
-@pytest.fixture(scope="module")
+@pytest.fixture(scope="module", autouse=True)
 def cmove(deployer, CMove):
     yield deployer.deploy(CMove)
 

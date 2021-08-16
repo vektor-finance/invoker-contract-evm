@@ -1,14 +1,8 @@
 import time
 
 import brownie
-import pytest
 from brownie.test import given, strategy
 from helpers import get_dai_for_user
-
-
-@pytest.fixture(autouse=True)
-def isolation(fn_isolation):
-    pass
 
 
 def test_move_dai(dai, alice, bob, weth, uni_router, invoker, cmove):
