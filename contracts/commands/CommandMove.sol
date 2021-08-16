@@ -32,6 +32,12 @@ contract CMove {
         uint256 balanceAfter = _token.balanceOf(_to);
         require(balanceAfter == balanceBefore + _amount, "CMove: Deflationary token");
     }
+
+    function moveEth(address _to, uint256 _amount) external payable {
+        //solhint-disable-next-line avoid-low-level-calls
+        (bool success, ) = _to.call{value: _amount}(new bytes(0));
+        require(success, "Cmove: ETH transfer failed");
+    }
 }
 
 // Need to consider moving non-erc20 tokens eg erc721 / 1155
