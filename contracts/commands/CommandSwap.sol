@@ -6,6 +6,7 @@
 pragma solidity ^0.8.6;
 
 import "../../interfaces/IERC20.sol";
+import "../../interfaces/IWeth.sol";
 
 interface IROUTER {
     function swapExactTokensForTokens(
@@ -18,6 +19,10 @@ interface IROUTER {
 }
 
 contract CSwap {
+    address public constant WETH = 0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2;
+
+    // When deploying on alternate networks, this should be specified in constructor
+
     function swapExactTokensForTokens(
         uint256 amountIn,
         uint256 amountOutMin,
@@ -35,5 +40,13 @@ contract CSwap {
             msg.sender,
             block.timestamp + 1
         );
+    }
+
+    function wrapEth(uint256 amount) external payable {
+        IWETH(WETH).deposit{value: amount}();
+    }
+
+    function unwrapEth(uint256 amount) external {
+        IWETH(WETH).withdraw(amount);
     }
 }
