@@ -72,3 +72,8 @@ def usdc():
 @pytest.fixture
 def link():
     yield Contract.from_explorer("0x514910771AF9Ca656af840dff83E8264EcF986CA")
+
+
+@pytest.fixture
+def world():  # deflationary token with burn on transfer
+    yield Contract.from_explorer("0xBF494F02EE3FdE1F20BEE6242bCe2d1ED0c15e47")
