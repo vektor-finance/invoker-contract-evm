@@ -19,7 +19,7 @@ interface IROUTER {
 }
 
 contract CSwap {
-    address public constant WETH = 0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2;
+    IWETH public constant WETH = IWETH(0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2);
 
     // When deploying on alternate networks, this should be specified in constructor
 
@@ -51,7 +51,7 @@ contract CSwap {
         @param _amount The amount of ETH to wrap (in Wei)
     **/
     function wrapEth(uint256 _amount) external payable {
-        IWETH(WETH).deposit{value: _amount}();
+        WETH.deposit{value: _amount}();
     }
 
     /**
@@ -63,6 +63,6 @@ contract CSwap {
         @param _amount The amount of WETH to unwrap (in Wei)
     **/
     function unwrapEth(uint256 _amount) external {
-        IWETH(WETH).withdraw(_amount);
+        WETH.withdraw(_amount);
     }
 }
