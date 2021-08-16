@@ -19,6 +19,10 @@ contract Invoker is Storage, AccessControl {
         _setupRole(DEFAULT_ADMIN_ROLE, msg.sender);
     }
 
+    receive() external payable {
+        //Otherwise we can't receive ETH
+    }
+
     function invokeStatic(
         address _to,
         bytes calldata _data,

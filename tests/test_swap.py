@@ -1,6 +1,7 @@
 import time
 
 import pytest
+from brownie.test import given, strategy
 from helpers import get_dai_for_user
 
 
@@ -72,3 +73,30 @@ def test_swap_dai_usdc_via_delegate_invoker_combo(
         [cmove.address, cswap.address], [calldata_move, calldata_swap], {"from": deployer}
     )
     assert usdc.balanceOf(deployer) > 995 * 1e6
+
+
+@pytest.mark.require_network("hardhat-fork")
+@given(value=strategy("uint256", max_value="1000 ether"))
+def test_wrap_eth(alice, invoker, cswap, weth, value):
+    starting_balance = alice.balance()
+    starting_weth_balance = weth.balanceOf(invoker)
+    calldata_wrap_eth = cswap.wrapEth.encode_input(value)
+    invoker.invoke([cswap.address], [calldata_wrap_eth], {"from": alice, "value": value})
+    assert alice.balance() == starting_balance - value
+    assert weth.balanceOf(invoker) == starting_weth_balance + value
+
+
+@pytest.mark.require_network("hardhat-fork")
+def test_unwrapwrap_eth(alice, invoker, cswap, weth):
+    value = "10 ether"
+    # maker contract has 1.8M WETH so we can "borrow" some for testing purposes
+    maker_contract = "0x2F0b23f53734252Bda2277357e97e1517d6B042A"
+    weth.transfer(invoker, value, {"from": maker_contract})
+    assert weth.balanceOf(invoker) == value
+
+    starting_weth_balance = weth.balanceOf(invoker)
+    starting_balance = invoker.balance()
+    calldata_unwrap_eth = cswap.unwrapEth.encode_input(value)
+    invoker.invoke([cswap.address], [calldata_unwrap_eth], {"from": alice})
+    assert invoker.balance() == starting_balance + value
+    assert weth.balanceOf(invoker) == starting_weth_balance - value
