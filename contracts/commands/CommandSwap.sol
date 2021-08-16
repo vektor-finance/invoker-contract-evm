@@ -42,11 +42,27 @@ contract CSwap {
         );
     }
 
-    function wrapEth(uint256 amount) external payable {
-        IWETH(WETH).deposit{value: amount}();
+    /**
+        @notice Allows a user to wrap their ETH into WETH
+        @dev The transferred amount of eth is specified by _amount rather than msg.value
+            This is intentional to allow users to make multiple ETH transfers
+            Note: User deposits ETH, but WETH given to invoker contract
+                You can then MOVE this WETH
+        @param _amount The amount of ETH to wrap (in Wei)
+    **/
+    function wrapEth(uint256 _amount) external payable {
+        IWETH(WETH).deposit{value: _amount}();
     }
 
-    function unwrapEth(uint256 amount) external {
-        IWETH(WETH).withdraw(amount);
+    /**
+        @notice Allows a user to unwrap their WETH into ETH
+        @dev Transferred amount is specified by _amount
+            Note: The WETH must be located on the invoker contract
+                The returned ETH will be sent to the invoker contract
+                This will then need to be MOVED to the user
+        @param _amount The amount of WETH to unwrap (in Wei)
+    **/
+    function unwrapEth(uint256 _amount) external {
+        IWETH(WETH).withdraw(_amount);
     }
 }
