@@ -17,6 +17,15 @@ contract CSwap {
 
     // When deploying on alternate networks, this should be specified in constructor
 
+    /**
+        @notice Allows a user to swap tokens using uniswap.
+        @dev After swapping, the output tokens are returned to the invoker contract
+        @param _amountIn the amount of input tokens to send
+        @param _amountOutMin The minimum amount of tokens that must be received or else the function reverts
+        @param _path An array of token addresses that determines the path the route takes
+            For example: WETH -> WBTC -> LINK
+            This should be optimised off-chain and then passed in this parameter
+    **/
     function swapUniswapIn(
         uint256 _amountIn,
         uint256 _amountOutMin,
@@ -39,6 +48,15 @@ contract CSwap {
         require(balanceAfter > balanceBefore + _amountOutMin, "CSwap: Slippage in");
     }
 
+    /**
+        @notice Allows a user to swap tokens using uniswap.
+        @dev After swapping, the output tokens are returned to the invoker contract
+        @param _amountOut the amount of output tokens to receive
+        @param _amountInMax The maximum amount of inputs tokens that can be required or else the function reverts
+        @param _path An array of token addresses that determines the path the route takes
+            For example: WETH -> WBTC -> LINK
+            This should be optimised off-chain and then passed in this parameter
+    **/
     function swapUniswapOut(
         uint256 _amountOut,
         uint256 _amountInMax,
