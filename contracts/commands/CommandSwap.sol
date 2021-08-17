@@ -7,39 +7,57 @@ pragma solidity ^0.8.6;
 
 import "../../interfaces/IERC20.sol";
 import "../../interfaces/IWeth.sol";
-
-interface IROUTER {
-    function swapExactTokensForTokens(
-        uint256 amountIn,
-        uint256 amountOutMin,
-        address[] calldata path,
-        address to,
-        uint256 deadline
-    ) external returns (uint256[] memory amounts);
-}
+import "../../interfaces/IUniswapV2Router02.sol";
 
 contract CSwap {
     IWETH public constant WETH = IWETH(0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2);
 
+    IUniswapV2Router02 public constant UNISWAP_ROUTER =
+        IUniswapV2Router02(0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D);
+
     // When deploying on alternate networks, this should be specified in constructor
 
-    function swapExactTokensForTokens(
-        uint256 amountIn,
-        uint256 amountOutMin,
-        address[] calldata path
+    function swapUniswapIn(
+        uint256 _amountIn,
+        uint256 _amountOutMin,
+        address[] calldata _path
     ) external {
-        require(path.length > 1, "invalid path");
-        IROUTER router = IROUTER(0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D);
-        IERC20 tokenIn = IERC20(path[0]);
-        tokenIn.approve(address(router), amountIn);
-        // solhint-disable-next-line not-rely-on-time
-        router.swapExactTokensForTokens(
-            amountIn,
-            amountOutMin,
-            path,
-            msg.sender,
+        require(_path.length > 1, "CSwap: invalid path");
+        IERC20 tokenIn = IERC20(_path[0]);
+        IERC20 tokenOut = IERC20(_path[_path.length - 1]);
+        tokenIn.approve(address(UNISWAP_ROUTER), _amountIn);
+        uint256 balanceBefore = tokenOut.balanceOf(address(this));
+        UNISWAP_ROUTER.swapExactTokensForTokens(
+            _amountIn,
+            _amountOutMin,
+            _path,
+            address(this),
+            //solhint-disable-next-line not-rely-on-time
             block.timestamp + 1
         );
+        uint256 balanceAfter = tokenOut.balanceOf(address(this));
+        require(balanceAfter > balanceBefore + _amountOutMin, "CSwap: Slippage in");
+    }
+
+    function swapUniswapOut(
+        uint256 _amountOut,
+        uint256 _amountInMax,
+        address[] calldata _path
+    ) external {
+        require(_path.length > 1, "CSwap: invalid path");
+        IERC20 tokenIn = IERC20(_path[0]);
+        tokenIn.approve(address(UNISWAP_ROUTER), _amountInMax);
+        uint256 balanceBefore = tokenIn.balanceOf(address(this));
+        UNISWAP_ROUTER.swapTokensForExactTokens(
+            _amountOut,
+            _amountInMax,
+            _path,
+            address(this),
+            //solhint-disable-next-line not-rely-on-time
+            block.timestamp + 1
+        );
+        uint256 balanceAfter = tokenIn.balanceOf(address(this));
+        require(balanceAfter > balanceBefore - _amountInMax, "CSwap: Slippage out");
     }
 
     /**
