@@ -22,7 +22,6 @@ weth_address = {
     1: "0xC02AAA39B223FE8D0A0E5C4F27EAD9083C756CC2",  # Mainnet
     4: "0xc778417E063141139Fce010982780140Aa0cD5Ab",  # Rinkeby
     1337: "0xC02AAA39B223FE8D0A0E5C4F27EAD9083C756CC2",  # Hardhat fork
-    # note regarding fork: if we fork rinkeby rather than mainnet, we need to update address
 }
 
 
