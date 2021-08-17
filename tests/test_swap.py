@@ -63,6 +63,22 @@ def test_swap_dai_usdc_via_delegate_invoker_combo(
 
 
 @pytest.mark.require_network("hardhat-fork")
+@given(value=strategy("uint256", max_value=900 * 1e6, min_value=1))
+def test_swap_dai_usdc_out(alice, dai, usdc, cswap, cmove, weth, uni_router, invoker, value):
+    get_dai_for_user(dai, alice, weth, uni_router)
+    # Approve invoker to spend Dai
+    max_value = 1.1 * value * 1e12
+    dai.approve(invoker.address, max_value, {"from": alice})
+    assert dai.allowance(alice.address, invoker.address) == max_value
+    # Move Dai to invoker
+    calldata_move = cmove.moveERC20In.encode_input(dai.address, max_value)
+    # Swap Dai for USDC
+    calldata_swap = cswap.swapUniswapOut.encode_input(value, max_value, [dai.address, usdc.address])
+    invoker.invoke([cmove.address, cswap.address], [calldata_move, calldata_swap], {"from": alice})
+    assert usdc.balanceOf(invoker.address) == value
+
+
+@pytest.mark.require_network("hardhat-fork")
 @given(value=strategy("uint256", max_value="1000 ether"))
 def test_wrap_eth(alice, invoker, cswap, weth, value):
     starting_balance = alice.balance()
