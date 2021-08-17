@@ -11,36 +11,38 @@ import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 contract CMove {
     using SafeERC20 for IERC20;
 
-    function moveERC20In(IERC20 _token, uint256 amount) external {
-        _moveERC20(_token, msg.sender, address(this), amount);
-    }
-
-    function moveERC20Out(
-        IERC20 _token,
-        address _to,
-        uint256 _amount
-    ) external {
-        _moveERC20(_token, address(this), _to, _amount);
-    }
-
     /**
-        @notice Allows a user to move their tokens to another address
+        @notice Allows a user to move their tokens to the invoker
         @dev Uses OpenZepellin SafeERC20, and validates balance before and after transfer
             to protect users from unknowingly transferring deflationary tokens.
             Solidity compiler 0.8 has built in overflow checks
             Please note: user needs to approve invoker contract first
         @param _token The contract address for the ERC20 token
+        @param _amount The amount of tokens to transfer
+    **/
+    function moveERC20In(IERC20 _token, uint256 _amount) external {
+        uint256 balanceBefore = _token.balanceOf(address(this));
+        _token.transferFrom(msg.sender, address(this), _amount);
+        uint256 balanceAfter = _token.balanceOf(address(this));
+        require(balanceAfter == balanceBefore + _amount, "CMove: Deflationary token");
+    }
+
+    /**
+        @notice Allows a user to move their tokens from the invoker to another address
+        @dev Uses OpenZepellin SafeERC20, and validates balance before and after transfer
+            to protect users from unknowingly transferring deflationary tokens.
+            Solidity compiler 0.8 has built in overflow checks
+        @param _token The contract address for the ERC20 token
         @param _to  The address you wish to send the tokens to
         @param _amount The amount of tokens to transfer
     **/
-    function _moveERC20(
+    function moveERC20Out(
         IERC20 _token,
-        address _from,
         address _to,
         uint256 _amount
-    ) internal {
+    ) external {
         uint256 balanceBefore = _token.balanceOf(_to);
-        _token.transferFrom(_from, _to, _amount);
+        _token.transfer(_to, _amount);
         uint256 balanceAfter = _token.balanceOf(_to);
         require(balanceAfter == balanceBefore + _amount, "CMove: Deflationary token");
     }
