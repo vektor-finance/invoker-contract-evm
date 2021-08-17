@@ -35,7 +35,7 @@ def test_swap_dai_usdc_via_delegate_invoker_individually(
     assert dai.allowance(deployer, invoker.address) == 1000 * 1e18
 
     # Move 1000 Dai to invoker
-    calldata_move = cmove.moveERC20.encode_input(dai.address, invoker.address, 1000 * 1e18)
+    calldata_move = cmove.moveERC20In.encode_input(dai.address, 1000 * 1e18)
     invoker.invokeDelegate(cmove.address, calldata_move, {"from": deployer})
     assert dai.balanceOf(invoker.address) == 1000 * 1e18
 
@@ -58,13 +58,7 @@ def test_swap_dai_usdc_via_delegate_invoker_combo(
     assert dai.allowance(deployer, invoker.address) == 1000 * 1e18
 
     # Move 1000 Dai to invoker and swap for USDC
-    calldata_move = cmove.moveERC20.encode_input(dai.address, invoker.address, 1000 * 1e18)
-    calldata_swap = cswap.swapExactTokensForTokens.encode_input(
-        1000 * 1e18, 0, [dai.address, usdc.address]
-    )
-
-    # Move 1000 Dai to invoker and swap for USDC
-    calldata_move = cmove.moveERC20.encode_input(dai.address, invoker.address, 1000 * 1e18)
+    calldata_move = cmove.moveERC20In.encode_input(dai.address, 1000 * 1e18)
     calldata_swap = cswap.swapExactTokensForTokens.encode_input(
         1000 * 1e18, 0, [dai.address, usdc.address]
     )
