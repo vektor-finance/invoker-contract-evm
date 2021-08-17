@@ -34,6 +34,7 @@ contract CSwap {
         require(_path.length > 1, "CSwap: invalid path");
         IERC20 tokenIn = IERC20(_path[0]);
         IERC20 tokenOut = IERC20(_path[_path.length - 1]);
+        tokenIn.approve(address(UNISWAP_ROUTER), 0); // To support tether
         tokenIn.approve(address(UNISWAP_ROUTER), _amountIn);
         uint256 balanceBefore = tokenOut.balanceOf(address(this));
         UNISWAP_ROUTER.swapExactTokensForTokens(
@@ -64,6 +65,7 @@ contract CSwap {
     ) external {
         require(_path.length > 1, "CSwap: invalid path");
         IERC20 tokenIn = IERC20(_path[0]);
+        tokenIn.approve(address(UNISWAP_ROUTER), 0); // To support tether
         tokenIn.approve(address(UNISWAP_ROUTER), _amountInMax);
         uint256 balanceBefore = tokenIn.balanceOf(address(this));
         UNISWAP_ROUTER.swapTokensForExactTokens(
