@@ -36,8 +36,8 @@ def invoker(deployer, Invoker, cmove, cswap):
 
 
 @pytest.fixture(scope="module", autouse=True)
-def cswap(deployer, CSwap):
-    yield deployer.deploy(CSwap)
+def cswap(deployer, CSwap, weth):
+    yield deployer.deploy(CSwap, weth.address)
 
 
 @pytest.fixture(scope="module", autouse=True)

@@ -19,9 +19,13 @@ interface IROUTER {
 }
 
 contract CSwap {
-    IWETH public constant WETH = IWETH(0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2);
+    IWETH public immutable WETH;
 
     // When deploying on alternate networks, this should be specified in constructor
+
+    constructor(address _weth) {
+        WETH = IWETH(_weth);
+    }
 
     function swapExactTokensForTokens(
         uint256 amountIn,
