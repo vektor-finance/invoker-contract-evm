@@ -18,6 +18,18 @@ commands = [CMove, CSwap]
 APPROVED_COMMAND = "410a6a8d01da3028e7c041b5925a6d26ed38599db21a26cf9a5e87c68941f98a"
 
 
+weth_address = {
+    1: "0xC02AAA39B223FE8D0A0E5C4F27EAD9083C756CC2",  # Mainnet
+    4: "0xc778417E063141139Fce010982780140Aa0cD5Ab",  # Rinkeby
+    1337: "0xC02AAA39B223FE8D0A0E5C4F27EAD9083C756CC2",  # Hardhat fork
+    # note regarding fork: if we fork rinkeby rather than mainnet, we need to update address
+}
+
+
+def get_weth_address():
+    return weth_address[Chain().id]
+
+
 def deploy_invoker(deployer):
     print("Deploying invoker")
     invoker = Invoker.deploy({"from": deployer})
@@ -27,7 +39,10 @@ def deploy_invoker(deployer):
 def deploy_commands(deployer, invoker):
     for command in commands:
         print(f"Deploying {command}")
-        deployed_command = command.deploy({"from": deployer})
+        if command is CSwap:
+            deployed_command = command.deploy(get_weth_address(), {"from": deployer})
+        else:
+            deployed_command = command.deploy({"from": deployer})
         invoker.grantRole(APPROVED_COMMAND, deployed_command.address, {"from": deployer})
 
 
