@@ -1,3 +1,4 @@
+import math
 import time
 
 import pytest
@@ -25,48 +26,57 @@ def test_buy_dai_via_invoker(deployer, dai, weth, uni_router, invoker):
 
 
 @pytest.mark.require_network("hardhat-fork")
+@given(value=strategy("uint256", max_value="1000 ether", min_value=2e12))
 def test_swap_dai_usdc_via_delegate_invoker_individually(
-    deployer, dai, usdc, cswap, cmove, weth, uni_router, invoker
+    alice, dai, usdc, cswap, cmove, weth, uni_router, invoker, value
 ):
-    get_dai_for_user(dai, deployer, weth, uni_router)
-
-    # Approve invoker to spend 1000 Dai
-    dai.approve(invoker.address, 1000 * 1e18, {"from": deployer})
-    assert dai.allowance(deployer, invoker.address) == 1000 * 1e18
-
-    # Move 1000 Dai to invoker
-    calldata_move = cmove.moveERC20In.encode_input(dai.address, 1000 * 1e18)
-    invoker.invokeDelegate(cmove.address, calldata_move, {"from": deployer})
-    assert dai.balanceOf(invoker.address) == 1000 * 1e18
-
-    # Swap 1000 Dai for some USDC
-    calldata_swap = cswap.swapExactTokensForTokens.encode_input(
-        1000 * 1e18, 0, [dai.address, usdc.address]
-    )
-    invoker.invokeDelegate(cswap.address, calldata_swap, {"from": deployer})
-    assert usdc.balanceOf(deployer) > 995 * 1e6
+    get_dai_for_user(dai, alice, weth, uni_router)
+    # Approve invoker to spend Dai
+    dai.approve(invoker.address, value, {"from": alice})
+    assert dai.allowance(alice.address, invoker.address) == value
+    # Move Dai to invoker
+    calldata_move = cmove.moveERC20In.encode_input(dai.address, value)
+    invoker.invoke([cmove.address], [calldata_move], {"from": alice})
+    assert dai.balanceOf(invoker.address) == value
+    # Swap Dai for USDC
+    min_value = math.floor(0.9 * value / 1e12)  # dai is 1e18, usdc is 1e6 decimals
+    calldata_swap = cswap.swapUniswapIn.encode_input(value, min_value, [dai.address, usdc.address])
+    invoker.invoke([cswap.address], [calldata_swap], {"from": alice})
+    assert usdc.balanceOf(invoker.address) >= min_value
 
 
 @pytest.mark.require_network("hardhat-fork")
+@given(value=strategy("uint256", max_value="1000 ether", min_value=2e12))
 def test_swap_dai_usdc_via_delegate_invoker_combo(
-    deployer, dai, usdc, cswap, cmove, weth, uni_router, invoker
+    alice, dai, usdc, cswap, cmove, weth, uni_router, invoker, value
 ):
-    get_dai_for_user(dai, deployer, weth, uni_router)
+    get_dai_for_user(dai, alice, weth, uni_router)
+    # Approve invoker to spend Dai
+    dai.approve(invoker.address, value, {"from": alice})
+    assert dai.allowance(alice.address, invoker.address) == value
+    # Move Dai to invoker
+    calldata_move = cmove.moveERC20In.encode_input(dai.address, value)
+    # Swap Dai for USDC
+    min_value = math.floor(0.9 * value / 1e12)  # dai is 1e18, usdc is 1e6 decimals
+    calldata_swap = cswap.swapUniswapIn.encode_input(value, min_value, [dai.address, usdc.address])
+    invoker.invoke([cmove.address, cswap.address], [calldata_move, calldata_swap], {"from": alice})
+    assert usdc.balanceOf(invoker.address) >= min_value
 
-    # Approve invoker to spend 1000 Dai
-    dai.approve(invoker.address, 1000 * 1e18, {"from": deployer})
-    assert dai.allowance(deployer, invoker.address) == 1000 * 1e18
 
-    # Move 1000 Dai to invoker and swap for USDC
-    calldata_move = cmove.moveERC20In.encode_input(dai.address, 1000 * 1e18)
-    calldata_swap = cswap.swapExactTokensForTokens.encode_input(
-        1000 * 1e18, 0, [dai.address, usdc.address]
-    )
-
-    invoker.invoke(
-        [cmove.address, cswap.address], [calldata_move, calldata_swap], {"from": deployer}
-    )
-    assert usdc.balanceOf(deployer) > 995 * 1e6
+@pytest.mark.require_network("hardhat-fork")
+@given(value=strategy("uint256", max_value=900 * 1e6, min_value=1))
+def test_swap_dai_usdc_out(alice, dai, usdc, cswap, cmove, weth, uni_router, invoker, value):
+    get_dai_for_user(dai, alice, weth, uni_router)
+    # Approve invoker to spend Dai
+    max_value = 1.1 * value * 1e12
+    dai.approve(invoker.address, max_value, {"from": alice})
+    assert dai.allowance(alice.address, invoker.address) == max_value
+    # Move Dai to invoker
+    calldata_move = cmove.moveERC20In.encode_input(dai.address, max_value)
+    # Swap Dai for USDC
+    calldata_swap = cswap.swapUniswapOut.encode_input(value, max_value, [dai.address, usdc.address])
+    invoker.invoke([cmove.address, cswap.address], [calldata_move, calldata_swap], {"from": alice})
+    assert usdc.balanceOf(invoker.address) == value
 
 
 @pytest.mark.require_network("hardhat-fork")
