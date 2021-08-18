@@ -49,7 +49,7 @@ contract CSwap {
             block.timestamp + 1
         );
         uint256 balanceAfter = tokenOut.balanceOf(address(this));
-        require(balanceAfter > balanceBefore + _amountOutMin, "CSwap: Slippage in");
+        require(balanceAfter >= balanceBefore + _amountOutMin, "CSwap: Slippage in");
     }
 
     /**
@@ -80,7 +80,7 @@ contract CSwap {
             block.timestamp + 1
         );
         uint256 balanceAfter = tokenIn.balanceOf(address(this));
-        require(balanceAfter + _amountInMax > balanceBefore, "CSwap: Slippage out");
+        require(balanceAfter + _amountInMax >= balanceBefore, "CSwap: Slippage out");
     }
 
     /**

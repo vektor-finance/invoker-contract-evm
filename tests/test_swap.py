@@ -1,3 +1,4 @@
+import math
 import time
 
 import pytest
@@ -25,7 +26,7 @@ def test_buy_dai_via_invoker(deployer, dai, weth, uni_router, invoker):
 
 
 @pytest.mark.require_network("hardhat-fork")
-@given(value=strategy("uint256", max_value="1000 ether", min_value=1e12))
+@given(value=strategy("uint256", max_value="1000 ether", min_value=2e12))
 def test_swap_dai_usdc_via_delegate_invoker_individually(
     alice, dai, usdc, cswap, cmove, weth, uni_router, invoker, value
 ):
@@ -38,14 +39,14 @@ def test_swap_dai_usdc_via_delegate_invoker_individually(
     invoker.invoke([cmove.address], [calldata_move], {"from": alice})
     assert dai.balanceOf(invoker.address) == value
     # Swap Dai for USDC
-    min_value = 0.9 * value / 1e12  # dai is 1e18, usdc is 1e6 decimals
+    min_value = math.floor(0.9 * value / 1e12)  # dai is 1e18, usdc is 1e6 decimals
     calldata_swap = cswap.swapUniswapIn.encode_input(value, min_value, [dai.address, usdc.address])
     invoker.invoke([cswap.address], [calldata_swap], {"from": alice})
-    assert usdc.balanceOf(invoker.address) > min_value
+    assert usdc.balanceOf(invoker.address) >= min_value
 
 
 @pytest.mark.require_network("hardhat-fork")
-@given(value=strategy("uint256", max_value="1000 ether", min_value=1e12))
+@given(value=strategy("uint256", max_value="1000 ether", min_value=2e12))
 def test_swap_dai_usdc_via_delegate_invoker_combo(
     alice, dai, usdc, cswap, cmove, weth, uni_router, invoker, value
 ):
@@ -56,10 +57,10 @@ def test_swap_dai_usdc_via_delegate_invoker_combo(
     # Move Dai to invoker
     calldata_move = cmove.moveERC20In.encode_input(dai.address, value)
     # Swap Dai for USDC
-    min_value = 0.9 * value / 1e12  # dai is 1e18, usdc is 1e6 decimals
+    min_value = math.floor(0.9 * value / 1e12)  # dai is 1e18, usdc is 1e6 decimals
     calldata_swap = cswap.swapUniswapIn.encode_input(value, min_value, [dai.address, usdc.address])
     invoker.invoke([cmove.address, cswap.address], [calldata_move, calldata_swap], {"from": alice})
-    assert usdc.balanceOf(invoker.address) > min_value
+    assert usdc.balanceOf(invoker.address) >= min_value
 
 
 @pytest.mark.require_network("hardhat-fork")
