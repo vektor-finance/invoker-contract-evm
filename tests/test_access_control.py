@@ -22,7 +22,7 @@ def test_should_revert_if_command_not_approved(
 ):
     invoker = invokerNoApproval
     get_dai_for_user(dai, deployer, weth, uni_router)
-    calldata = cmove.moveERC20.encode_input(dai.address, invoker.address, 100 * 1e18)
+    calldata = cmove.moveERC20In.encode_input(dai.address, 100 * 1e18)
     with brownie.reverts("Command not approved"):
         invoker.invoke([cmove.address], [calldata], {"from": deployer})
 
@@ -30,7 +30,7 @@ def test_should_revert_if_command_not_approved(
 def test_should_permit_approved_commands(invoker, cmove, dai, weth, uni_router, deployer):
     get_dai_for_user(dai, deployer, weth, uni_router)
     invoker.grantRole(APPROVED_COMMAND, cmove.address, {"from": deployer})
-    calldata = cmove.moveERC20.encode_input(dai.address, invoker.address, 100 * 1e18)
+    calldata = cmove.moveERC20In.encode_input(dai.address, 100 * 1e18)
     dai.approve(invoker.address, 100 * 1e18, {"from": deployer})
     assert dai.allowance(deployer, invoker.address) == 100 * 1e18
     invoker.invoke([cmove.address], [calldata], {"from": deployer})
