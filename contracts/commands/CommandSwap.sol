@@ -10,12 +10,15 @@ import "../../interfaces/IWeth.sol";
 import "../../interfaces/IUniswapV2Router02.sol";
 
 contract CSwap {
-    IWETH public constant WETH = IWETH(0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2);
+    IWETH public immutable WETH;
 
     IUniswapV2Router02 public constant UNISWAP_ROUTER =
         IUniswapV2Router02(0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D);
 
-    // When deploying on alternate networks, this should be specified in constructor
+    // When deploying on alternate networks, the WETH address should be specified in constructor
+    constructor(address _weth) {
+        WETH = IWETH(_weth);
+    }
 
     /**
         @notice Allows a user to swap tokens using uniswap.
