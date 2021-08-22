@@ -18,10 +18,20 @@ contract CSwap {
     IUniswapV2Router02 public constant UNISWAP_ROUTER =
         IUniswapV2Router02(0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D);
 
+    function getChainID() internal view returns (uint256) {
+        uint256 id;
+        assembly {
+            id := chainid()
+        }
+        return id;
+    }
+
     // When deploying on alternate networks, the WETH address should be specified in constructor
     constructor(address _weth, address _factory) {
         WETH = IWETH(_weth);
         factory = _factory;
+        uint256 chainId = getChainID();
+        require(chainId == 1337, "CHAIN NOT SUPPORTED: please read documentation");
     }
 
     /**
