@@ -9,15 +9,19 @@ import "../../interfaces/IERC20.sol";
 import "../../interfaces/IWeth.sol";
 import "../../interfaces/IUniswapV2Router02.sol";
 
+import "../uniswap/UniswapV2Library.sol";
+
 contract CSwap {
     IWETH public immutable WETH;
+    address public immutable factory;
 
     IUniswapV2Router02 public constant UNISWAP_ROUTER =
         IUniswapV2Router02(0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D);
 
     // When deploying on alternate networks, the WETH address should be specified in constructor
-    constructor(address _weth) {
+    constructor(address _weth, address _factory) {
         WETH = IWETH(_weth);
+        factory = _factory;
     }
 
     /**
@@ -113,5 +117,31 @@ contract CSwap {
         WETH.withdraw(_amount);
         uint256 balanceAfter = address(this).balance;
         require(balanceAfter == balanceBefore + _amount, "CSwap: Error unwrapping WETH");
+    }
+
+    /**
+        @notice DEBUG FUNCTION to swap tokens using uniswap
+        @dev Do not use this function in any production environment
+            In order to use this function, the user must first approve the invoker contract to spend the appropriate amount of ERC20 token
+            The funds will be taken from the users address, swapped, and then returned to user
+            This function does not check for slippage, and therefore you WILL be frontrun on any mainnet
+        @param _amountIn the amount of token
+        @param _path the array of addresses that determines the path of the swap
+    **/
+    function DEBUG_swapIn(uint256 _amountIn, address[] calldata _path) external {
+        require(_path.length > 1, "CSwap: invalid path");
+        IERC20 tokenIn = IERC20(_path[0]);
+        tokenIn.approve(address(UNISWAP_ROUTER), 0); // To support tether
+        tokenIn.approve(address(UNISWAP_ROUTER), _amountIn);
+        uint256[] memory amounts = UniswapV2Library.getAmountsOut(factory, _amountIn, _path);
+        uint256 amountOutMin = amounts[amounts.length - 1];
+        UNISWAP_ROUTER.swapExactTokensForTokens(
+            _amountIn,
+            amountOutMin,
+            _path,
+            address(this),
+            //solhint-disable-next-line not-rely-on-time
+            block.timestamp + 1
+        );
     }
 }
