@@ -39,7 +39,9 @@ def deploy_commands(deployer, invoker):
     for command in commands:
         print(f"Deploying {command}")
         if command is CSwap:
-            deployed_command = command.deploy(get_weth_address(), {"from": deployer})
+            deployed_command = command.deploy(
+                get_weth_address(), "0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f", {"from": deployer}
+            )
         else:
             deployed_command = command.deploy({"from": deployer})
         invoker.grantRole(APPROVED_COMMAND, deployed_command.address, {"from": deployer})

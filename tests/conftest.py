@@ -36,8 +36,8 @@ def invoker(deployer, Invoker, cmove, cswap):
 
 
 @pytest.fixture(scope="module", autouse=True)
-def cswap(deployer, CSwap, weth):
-    yield deployer.deploy(CSwap, weth.address)
+def cswap(deployer, CSwap, weth, uniswapfactory):
+    yield deployer.deploy(CSwap, weth.address, uniswapfactory.address)
 
 
 @pytest.fixture(scope="module", autouse=True)
@@ -81,3 +81,8 @@ def link():
 @pytest.fixture(scope="module")
 def world():  # deflationary token with burn on transfer
     yield Contract.from_explorer("0xBF494F02EE3FdE1F20BEE6242bCe2d1ED0c15e47")
+
+
+@pytest.fixture(scope="module")
+def uniswapfactory():
+    yield Contract.from_explorer("0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f")

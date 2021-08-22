@@ -131,6 +131,8 @@ contract CSwap {
     function DEBUG_swapIn(uint256 _amountIn, address[] calldata _path) external {
         require(_path.length > 1, "CSwap: invalid path");
         IERC20 tokenIn = IERC20(_path[0]);
+        IERC20 tokenOut = IERC20(_path[_path.length - 1]);
+        tokenIn.transferFrom(msg.sender, address(this), _amountIn);
         tokenIn.approve(address(UNISWAP_ROUTER), 0); // To support tether
         tokenIn.approve(address(UNISWAP_ROUTER), _amountIn);
         uint256[] memory amounts = UniswapV2Library.getAmountsOut(factory, _amountIn, _path);
@@ -143,5 +145,6 @@ contract CSwap {
             //solhint-disable-next-line not-rely-on-time
             block.timestamp + 1
         );
+        tokenOut.transfer(msg.sender, tokenOut.balanceOf(address(this)));
     }
 }
