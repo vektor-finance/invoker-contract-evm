@@ -9,3 +9,5 @@ networks:
 
 dependencies:
   - OpenZeppelin/openzeppelin-contracts@4.2.0
+
+dotenv: .env
