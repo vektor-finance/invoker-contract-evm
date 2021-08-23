@@ -7,43 +7,80 @@ pragma solidity ^0.8.6;
 
 import "../../interfaces/IERC20.sol";
 import "../../interfaces/IWeth.sol";
-
-interface IROUTER {
-    function swapExactTokensForTokens(
-        uint256 amountIn,
-        uint256 amountOutMin,
-        address[] calldata path,
-        address to,
-        uint256 deadline
-    ) external returns (uint256[] memory amounts);
-}
+import "../../interfaces/IUniswapV2Router02.sol";
 
 contract CSwap {
     IWETH public immutable WETH;
 
-    // When deploying on alternate networks, this should be specified in constructor
+    IUniswapV2Router02 public constant UNISWAP_ROUTER =
+        IUniswapV2Router02(0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D);
 
+    // When deploying on alternate networks, the WETH address should be specified in constructor
     constructor(address _weth) {
         WETH = IWETH(_weth);
     }
 
-    function swapExactTokensForTokens(
-        uint256 amountIn,
-        uint256 amountOutMin,
-        address[] calldata path
+    /**
+        @notice Allows a user to swap tokens using uniswap.
+        @dev After swapping, the output tokens are returned to the invoker contract
+        @param _amountIn the amount of input tokens to send
+        @param _amountOutMin The minimum amount of tokens that must be received or else the function reverts
+        @param _path An array of token addresses that determines the path the route takes
+            For example: WETH -> WBTC -> LINK
+            This should be optimised off-chain and then passed in this parameter
+    **/
+    function swapUniswapIn(
+        uint256 _amountIn,
+        uint256 _amountOutMin,
+        address[] calldata _path
     ) external {
-        require(path.length > 1, "invalid path");
-        IROUTER router = IROUTER(0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D);
-        IERC20 tokenIn = IERC20(path[0]);
-        tokenIn.approve(address(router), amountIn);
-        // solhint-disable-next-line not-rely-on-time
-        router.swapExactTokensForTokens(
-            amountIn,
-            amountOutMin,
-            path,
-            msg.sender,
+        require(_path.length > 1, "CSwap: invalid path");
+        IERC20 tokenIn = IERC20(_path[0]);
+        IERC20 tokenOut = IERC20(_path[_path.length - 1]);
+        tokenIn.approve(address(UNISWAP_ROUTER), 0); // To support tether
+        tokenIn.approve(address(UNISWAP_ROUTER), _amountIn);
+        uint256 balanceBefore = tokenOut.balanceOf(address(this));
+        UNISWAP_ROUTER.swapExactTokensForTokens(
+            _amountIn,
+            _amountOutMin,
+            _path,
+            address(this),
+            //solhint-disable-next-line not-rely-on-time
             block.timestamp + 1
         );
+        uint256 balanceAfter = tokenOut.balanceOf(address(this));
+        require(balanceAfter >= balanceBefore + _amountOutMin, "CSwap: Slippage in");
+    }
+
+    /**
+        @notice Allows a user to swap tokens using uniswap.
+        @dev After swapping, the output tokens are returned to the invoker contract
+        @param _amountOut the amount of output tokens to receive
+        @param _amountInMax The maximum amount of inputs tokens that can be required or else the function reverts
+        @param _path An array of token addresses that determines the path the route takes
+            For example: WETH -> WBTC -> LINK
+            This should be optimised off-chain and then passed in this parameter
+    **/
+    function swapUniswapOut(
+        uint256 _amountOut,
+        uint256 _amountInMax,
+        address[] calldata _path
+    ) external {
+        require(_path.length > 1, "CSwap: invalid path");
+        IERC20 tokenIn = IERC20(_path[0]);
+        tokenIn.approve(address(UNISWAP_ROUTER), 0); // To support tether
+        tokenIn.approve(address(UNISWAP_ROUTER), _amountInMax);
+        uint256 balanceBefore = tokenIn.balanceOf(address(this));
+        UNISWAP_ROUTER.swapTokensForExactTokens(
+            _amountOut,
+            _amountInMax,
+            _path,
+            address(this),
+            //solhint-disable-next-line not-rely-on-time
+            block.timestamp + 1
+        );
+        uint256 balanceAfter = tokenIn.balanceOf(address(this));
+        require(balanceAfter + _amountInMax >= balanceBefore, "CSwap: Slippage out");
     }
 
     /**
