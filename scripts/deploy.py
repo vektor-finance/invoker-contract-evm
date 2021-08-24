@@ -17,6 +17,7 @@ from brownie.network.state import Chain
 commands = [CMove, CSwap]
 APPROVED_COMMAND = "410a6a8d01da3028e7c041b5925a6d26ed38599db21a26cf9a5e87c68941f98a"
 
+UNISWAP_V2_FACTORY_CONTRACT_ADDRESS = "0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f"
 
 weth_address = {
     1: "0xC02AAA39B223FE8D0A0E5C4F27EAD9083C756CC2",  # Mainnet
@@ -40,7 +41,9 @@ def deploy_commands(deployer, invoker):
         print(f"Deploying {command}")
         if command is CSwap:
             deployed_command = command.deploy(
-                get_weth_address(), "0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f", {"from": deployer}
+                get_weth_address(),
+                UNISWAP_V2_FACTORY_CONTRACT_ADDRESS,
+                {"from": deployer},
             )
         else:
             deployed_command = command.deploy({"from": deployer})
