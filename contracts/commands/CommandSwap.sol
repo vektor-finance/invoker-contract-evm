@@ -160,7 +160,7 @@ contract CSwap {
         @notice DEBUG FUNCTION to swap tokens using Uniswap
         @dev Do not use this function in any production environment
             In order to use this function, the user must first approve the invoker contract to spend the appropriate amount of ERC20 token
-            The funds will be taken from the users address, swapped, and then returned to user
+            The funds will be taken from the user's address, swapped, and then returned to user
             This function does not check for slippage, and therefore you WILL be frontrun on any mainnet
         @param _amountOut the amount of output token to receive
         @param _path the array of addresses that determines the path of the swap
