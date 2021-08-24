@@ -12,12 +12,19 @@ TODO
 
 ### Environment Variables
 
-For testing, this project requires you have an API key for:
+For testing, this project requires you have an API key for (both are free to create):
 
 - [Etherscan](https://etherscan.io/apis)
 - [Infura](https://infura.io/)
 
-Both are free to create.
+They must be set in the shell environment before running most `brownie` commands.
+
+Copy the `.env.template` file and set the values:
+
+```bash
+cp .env.template .env
+edit .env
+```
 
 ### Dependencies
 

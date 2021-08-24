@@ -89,6 +89,10 @@ jobs:
         run: pre-commit run --all-files
         id: run_pre_commit
 
+      - name: Create .env file (unused)
+        run: touch .env
+        id: create_env_file
+
       - name: Run Tests
         run: brownie test
         id: run_brownie_tests
