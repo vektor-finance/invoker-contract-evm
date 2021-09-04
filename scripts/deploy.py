@@ -50,17 +50,18 @@ def deploy_commands(deployer, invoker):
         invoker.grantRole(APPROVED_COMMAND, deployed_command.address, {"from": deployer})
 
 
-def deploy_all_contracts():
-    deployer = accounts[0]
-    print(f"Deployment user: {accounts[0]}")
+def deploy_all_contracts(deployer):
+    print(f"Deployment user: {deployer}")
     invoker = deploy_invoker(deployer)
     deploy_commands(deployer, invoker)
 
 
 def main():
-    print(f"Deploying to '{network.show_active()}' network")
-    print(f"Chain ID: {Chain().id}")
-    deploy_all_contracts()
-    accounts[0].transfer("0xc7711f36b2C13E00821fFD9EC54B04A60AEfbd1b", "1 ether")
+    print(f"Deploying to '{network.show_active()}' network (Chain ID: {Chain().id})")
+    deployer = accounts[0]
+    deploy_all_contracts(deployer)
+    print(f"Gas used for deployment: {deployer.gas_used} gwei")
+
+    deployer.transfer("0xc7711f36b2C13E00821fFD9EC54B04A60AEfbd1b", "1 ether")
     for block in chain.new_blocks():
         print(f"Mining block {block.number}")
