@@ -97,3 +97,58 @@ jobs:
         run: brownie test
         id: run_brownie_tests
 
+  test_deployment:
+    name: Install dependencies and run local deployment
+    runs-on: ubuntu-latest
+    needs: lint_and_tests
+    timeout-minutes: 15
+    steps:
+      - name: Checkout current commit (${{ github.sha }})
+        uses: actions/checkout@v2
+
+      - name: Cache Compiler Installations
+        uses: actions/cache@v2
+        id: cache_compiler_installations
+        with:
+          path: ${{ env.CACHED_COMPILER_PATHS }}
+          key: ${{ runner.os }}-compiler-cache
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        id: setup_node
+
+      - name: Cache Node dependencies
+        uses: actions/cache@v2
+        id: cache_node_dependencies
+        with:
+          path: ${{ env.CACHED_NODE_DEPENDENCY_PATHS }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+
+      - name: Install Node dependencies
+        run: yarn install
+        id: install_node_dependencies
+
+      - name: Setup Python 3.8
+        uses: actions/setup-python@v2
+        id: setup_python
+        with:
+          python-version: 3.8
+
+      - name: Cache Python dependencies
+        uses: actions/cache@v2
+        id: cache_python_dependencies
+        with:
+          path: ${{ env.CACHED_PYTHON_DEPENDENCY_PATHS }}
+          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
+
+      - name: Install Python dependencies
+        run: pip install -r requirements.txt
+        id: install_python_dependencies
+
+      - name: Create .env file (unused)
+        run: touch .env
+        id: create_env_file
+
+      - name: Run Deployment
+        run: brownie run scripts/deploy.py
+        id: run_brownie_deployment
