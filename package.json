@@ -19,6 +19,9 @@
     "solhint": "^3.3.6",
     "solhint-plugin-prettier": "^0.0.5"
   },
+  "resolutions": {
+    "axios": "^0.21.3"
+  },
   "lint-staged": {
     "*.sol": [
       "solhint '*.sol'"
