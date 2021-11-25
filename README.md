@@ -69,10 +69,3 @@ To run the entire suite:
 brownie test
 ```
 
-## Contracts Architecture
-
-### UML Diagram
-
-![UML diagram of smart contracts](./uml.svg)
-
-To generate a new diagram run `yarn uml`.
