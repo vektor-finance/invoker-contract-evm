@@ -37,7 +37,7 @@ edit .env
 To get started, first create and initialize a Python [virtual environment](https://docs.python.org/3/library/venv.html). Next, clone the repo and install the developer dependencies:
 
 ```bash
-git clone https://github.com/vektorfinance/invoker-contract-evm.git
+git clone https://github.com/vektor-finance/invoker-contract-evm.git
 cd invoker-contract-evm
 pip install -r requirements.txt
 yarn install
