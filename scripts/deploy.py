@@ -12,7 +12,6 @@
 
 
 from brownie import CMove, CSwap, Invoker, accounts, chain, network
-from brownie.network.state import Chain
 
 commands = [CMove, CSwap]
 APPROVED_COMMAND = "410a6a8d01da3028e7c041b5925a6d26ed38599db21a26cf9a5e87c68941f98a"
@@ -25,37 +24,51 @@ weth_address = {
 }
 
 
-def get_weth_address():
-    return weth_address[Chain().id]
+def get_deployer_opts(deployer, chain):
+    if chain.id == 1 or chain.id == 4:
+        # TODO: Define deployment strategy based on chain.id
+        return {"from": deployer, "priority_fee": "2 gwei"}
+    else:
+        return {"from": deployer}
 
 
-def deploy_invoker(deployer):
+def get_weth_address(chain):
+    return weth_address[chain.id]
+
+
+def deploy_invoker(deployer, chain):
     print("Deploying invoker")
-    invoker = Invoker.deploy({"from": deployer})
+    invoker = Invoker.deploy(get_deployer_opts(deployer, chain))
     return invoker
 
 
-def deploy_commands(deployer, invoker):
+def deploy_commands(deployer, invoker, chain):
     for command in commands:
         print(f"Deploying {command}")
         if command is CSwap:
-            deployed_command = command.deploy(get_weth_address(), {"from": deployer})
+            deployed_command = command.deploy(
+                get_weth_address(chain),
+                UNISWAP_V2_FACTORY_CONTRACT_ADDRESS,
+                get_deployer_opts(deployer, chain),
+            )
         else:
-            deployed_command = command.deploy({"from": deployer})
-        invoker.grantRole(APPROVED_COMMAND, deployed_command.address, {"from": deployer})
-
-
-def deploy_all_contracts():
-    deployer = accounts[0]
-    print(f"Deployment user: {accounts[0]}")
-    invoker = deploy_invoker(deployer)
-    deploy_commands(deployer, invoker)
+            deployed_command = command.deploy(get_deployer_opts(deployer, chain))
+        invoker.grantRole(
+            APPROVED_COMMAND, deployed_command.address, get_deployer_opts(deployer, chain)
+        )
 
 
 def main():
-    print(f"Deploying to '{network.show_active()}' network")
-    print(f"Chain ID: {Chain().id}")
-    deploy_all_contracts()
-    accounts[0].transfer("0xc7711f36b2C13E00821fFD9EC54B04A60AEfbd1b", "1 ether")
+    deployer = accounts[0]
+
+    print(f"Deployment network: '{network.show_active()}' network (Chain ID: {chain.id})")
+    print(f"Deployment user: {deployer}")
+
+    invoker = deploy_invoker(deployer, chain)
+    deploy_commands(deployer, invoker, chain)
+
+    print(f"Gas used for deployment: {deployer.gas_used} gwei\n")
+
+    deployer.transfer("0xc7711f36b2C13E00821fFD9EC54B04A60AEfbd1b", "1 ether")
     for block in chain.new_blocks():
         print(f"Mining block {block.number}")
