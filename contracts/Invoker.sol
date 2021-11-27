@@ -7,9 +7,11 @@ pragma solidity ^0.8.6;
 import "./utils/Address.sol";
 import "./Storage.sol";
 
+import "./utils/Log.sol";
+
 import "@openzeppelin/contracts/access/AccessControl.sol";
 
-contract Invoker is Storage, AccessControl {
+contract Invoker is Storage, AccessControl, Log {
     using Address for address;
 
     bytes32 public constant APPROVED_COMMAND_IMPLEMENTATION =
@@ -43,11 +45,13 @@ contract Invoker is Storage, AccessControl {
     function invoke(address[] calldata _tos, bytes[] calldata _datas)
         external
         payable
+        logFunctionCall
         returns (bytes[] memory output)
     {
         require(_tos.length == _datas.length, "dev: to+data length not equal"); // dev: to+data length not equal
         output = new bytes[](_tos.length);
         for (uint256 i = 0; i < _tos.length; i++) {
+            logVeks(_datas[i]);
             // output[i] = _tos[i].functionDelegateCall(_datas[i]);
             output[i] = invokeDelegate(_tos[i], _datas[i]);
         }
