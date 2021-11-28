@@ -20,7 +20,7 @@ contract CMove {
         @param _token The contract address for the ERC20 token
         @param _amount The amount of tokens to transfer
     **/
-    function moveERC20In(IERC20 _token, uint256 _amount) external {
+    function moveERC20In(IERC20 _token, uint256 _amount) external payable {
         uint256 balanceBefore = _token.balanceOf(address(this));
         _token.transferFrom(msg.sender, address(this), _amount);
         uint256 balanceAfter = _token.balanceOf(address(this));
@@ -40,7 +40,7 @@ contract CMove {
         IERC20 _token,
         address _to,
         uint256 _amount
-    ) external {
+    ) external payable {
         uint256 balanceBefore = _token.balanceOf(_to);
         _token.transfer(_to, _amount);
         uint256 balanceAfter = _token.balanceOf(_to);
