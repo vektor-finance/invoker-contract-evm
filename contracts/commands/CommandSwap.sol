@@ -9,29 +9,15 @@ import "../../interfaces/IERC20.sol";
 import "../../interfaces/IWeth.sol";
 import "../../interfaces/IUniswapV2Router02.sol";
 
-import "../uniswap/UniswapV2Library.sol";
-
 contract CSwap {
     IWETH public immutable WETH;
-    address public immutable factory;
 
     IUniswapV2Router02 public constant UNISWAP_ROUTER =
         IUniswapV2Router02(0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D);
 
-    function getChainID() internal view returns (uint256) {
-        uint256 id;
-        assembly {
-            id := chainid()
-        }
-        return id;
-    }
-
     // When deploying on alternate networks, the WETH address should be specified in constructor
-    constructor(address _weth, address _factory) {
+    constructor(address _weth) {
         WETH = IWETH(_weth);
-        factory = _factory;
-        uint256 chainId = getChainID();
-        require(chainId == 1337, "CHAIN NOT SUPPORTED: please read documentation");
     }
 
     /**
@@ -127,59 +113,5 @@ contract CSwap {
         WETH.withdraw(_amount);
         uint256 balanceAfter = address(this).balance;
         require(balanceAfter == balanceBefore + _amount, "CSwap: Error unwrapping WETH");
-    }
-
-    /**
-        @notice DEBUG FUNCTION to swap tokens using Uniswap
-        @dev Do not use this function in any production environment
-            In order to use this function, the user must first approve the invoker contract to spend the appropriate amount of ERC20 token
-            The funds will be taken from the user's address, swapped, and then returned to user
-            This function does not check for slippage, and therefore you WILL be frontrun on any mainnet
-        @param _amountIn the amount of input token to offer
-        @param _path the array of addresses that determines the path of the swap
-    **/
-    function DEBUG_swapIn(uint256 _amountIn, address[] calldata _path) external {
-        require(_path.length > 1, "CSwap: invalid path");
-        IERC20 tokenIn = IERC20(_path[0]);
-        tokenIn.transferFrom(msg.sender, address(this), _amountIn);
-        tokenIn.approve(address(UNISWAP_ROUTER), 0); // To support tether
-        tokenIn.approve(address(UNISWAP_ROUTER), _amountIn);
-        uint256[] memory amounts = UniswapV2Library.getAmountsOut(factory, _amountIn, _path);
-        uint256 amountOutMin = amounts[amounts.length - 1];
-        UNISWAP_ROUTER.swapExactTokensForTokens(
-            _amountIn,
-            amountOutMin,
-            _path,
-            msg.sender,
-            //solhint-disable-next-line not-rely-on-time
-            block.timestamp + 1
-        );
-    }
-
-    /**
-        @notice DEBUG FUNCTION to swap tokens using Uniswap
-        @dev Do not use this function in any production environment
-            In order to use this function, the user must first approve the invoker contract to spend the appropriate amount of ERC20 token
-            The funds will be taken from the user's address, swapped, and then returned to user
-            This function does not check for slippage, and therefore you WILL be frontrun on any mainnet
-        @param _amountOut the amount of output token to receive
-        @param _path the array of addresses that determines the path of the swap
-    **/
-    function DEBUG_swapOut(uint256 _amountOut, address[] calldata _path) external {
-        require(_path.length > 1, "CSwap: invalid path");
-        IERC20 tokenIn = IERC20(_path[0]);
-        uint256[] memory amounts = UniswapV2Library.getAmountsIn(factory, _amountOut, _path);
-        uint256 amountIn = amounts[0];
-        tokenIn.transferFrom(msg.sender, address(this), amountIn);
-        tokenIn.approve(address(UNISWAP_ROUTER), 0); // To support tether
-        tokenIn.approve(address(UNISWAP_ROUTER), amountIn);
-        UNISWAP_ROUTER.swapTokensForExactTokens(
-            _amountOut,
-            amountIn,
-            _path,
-            msg.sender,
-            //solhint-disable-next-line not-rely-on-time
-            block.timestamp + 1
-        );
     }
 }
