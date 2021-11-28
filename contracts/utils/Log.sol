@@ -2,13 +2,8 @@
 // Vektor logging contract
 // Could have been incorporated directly into Invoker.sol but is a separate contract for readability
 // All user interactions will emit events in the form of LogInvocation and LogVeks
-// These commands do add a gas overhead
-// With logs:
-// Invoker <Contract>
-//    ├─ constructor  -  avg: 1184956  avg (confirmed): 1184956  low: 1184956  high: 1184956
-//    ├─ invokeStatic -  avg:  132098  avg (confirmed):  132098  low:  132098  high:  132098
-//    ├─ invoke       -  avg:  111746  avg (confirmed):  111542  low:   32297  high:  329434
-//    └─ grantRole    -  avg:   50362  avg (confirmed):   49952  low:   29252  high:   56504
+// These commands do add a gas overhead, further information provided on notion
+// https://www.notion.so/vektorfinance/Invoker-Gas-Optimisation-cb1cdce4f8e04ec58bcf7c98ff5502e2
 pragma solidity ^0.8.6;
 
 contract Log {
