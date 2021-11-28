@@ -130,7 +130,7 @@ def test_wrap_ether_in_multiple_transactions_can_leave_eth_on_invoker(
     1.5 ether is sent to the invoker via msg.value
     0.5 ether is used to wrap into weth
     At the end of invocation, 1 ether should remain on the invoker
-    -(in reality, this should be sweeped to user)
+    (in reality, this should be sweeped to user)
     """
 
     starting_balance = alice.balance()
