@@ -39,20 +39,19 @@ contract Invoker is Storage, AccessControl, Log {
         returns (bytes memory)
     {
         require(hasRole(APPROVED_COMMAND_IMPLEMENTATION, _to), "Command not approved");
+        logVeks(_data);
         return _to.functionDelegateCall(_data);
     }
 
     function invoke(address[] calldata _tos, bytes[] calldata _datas)
         external
         payable
-        logFunctionCall
+        logInvocation
         returns (bytes[] memory output)
     {
         require(_tos.length == _datas.length, "dev: to+data length not equal"); // dev: to+data length not equal
         output = new bytes[](_tos.length);
         for (uint256 i = 0; i < _tos.length; i++) {
-            logVeks(_datas[i]);
-            // output[i] = _tos[i].functionDelegateCall(_datas[i]);
             output[i] = invokeDelegate(_tos[i], _datas[i]);
         }
     }
