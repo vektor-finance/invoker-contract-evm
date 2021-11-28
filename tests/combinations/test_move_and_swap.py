@@ -1,14 +1,16 @@
 # Move and Swap
 from helpers import get_dai_for_user
 
-# ALICE wants to swap her ETH for DAI
-# Invoke:
-# 1. Wrap ETH -> WETH
-# 2. Swap WETH -> DAI
-# 3. Move DAI -> Alice
-
 
 def test_swap_eth_for_dai(invoker, alice, cmove, cswap, weth, dai):
+    """
+    ALICE wants to swap her ETH for DAI
+    Invoke:
+    1. Wrap ETH -> WETH
+    2. Swap WETH -> DAI
+    3. Move DAI -> Alice
+    """
+
     value = "1 ether"
     starting_balance = alice.balance()
 
@@ -31,19 +33,20 @@ def test_swap_eth_for_dai(invoker, alice, cmove, cswap, weth, dai):
     assert dai.balanceOf(alice) == 100 * 1e18
 
 
-# Bob wants to quickly fund three accounts to farm airdrops
-# First: Approve Dai on invoker
-# Invoke:
-# 1. Move Dai -> Invoker
-# 2. Swap Dai -> WETH
-# 3. Unrwap WETH -> ETH
-# 4. Move ETH -> Account 3
-# 5. Move ETH -> Account 4
-# 6. Move ETH -> Account 5
-# Note accounts 0,1,2 already reserved
-
-
 def test_swap_dai_to_eth_and_disperse(invoker, bob, cmove, cswap, weth, dai, uni_router, accounts):
+    """
+    Bob wants to quickly fund three accounts to farm airdrops
+    First: Approve Dai on invoker
+    Invoke:
+    1. Move Dai -> Invoker
+    2. Swap Dai -> WETH
+    3. Unrwap WETH -> ETH
+    4. Move ETH -> Account 3
+    5. Move ETH -> Account 4
+    6. Move ETH -> Account 5
+    Note accounts 0,1,2 already reserved
+    """
+
     # First get the user one eth worth of dai
     get_dai_for_user(dai, bob, weth, uni_router)
 
