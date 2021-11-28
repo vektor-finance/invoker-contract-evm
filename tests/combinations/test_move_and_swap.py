@@ -41,7 +41,7 @@ def test_swap_dai_to_eth_and_disperse(invoker, bob, cmove, cswap, weth, dai, uni
     Invoke:
     1. Move Dai -> Invoker
     2. Swap Dai -> WETH
-    3. Unrwap WETH -> ETH
+    3. Unwrap WETH -> ETH
     4. Move ETH -> Account 3
     5. Move ETH -> Account 4
     6. Move ETH -> Account 5
