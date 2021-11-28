@@ -33,7 +33,7 @@ contract CSwap {
         uint256 _amountIn,
         uint256 _amountOutMin,
         address[] calldata _path
-    ) external {
+    ) external payable {
         require(_path.length > 1, "CSwap: invalid path");
         IERC20 tokenIn = IERC20(_path[0]);
         IERC20 tokenOut = IERC20(_path[_path.length - 1]);
@@ -65,7 +65,7 @@ contract CSwap {
         uint256 _amountOut,
         uint256 _amountInMax,
         address[] calldata _path
-    ) external {
+    ) external payable {
         require(_path.length > 1, "CSwap: invalid path");
         IERC20 tokenIn = IERC20(_path[0]);
         tokenIn.approve(address(UNISWAP_ROUTER), 0); // To support tether
@@ -108,7 +108,7 @@ contract CSwap {
             Validation checks to support unwrapping of native tokens that may not conform to WETH9
         @param _amount The amount of WETH to unwrap (in Wei)
     **/
-    function unwrapEth(uint256 _amount) external {
+    function unwrapEth(uint256 _amount) external payable {
         uint256 balanceBefore = address(this).balance;
         WETH.withdraw(_amount);
         uint256 balanceAfter = address(this).balance;
