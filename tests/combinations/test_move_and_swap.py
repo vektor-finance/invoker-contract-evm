@@ -1,4 +1,5 @@
 # Move and Swap
+import brownie
 from helpers import get_dai_for_user
 
 
@@ -88,3 +89,87 @@ def test_swap_dai_to_eth_and_disperse(invoker, bob, cmove, cswap, weth, dai, uni
     assert accounts[3].balance() == account_3_starting_balance + "0.1 ether"
     assert accounts[4].balance() == account_4_starting_balance + "0.1 ether"
     assert accounts[5].balance() == account_5_starting_balance + "0.1 ether"
+
+
+def test_wrap_ether_in_multiple_transactions(invoker, alice, weth, cswap, cmove):
+    """
+    This is a test that highlights how msg.value works in multiple delegatecalls
+    Note that the total value attached to this transaction is 1.5 ether
+    The first wrap will utilise 0.5 ether, leaving 1.0 ether on the invoker
+    The second wrap will use the remaining 1.0 ether
+    """
+
+    starting_balance = alice.balance()
+    starting_weth_balance = weth.balanceOf(alice)
+    starting_invoker_weth_balance = weth.balanceOf(invoker)
+
+    value_a = "1 ether"
+    value_b = "0.5 ether"
+    total_value = "1.5 ether"  # can't do string multiplication
+    calldata_wrap_eth_a = cswap.wrapEth.encode_input(value_a)
+    calldata_move_weth = cmove.moveERC20Out.encode_input(weth.address, alice.address, value_a)
+    calldata_wrap_eth_b = cswap.wrapEth.encode_input(value_b)
+
+    invoker.invoke(
+        [cswap.address, cmove.address, cswap.address],
+        [calldata_wrap_eth_a, calldata_move_weth, calldata_wrap_eth_b],
+        {"from": alice, "value": total_value},
+    )
+
+    assert alice.balance() == starting_balance - total_value
+    assert weth.balanceOf(alice) == starting_weth_balance + value_a
+    assert weth.balanceOf(invoker) == starting_invoker_weth_balance + value_b
+
+
+def test_wrap_ether_in_multiple_transactions_can_leave_eth_on_invoker(
+    invoker, alice, weth, cswap, cmove
+):
+    """
+    This test is similar to the above test, however does not have the second wrap.
+    If you follow the ether:
+    1.5 ether is sent to the invoker via msg.value
+    0.5 ether is used to wrap into weth
+    At the end of invocation, 1 ether should remain on the invoker
+    -(in reality, this should be sweeped to user)
+    """
+
+    starting_balance = alice.balance()
+    starting_weth_balance = weth.balanceOf(alice)
+    starting_invoker_weth_balance = weth.balanceOf(invoker)
+    starting_invoker_eth_balance = invoker.balance()
+
+    value_a = "1 ether"
+    value_b = "0.5 ether"
+    total_value = "1.5 ether"  # can't do string multiplication
+    calldata_wrap_eth_a = cswap.wrapEth.encode_input(value_a)
+    calldata_move_weth = cmove.moveERC20Out.encode_input(weth.address, alice.address, value_a)
+
+    invoker.invoke(
+        [cswap.address, cmove.address],
+        [calldata_wrap_eth_a, calldata_move_weth],
+        {"from": alice, "value": total_value},
+    )
+
+    assert alice.balance() == starting_balance - total_value
+    assert weth.balanceOf(alice) == starting_weth_balance + value_a
+    assert invoker.balance() == starting_invoker_eth_balance + value_b
+    assert weth.balanceOf(invoker) == starting_invoker_weth_balance
+
+
+def test_wrap_ether_in_multiple_transactions_should_fail_with_no_ether_attached(
+    invoker, alice, weth, cswap, cmove
+):
+    "If we don't attach any ether to the above transactions, they should fail"
+
+    value_a = "1 ether"
+    value_b = "0.5 ether"
+    calldata_wrap_eth_a = cswap.wrapEth.encode_input(value_a)
+    calldata_move_weth = cmove.moveERC20Out.encode_input(weth.address, alice.address, value_a)
+    calldata_wrap_eth_b = cswap.wrapEth.encode_input(value_b)
+
+    with brownie.reverts():
+        invoker.invoke(
+            [cswap.address, cmove.address, cswap.address],
+            [calldata_wrap_eth_a, calldata_move_weth, calldata_wrap_eth_b],
+            {"from": alice},
+        )
