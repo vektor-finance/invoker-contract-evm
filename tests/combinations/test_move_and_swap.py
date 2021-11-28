@@ -171,5 +171,5 @@ def test_wrap_ether_in_multiple_transactions_should_fail_with_no_ether_attached(
         invoker.invoke(
             [cswap.address, cmove.address, cswap.address],
             [calldata_wrap_eth_a, calldata_move_weth, calldata_wrap_eth_b],
-            {"from": alice},
+            {"from": alice, "value": "0 ether"},  # emphasis on 0 ether
         )
