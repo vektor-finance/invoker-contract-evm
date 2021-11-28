@@ -31,7 +31,7 @@ a764000000000000000000000000000000000000000000000000000000000000    Calldata (3)
 """
 
 
-def test_event_logged_on_invoke(invoker, alice, bob, cmove):
+def test_is_event_logged_log_invocation_on_invoke(invoker, alice, bob, cmove):
     calldata_transfer_one_eth = cmove.moveEth.encode_input(bob.address, "1 ether")
 
     tx = invoker.invoke(
@@ -47,7 +47,7 @@ def test_event_logged_on_invoke(invoker, alice, bob, cmove):
     assert event["value"] == "1 ether"
 
 
-def test_event_logged_veks_on_invoke(invoker, alice, bob, cmove):
+def test_is_event_logged_single_log_vek_on_invoke(invoker, alice, bob, cmove):
     calldata_transfer_one_eth = cmove.moveEth.encode_input(bob.address, "1 ether")
 
     tx = invoker.invoke(
@@ -55,9 +55,24 @@ def test_event_logged_veks_on_invoke(invoker, alice, bob, cmove):
     )
 
     events = tx.events
-    assert "LogVeks" in events
-    event = events["LogVeks"]
+    assert "LogVek" in events
+    event = events["LogVek"]
     assert event["user"] == alice.address
     assert event["sigHash"] == "0x1cc1472d"  # Function selector for moveEth()
     assert event["params"] == calldata_transfer_one_eth
     assert event["value"] == "1 ether"
+
+
+def test_is_event_logged_multiple_log_veks_on_invoke(invoker, alice, bob, weth, cmove, cswap):
+    value = "1 ether"
+    calldata_wrap_eth = cswap.wrapEth.encode_input(value)
+    calldata_move_weth = cmove.moveERC20Out.encode_input(weth.address, bob.address, value)
+
+    tx = invoker.invoke(
+        [cswap.address, cmove.address],
+        [calldata_wrap_eth, calldata_move_weth],
+        {"from": alice, "value": value},
+    )
+    events = tx.events
+    assert "LogVek" in events
+    assert weth.balanceOf(bob.address) == value
