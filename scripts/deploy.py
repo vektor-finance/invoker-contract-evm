@@ -16,12 +16,6 @@ from brownie import CMove, CSwap, Invoker, accounts, chain, network
 commands = [CMove, CSwap]
 APPROVED_COMMAND = "410a6a8d01da3028e7c041b5925a6d26ed38599db21a26cf9a5e87c68941f98a"
 
-UNISWAP_V2_FACTORY_CONTRACT_ADDRESS = {
-    1: "0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f",
-    4: "0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f",
-    1337: "0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f",
-}
-
 WETH_ADDRESS = {
     1: "0xC02AAA39B223FE8D0A0E5C4F27EAD9083C756CC2",  # Mainnet
     4: "0xc778417E063141139Fce010982780140Aa0cD5Ab",  # Rinkeby
@@ -49,7 +43,6 @@ def deploy_commands(deployer, invoker, chain):
         if command is CSwap:
             deployed_command = command.deploy(
                 WETH_ADDRESS[chain.id],
-                UNISWAP_V2_FACTORY_CONTRACT_ADDRESS[chain.id],
                 get_deployer_opts(deployer, chain),
             )
         else:
@@ -70,6 +63,5 @@ def main():
 
     print(f"Gas used for deployment: {deployer.gas_used} gwei\n")
 
-    deployer.transfer("0xc7711f36b2C13E00821fFD9EC54B04A60AEfbd1b", "1 ether")
     for block in chain.new_blocks():
         print(f"Mining block {block.number}")
