@@ -24,7 +24,7 @@ def get_deployer_opts(account, value, chain):
 
 
 # mainnet only
-def swap_eth_for_tokens(account, chain):
+def swap_eth_for_tokens(account, chain, eth_amount=0.5):
     print(f"Swapping tokens for account {account.address}")
     chain_id = get_chain_id(chain)
     uni_router = Contract.from_explorer(UNI_ROUTER_ADDRESS[chain_id])
@@ -36,21 +36,20 @@ def swap_eth_for_tokens(account, chain):
         token = Contract.from_explorer(address)
         path = [weth.address, token.address]
         min_amount = 0
-        eth_value = 0.5
 
-        print(f"Swapping {eth_value} ETH for {token.symbol()}")
+        print(f"Swapping {eth_amount} ETH for {token.symbol()}")
 
         uni_router.swapExactETHForTokens(
             min_amount * token.decimals(),
             path,
             account,
             int(time.time()) + 1,
-            {"from": account, "value": eth_value * 1e18, "priority_fee": "2 gwei"},
+            {"from": account, "value": eth_amount * 1e18, "priority_fee": "2 gwei"},
         )
 
         balance = token.balanceOf(account) / (10 ** token.decimals())
         balances.append([balance, token.symbol()])
-        print(f"Swapped {eth_value} ETH for {balance} {token.symbol()}")
+        print(f"Swapped {eth_amount} ETH for {balance} {token.symbol()}")
 
     balances.insert(0, [account.balance() / 1e18, "ETH"])
     print(f"Balances for {account.address}\n")
@@ -79,8 +78,15 @@ def get_account():
     return account
 
 
+# Allow user to set the account index or force unlock an address
+# Defaults to account 0.5
+def get_eth_amount():
+    return float(os.getenv("ETH", 0.5))
+
+
 def main():
     print(f"Network: '{network.show_active()}' network (Chain ID: {chain.id})")
 
     account = get_account()
-    swap_eth_for_tokens(account, chain)
+    eth_amount = get_eth_amount()
+    swap_eth_for_tokens(account, chain, eth_amount)
