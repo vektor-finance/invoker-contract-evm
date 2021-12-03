@@ -81,5 +81,7 @@ The `faucet` script swaps `ETH` for a selection of `ERC20` tokens that are defin
 
 **Arguments:**
 
+Prefix the `key=value` before calling the command e.g. `ACCOUNT=2 ETH=1.5 brownie run faucet`
+
 - `ACCOUNT` - account index (e.g. 12) or address `0x....` to use. Defaults to account index 0.
 - `ETH` - ETH to use per swap. Defaults to 0.5 ETH.
