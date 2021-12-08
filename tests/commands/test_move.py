@@ -50,6 +50,13 @@ def test_move_dai_out_should_revert_if_insufficient_balance(dai, alice, bob, inv
         invoker.invoke([cmove.address], [calldata_move_dai_out], {"from": alice})
 
 
+# def test_move_dai_out_all_should_not_revert_if_insufficient_balance(
+#     dai, alice, bob, invoker, cmove
+# ):
+#     calldata_move_dai_out = cmove.moveERC20OutAll.encode_input(dai.address, bob.address)
+#     invoker.invoke([cmove.address], [calldata_move_dai_out], {"from": alice})
+
+
 def test_move_dai_in_should_revert_if_insufficient_allowance(
     dai, alice, weth, uni_router, invoker, cmove
 ):
@@ -74,6 +81,14 @@ def test_move_world_token_out(world, alice, bob, weth, uni_router, invoker, cmov
     calldata_world_invoker_to_bob = cmove.moveERC20Out.encode_input(
         world.address, bob.address, 100 * 1e18
     )
+    with brownie.reverts("CMove: Deflationary token"):
+        invoker.invoke([cmove.address], [calldata_world_invoker_to_bob], {"from": alice})
+
+
+def test_move_world_token_out_all(world, alice, bob, weth, uni_router, invoker, cmove):
+    get_world_token_for_user(alice, weth, world, uni_router)
+    world.transfer(invoker.address, 110 * 1e18, {"from": alice})
+    calldata_world_invoker_to_bob = cmove.moveERC20OutAll.encode_input(world.address, bob.address)
     with brownie.reverts("CMove: Deflationary token"):
         invoker.invoke([cmove.address], [calldata_world_invoker_to_bob], {"from": alice})
 
