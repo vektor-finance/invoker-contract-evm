@@ -48,6 +48,22 @@ contract CMove {
     }
 
     /**
+        @notice Allows a user to move all their tokens from the invoker to another address
+        @dev Uses OpenZepellin SafeERC20, and validates balance before and after transfer
+            to protect users from unknowingly transferring deflationary tokens.
+            Solidity compiler 0.8 has built in overflow checks
+        @param _token The contract address for the ERC20 token
+        @param _to  The address you wish to send the tokens to
+    **/
+    function moveERC20OutAll(IERC20 _token, address _to) external payable {
+        uint256 amount = _token.balanceOf(address(this));
+        uint256 balanceBefore = _token.balanceOf(_to);
+        _token.transfer(_to, amount);
+        uint256 balanceAfter = _token.balanceOf(_to);
+        require(balanceAfter == balanceBefore + amount, "CMove: Deflationary token");
+    }
+
+    /**
         @notice Allows a user to move their ETH to another address
         @dev The transferred amount of eth is specified by _amount rather than msg.value
             This is intentional to allow users to make multiple ETH transfers
