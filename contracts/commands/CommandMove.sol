@@ -48,7 +48,7 @@ contract CMove {
     }
 
     /**
-        @notice Allows a user to move all their tokens from the invoker to another address
+        @notice Allows a user to move entire balance of a token from the invoker to another address
         @dev Uses OpenZepellin SafeERC20, and validates balance before and after transfer
             to protect users from unknowingly transferring deflationary tokens.
             Solidity compiler 0.8 has built in overflow checks
