@@ -19,6 +19,24 @@ def test_move_dai_out(dai, alice, bob, weth, uni_router, invoker, cmove):
     assert dai.balanceOf(bob.address) == 1000 * 1e18
 
 
+def test_move_dai_all_out(dai, alice, bob, weth, uni_router, invoker, cmove):
+    get_dai_for_user(dai, alice, weth, uni_router)
+    alice_starting_balance = dai.balanceOf(alice.address)
+    bob_starting_balance = dai.balanceOf(bob.address)
+    amount_dai = 1000 * 1e18
+    dai.approve(invoker.address, amount_dai, {"from": alice})
+    calldata_move_dai_in = cmove.moveERC20In.encode_input(dai.address, amount_dai)
+    calldata_move_dai_out_all = cmove.moveERC20OutAll.encode_input(dai.address, bob.address)
+    invoker.invoke(
+        [cmove.address, cmove.address],
+        [calldata_move_dai_in, calldata_move_dai_out_all],
+        {"from": alice},
+    )
+    assert dai.balanceOf(invoker.address) == 0
+    assert dai.balanceOf(alice.address) == alice_starting_balance - amount_dai
+    assert dai.balanceOf(bob.address) == bob_starting_balance + amount_dai
+
+
 def test_move_dai_in_should_revert_if_insufficient_balance(dai, alice, invoker, cmove):
     dai.approve(invoker.address, 1000 * 1e18, {"from": alice})
     calldata_move_dai_in = cmove.moveERC20In.encode_input(dai.address, 1000 * 1e18)
