@@ -50,13 +50,6 @@ def test_move_dai_out_should_revert_if_insufficient_balance(dai, alice, bob, inv
         invoker.invoke([cmove.address], [calldata_move_dai_out], {"from": alice})
 
 
-# def test_move_dai_out_all_should_not_revert_if_insufficient_balance(
-#     dai, alice, bob, invoker, cmove
-# ):
-#     calldata_move_dai_out = cmove.moveERC20OutAll.encode_input(dai.address, bob.address)
-#     invoker.invoke([cmove.address], [calldata_move_dai_out], {"from": alice})
-
-
 def test_move_dai_in_should_revert_if_insufficient_allowance(
     dai, alice, weth, uni_router, invoker, cmove
 ):
