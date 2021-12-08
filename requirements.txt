@@ -1,5 +1,5 @@
-black==21.9b0
-eth-brownie==1.17.1
+black==21.11b1
+eth-brownie==1.17.2
 flake8==4.0.1
 isort==5.10.1
 pre-commit==2.15.0
