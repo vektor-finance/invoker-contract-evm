@@ -66,7 +66,7 @@ contract CMove {
         at the time of being called
         @param _to The address you wish to send ETH to
     **/
-    function moveEthOutAll(address _to) external payable {
+    function moveAllEthOut(address _to) external payable {
         uint256 balance = address(this).balance;
         //solhint-disable-next-line avoid-low-level-calls
         (bool success, ) = _to.call{value: balance}(new bytes(0));

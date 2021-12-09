@@ -98,10 +98,10 @@ def test_move_eth_to_multiple_addresses(alice, user1, user2, value1, value2, inv
 
 
 @given(value=strategy("uint256", max_value="1000 ether"), to=strategy("address"))
-def test_move_eth_out_all_to_single_address(alice, to, invoker, cmove, value):
+def test_move_all_eth_out_to_single_address(alice, to, invoker, cmove, value):
     alice_starting_balance = alice.balance()
     to_starting_balance = to.balance()
-    calldata_transfer_all_eth = cmove.moveEthOutAll.encode_input(to.address)
+    calldata_transfer_all_eth = cmove.moveAllEthOut.encode_input(to.address)
     invoker.invoke([cmove.address], [calldata_transfer_all_eth], {"from": alice, "value": value})
     assert invoker.balance() == 0
     if alice is not to:
