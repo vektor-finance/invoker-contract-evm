@@ -78,7 +78,7 @@ def test_move_world_token_out(world, alice, bob, weth, uni_router, invoker, cmov
         invoker.invoke([cmove.address], [calldata_world_invoker_to_bob], {"from": alice})
 
 
-def test_move_world_token_out_all(world, alice, bob, weth, uni_router, invoker, cmove):
+def test_move_all_world_token_out(world, alice, bob, weth, uni_router, invoker, cmove):
     get_world_token_for_user(alice, weth, world, uni_router)
     world.transfer(invoker.address, 110 * 1e18, {"from": alice})
     calldata_world_invoker_to_bob = cmove.moveAllERC20Out.encode_input(world.address, bob.address)
