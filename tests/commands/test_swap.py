@@ -92,7 +92,7 @@ def test_wrap_eth(alice, invoker, cswap, weth, value):
 
 @given(value=strategy("uint256", max_value="1000 ether"))
 @pytest.mark.require_network("hardhat-fork")
-def test_unwrapwrap_eth(alice, invoker, cswap, weth, value):
+def test_unwrap_weth(alice, invoker, cswap, weth, value):
     # maker contract has 1.8M WETH so we can "borrow" some for testing purposes
     maker_contract = "0x2F0b23f53734252Bda2277357e97e1517d6B042A"
     weth.transfer(invoker, value, {"from": maker_contract})
@@ -100,7 +100,7 @@ def test_unwrapwrap_eth(alice, invoker, cswap, weth, value):
 
     starting_weth_balance = weth.balanceOf(invoker)
     starting_balance = invoker.balance()
-    calldata_unwrap_eth = cswap.unwrapEth.encode_input(value)
-    invoker.invoke([cswap.address], [calldata_unwrap_eth], {"from": alice})
+    calldata_unwrap_weth = cswap.unwrapWeth.encode_input(value)
+    invoker.invoke([cswap.address], [calldata_unwrap_weth], {"from": alice})
     assert invoker.balance() == starting_balance + value
     assert weth.balanceOf(invoker) == starting_weth_balance - value

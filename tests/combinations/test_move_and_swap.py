@@ -62,7 +62,7 @@ def test_swap_dai_to_eth_and_disperse(invoker, bob, cmove, cswap, weth, dai, uni
     )
 
     # 3. Unwrap ETH -> ETH
-    calldata_unwrap_eth = cswap.unwrapEth.encode_input("0.3 ether")
+    calldata_unwrap_weth = cswap.unwrapEth.encode_input("0.3 ether")
 
     # 4-6. Move ETH -> account 3,4,5
     calldata_move_eth_3 = cmove.moveEth.encode_input(accounts[3], "0.1 ether")
@@ -78,7 +78,7 @@ def test_swap_dai_to_eth_and_disperse(invoker, bob, cmove, cswap, weth, dai, uni
         [
             calldata_move_dai,
             calldata_swap_dai_eth,
-            calldata_unwrap_eth,
+            calldata_unwrap_weth,
             calldata_move_eth_3,
             calldata_move_eth_4,
             calldata_move_eth_5,
