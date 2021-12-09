@@ -19,7 +19,7 @@ def test_move_dai_out(dai, alice, bob, weth, uni_router, invoker, cmove):
     assert dai.balanceOf(bob.address) == 1000 * 1e18
 
 
-def test_move_dai_all_out(dai, alice, bob, weth, uni_router, invoker, cmove):
+def test_move_all_dai_out(dai, alice, bob, weth, uni_router, invoker, cmove):
     get_dai_for_user(dai, alice, weth, uni_router)
     alice_starting_balance = dai.balanceOf(alice.address)
     bob_starting_balance = dai.balanceOf(bob.address)
