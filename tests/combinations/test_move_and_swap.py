@@ -1,8 +1,10 @@
 # Move and Swap
 import brownie
+import pytest
 from helpers import get_dai_for_user
 
 
+@pytest.mark.require_network("hardhat-fork")
 def test_swap_eth_for_dai(invoker, alice, cmove, cswap, weth, dai):
     """
     ALICE wants to swap her ETH for DAI
@@ -34,6 +36,7 @@ def test_swap_eth_for_dai(invoker, alice, cmove, cswap, weth, dai):
     assert dai.balanceOf(alice) == 100 * 1e18
 
 
+@pytest.mark.require_network("hardhat-fork")
 def test_swap_dai_to_eth_and_disperse(invoker, bob, cmove, cswap, weth, dai, uni_router, accounts):
     """
     Bob wants to quickly fund three accounts to farm airdrops
@@ -91,6 +94,7 @@ def test_swap_dai_to_eth_and_disperse(invoker, bob, cmove, cswap, weth, dai, uni
     assert accounts[5].balance() == account_5_starting_balance + "0.1 ether"
 
 
+@pytest.mark.require_network("hardhat-fork")
 def test_wrap_ether_in_multiple_transactions(invoker, alice, weth, cswap, cmove):
     """
     This is a test that highlights how msg.value works in multiple delegatecalls
@@ -121,6 +125,7 @@ def test_wrap_ether_in_multiple_transactions(invoker, alice, weth, cswap, cmove)
     assert weth.balanceOf(invoker) == starting_invoker_weth_balance + value_b
 
 
+@pytest.mark.require_network("hardhat-fork")
 def test_wrap_ether_in_multiple_transactions_can_leave_eth_on_invoker(
     invoker, alice, weth, cswap, cmove
 ):
@@ -156,6 +161,7 @@ def test_wrap_ether_in_multiple_transactions_can_leave_eth_on_invoker(
     assert weth.balanceOf(invoker) == starting_invoker_weth_balance
 
 
+@pytest.mark.require_network("hardhat-fork")
 def test_wrap_ether_in_multiple_transactions_should_fail_with_no_ether_attached(
     invoker, alice, weth, cswap, cmove
 ):
