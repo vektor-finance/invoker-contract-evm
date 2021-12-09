@@ -55,7 +55,7 @@ contract CMove {
         @param _token The contract address for the ERC20 token
         @param _to  The address you wish to send the tokens to
     **/
-    function moveERC20OutAll(IERC20 _token, address _to) external payable {
+    function moveAllERC20Out(IERC20 _token, address _to) external payable {
         uint256 amount = _token.balanceOf(address(this));
         uint256 balanceBefore = _token.balanceOf(_to);
         _token.transfer(_to, amount);

@@ -26,7 +26,7 @@ def test_move_dai_all_out(dai, alice, bob, weth, uni_router, invoker, cmove):
     amount_dai = 1000 * 1e18
     dai.approve(invoker.address, amount_dai, {"from": alice})
     calldata_move_dai_in = cmove.moveERC20In.encode_input(dai.address, amount_dai)
-    calldata_move_dai_out_all = cmove.moveERC20OutAll.encode_input(dai.address, bob.address)
+    calldata_move_dai_out_all = cmove.moveAllERC20Out.encode_input(dai.address, bob.address)
     invoker.invoke(
         [cmove.address, cmove.address],
         [calldata_move_dai_in, calldata_move_dai_out_all],
@@ -81,7 +81,7 @@ def test_move_world_token_out(world, alice, bob, weth, uni_router, invoker, cmov
 def test_move_world_token_out_all(world, alice, bob, weth, uni_router, invoker, cmove):
     get_world_token_for_user(alice, weth, world, uni_router)
     world.transfer(invoker.address, 110 * 1e18, {"from": alice})
-    calldata_world_invoker_to_bob = cmove.moveERC20OutAll.encode_input(world.address, bob.address)
+    calldata_world_invoker_to_bob = cmove.moveAllERC20Out.encode_input(world.address, bob.address)
     with brownie.reverts("CMove: Deflationary token"):
         invoker.invoke([cmove.address], [calldata_world_invoker_to_bob], {"from": alice})
 
