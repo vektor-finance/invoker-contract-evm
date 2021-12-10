@@ -114,4 +114,20 @@ contract CSwap {
         uint256 balanceAfter = address(this).balance;
         require(balanceAfter == balanceBefore + _amount, "CSwap: Error unwrapping WETH");
     }
+
+    /**
+        @notice Allows a user to unwrap their all their WETH into ETH
+        @dev Transferred amount is the total balance of WETH
+            Note: The WETH must be located on the invoker contract
+                The returned ETH will be sent to the invoker contract
+                This will then need to be MOVED to the user
+            Validation checks to support unwrapping of native tokens that may not conform to WETH9
+    **/
+    function unwrapAllWeth(uint256 _amount) external payable {
+        uint256 amount = WETH.balanceOf(address(this));
+        uint256 balanceBefore = address(this).balance;
+        WETH.withdraw(amount);
+        uint256 balanceAfter = address(this).balance;
+        require(balanceAfter == balanceBefore + _amount, "CSwap: Error unwrapping WETH");
+    }
 }
