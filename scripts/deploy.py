@@ -39,7 +39,7 @@ def deploy_invoker(deployer, chain):
 
 def deploy_commands(deployer, invoker, chain):
     for command in commands:
-        print(f"Deploying {command}")
+        print(f"Deploying {command._name}")
         if command is CSwap:
             deployed_command = command.deploy(
                 WETH_ADDRESS[chain.id],
