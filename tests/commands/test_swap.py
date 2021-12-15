@@ -110,7 +110,7 @@ def test_unwrap_all_weth(alice, invoker, cswap, weth, value):
 
     starting_weth_balance = weth.balanceOf(invoker)
     starting_balance = invoker.balance()
-    calldata_unwrap_all_weth = cswap.unwrapAllWeth.encode_input(value)
+    calldata_unwrap_all_weth = cswap.unwrapAllWeth.encode_input()
     invoker.invoke([cswap.address], [calldata_unwrap_all_weth], {"from": alice})
     assert invoker.balance() == starting_balance + value
     assert weth.balanceOf(invoker) == starting_weth_balance - value

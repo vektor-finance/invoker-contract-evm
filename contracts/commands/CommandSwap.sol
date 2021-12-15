@@ -123,11 +123,11 @@ contract CSwap {
                 This will then need to be MOVED to the user
             Validation checks to support unwrapping of native tokens that may not conform to WETH9
     **/
-    function unwrapAllWeth(uint256 _amount) external payable {
+    function unwrapAllWeth() external payable {
         uint256 amount = WETH.balanceOf(address(this));
         uint256 balanceBefore = address(this).balance;
         WETH.withdraw(amount);
         uint256 balanceAfter = address(this).balance;
-        require(balanceAfter == balanceBefore + _amount, "CSwap: Error unwrapping WETH");
+        require(balanceAfter == balanceBefore + amount, "CSwap: Error unwrapping WETH");
     }
 }
