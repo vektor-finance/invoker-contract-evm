@@ -121,3 +121,30 @@ def test_move_eth_to_multiple_addresses(alice, user1, user2, value1, value2, inv
         if user1 is not user2:
             assert user1.balance() == user1_starting_balance + value1
             assert user2.balance() == user2_starting_balance + value2
+
+
+@given(
+    value=strategy("uint256", max_value="1000 ether"),
+    user=strategy("address"),
+)
+def test_move_all_erc20_out(alice, value, user, dai, weth, uni_router, cmove, invoker):
+    get_dai_for_user(dai, alice, weth, uni_router)
+    alice_starting_balance = dai.balanceOf(alice.address)
+    receiver_starting_balance = dai.balanceOf(user.address)
+
+    calldata_transfer_dai_to_invoker = cmove.moveERC20In.encode_input(dai.address, value)
+    calldata_transfer_all_dai_to_receiver = cmove.moveAllERC20Out.encode_input(
+        dai.address, user.address
+    )
+    dai.approve(invoker.address, value, {"from": alice})
+    invoker.invoke(
+        [cmove.address, cmove.address],
+        [calldata_transfer_dai_to_invoker, calldata_transfer_all_dai_to_receiver],
+        {"from": alice},
+    )
+    assert dai.balanceOf(invoker.address) == 0
+    if user == alice:  # if user is alice then these tests will incorrectly fail
+        pass
+    else:
+        assert dai.balanceOf(alice.address) == alice_starting_balance - value
+        assert dai.balanceOf(user.address) == receiver_starting_balance + value
