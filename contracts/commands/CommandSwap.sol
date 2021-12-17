@@ -125,9 +125,11 @@ contract CSwap {
     **/
     function unwrapAllWeth() external payable {
         uint256 amount = WETH.balanceOf(address(this));
-        uint256 balanceBefore = address(this).balance;
-        WETH.withdraw(amount);
-        uint256 balanceAfter = address(this).balance;
-        require(balanceAfter == balanceBefore + amount, "CSwap: Error unwrapping WETH");
+        if (amount > 0) {
+            uint256 balanceBefore = address(this).balance;
+            WETH.withdraw(amount);
+            uint256 balanceAfter = address(this).balance;
+            require(balanceAfter == balanceBefore + amount, "CSwap: Error unwrapping WETH");
+        }
     }
 }
