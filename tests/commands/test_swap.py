@@ -3,7 +3,7 @@ import time
 
 import pytest
 from brownie.test import given, strategy
-from helpers import get_dai_for_user
+from helpers import get_dai_for_user, get_weth
 
 
 @pytest.mark.require_network("hardhat-fork")
@@ -102,5 +102,18 @@ def test_unwrap_weth(alice, invoker, cswap, weth, value):
     starting_balance = invoker.balance()
     calldata_unwrap_weth = cswap.unwrapWeth.encode_input(value)
     invoker.invoke([cswap.address], [calldata_unwrap_weth], {"from": alice})
+    assert invoker.balance() == starting_balance + value
+    assert weth.balanceOf(invoker) == starting_weth_balance - value
+
+
+@pytest.mark.require_network("hardhat-fork")
+@given(value=strategy("uint256", max_value="1000 ether"))
+def test_unwrap_all_weth(alice, invoker, cswap, weth, value):
+    get_weth(weth, invoker, value)
+
+    starting_weth_balance = weth.balanceOf(invoker)
+    starting_balance = invoker.balance()
+    calldata_unwrap_all_weth = cswap.unwrapAllWeth.encode_input()
+    invoker.invoke([cswap.address], [calldata_unwrap_all_weth], {"from": alice})
     assert invoker.balance() == starting_balance + value
     assert weth.balanceOf(invoker) == starting_weth_balance - value
