@@ -108,7 +108,7 @@ contract CSwap {
             Validation checks to support unwrapping of native tokens that may not conform to WETH9
         @param _amount The amount of WETH to unwrap (in Wei)
     **/
-    function unwrapEth(uint256 _amount) external payable {
+    function unwrapWeth(uint256 _amount) external payable {
         uint256 balanceBefore = address(this).balance;
         WETH.withdraw(_amount);
         uint256 balanceAfter = address(this).balance;
