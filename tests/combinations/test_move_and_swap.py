@@ -173,3 +173,39 @@ def test_wrap_ether_in_multiple_transactions_should_fail_with_no_ether_attached(
             [calldata_wrap_eth_a, calldata_move_weth, calldata_wrap_eth_b],
             {"from": alice, "value": "0 ether"},  # emphasis on 0 ether
         )
+
+
+def test_move_swap_then_sweep_rest(invoker, alice, bob, cswap, dai, weth, cmove):
+    alice_starting_balance = alice.balance()
+    bob_starting_balance = bob.balance()
+    invoker_starting_balance = invoker.balance()
+
+    alice_starting_dai_balance = dai.balanceOf(alice.address)
+    bob_starting_dai_balance = dai.balanceOf(bob.address)
+
+    value = "1 ether"
+
+    # 1. Wrap ETH
+    calldata_wrap_eth = cswap.wrapEth.encode_input(value)
+
+    # 2. Swap WETH -> Dai
+    calldata_swap_weth_dai = cswap.swapUniswapIn.encode_input(value, 0, [weth.address, dai.address])
+
+    # 3. Move Dai -> Bob
+    calldata_move_dai = cmove.moveERC20Out.encode_input(dai.address, bob.address, 100 * 1e18)
+
+    # 4. Sweep rest to Alice
+    calldata_sweep_dai = cmove.moveAllERC20Out.encode_input(dai.address, alice.address)
+
+    invoker.invoke(
+        [cswap.address, cswap.address, cmove.address, cmove.address],
+        [calldata_wrap_eth, calldata_swap_weth_dai, calldata_move_dai, calldata_sweep_dai],
+        {"from": alice, "value": "1 ether"},
+    )
+
+    assert alice.balance() == alice_starting_balance - "1 ether"
+    assert bob.balance() == bob_starting_balance
+    assert dai.balanceOf(alice.address) > alice_starting_dai_balance
+    assert dai.balanceOf(bob.address) == bob_starting_dai_balance + "100 ether"
+    assert invoker.balance() == invoker_starting_balance
+    assert dai.balanceOf(invoker.address) == 0
