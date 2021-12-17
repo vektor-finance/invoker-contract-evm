@@ -122,7 +122,19 @@ def test_move_eth_to_multiple_addresses(alice, user1, user2, value1, value2, inv
             assert user1.balance() == user1_starting_balance + value1
             assert user2.balance() == user2_starting_balance + value2
 
+            
+@given(value=strategy("uint256", max_value="1000 ether"), to=strategy("address"))
+def test_move_all_eth_out_to_single_address(alice, to, invoker, cmove, value):
+    alice_starting_balance = alice.balance()
+    to_starting_balance = to.balance()
+    calldata_transfer_all_eth = cmove.moveAllEthOut.encode_input(to.address)
+    invoker.invoke([cmove.address], [calldata_transfer_all_eth], {"from": alice, "value": value})
+    assert invoker.balance() == 0
+    if alice is not to:
+        assert alice.balance() == alice_starting_balance - value
+        assert to.balance() == to_starting_balance + value
 
+        
 @given(
     value=strategy("uint256", max_value="1000 ether"),
     user=strategy("address"),
