@@ -59,6 +59,19 @@ contract CMove {
         (bool success, ) = _to.call{value: _amount}(new bytes(0));
         require(success, "Cmove: ETH transfer failed");
     }
+
+    /**
+        @notice Allows a user to move all the ETH in the Invoker to another address
+        @dev The transferred amount of eth is specified by current balance of the Invoker
+        at the time of being called
+        @param _to The address you wish to send ETH to
+    **/
+    function moveAllEthOut(address _to) external payable {
+        uint256 balance = address(this).balance;
+        //solhint-disable-next-line avoid-low-level-calls
+        (bool success, ) = _to.call{value: balance}(new bytes(0));
+        require(success, "Cmove: ETH transfer failed");
+    }
 }
 
 // Need to consider moving non-erc20 tokens eg erc721 / 1155

@@ -159,7 +159,7 @@ def test_wrap_ether_in_multiple_transactions_can_leave_eth_on_invoker(
 def test_wrap_ether_in_multiple_transactions_should_fail_with_no_ether_attached(
     invoker, alice, weth, cswap, cmove
 ):
-    "If we don't attach any ether to the above transactions, they should fail"
+    """If we don't attach any ether to the above transactions, they should fail"""
 
     value_a = "1 ether"
     value_b = "0.5 ether"
