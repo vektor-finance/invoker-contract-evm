@@ -57,10 +57,12 @@ contract CMove {
     **/
     function moveAllERC20Out(IERC20 _token, address _to) external payable {
         uint256 amount = _token.balanceOf(address(this));
-        uint256 balanceBefore = _token.balanceOf(_to);
-        _token.transfer(_to, amount);
-        uint256 balanceAfter = _token.balanceOf(_to);
-        require(balanceAfter == balanceBefore + amount, "CMove: Deflationary token");
+        if (amount > 0) {
+            uint256 balanceBefore = _token.balanceOf(_to);
+            _token.transfer(_to, amount);
+            uint256 balanceAfter = _token.balanceOf(_to);
+            require(balanceAfter == balanceBefore + amount, "CMove: Deflationary token");
+        }
     }
 
     /**
@@ -84,9 +86,11 @@ contract CMove {
     **/
     function moveAllEthOut(address _to) external payable {
         uint256 balance = address(this).balance;
-        //solhint-disable-next-line avoid-low-level-calls
-        (bool success, ) = _to.call{value: balance}(new bytes(0));
-        require(success, "Cmove: ETH transfer failed");
+        if (balance > 0) {
+            //solhint-disable-next-line avoid-low-level-calls
+            (bool success, ) = _to.call{value: balance}(new bytes(0));
+            require(success, "Cmove: ETH transfer failed");
+        }
     }
 }
 
