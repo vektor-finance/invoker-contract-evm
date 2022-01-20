@@ -62,6 +62,3 @@ def main():
     deploy_commands(deployer, invoker, chain)
 
     print(f"Gas used for deployment: {deployer.gas_used} gwei\n")
-
-    for block in chain.new_blocks():
-        print(f"Mining block {block.number}")
