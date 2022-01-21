@@ -98,3 +98,26 @@ jobs:
         id: brownie_tests
         run: brownie test
 
+  build_docker:
+    name: Build Docker Container
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    env:
+      DOCKER_TAG_SHA: vektor/invoker-deploy:${{ github.sha }}
+      DOCKER_TAG_LATEST: vektor/invoker-deploy:latest
+
+    steps:
+      - name: Check out current commit (${{ github.sha }})
+        uses: actions/checkout@v2
+      - name: Build
+        uses: docker/build-push-action@v2
+        with:
+          context: ops/docker/invoker-deploy
+          tags: |
+            ${{ env.DOCKER_TAG_SHA }}
+            ${{ env.DOCKER_TAG_LATEST }}
+          cache-from: type=registry,ref=${{ env.DOCKER_TAG_LATEST }}
+          cache-to: type=inline
+      - name: Test
+        run: docker run vektor/invoker-deploy:latest brownie
