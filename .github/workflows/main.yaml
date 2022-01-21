@@ -108,12 +108,9 @@ jobs:
       DOCKER_TAG_LATEST: vektor/invoker-deploy:latest
 
     steps:
-      - name: Check out current commit (${{ github.sha }})
-        uses: actions/checkout@v2
       - name: Build
         uses: docker/build-push-action@v2
         with:
-          context: ops/docker/invoker-deploy
           tags: |
             ${{ env.DOCKER_TAG_SHA }}
             ${{ env.DOCKER_TAG_LATEST }}
