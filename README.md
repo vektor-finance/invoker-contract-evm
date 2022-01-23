@@ -39,7 +39,7 @@ To get started, first create and initialize a Python [virtual environment](https
 ```bash
 git clone https://github.com/vektor-finance/invoker-contract-evm.git
 cd invoker-contract-evm
-pip install -r requirements.txt
+pip install -r requirements.txt -r requirements.dev.txt
 yarn install
 ```
 
