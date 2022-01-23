@@ -9,7 +9,9 @@ WORKDIR /app
 # Install linux dependencies
 RUN apt-get update && apt-get install -y wait-for-it libssl-dev npm
 
+# Instal node dependencies
 RUN npm install -g ganache-cli
+RUN npm install hardhat
 
 # Install python dependencies
 COPY requirements.txt .
