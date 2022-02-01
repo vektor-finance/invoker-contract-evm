@@ -10,9 +10,7 @@ import "./Storage.sol";
 import "./utils/Log.sol";
 import "./utils/PausableAccessControl.sol";
 
-import "@openzeppelin/contracts/access/AccessControl.sol";
-
-contract Invoker is Storage, AccessControl, Log, PausableAccessControl {
+contract Invoker is Storage, Log, PausableAccessControl {
     using Address for address;
 
     bytes32 public constant APPROVED_COMMAND_IMPLEMENTATION =
