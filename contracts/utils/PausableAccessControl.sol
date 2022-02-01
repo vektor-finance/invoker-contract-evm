@@ -24,6 +24,7 @@ contract PausableAccessControl is AccessControl {
 
     modifier whenNotPaused() {
         require(!paused, "PAC: Paused");
+        _;
     }
 
     function pause() external whenNotPaused {
