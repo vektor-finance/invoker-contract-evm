@@ -46,6 +46,7 @@ contract Invoker is Storage, Log, PausableAccessControl {
         external
         payable
         logInvocation
+        whenNotPaused
         returns (bytes[] memory output)
     {
         require(_tos.length == _datas.length, "dev: to+data length not equal"); // dev: to+data length not equal
