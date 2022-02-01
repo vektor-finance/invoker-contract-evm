@@ -9,16 +9,13 @@
     "pre-commit": "lint-staged"
   },
   "devDependencies": {
-    "hardhat": "^2.7.0",
-    "lint-staged": "11.0.0",
+    "hardhat": "^2.8.3",
+    "lint-staged": "12.2.1",
     "npm-run-all": "4.1.5",
-    "prettier": "^2.5.0",
+    "prettier": "^2.5.1",
     "prettier-plugin-solidity": "^1.0.0-beta.19",
     "solhint": "^3.3.6",
     "solhint-plugin-prettier": "^0.0.5"
-  },
-  "resolutions": {
-    "axios": "^0.21.3"
   },
   "lint-staged": {
     "*.sol": [

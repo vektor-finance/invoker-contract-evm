@@ -3,26 +3,32 @@ import time
 
 import pytest
 from brownie.test import given, strategy
-from helpers import get_dai_for_user
+from helpers import get_dai_for_user, get_weth
 
 
 @pytest.mark.require_network("hardhat-fork")
 def test_buy_dai(deployer, dai, weth, uni_router):
+    amount_in = 1e18
     path = [weth.address, dai.address]
+    [_, amount_out] = uni_router.getAmountsOut(amount_in, path)
     uni_router.swapExactETHForTokens(
-        2700 * 1e18, path, deployer, time.time() + 1, {"from": deployer, "value": 1e18}
+        amount_out, path, deployer, time.time() + 1, {"from": deployer, "value": amount_in}
     )
-    assert dai.balanceOf(deployer) > 2700 * 1e18
+    assert dai.balanceOf(deployer) > amount_out
 
 
 @pytest.mark.require_network("hardhat-fork")
 def test_buy_dai_via_invoker(deployer, dai, weth, uni_router, invoker):
+    amount_in = 1e18
     path = [weth.address, dai.address]
+    [_, amount_out] = uni_router.getAmountsOut(amount_in, path)
     calldata = uni_router.swapExactETHForTokens.encode_input(
-        2700 * 1e18, path, deployer, time.time() + 1
+        amount_out, path, deployer, time.time() + 1
     )
-    invoker.invokeStatic(uni_router.address, calldata, 1e18, {"from": deployer, "value": 1e18})
-    assert dai.balanceOf(deployer) > 2700 * 1e18
+    invoker.invokeStatic(
+        uni_router.address, calldata, amount_in, {"from": deployer, "value": amount_in}
+    )
+    assert dai.balanceOf(deployer) > amount_out
 
 
 @pytest.mark.require_network("hardhat-fork")
@@ -92,7 +98,7 @@ def test_wrap_eth(alice, invoker, cswap, weth, value):
 
 @given(value=strategy("uint256", max_value="1000 ether"))
 @pytest.mark.require_network("hardhat-fork")
-def test_unwrapwrap_eth(alice, invoker, cswap, weth, value):
+def test_unwrap_weth(alice, invoker, cswap, weth, value):
     # maker contract has 1.8M WETH so we can "borrow" some for testing purposes
     maker_contract = "0x2F0b23f53734252Bda2277357e97e1517d6B042A"
     weth.transfer(invoker, value, {"from": maker_contract})
@@ -100,7 +106,20 @@ def test_unwrapwrap_eth(alice, invoker, cswap, weth, value):
 
     starting_weth_balance = weth.balanceOf(invoker)
     starting_balance = invoker.balance()
-    calldata_unwrap_eth = cswap.unwrapEth.encode_input(value)
-    invoker.invoke([cswap.address], [calldata_unwrap_eth], {"from": alice})
+    calldata_unwrap_weth = cswap.unwrapWeth.encode_input(value)
+    invoker.invoke([cswap.address], [calldata_unwrap_weth], {"from": alice})
+    assert invoker.balance() == starting_balance + value
+    assert weth.balanceOf(invoker) == starting_weth_balance - value
+
+
+@pytest.mark.require_network("hardhat-fork")
+@given(value=strategy("uint256", max_value="1000 ether"))
+def test_unwrap_all_weth(alice, invoker, cswap, weth, value):
+    get_weth(weth, invoker, value)
+
+    starting_weth_balance = weth.balanceOf(invoker)
+    starting_balance = invoker.balance()
+    calldata_unwrap_all_weth = cswap.unwrapAllWeth.encode_input()
+    invoker.invoke([cswap.address], [calldata_unwrap_all_weth], {"from": alice})
     assert invoker.balance() == starting_balance + value
     assert weth.balanceOf(invoker) == starting_weth_balance - value
