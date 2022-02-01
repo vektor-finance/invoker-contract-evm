@@ -55,8 +55,8 @@ def test_is_event_logged_single_log_vek_on_invoke(invoker, alice, bob, cmove):
     )
 
     events = tx.events
-    assert "LogVek" in events
-    event = events["LogVek"]
+    assert "LogStep" in events
+    event = events["LogStep"]
     assert event["user"] == alice.address
     assert event["sigHash"] == "0x1cc1472d"  # Function selector for moveEth()
     assert event["params"] == calldata_transfer_one_eth
@@ -74,5 +74,5 @@ def test_is_event_logged_multiple_log_veks_on_invoke(invoker, alice, bob, weth, 
         {"from": alice, "value": value},
     )
     events = tx.events
-    assert "LogVek" in events
+    assert "LogStep" in events
     assert weth.balanceOf(bob.address) == value

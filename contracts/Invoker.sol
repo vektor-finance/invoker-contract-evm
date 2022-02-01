@@ -39,7 +39,7 @@ contract Invoker is Storage, AccessControl, Log {
         returns (bytes memory)
     {
         require(hasRole(APPROVED_COMMAND_IMPLEMENTATION, _to), "Command not approved");
-        logVek(_data);
+        logStep(_data);
         return _to.functionDelegateCall(_data);
     }
 
