@@ -1,6 +1,7 @@
 # Move and Swap
 import brownie
-from helpers import get_dai_for_user
+
+from tests.helpers import get_dai_for_user
 
 
 def test_swap_eth_for_dai(invoker, alice, cmove, cswap, weth, dai):
