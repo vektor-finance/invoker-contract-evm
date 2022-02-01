@@ -7,7 +7,7 @@ pragma solidity ^0.8.6;
 import "@openzeppelin/contracts/access/AccessControl.sol";
 
 contract PausableAccessControl is AccessControl {
-    bytes32 public constant PAUSER = keccak256("PAUSER");
+    bytes32 public constant PAUSER = keccak256("ROLE_PAUSER");
     bool public paused = false;
 
     event Paused(address _account);
