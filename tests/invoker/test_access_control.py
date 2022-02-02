@@ -89,3 +89,16 @@ def test_only_approved_can_unpause(invoker, deployer, alice):
     invoker.pause({"from": deployer})
     with brownie.reverts("PAC: Invalid role"):
         invoker.unpause({"from": alice})
+
+
+def test_add_pauser(invoker, deployer, alice):
+    invoker.grantRole(PAUSER, alice, {"from": deployer})
+    invoker.pause({"from": alice})
+    assert invoker.paused() is True
+
+
+def test_remove_pauser(invoker, deployer, alice):
+    invoker.grantRole(PAUSER, alice, {"from": deployer})
+    invoker.revokeRole(PAUSER, alice, {"from": deployer})
+    with brownie.reverts("PAC: Invalid role"):
+        invoker.pause({"from": alice})
