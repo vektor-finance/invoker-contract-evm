@@ -23,8 +23,8 @@ contract Invoker is Storage, Log, PausableAccessControl {
         //Otherwise we can't receive ETH
     }
 
-    function invokeDelegate(address _to, bytes calldata _data)
-        public
+    function _invokeDelegate(address _to, bytes calldata _data)
+        internal
         payable
         returns (bytes memory)
     {
@@ -43,7 +43,7 @@ contract Invoker is Storage, Log, PausableAccessControl {
         require(_tos.length == _datas.length, "dev: to+data length not equal"); // dev: to+data length not equal
         output = new bytes[](_tos.length);
         for (uint256 i = 0; i < _tos.length; i++) {
-            output[i] = invokeDelegate(_tos[i], _datas[i]);
+            output[i] = _invokeDelegate(_tos[i], _datas[i]);
         }
     }
 }
