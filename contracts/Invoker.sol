@@ -23,11 +23,7 @@ contract Invoker is Storage, Log, PausableAccessControl {
         //Otherwise we can't receive ETH
     }
 
-    function _invokeDelegate(address _to, bytes calldata _data)
-        internal
-        payable
-        returns (bytes memory)
-    {
+    function _invokeDelegate(address _to, bytes calldata _data) private returns (bytes memory) {
         require(hasRole(APPROVED_COMMAND_IMPLEMENTATION, _to), "Command not approved");
         logStep(_data);
         return _to.functionDelegateCall(_data);
