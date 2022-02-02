@@ -4,14 +4,12 @@
 
 pragma solidity ^0.8.6;
 
-import "./utils/Address.sol";
 import "./Storage.sol";
-
+import "./utils/Address.sol";
 import "./utils/Log.sol";
+import "./utils/PausableAccessControl.sol";
 
-import "@openzeppelin/contracts/access/AccessControl.sol";
-
-contract Invoker is Storage, AccessControl, Log {
+contract Invoker is Storage, Log, PausableAccessControl {
     using Address for address;
 
     bytes32 public constant APPROVED_COMMAND_IMPLEMENTATION =
@@ -47,6 +45,7 @@ contract Invoker is Storage, AccessControl, Log {
         external
         payable
         logInvocation
+        whenNotPaused
         returns (bytes[] memory output)
     {
         require(_tos.length == _datas.length, "dev: to+data length not equal"); // dev: to+data length not equal
