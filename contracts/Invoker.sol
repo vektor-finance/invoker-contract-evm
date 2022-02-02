@@ -23,14 +23,6 @@ contract Invoker is Storage, Log, PausableAccessControl {
         //Otherwise we can't receive ETH
     }
 
-    function invokeStatic(
-        address _to,
-        bytes calldata _data,
-        uint256 _value
-    ) external payable returns (bytes memory) {
-        return _to.functionCallWithValue(_data, _value);
-    }
-
     function invokeDelegate(address _to, bytes calldata _data)
         public
         payable
