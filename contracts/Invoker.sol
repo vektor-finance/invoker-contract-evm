@@ -4,9 +4,8 @@
 
 pragma solidity ^0.8.6;
 
-import "./utils/Address.sol";
 import "./Storage.sol";
-
+import "./utils/Address.sol";
 import "./utils/Log.sol";
 import "./utils/PausableAccessControl.sol";
 
