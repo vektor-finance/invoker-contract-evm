@@ -51,12 +51,12 @@ def test_deployer_is_initial_pauser(invoker, deployer):
 
 
 def test_initially_deployed_unpaused(invoker):
-    assert invoker.paused() is False
+    assert not invoker.paused()
 
 
 def test_pause_from_admin(invoker, deployer):
     tx = invoker.pause({"from": deployer})
-    assert invoker.paused() is True
+    assert invoker.paused()
     events = tx.events
     assert "Paused" in events
 
@@ -64,7 +64,7 @@ def test_pause_from_admin(invoker, deployer):
 def test_unpause_from_admin(invoker, deployer):
     invoker.pause({"from": deployer})  # need to pause contract first
     tx = invoker.unpause({"from": deployer})
-    assert invoker.paused() is False
+    assert not invoker.paused()
     events = tx.events
     assert "Unpaused" in events
 
@@ -94,7 +94,7 @@ def test_only_approved_can_unpause(invoker, deployer, alice):
 def test_add_pauser(invoker, deployer, alice):
     invoker.grantRole(PAUSER, alice, {"from": deployer})
     invoker.pause({"from": alice})
-    assert invoker.paused() is True
+    assert invoker.paused()
 
 
 def test_remove_pauser(invoker, deployer, alice):
