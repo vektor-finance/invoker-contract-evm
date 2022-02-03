@@ -19,20 +19,6 @@ def test_buy_dai(deployer, dai, weth, uni_router):
 
 
 @pytest.mark.require_network("hardhat-fork")
-def test_buy_dai_via_invoker(deployer, dai, weth, uni_router, invoker):
-    amount_in = 1e18
-    path = [weth.address, dai.address]
-    [_, amount_out] = uni_router.getAmountsOut(amount_in, path)
-    calldata = uni_router.swapExactETHForTokens.encode_input(
-        amount_out, path, deployer, time.time() + 1
-    )
-    invoker.invokeStatic(
-        uni_router.address, calldata, amount_in, {"from": deployer, "value": amount_in}
-    )
-    assert dai.balanceOf(deployer) > amount_out
-
-
-@pytest.mark.require_network("hardhat-fork")
 @given(value=strategy("uint256", max_value="1000 ether", min_value=2e12))
 def test_swap_dai_usdc_via_delegate_invoker_individually(
     alice, dai, usdc, cswap, cmove, weth, uni_router, invoker, value
