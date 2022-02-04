@@ -16,10 +16,103 @@ mainnet:
   network:
     prod: mainnet
     fork: hardhat-fork
-
+  assets:
+    - name: Ethereum
+      symbol: ETH
+      decimals: 18
+      address: ~
+    - name: Wrapped Ethereum
+      symbol: WETH
+      decimals: 18
+      address: "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2"
+      wrapped_native: true
+      interfaces: [weth9, erc20]
+    - name: DAI
+      symbol: DAI
+      decimals: 18
+      address: "0x6b175474e89094c44da98b954eedeac495271d0f"
+      interfaces: [erc20]
+    - name: Tether
+      symbol: USDT
+      decimals: 6
+      address: "0xdac17f958d2ee523a2206206994597c13d831ec7"
+      interfaces: [erc20]
+    - name: USD Coin
+      symbol: USDC
+      decimals: 6
+      address: "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"
+      interfaces: [erc20]
+    - name: Wrapped BTC
+      symbol: WBTC
+      decimals: 8
+      address: "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599"
+      interfaces: [erc20]
+  contracts:
+    # - venue: vektor
+    #   interfaces: [vektor_evm_invoker]
+    #   address: ""
+    # - venue: vektor
+    #   interfaces: [vektor_evm_invoker_cmove]
+    #   address: ""
+    # - venue: vektor
+    #   interfaces: [vektor_evm_invoker_cswap]
+    #   address: ""
+    - venue: uniswap
+      interfaces: [uniswap_router_v2_02]
+      address: "0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D"
+    - venue: multicall2
+      interfaces: [multicall2]
+      address: "0x5ba1e12693dc8f9c48aad8770482f4739beed696"
 rinkeby:
   id: rinkeby
   name: Rinkeby Testnet
   chain_id: 4
   network:
     prod: rinkeby
+  assets:
+    - name: Ethereum
+      symbol: ETH
+      decimals: 18
+      address: ~
+    - name: Wrapped Ethereum
+      symbol: WETH
+      decimals: 18
+      address: "0xc778417e063141139fce010982780140aa0cd5ab"
+      wrapped_native: true
+      interfaces: [weth9, erc20]
+    - name: DAI
+      symbol: DAI
+      decimals: 18
+      address: "0xc7ad46e0b8a400bb3c915120d284aafba8fc4735"
+      interfaces: [erc20]
+    - name: Tether
+      symbol: USDT
+      decimals: 18 # yes, this is 18 not 6 on rinkeby
+      address: "0xD9BA894E0097f8cC2BBc9D24D308b98e36dc6D02"
+      interfaces: [erc20]
+    - name: USD Coin
+      symbol: USDC
+      decimals: 6
+      address: "0x4dbcdf9b62e891a7cec5a2568c3f4faf9e8abe2b"
+      interfaces: [erc20]
+    - name: Wrapped BTC
+      symbol: WBTC
+      decimals: 8
+      address: "0x577D296678535e4903D59A4C929B718e1D575e0A"
+      interfaces: [erc20]
+  contracts:
+    - venue: vektor
+      interfaces: [vektor_evm_invoker]
+      address: "0x0eDf683f7962aef331Feaa52175e2f5BB49Ea810"
+    - venue: vektor
+      interfaces: [vektor_evm_invoker_cmove]
+      address: "0x243A7864905824b51Ea2215Acf29419Fe91904dC"
+    - venue: vektor
+      interfaces: [vektor_evm_invoker_cswap]
+      address: "0xca68b13100eA59d0eCFE1e218627DB8C3d795De3"
+    - venue: uniswap
+      interfaces: [uniswap_router_v2_02]
+      address: "0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D"
+    - venue: multicall2
+      interfaces: [multicall2]
+      address: "0x5ba1e12693dc8f9c48aad8770482f4739beed696"
