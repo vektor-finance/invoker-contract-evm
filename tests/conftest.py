@@ -26,6 +26,9 @@ def bob(accounts):
 # Deploy vektor contracts
 APPROVED_COMMAND = "410a6a8d01da3028e7c041b5925a6d26ed38599db21a26cf9a5e87c68941f98a"
 
+# Mainnet uniswap router
+UNISWAP_ROUTER = "0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D"
+
 
 @pytest.fixture(scope="module", autouse=True)
 def invoker(deployer, Invoker, cmove, cswap):
@@ -37,7 +40,7 @@ def invoker(deployer, Invoker, cmove, cswap):
 
 @pytest.fixture(scope="module", autouse=True)
 def cswap(deployer, CSwap, weth):
-    yield deployer.deploy(CSwap, weth.address)
+    yield deployer.deploy(CSwap, weth.address, UNISWAP_ROUTER)
 
 
 @pytest.fixture(scope="module", autouse=True)
