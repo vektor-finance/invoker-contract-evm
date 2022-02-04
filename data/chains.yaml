@@ -2,6 +2,13 @@
 # Fork: forked version of the blockchain, for local testing
 ---
 
+dev:
+  id: dev
+  name: Development Network
+  chain_id: 1337
+  network:
+    fork: hardhat
+
 mainnet:
   id: mainnet
   name: Ethereum Mainnet
