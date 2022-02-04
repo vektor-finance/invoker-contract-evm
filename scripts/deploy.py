@@ -22,6 +22,12 @@ WETH_ADDRESS = {
     1337: "0xC02AAA39B223FE8D0A0E5C4F27EAD9083C756CC2",  # Hardhat fork
 }
 
+UNI_ROUTER_ADDRESS = {
+    1: "0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D",  # mainnet
+    4: "0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D",  # rinkeby
+    1337: "0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D",  # Hardhat fork
+}
+
 
 def get_deployer_opts(deployer, chain):
     if chain.id == 1 or chain.id == 4:
@@ -43,6 +49,7 @@ def deploy_commands(deployer, invoker, chain):
         if command is CSwap:
             deployed_command = command.deploy(
                 WETH_ADDRESS[chain.id],
+                UNI_ROUTER_ADDRESS[chain.id],
                 get_deployer_opts(deployer, chain),
             )
         else:
