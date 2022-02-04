@@ -12,8 +12,8 @@ import "../../interfaces/IUniswapV2Router02.sol";
 contract CSwap {
     IWETH public immutable WETH;
 
-    IUniswapV2Router02 public immutable UNISWAP_ROUTER;
-
+    IUniswapV2Router02 public immutable UNISWAP_ROUTER
+    
     // When deploying on alternate networks, the WETH address should be specified in constructor
     constructor(address _weth, address _router) {
         WETH = IWETH(_weth);
