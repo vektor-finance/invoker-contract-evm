@@ -1,0 +1,18 @@
+# Prod: the actual blockchain. Will require private keys
+# Fork: forked version of the blockchain, for local testing
+---
+
+mainnet:
+  id: mainnet
+  name: Ethereum Mainnet
+  chain_id: 1
+  network:
+    prod: mainnet
+    fork: hardhat-fork
+
+rinkeby:
+  id: rinkeby
+  name: Rinkeby Testnet
+  chain_id: 4
+  network:
+    prod: rinkeby
