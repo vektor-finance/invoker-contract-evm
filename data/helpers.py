@@ -9,4 +9,9 @@ def get_chain_data():
 
 def get_chain_from_network_name(network_name):
     data = get_chain_data()
-    return next(data[chain] for chain in data if network_name in data[chain]["network"].values())
+    chain = next(
+        (data[chain] for chain in data if network_name in data[chain]["network"].values()), None
+    )
+    network = chain["network"]
+    mode = next(k for k in network if network[k] == network_name)
+    return (chain, mode)

@@ -12,6 +12,7 @@
 
 
 from brownie import CMove, CSwap, Invoker, accounts, chain, network
+from data.helpers import get_chain_from_network_name
 from scripts.addresses import WETH_ADDRESS, UNI_ROUTER_ADDRESS
 
 commands = [CMove, CSwap]
@@ -55,12 +56,25 @@ def deploy_commands(deployer, invoker, chain):
 
 
 def main():
-    deployer = accounts[0]
 
-    print(f"Deployment network: '{network.show_active()}' network (Chain ID: {chain.id})")
+    (chain, mode) = get_chain_from_network_name(network.show_active())
+    if chain is None:
+        raise ValueError(
+            "Network not supported in config. Please review data/chains.yaml", network.show_active()
+        )
+
+    print(f"Deployment network: '{chain['id']}' network (Chain ID: {chain['chain_id']})")
+    print(f"Deployment mode: {mode}")
+
+    if mode == "fork":
+        deployer = accounts[0]
+    else:
+        print(f"Available accounts: {accounts.load()}")
+        deployer = accounts.load(input("Which account to deploy from: "))
+
     print(f"Deployment user: {deployer}")
 
-    invoker = deploy_invoker(deployer, chain)
-    deploy_commands(deployer, invoker, chain)
+    # invoker = deploy_invoker(deployer, chain)
+    # deploy_commands(deployer, invoker, chain)
 
-    print(f"Gas used for deployment: {deployer.gas_used} gwei\n")
+    # print(f"Gas used for deployment: {deployer.gas_used} gwei\n")
