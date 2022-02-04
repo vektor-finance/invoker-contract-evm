@@ -12,10 +12,12 @@
 
 
 from brownie import CMove, CSwap, Invoker, accounts, chain, network
+from scripts.addresses import WETH_ADDRESS, UNI_ROUTER_ADDRESS
 
 commands = [CMove, CSwap]
 APPROVED_COMMAND = "410a6a8d01da3028e7c041b5925a6d26ed38599db21a26cf9a5e87c68941f98a"
 
+<<<<<<< HEAD
 WETH_ADDRESS = {
     1: "0xC02AAA39B223FE8D0A0E5C4F27EAD9083C756CC2",  # Mainnet
     4: "0xc778417E063141139Fce010982780140Aa0cD5Ab",  # Rinkeby
@@ -28,6 +30,8 @@ UNI_ROUTER_ADDRESS = {
     1337: "0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D",  # Hardhat fork
 }
 
+=======
+>>>>>>> 5bebacc (chore: fix merge)
 
 def get_deployer_opts(deployer, chain):
     if chain.id == 1 or chain.id == 4:
@@ -41,6 +45,12 @@ def deploy_invoker(deployer, chain):
     print("Deploying invoker")
     invoker = Invoker.deploy(get_deployer_opts(deployer, chain))
     return invoker
+
+
+def get_chain_id():
+    # Hardhat network has chain.id 1337
+    # When we start forking multiple different networks, we need to map
+    return 1 if chain.id == 1337 else chain.id
 
 
 def deploy_commands(deployer, invoker, chain):
