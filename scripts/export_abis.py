@@ -3,8 +3,6 @@ import os
 
 from brownie.project import InvokerContractEvmProject
 
-# from brownie.project.build import Build
-
 contracts = InvokerContractEvmProject.dict()
 
 OUTPUTS_ABIS_DIR = "outputs/abi"
