@@ -13,6 +13,7 @@
 
 from brownie import CMove, CSwap, Invoker, accounts, network
 
+from data.chain import get_uni_router_address, get_weth_address
 from data.helpers import get_chain_from_network_name
 
 commands = [CMove, CSwap]
@@ -33,22 +34,15 @@ def deploy_invoker(deployer, chain):
 
 
 def deploy_commands(deployer, invoker, chain):
-    WETH_ADDRESS = next(token for token in chain["assets"] if token.get("wrapped_native"))[
-        "address"
-    ]
-
-    UNI_ROUTER = next(
-        contract
-        for contract in chain["contracts"]
-        if "uniswap_router_v2_02" in contract["interfaces"]
-    )["address"]
+    WETH_ADDRESS = get_weth_address(chain)
+    UNI_ROUTER_ADDRESS = get_uni_router_address(chain)
 
     for command in commands:
         print(f"Deploying {command._name}")
         if command is CSwap:
             deployed_command = command.deploy(
                 WETH_ADDRESS,
-                UNI_ROUTER,
+                UNI_ROUTER_ADDRESS,
                 get_deployer_opts(deployer, chain),
             )
         else:

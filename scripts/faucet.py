@@ -6,6 +6,7 @@ import time
 from brownie import Contract, accounts, interface, network
 from tabulate import tabulate
 
+from data.chain import get_uni_router_address, get_weth_address
 from data.helpers import get_chain_from_network_name
 
 ROUTER = interface.IUniswapV2Router02
@@ -25,15 +26,11 @@ def swap_eth_for_tokens(account, chain, eth_amount=0.5):
     print(f"Swapping tokens for account {account.address}")
 
     tokens = chain["assets"]
-    contracts = chain["contracts"]
 
-    WETH_ADDRESS = next(token for token in tokens if token.get("wrapped_native"))["address"]
+    WETH_ADDRESS = get_weth_address(chain)
+    UNI_ROUTER_ADDRESS = get_uni_router_address(chain)
 
-    UNI_ROUTER = next(
-        contract for contract in contracts if "uniswap_router_v2_02" in contract["interfaces"]
-    )["address"]
-
-    uni_router = Contract.from_abi("Router", UNI_ROUTER, ROUTER.abi)
+    uni_router = Contract.from_abi("Router", UNI_ROUTER_ADDRESS, ROUTER.abi)
     weth = Contract.from_abi("Weth", WETH_ADDRESS, WETH.abi)
     opts = get_deployer_opts(account, eth_amount * 1e18, chain)
 
