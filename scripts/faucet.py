@@ -6,8 +6,7 @@ import time
 from brownie import Contract, accounts, interface, network
 from tabulate import tabulate
 
-from data.chain import get_uni_router_address, get_weth_address
-from data.helpers import get_chain_from_network_name
+from data.chain import get_chain_from_network_name, get_uni_router_address, get_weth_address
 
 ROUTER = interface.IUniswapV2Router02
 WETH = interface.IWETH
