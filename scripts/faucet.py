@@ -3,8 +3,9 @@
 import os
 import time
 
-from brownie import Contract, accounts, network, interface
+from brownie import Contract, accounts, interface, network
 from tabulate import tabulate
+
 from data.helpers import get_chain_from_network_name
 
 ROUTER = interface.IUniswapV2Router02
@@ -44,7 +45,7 @@ def swap_eth_for_tokens(account, chain, eth_amount=0.5):
     balances = []
     for token in tokens:
         address = token["address"]
-        if address == None:
+        if address is None:
             continue  # undefined for native asset
         if "wrapped_native" in token and token["wrapped_native"]:
             continue  # dont swap into wrapped token

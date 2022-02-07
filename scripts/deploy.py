@@ -12,8 +12,9 @@
 
 
 from brownie import CMove, CSwap, Invoker, accounts, chain, network
+
 from data.helpers import get_chain_from_network_name
-from scripts.addresses import WETH_ADDRESS, UNI_ROUTER_ADDRESS
+from scripts.addresses import UNI_ROUTER_ADDRESS, WETH_ADDRESS
 
 commands = [CMove, CSwap]
 APPROVED_COMMAND = "410a6a8d01da3028e7c041b5925a6d26ed38599db21a26cf9a5e87c68941f98a"
