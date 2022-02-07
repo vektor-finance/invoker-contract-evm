@@ -13,6 +13,7 @@ mainnet:
   id: mainnet
   name: Ethereum Mainnet
   chain_id: 1
+  EIP1559: true
   network:
     prod: mainnet
     fork: hardhat-fork
@@ -82,6 +83,7 @@ rinkeby:
   id: rinkeby
   name: Rinkeby Testnet
   chain_id: 4
+  EIP1559: true
   network:
     prod: rinkeby
   assets:
