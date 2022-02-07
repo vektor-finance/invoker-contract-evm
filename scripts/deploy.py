@@ -11,17 +11,16 @@
 # In the future, we could deploy/mint ether/erc20 tokens for users
 
 
-from brownie import CMove, CSwap, Invoker, accounts, chain, network
+from brownie import CMove, CSwap, Invoker, accounts, network
 
 from data.helpers import get_chain_from_network_name
-from scripts.addresses import UNI_ROUTER_ADDRESS, WETH_ADDRESS
 
 commands = [CMove, CSwap]
 APPROVED_COMMAND = "410a6a8d01da3028e7c041b5925a6d26ed38599db21a26cf9a5e87c68941f98a"
 
 
 def get_deployer_opts(deployer, chain):
-    if chain.id == 1 or chain.id == 4:
+    if "EIP1559" in chain and chain["EIP1559"]:
         # TODO: Define deployment strategy based on chain.id
         return {"from": deployer, "priority_fee": "2 gwei"}
     else:
@@ -34,19 +33,25 @@ def deploy_invoker(deployer, chain):
     return invoker
 
 
-def get_chain_id():
-    # Hardhat network has chain.id 1337
-    # When we start forking multiple different networks, we need to map
-    return 1 if chain.id == 1337 else chain.id
-
-
 def deploy_commands(deployer, invoker, chain):
+    WETH_ADDRESS = next(
+        token
+        for token in chain["assets"]
+        if ("wrapped_native" in token and token["wrapped_native"])
+    )["address"]
+
+    UNI_ROUTER = next(
+        contract
+        for contract in chain["contracts"]
+        if "uniswap_router_v2_02" in contract["interfaces"]
+    )["address"]
+
     for command in commands:
         print(f"Deploying {command._name}")
         if command is CSwap:
             deployed_command = command.deploy(
-                WETH_ADDRESS[get_chain_id()],
-                UNI_ROUTER_ADDRESS[get_chain_id()],
+                WETH_ADDRESS,
+                UNI_ROUTER,
                 get_deployer_opts(deployer, chain),
             )
         else:
@@ -75,7 +80,9 @@ def main():
 
     print(f"Deployment user: {deployer}")
 
-    # invoker = deploy_invoker(deployer, chain)
-    # deploy_commands(deployer, invoker, chain)
+    start_gas = deployer.gas_used  # in case somebody has sent tx with deployer
 
-    # print(f"Gas used for deployment: {deployer.gas_used} gwei\n")
+    invoker = deploy_invoker(deployer, chain)
+    deploy_commands(deployer, invoker, chain)
+
+    print(f"Gas used for deployment: {deployer.gas_used-start_gas} gwei\n")
