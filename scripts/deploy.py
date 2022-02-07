@@ -20,8 +20,7 @@ APPROVED_COMMAND = "410a6a8d01da3028e7c041b5925a6d26ed38599db21a26cf9a5e87c68941
 
 
 def get_deployer_opts(deployer, chain):
-    if "EIP1559" in chain and chain["EIP1559"]:
-        # TODO: Define deployment strategy based on chain.id
+    if chain.get("eip1559"):
         return {"from": deployer, "priority_fee": "2 gwei"}
     else:
         return {"from": deployer}
@@ -34,11 +33,9 @@ def deploy_invoker(deployer, chain):
 
 
 def deploy_commands(deployer, invoker, chain):
-    WETH_ADDRESS = next(
-        token
-        for token in chain["assets"]
-        if ("wrapped_native" in token and token["wrapped_native"])
-    )["address"]
+    WETH_ADDRESS = next(token for token in chain["assets"] if token.get("wrapped_native"))[
+        "address"
+    ]
 
     UNI_ROUTER = next(
         contract
@@ -64,13 +61,15 @@ def deploy_commands(deployer, invoker, chain):
 def main():
 
     (chain, mode) = get_chain_from_network_name(network.show_active())
-    if chain is None:
+    if not chain:
         raise ValueError(
             "Network not supported in config. Please review data/chains.yaml", network.show_active()
         )
 
-    print(f"Deployment network: '{chain['id']}' network (Chain ID: {chain['chain_id']})")
-    print(f"Deployment mode: {mode}")
+    print(
+        f"Deployment network: '{chain['id']}' network (Chain ID: {chain['chain_id']})"
+        f" with mode '{mode}'."
+    )
 
     if mode == "fork":
         deployer = accounts[0]

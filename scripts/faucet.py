@@ -13,8 +13,8 @@ WETH = interface.IWETH
 ERC20Detailed = interface.ERC20Detailed
 
 
-def get_deployer_opts(account, value, chain_id):
-    if chain_id in [1, 1337]:
+def get_deployer_opts(account, value, chain):
+    if chain.get("eip1559"):
         return {"from": account, "value": value, "priority_fee": "2 gwei"}
     else:
         return {"from": account, "value": value}
@@ -24,13 +24,10 @@ def get_deployer_opts(account, value, chain_id):
 def swap_eth_for_tokens(account, chain, eth_amount=0.5):
     print(f"Swapping tokens for account {account.address}")
 
-    chain_id = chain["chain_id"]
     tokens = chain["assets"]
     contracts = chain["contracts"]
 
-    WETH_ADDRESS = next(
-        token for token in tokens if ("wrapped_native" in token and token["wrapped_native"])
-    )["address"]
+    WETH_ADDRESS = next(token for token in tokens if token.get("wrapped_native"))["address"]
 
     UNI_ROUTER = next(
         contract for contract in contracts if "uniswap_router_v2_02" in contract["interfaces"]
@@ -38,16 +35,16 @@ def swap_eth_for_tokens(account, chain, eth_amount=0.5):
 
     uni_router = Contract.from_abi("Router", UNI_ROUTER, ROUTER.abi)
     weth = Contract.from_abi("Weth", WETH_ADDRESS, WETH.abi)
-    opts = get_deployer_opts(account, eth_amount * 1e18, chain_id)
+    opts = get_deployer_opts(account, eth_amount * 1e18, chain)
 
     print(f"Token list: {[tok['name'] for tok in tokens]}")
 
     balances = []
     for token in tokens:
         address = token["address"]
-        if address is None:
+        if not address:
             continue  # undefined for native asset
-        if "wrapped_native" in token and token["wrapped_native"]:
+        if token.get("wrapped_native"):
             continue  # dont swap into wrapped token
         token = Contract.from_abi("ERC20", address, ERC20Detailed.abi)
         symbol = token.symbol()
@@ -105,7 +102,7 @@ def get_eth_amount():
 def main():
 
     (chain, _) = get_chain_from_network_name(network.show_active())
-    if chain is None:
+    if not chain:
         raise ValueError(
             "Network not supported in config. Please review data/chains.yaml", network.show_active()
         )
