@@ -1,5 +1,7 @@
 import pytest
-from brownie import Contract
+from brownie import Contract, interface
+
+_chaindata = {}
 
 
 # User accounts
@@ -63,7 +65,8 @@ def uni_dai_eth():
 
 @pytest.fixture(scope="module")
 def weth():
-    yield Contract.from_explorer("0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2")
+    WETH = interface.IWETH
+    yield Contract.from_abi("WETH", "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2", WETH.abi)
 
 
 @pytest.fixture(scope="module")
@@ -84,3 +87,14 @@ def link():
 @pytest.fixture(scope="module")
 def world():  # deflationary token with burn on transfer
     yield Contract.from_explorer("0xBF494F02EE3FdE1F20BEE6242bCe2d1ED0c15e47")
+
+
+# TEST TOKENS
+@pytest.fixture(scope="module")
+def mock_erc20(deployer, MockERC20):
+    yield deployer.deploy(MockERC20, "Test Token", "TST", 18)
+
+
+@pytest.fixture(scope="module")
+def mock_deflationary_erc20(deployer, MockERC20Deflationary):
+    yield deployer.deploy(MockERC20Deflationary, "Deflationary Test Token", "DTT", 18)
