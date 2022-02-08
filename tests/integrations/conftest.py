@@ -4,6 +4,7 @@ Conftest for integration tests
 
 import pytest
 from brownie import Contract, interface
+from brownie._config import CONFIG
 
 # Deploy vektor contracts
 APPROVED_COMMAND = "410a6a8d01da3028e7c041b5925a6d26ed38599db21a26cf9a5e87c68941f98a"
@@ -52,3 +53,10 @@ def dai():
 @pytest.fixture(scope="module")
 def usdc():
     yield Contract.from_explorer("0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48")
+
+
+def pytest_ignore_collect(path, config):
+    # ignore integration tests if on 'hardhat' network (dev)
+    network = CONFIG.argv["network"]
+    if network == "hardhat":
+        return True

@@ -1,13 +1,11 @@
 import math
 import time
 
-import pytest
 from brownie.test import given, strategy
 
 from tests.helpers import get_dai_for_user, get_weth
 
 
-@pytest.mark.require_network("hardhat-fork")
 def test_buy_dai(deployer, dai, weth, uni_router):
     amount_in = 1e18
     path = [weth.address, dai.address]
@@ -18,7 +16,6 @@ def test_buy_dai(deployer, dai, weth, uni_router):
     assert dai.balanceOf(deployer) > amount_out
 
 
-@pytest.mark.require_network("hardhat-fork")
 @given(value=strategy("uint256", max_value="1000 ether", min_value=2e12))
 def test_swap_dai_usdc_via_delegate_invoker_individually(
     alice, dai, usdc, cswap, cmove, weth, uni_router, invoker, value
@@ -38,7 +35,6 @@ def test_swap_dai_usdc_via_delegate_invoker_individually(
     assert usdc.balanceOf(invoker.address) >= min_value
 
 
-@pytest.mark.require_network("hardhat-fork")
 @given(value=strategy("uint256", max_value="1000 ether", min_value=2e12))
 def test_swap_dai_usdc_via_delegate_invoker_combo(
     alice, dai, usdc, cswap, cmove, weth, uni_router, invoker, value
@@ -56,7 +52,6 @@ def test_swap_dai_usdc_via_delegate_invoker_combo(
     assert usdc.balanceOf(invoker.address) >= min_value
 
 
-@pytest.mark.require_network("hardhat-fork")
 @given(value=strategy("uint256", max_value=900 * 1e6, min_value=1))
 def test_swap_dai_usdc_out(alice, dai, usdc, cswap, cmove, weth, uni_router, invoker, value):
     get_dai_for_user(dai, alice, weth, uni_router)
@@ -72,7 +67,6 @@ def test_swap_dai_usdc_out(alice, dai, usdc, cswap, cmove, weth, uni_router, inv
     assert usdc.balanceOf(invoker.address) == value
 
 
-@pytest.mark.require_network("hardhat-fork")
 @given(value=strategy("uint256", max_value="1000 ether"))
 def test_wrap_eth(alice, invoker, cswap, weth, value):
     starting_balance = alice.balance()
@@ -84,7 +78,6 @@ def test_wrap_eth(alice, invoker, cswap, weth, value):
 
 
 @given(value=strategy("uint256", max_value="1000 ether"))
-@pytest.mark.require_network("hardhat-fork")
 def test_unwrap_weth(alice, invoker, cswap, weth, value):
     # maker contract has 1.8M WETH so we can "borrow" some for testing purposes
     maker_contract = "0x2F0b23f53734252Bda2277357e97e1517d6B042A"
@@ -99,7 +92,6 @@ def test_unwrap_weth(alice, invoker, cswap, weth, value):
     assert weth.balanceOf(invoker) == starting_weth_balance - value
 
 
-@pytest.mark.require_network("hardhat-fork")
 @given(value=strategy("uint256", max_value="1000 ether"))
 def test_unwrap_all_weth(alice, invoker, cswap, weth, value):
     get_weth(weth, invoker, value)
