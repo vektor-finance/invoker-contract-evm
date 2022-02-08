@@ -1,47 +1,58 @@
 import brownie
+from brownie.test import strategy
 
 # ETH tests
 
 
+class NativeEthStateMachine:
+    value = strategy("uint256")
+    from_address = strategy("address")
+    to_address = strategy("address")
+    multiple_recv = strategy("(address,uint256)[]")
+
+    def __init__(cls, accounts, invoker, cmove):
+        cls.accounts = accounts
+        cls.invoker = invoker
+        cls.cmove = cmove
+
+    def setup(self):
+        self.balances = {i: i.balance() for i in self.accounts}
+
+    def rule_move_to_single(self, from_address, to_address, value):
+        calldata_transfer_eth = self.cmove.moveEth.encode_input(to_address, value)
+        if value <= self.balances[from_address]:
+            self.invoker.invoke(
+                [self.cmove.address],
+                [calldata_transfer_eth],
+                {"from": from_address, "value": value},
+            )
+            self.balances[from_address] -= value
+            self.balances[to_address] += value
+        else:
+            pass
+
+    def rule_move_to_multiple(self, from_address, multiple_recv):
+        cmoves = [self.cmove.address] * len(multiple_recv)
+        calldatas = [self.cmove.moveEth.encode_input(i[0].address, i[1]) for i in multiple_recv]
+        total_value = sum(i[1] for i in multiple_recv)
+        if total_value <= self.balances[from_address]:
+            self.invoker.invoke(cmoves, calldatas, {"from": from_address, "value": total_value})
+            self.balances[from_address] -= total_value
+            for recv in multiple_recv:
+                self.balances[recv[0]] += recv[1]
+        else:
+            pass
+
+    def invariant(self):
+        for address, amount in self.balances.items():
+            assert address.balance() == amount
+
+
+def test_stateful(accounts, state_machine, invoker, cmove):
+    state_machine(NativeEthStateMachine, accounts, invoker, cmove)
+
+
 """
-@given(value=strategy("uint256", max_value="1000 ether"), to=strategy("address"))
-def test_move_eth_to_single_address(alice, to, invoker, cmove, value):
-    alice_starting_balance = alice.balance()
-    to_starting_balance = to.balance()
-    calldata_transfer_one_eth = cmove.moveEth.encode_input(to.address, value)
-    invoker.invoke([cmove.address], [calldata_transfer_one_eth], {"from": alice, "value": value})
-    if alice is not to:
-        assert alice.balance() == alice_starting_balance - value
-        assert to.balance() == to_starting_balance + value
-
-
-@given(
-    value1=strategy("uint256", max_value="500 ether"),
-    user1=strategy("address"),
-    value2=strategy("uint256", max_value="500 ether"),
-    user2=strategy("address"),
-)
-def test_move_eth_to_multiple_addresses(alice, user1, user2, value1, value2, invoker, cmove):
-    amount = 100 * 1e18
-    alice_starting_balance = alice.balance()
-    user1_starting_balance = user1.balance()
-    user2_starting_balance = user2.balance()
-    calldata_transfer_eth_to_user1 = cmove.moveEth.encode_input(user1.address, value1)
-    calldata_transfer_eth_to_user2 = cmove.moveEth.encode_input(user2.address, value2)
-    invoker.invoke(
-        [cmove.address, cmove.address],
-        [calldata_transfer_eth_to_user1, calldata_transfer_eth_to_user2],
-        {"from": alice, "value": value1 + value2},
-    )
-    if alice in [user1, user2]:
-        pass
-    else:
-        assert alice.balance() == alice_starting_balance - value1 - value2
-        if user1 is not user2:
-            assert user1.balance() == user1_starting_balance + value1
-            assert user2.balance() == user2_starting_balance + value2
-
-
 @given(value=strategy("uint256", max_value="1000 ether"), to=strategy("address"))
 def test_move_all_eth_out_to_single_address(alice, to, invoker, cmove, value):
     alice_starting_balance = alice.balance()
