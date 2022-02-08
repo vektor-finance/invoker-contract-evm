@@ -1,1 +1,2 @@
 eth-brownie==1.17.2
+PyYAML==5.4.1
