@@ -63,6 +63,7 @@ def uni_dai_eth():
     yield Contract.from_explorer("0xa478c2975ab1ea89e8196811f51a7b7ade33eb11")
 
 
+@pytest.mark.require_network("hardhat-fork")
 @pytest.fixture(scope="module")
 def weth():
     WETH = interface.IWETH
