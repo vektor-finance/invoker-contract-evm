@@ -43,54 +43,27 @@ class NativeEthStateMachine:
         else:
             pass
 
+    def rule_move_sweep(self, from_address, to_address, value):
+        calldata_sweep_eth = self.cmove.moveAllEthOut.encode_input(to_address)
+        if value <= self.balances[from_address]:
+            self.invoker.invoke(
+                [self.cmove.address],
+                [calldata_sweep_eth],
+                {"from": from_address, "value": value},
+            )
+            self.balances[from_address] -= value
+            self.balances[to_address] += value
+        else:
+            pass
+
     def invariant(self):
         for address, amount in self.balances.items():
             assert address.balance() == amount
+        assert self.invoker.balance() == 0
 
 
 def test_stateful(accounts, state_machine, invoker, cmove):
     state_machine(NativeEthStateMachine, accounts, invoker, cmove)
-
-
-"""
-@given(value=strategy("uint256", max_value="1000 ether"), to=strategy("address"))
-def test_move_all_eth_out_to_single_address(alice, to, invoker, cmove, value):
-    alice_starting_balance = alice.balance()
-    to_starting_balance = to.balance()
-    calldata_transfer_all_eth = cmove.moveAllEthOut.encode_input(to.address)
-    invoker.invoke([cmove.address], [calldata_transfer_all_eth], {"from": alice, "value": value})
-    assert invoker.balance() == 0
-    if alice is not to:
-        assert alice.balance() == alice_starting_balance - value
-        assert to.balance() == to_starting_balance + value
-
-
-@given(
-    value=strategy("uint256", max_value="1000 ether"),
-    user=strategy("address"),
-)
-def test_move_all_erc20_out(alice, value, user, dai, weth, uni_router, cmove, invoker):
-    get_dai_for_user(dai, alice, weth, uni_router)
-    alice_starting_balance = dai.balanceOf(alice.address)
-    receiver_starting_balance = dai.balanceOf(user.address)
-
-    calldata_transfer_dai_to_invoker = cmove.moveERC20In.encode_input(dai.address, value)
-    calldata_transfer_all_dai_to_receiver = cmove.moveAllERC20Out.encode_input(
-        dai.address, user.address
-    )
-    dai.approve(invoker.address, value, {"from": alice})
-    invoker.invoke(
-        [cmove.address, cmove.address],
-        [calldata_transfer_dai_to_invoker, calldata_transfer_all_dai_to_receiver],
-        {"from": alice},
-    )
-    assert dai.balanceOf(invoker.address) == 0
-    if user == alice:  # if user is alice then these tests will incorrectly fail
-        pass
-    else:
-        assert dai.balanceOf(alice.address) == alice_starting_balance - value
-        assert dai.balanceOf(user.address) == receiver_starting_balance + value
-"""
 
 
 # ERC20 TESTS
