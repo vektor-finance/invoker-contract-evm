@@ -65,8 +65,5 @@ def pytest_generate_tests(metafunc):
     if "token" in metafunc.fixturenames:
         if _chain["id"] != "dev":
             tokens = [asset for asset in _chain["assets"] if asset.get("address")]
-            token_addresses = [token["address"] for token in tokens]
             token_names = [token["name"] for token in tokens]
-            metafunc.parametrize(
-                "token", token_addresses, ids=token_names, scope="module", indirect=True
-            )
+            metafunc.parametrize("token", tokens, ids=token_names, indirect=True)
