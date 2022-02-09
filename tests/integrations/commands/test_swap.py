@@ -1,21 +1,37 @@
-import math
 import time
 
-from brownie.test import given, strategy
 
-from tests.helpers import get_dai_for_user, get_weth
-
-
-def test_buy_dai(deployer, dai, weth, uni_router):
+def test_buy_token(alice, weth, uni_router, token):
+    """Test simple BUY via uniswap"""
+    if token == weth:
+        return
     amount_in = 1e18
-    path = [weth.address, dai.address]
+    path = [weth.address, token.address]
     [_, amount_out] = uni_router.getAmountsOut(amount_in, path)
     uni_router.swapExactETHForTokens(
-        amount_out, path, deployer, time.time() + 1, {"from": deployer, "value": amount_in}
+        amount_out, path, alice, time.time() + 1, {"from": alice, "value": amount_in}
     )
-    assert dai.balanceOf(deployer) > amount_out
+    assert token.balanceOf(alice) >= amount_out
 
 
+def test_buy_with_invoker(alice, weth, uni_router, token, invoker, cswap):
+    """Test simple BUY via invoker"""
+    if token == weth:
+        return
+    amount_in = 1e18
+    path = [weth.address, token.address]
+    [_, amount_out] = uni_router.getAmountsOut(amount_in, path)
+    calldata_wrap = cswap.wrapEth.encode_input(amount_in)
+    calldata_buy = cswap.swapUniswapIn.encode_input(amount_in, amount_out, path)
+    invoker.invoke(
+        [cswap.address, cswap.address],
+        [calldata_wrap, calldata_buy],
+        {"from": alice, "value": amount_in},
+    )
+    assert token.balanceOf(invoker.address) >= amount_out
+
+
+"""
 @given(value=strategy("uint256", max_value="1000 ether", min_value=2e12))
 def test_swap_dai_usdc_via_delegate_invoker_individually(
     alice, dai, usdc, cswap, cmove, weth, uni_router, invoker, value
@@ -102,3 +118,4 @@ def test_unwrap_all_weth(alice, invoker, cswap, weth, value):
     invoker.invoke([cswap.address], [calldata_unwrap_all_weth], {"from": alice})
     assert invoker.balance() == starting_balance + value
     assert weth.balanceOf(invoker) == starting_weth_balance - value
+"""
