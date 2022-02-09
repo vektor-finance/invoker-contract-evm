@@ -1,5 +1,14 @@
 # Move and Swap
 import brownie
+import pytest
+from brownie import Contract, interface
+
+
+@pytest.fixture(scope="module")
+def dai():
+    yield Contract.from_abi(
+        "Dai", "0x6b175474e89094c44da98b954eedeac495271d0f", interface.IERC20.abi
+    )
 
 
 def test_swap_eth_for_dai(invoker, alice, cmove, cswap, weth, dai):
