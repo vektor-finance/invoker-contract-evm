@@ -8,6 +8,7 @@ import pytest
 from brownie._config import CONFIG
 from brownie.project.main import get_loaded_projects
 
+from data.access_control import APPROVED_COMMAND
 from data.chain import get_chain_from_network_name
 
 
@@ -30,6 +31,28 @@ def alice(accounts):
 @pytest.fixture(scope="module")
 def bob(accounts):
     yield accounts[2]
+
+
+# Vektor contracts
+
+
+@pytest.fixture(scope="module", autouse=True)
+def invoker(deployer, Invoker, cmove, cswap):
+    contract = deployer.deploy(Invoker)
+    contract.grantRole(APPROVED_COMMAND, cswap.address, {"from": deployer})
+    yield contract
+
+
+@pytest.fixture(scope="module", autouse=True)
+def cswap(invoker, deployer, CSwap, weth, uni_router):
+    contract = deployer.deploy(CSwap, weth.address, uni_router.address)
+    invoker.grantRole(APPROVED_COMMAND, contract, {"from": deployer})  # approve commands
+    yield contract
+
+
+@pytest.fixture(scope="module", autouse=True)
+def cmove(deployer, CMove):
+    yield deployer.deploy(CMove)
 
 
 # Integrations
