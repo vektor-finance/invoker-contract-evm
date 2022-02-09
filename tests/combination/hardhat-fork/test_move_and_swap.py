@@ -10,8 +10,7 @@ def dai():
     )
 
 
-def test_swap_eth_for_dai(invoker, alice, cmove, cswap, weth, dai, token):
-    print(token)
+def test_swap_eth_for_dai(invoker, alice, cmove, cswap, weth, dai):
     """
     ALICE wants to swap her ETH for DAI
     Invoke:
