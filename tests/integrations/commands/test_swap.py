@@ -47,20 +47,23 @@ def test_wrap_native(alice, invoker, weth, cswap, value):
 
 
 @given(value=strategy("uint256", max_value="1000 ether"))
-def test_unwrap_native(alice, invoker, weth, cswap, value):
+def test_unwrap_native(alice, invoker, weth, cswap, value, bob):
+    # bob mints wrapped native and sends to invoker
+    weth.deposit({"from": bob, "value": value})
+    weth.transfer(invoker, value, {"from": bob})
     calldata_unwrap = cswap.unwrapWeth.encode_input(value)
-    # charitable donation from maker contract:
-    weth.transfer(invoker, value, {"from": "0x2F0b23f53734252Bda2277357e97e1517d6B042A"})
     invoker.invoke([cswap.address], [calldata_unwrap], {"from": alice})
     assert invoker.balance() == value
     assert weth.balanceOf(invoker) == 0
 
 
 @given(value=strategy("uint256", max_value="1000 ether"))
-def test_unwrap_all_native(alice, invoker, weth, venue_cswap, value):
+def test_unwrap_all_native(alice, invoker, weth, venue_cswap, value, bob):
+    # bob mints wrapped native and sends to invoker
+    weth.deposit({"from": bob, "value": value})
+    weth.transfer(invoker, value, {"from": bob})
+
     calldata_unwrap_all = venue_cswap.unwrapAllWeth.encode_input()
-    # charitable donation from maker contract:
-    weth.transfer(invoker, value, {"from": "0x2F0b23f53734252Bda2277357e97e1517d6B042A"})
     invoker.invoke([venue_cswap.address], [calldata_unwrap_all], {"from": alice})
     assert invoker.balance() == value
     assert weth.balanceOf(invoker) == 0
