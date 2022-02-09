@@ -29,7 +29,17 @@ def cmove(deployer, CMove):
     yield deployer.deploy(CMove)
 
 
-# Mainnet ethereum contracts
+# Contracts for specific tests
+
+
+@pytest.fixture(scope="module")
+def dai():
+    yield Contract.from_abi(
+        "Dai", "0x6b175474e89094c44da98b954eedeac495271d0f", interface.IERC20.abi
+    )
+
+
+# Contracts from config file
 
 
 @pytest.fixture(scope="module")

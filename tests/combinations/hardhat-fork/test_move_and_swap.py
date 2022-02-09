@@ -1,8 +1,6 @@
 # Move and Swap
 import brownie
 
-from tests.helpers import get_dai_for_user
-
 
 def test_swap_eth_for_dai(invoker, alice, cmove, cswap, weth, dai):
     """
@@ -50,7 +48,7 @@ def test_swap_dai_to_eth_and_disperse(invoker, bob, cmove, cswap, weth, dai, uni
     """
 
     # First get the user one eth worth of dai
-    get_dai_for_user(dai, bob, weth, uni_router)
+    # get_dai_for_user(dai, bob, weth, uni_router)
 
     dai.approve(invoker.address, 2000 * 1e18, {"from": bob.address})
 

@@ -55,9 +55,16 @@ def pytest_ignore_collect(path):
     if path.is_dir():
         return None
 
+    # ignore core tests unless you are on 'hardhat' network (dev)
+    if path_parts[:1] == ("core",):
+        return _network != "hardhat"
+
     # ignore integration tests if on 'hardhat' network (dev)
     if path_parts[:1] == ("integrations",):
         return _network == "hardhat"
+
+    if path_parts[:1] == ("combinations",):
+        return _network != path_parts[1]
 
 
 def pytest_generate_tests(metafunc):
