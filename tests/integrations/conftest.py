@@ -48,10 +48,8 @@ def venue_cswap(deployer, invoker, CSwap, uni_router, weth):
 
 
 @pytest.fixture(scope="module")
-def weth():
-    yield Contract.from_abi(
-        "WETH", "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2", interface.IWETH.abi
-    )
+def weth(request):
+    yield Contract.from_abi("WETH", request.param["address"], interface.IWETH.abi)
 
 
 @pytest.fixture(scope="module")
