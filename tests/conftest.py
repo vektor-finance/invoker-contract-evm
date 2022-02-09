@@ -78,3 +78,8 @@ def pytest_generate_tests(metafunc):
         ]
         router_names = [router["venue"] for router in routers]
         metafunc.parametrize("uni_router", routers, ids=router_names, indirect=True)
+
+    if "weth" in metafunc.fixturenames:
+        wrapped_natives = [asset for asset in _chain["assets"] if asset.get("wrapped_native")]
+        wrapped_names = [token["name"] for token in wrapped_natives]
+        metafunc.parametrize("weth", wrapped_natives, ids=wrapped_names, indirect=True)
