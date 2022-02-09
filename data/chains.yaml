@@ -59,6 +59,9 @@ mainnet:
     - venue: uniswap
       interfaces: [uniswap_router_v2_02]
       address: "0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D"
+    - venue: sushiswap
+      interfaces: [uniswap_router_v2_02]
+      address: "0xd9e1cE17f2641f24aE83637ab66a2cca9C378B9F"
 rinkeby:
   id: rinkeby
   name: Rinkeby Testnet

@@ -62,8 +62,19 @@ def pytest_ignore_collect(path):
 
 def pytest_generate_tests(metafunc):
 
+    if _chain["id"] == "dev":
+        return
+
     if "token" in metafunc.fixturenames:
-        if _chain["id"] != "dev":
-            tokens = [asset for asset in _chain["assets"] if asset.get("address")]
-            token_names = [token["name"] for token in tokens]
-            metafunc.parametrize("token", tokens, ids=token_names, indirect=True)
+        tokens = [asset for asset in _chain["assets"] if asset.get("address")]
+        token_names = [token["name"] for token in tokens]
+        metafunc.parametrize("token", tokens, ids=token_names, indirect=True)
+
+    if "uni_router" in metafunc.fixturenames:
+        routers = [
+            contract
+            for contract in _chain["contracts"]
+            if "uniswap_router_v2_02" in contract.get("interfaces")
+        ]
+        router_names = [router["venue"] for router in routers]
+        metafunc.parametrize("uni_router", routers, ids=router_names, indirect=True)
