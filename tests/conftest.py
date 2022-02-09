@@ -5,6 +5,7 @@ Most fixtures will be generated in subfolders
 from pathlib import Path
 
 import pytest
+from brownie import Contract, interface
 from brownie._config import CONFIG
 from brownie.project.main import get_loaded_projects
 
@@ -37,25 +38,47 @@ def bob(accounts):
 
 
 @pytest.fixture(scope="module", autouse=True)
-def invoker(deployer, Invoker, cmove, cswap):
-    contract = deployer.deploy(Invoker)
-    contract.grantRole(APPROVED_COMMAND, cswap.address, {"from": deployer})
-    yield contract
+def invoker(deployer, Invoker):
+    yield deployer.deploy(Invoker)
 
 
 @pytest.fixture(scope="module", autouse=True)
 def cswap(invoker, deployer, CSwap, weth, uni_router):
     contract = deployer.deploy(CSwap, weth.address, uni_router.address)
-    invoker.grantRole(APPROVED_COMMAND, contract, {"from": deployer})  # approve commands
+    invoker.grantRole(APPROVED_COMMAND, contract, {"from": deployer})  # approve command
     yield contract
 
 
 @pytest.fixture(scope="module", autouse=True)
-def cmove(deployer, CMove):
-    yield deployer.deploy(CMove)
+def cmove(deployer, invoker, CMove):
+    contract = deployer.deploy(CMove)
+    invoker.grantRole(APPROVED_COMMAND, contract, {"from": deployer})  # approve command
+    yield contract
 
 
-# Integrations
+# Contracts from config file
+
+
+@pytest.fixture(scope="module")
+def uni_router(request):
+    router = request.param
+    yield Contract.from_abi(
+        f"{router['venue']} router", router["address"], interface.IUniswapV2Router02.abi
+    )
+
+
+@pytest.fixture(scope="module")
+def weth(request):
+    yield Contract.from_abi("WETH", request.param["address"], interface.IWETH.abi)
+
+
+@pytest.fixture(scope="module")
+def token(request):
+    token = request.param
+    yield Contract.from_abi(token["name"], token["address"], interface.IERC20.abi)
+
+
+# pytest fixtures/collections
 
 _network = ""
 _chain = {}

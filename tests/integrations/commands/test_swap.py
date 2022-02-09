@@ -16,7 +16,7 @@ def test_buy_token(alice, weth, uni_router, token):
 
 
 @given(amount_in=strategy("uint256", min_value="1", max_value="1000 ether"))
-def test_buy_with_invoker(alice, weth, uni_router, token, invoker, venue_cswap, amount_in):
+def test_buy_with_invoker(alice, weth, uni_router, token, invoker, cswap, amount_in):
     """Test simple BUY via invoker"""
     if token == weth:
         return
@@ -26,11 +26,11 @@ def test_buy_with_invoker(alice, weth, uni_router, token, invoker, venue_cswap, 
     if amount_out == 0:
         return
 
-    calldata_wrap = venue_cswap.wrapEth.encode_input(amount_in)
-    calldata_buy = venue_cswap.swapUniswapIn.encode_input(amount_in, amount_out, path)
+    calldata_wrap = cswap.wrapEth.encode_input(amount_in)
+    calldata_buy = cswap.swapUniswapIn.encode_input(amount_in, amount_out, path)
 
     invoker.invoke(
-        [venue_cswap.address, venue_cswap.address],
+        [cswap.address, cswap.address],
         [calldata_wrap, calldata_buy],
         {"from": alice, "value": amount_in},
     )
@@ -58,12 +58,12 @@ def test_unwrap_native(alice, invoker, weth, cswap, value, bob):
 
 
 @given(value=strategy("uint256", max_value="1000 ether"))
-def test_unwrap_all_native(alice, invoker, weth, venue_cswap, value, bob):
+def test_unwrap_all_native(alice, invoker, weth, cswap, value, bob):
     # bob mints wrapped native and sends to invoker
     weth.deposit({"from": bob, "value": value})
     weth.transfer(invoker, value, {"from": bob})
 
-    calldata_unwrap_all = venue_cswap.unwrapAllWeth.encode_input()
-    invoker.invoke([venue_cswap.address], [calldata_unwrap_all], {"from": alice})
+    calldata_unwrap_all = cswap.unwrapAllWeth.encode_input()
+    invoker.invoke([cswap.address], [calldata_unwrap_all], {"from": alice})
     assert invoker.balance() == value
     assert weth.balanceOf(invoker) == 0
