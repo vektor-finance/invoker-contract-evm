@@ -56,4 +56,4 @@ def usdc():
 
 @pytest.fixture
 def token(request):
-    yield Contract.from_explorer(request.param)
+    yield Contract.from_abi("ERC20", request.param, interface.IERC20.abi)
