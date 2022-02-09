@@ -37,19 +37,19 @@ def bob(accounts):
 # Vektor contracts
 
 
-@pytest.fixture(scope="module", autouse=True)
+@pytest.fixture(scope="module")
 def invoker(deployer, Invoker):
     yield deployer.deploy(Invoker)
 
 
-@pytest.fixture(scope="module", autouse=True)
+@pytest.fixture(scope="module")
 def cswap(invoker, deployer, CSwap, weth, uni_router):
     contract = deployer.deploy(CSwap, weth.address, uni_router.address)
     invoker.grantRole(APPROVED_COMMAND, contract, {"from": deployer})  # approve command
     yield contract
 
 
-@pytest.fixture(scope="module", autouse=True)
+@pytest.fixture(scope="module")
 def cmove(deployer, invoker, CMove):
     contract = deployer.deploy(CMove)
     invoker.grantRole(APPROVED_COMMAND, contract, {"from": deployer})  # approve command
