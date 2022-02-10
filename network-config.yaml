@@ -21,6 +21,20 @@ development:
   id: mainnet-hardhat-fork
   name: Hardhat (Mainnet Fork)
   timeout: 120
+- cmd: npx hardhat node
+  cmd_settings:
+    fork: rinkeby-test
+    port: 8545
+  host: http://localhost
+  id: rinkeby-hardhat-fork
+  name: Hardhat (Rinkeby Fork)
+- cmd: npx hardhat node
+  cmd_settings:
+    fork: mumbai-test
+    port: 8545
+  host: http://localhost
+  id: mumbai-hardhat-fork
+  name: Hardhat (Mumbai Fork)
 
 live:
 - name: Ethereum
@@ -48,6 +62,6 @@ live:
   - chainid: 80001
     explorer: https://api-testnet.polygonscan.com/api
     host: $NODE_POLYGON_MUMBAI_URL
-    id: polygon-test
+    id: mumbai-test
     multicall2: '0x6842E0412AC1c00464dc48961330156a07268d14'
     name: Mumbai Testnet

@@ -44,10 +44,10 @@ jobs:
     strategy:
       matrix:
         network:
-          - mainnet
-          - rinkeby
-          - polygon-main
-          - polygon-mumbai
+          - mainnet-hardhat-fork
+          - rinkeby-hardhat-fork
+          - polygon-hardhat-fork
+          - mumbai-hardhat-fork
 
     steps:
       - name: Checkout current commit (${{ github.sha }})
