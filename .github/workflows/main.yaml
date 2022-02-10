@@ -111,7 +111,7 @@ jobs:
 
       - name: Copy network-config.yaml to ~/.brownie
         id: copy_network_config
-        run: cp .network-config.yml ~/.brownie/
+        run: cp network-config.yml ~/.brownie/
 
       - name: Run Tests
         id: brownie_tests

@@ -1,0 +1,55 @@
+development:
+- cmd: npx hardhat node
+  cmd_settings:
+    port: 8545
+  host: http://localhost
+  id: hardhat
+  name: Hardhat
+- cmd: npx hardhat node
+  cmd_settings:
+    fork: polygon-prod
+    port: 8545
+  host: http://127.0.0.1
+  id: polygon-hardhat-fork
+  timeout: 120
+  name: Hardhat (Polygon Fork)
+- cmd: npx hardhat node
+  cmd_settings:
+    fork: mainnet-prod
+    port: 8545
+  host: http://localhost
+  id: mainnet-hardhat-fork
+  name: Hardhat (Mainnet Fork)
+  timeout: 120
+
+
+
+live:
+- name: Ethereum
+  networks:
+  - chainid: 1
+    explorer: https://api.etherscan.io/api
+    host: https://mainnet.infura.io/v3/$WEB3_INFURA_PROJECT_ID
+    id: mainnet-prod
+    multicall2: '0x5BA1e12693Dc8F9c48aAD8770482f4739bEeD696'
+    name: Mainnet
+  - chainid: 4
+    explorer: https://api-rinkeby.etherscan.io/api
+    host: https://rinkeby.infura.io/v3/$WEB3_INFURA_PROJECT_ID
+    id: rinkeby-test
+    multicall2: '0x5BA1e12693Dc8F9c48aAD8770482f4739bEeD696'
+    name: Rinkeby
+- name: Polygon
+  networks:
+  - chainid: 137
+    explorer: https://api.polygonscan.com/api
+    host: https://polygon-mainnet.infura.io/v3/$WEB3_INFURA_PROJECT_ID
+    id: polygon-prod
+    multicall2: '0xc8E51042792d7405184DfCa245F2d27B94D013b6'
+    name: Polygon Mainnet
+  - chainid: 80001
+    explorer: https://api-testnet.polygonscan.com/api
+    host: https://polygon-mumbai.infura.io/v3/$WEB3_INFURA_PROJECT_ID
+    id: polygon-test
+    multicall2: '0x6842E0412AC1c00464dc48961330156a07268d14'
+    name: Mumbai Testnet
