@@ -115,7 +115,7 @@ jobs:
 
       - name: Run Tests
         id: brownie_tests
-        run: brownie test --network=${{ matrix.network }}
+        run: brownie test --network=${{ matrix.network }} -v
 
   build_docker:
     name: Build Docker Container
