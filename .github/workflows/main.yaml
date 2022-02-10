@@ -109,9 +109,9 @@ jobs:
         id: create_env_file
         run: touch .env
 
-      - name: Copy network-config.yaaml to ~/.brownie
+      - name: Copy network-config.yaml to ~/.brownie
         id: copy_network_config
-        run: cp network-config.yaml ~/.brownie/
+        run: mkdir ~/.brownie && cp network-config.yaml ~/.brownie/
 
       - name: Run Tests
         id: brownie_tests
