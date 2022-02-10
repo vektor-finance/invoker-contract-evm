@@ -35,6 +35,7 @@ contract CBridge {
 
     function bridgeERC20(
         IERC20 fromToken,
+        IERC20 anyToken,
         uint256 amount,
         address destinationAddress,
         uint256 destinationChainID
@@ -43,7 +44,7 @@ contract CBridge {
         token.approve(address(ANYSWAP_ROUTER), 0);
         token.approve(address(ANYSWAP_ROUTER), amount);
         ANYSWAP_ROUTER.anySwapOutUnderlying(
-            address(fromToken),
+            address(anyToken),
             destinationAddress,
             amount,
             destinationChainID
