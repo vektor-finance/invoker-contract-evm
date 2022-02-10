@@ -146,7 +146,7 @@ polygon:
       address: "0xa5E0829CaCEd8fFDD4De3c43696c57F7D7A678ff"
 
 mumbai:
-  id: mumbai
+  id: mumbaiuni
   name: Mumbai
   chain_id: 80001
   explorer: https://mumbai.polygonscan.com/
@@ -163,10 +163,11 @@ mumbai:
       decimals: 18
       address: "0x9c3C9283D3e44854697Cd22D3Faa240Cfb032889"
       wrapped_native: true
-    - name: Wrapped Ethereum
-      symbol: WETH
-      decimals: 18
-      address: "0x714550C2C1Ea08688607D86ed8EeF4f5E4F22323"
+    # No liquidity for WETH on mumbai.
+    # - name: Wrapped Ethereum
+    #   symbol: WETH
+    #   decimals: 18
+    #   address: "0x714550C2C1Ea08688607D86ed8EeF4f5E4F22323"
     - name: DAI
       symbol: DAI
       decimals: 18
