@@ -14,6 +14,12 @@ env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   WEB3_INFURA_PROJECT_ID: ${{ secrets.WEB3_INFURA_PROJECT_ID }}
 
+  # Node URLS
+  NODE_ETHEREUM_MAINNET_URL: ${{ secrets.NODE_ETHEREUM_MAINNET_URL }}
+  NODE_ETHEREUM_RINKEBY_URL: ${{ secrets.NODE_ETHEREUM_RINKEBY_URL }}
+  NODE_POLYGON_MAINNET_URL: ${{ secrets.NODE_POLYGON_MAINNET_URL }}
+  NODE_POLYGON_MUMBAI_URL: ${{ secrets.NODE_POLYGON_MUMBAI_URL }}
+
   # increasing available memory for node reduces issues with ganache crashing
   # https://nodejs.org/api/cli.html#cli_max_old_space_size_size_in_megabytes
   NODE_OPTIONS: --max_old_space_size=4096
@@ -34,6 +40,15 @@ jobs:
     name: Install dependencies, run lint and tests
     runs-on: ubuntu-latest
     timeout-minutes: 15
+
+    strategy:
+      matrix:
+        network:
+          - mainnet
+          - rinkeby
+          - polygon-main
+          - polygon-mumbai
+
     steps:
       - name: Checkout current commit (${{ github.sha }})
         id: checkout
@@ -94,9 +109,13 @@ jobs:
         id: create_env_file
         run: touch .env
 
+      - name: Copy network-config.yaml to ~/.brownie
+        id: copy_network_config
+        run: cp .network-config.yml ~/.brownie/
+
       - name: Run Tests
         id: brownie_tests
-        run: brownie test
+        run: brownie test --network=${{ matrix.network }}
 
   build_docker:
     name: Build Docker Container
