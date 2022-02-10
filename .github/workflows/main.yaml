@@ -44,6 +44,7 @@ jobs:
     strategy:
       matrix:
         network:
+          - hardhat
           - mainnet-hardhat-fork
           - rinkeby-hardhat-fork
           - polygon-hardhat-fork
