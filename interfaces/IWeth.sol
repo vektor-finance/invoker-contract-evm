@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT License
 // https://github.com/Synthetixio/synthetix/blob/v2.47.0-ovm/contracts/interfaces/IWETH.sol
 pragma solidity ^0.8.6;
 
