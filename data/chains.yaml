@@ -145,7 +145,7 @@ polygon:
       address: "0xa5E0829CaCEd8fFDD4De3c43696c57F7D7A678ff"
 
 mumbai:
-  id: mumbaiuni
+- id: mumbai
   name: Mumbai
   chain_id: 80001
   explorer: https://mumbai.polygonscan.com/
