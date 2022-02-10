@@ -1,7 +1,6 @@
 # Move and Swap
-import brownie
 import pytest
-from brownie import Contract, interface
+from brownie import Contract, interface, reverts
 
 
 @pytest.fixture(scope="module")
@@ -174,7 +173,7 @@ def test_wrap_ether_in_multiple_transactions_should_fail_with_no_ether_attached(
     calldata_move_weth = cmove.moveERC20Out.encode_input(weth.address, alice.address, value_a)
     calldata_wrap_eth_b = cswap.wrapEth.encode_input(value_b)
 
-    with brownie.reverts():
+    with reverts():
         invoker.invoke(
             [cswap.address, cmove.address, cswap.address],
             [calldata_wrap_eth_a, calldata_move_weth, calldata_wrap_eth_b],

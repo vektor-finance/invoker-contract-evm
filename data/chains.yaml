@@ -122,31 +122,23 @@ polygon:
       symbol: WETH
       decimals: 18
       address: "0x7ceb23fd6bc0add59e62ac25578270cff1b9f619"
-      interfaces: [weth9, erc20]
     - name: DAI
       symbol: DAI
       decimals: 18
       address: "0x8f3cf7ad23cd3cadbd9735aff958023239c6a063"
-      interfaces: [erc20]
     - name: Tether
       symbol: USDT
       decimals: 6
       address: "0xc2132d05d31c914a87c6611c10748aeb04b58e8f"
-      interfaces: [erc20]
     - name: USD Coin
       symbol: USDC
       decimals: 6
       address: "0x2791bca1f2de4661ed88a30c99a7a9449aa84174"
-      interfaces: [erc20]
     - name: Wrapped BTC
       symbol: WBTC
       decimals: 8
       address: "0x1bfd67037b42cf73acf2047067bd4f2c47d9bfd6"
-      interfaces: [erc20]
   contracts:
     - venue: quickswap
       interfaces: [uniswap_router_v2_02]
       address: "0xa5E0829CaCEd8fFDD4De3c43696c57F7D7A678ff"
-    - venue: multicall2
-      interfaces: [multicall2]
-      address: "0xc8E51042792d7405184DfCa245F2d27B94D013b6"
