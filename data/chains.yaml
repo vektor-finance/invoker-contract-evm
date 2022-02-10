@@ -15,8 +15,8 @@ mainnet:
   chain_id: 1
   eip1559: true
   network:
-    prod: mainnet
-    fork: hardhat-fork
+    prod: mainnet-prod
+    fork: mainnet-hardhat-fork
   assets:
     - name: Ethereum
       symbol: ETH
@@ -68,7 +68,8 @@ rinkeby:
   chain_id: 4
   eip1559: true
   network:
-    prod: rinkeby
+    prod: rinkeby-test
+    fork: rinkeby-hardhat-fork
   assets:
     - name: Ethereum
       symbol: ETH
@@ -106,7 +107,7 @@ polygon:
   chain_id: 137
   eip1559: true
   network:
-    prod: polygon-main
+    prod: polygon-prod
     fork: polygon-hardhat-fork
   assets:
     - name: Matic
@@ -142,3 +143,38 @@ polygon:
     - venue: quickswap
       interfaces: [uniswap_router_v2_02]
       address: "0xa5E0829CaCEd8fFDD4De3c43696c57F7D7A678ff"
+
+mumbai:
+- id: mumbai
+  name: Mumbai
+  chain_id: 80001
+  explorer: https://mumbai.polygonscan.com/
+  network:
+    prod: mumbai-prod
+    fork: mumbai-hardhat-fork
+  assets:
+    - name: Matic
+      symbol: MATIC
+      decimals: 18
+      address: ~
+    - name: Wrapped Matic
+      symbol: WMATIC
+      decimals: 18
+      address: "0x9c3C9283D3e44854697Cd22D3Faa240Cfb032889"
+      wrapped_native: true
+    - name: Wrapped Ethereum
+      symbol: WETH
+      decimals: 18
+      address: "0x714550C2C1Ea08688607D86ed8EeF4f5E4F22323"
+    - name: DAI
+      symbol: DAI
+      decimals: 18
+      address: "0xcB1e72786A6eb3b44C2a2429e317c8a2462CFeb1"
+    - name: Tether
+      symbol: USDT
+      decimals: 6
+      address: "0x3813e82e6f7098b9583FC0F33a962D02018B6803"
+  contracts:
+    - venue: quickswap
+      interfaces: [uniswap_router_v2_02]
+      address: "0x8954afa98594b838bda56fe4c12a09d7739d179b"
