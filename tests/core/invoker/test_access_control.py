@@ -1,12 +1,7 @@
 import brownie
 import pytest
 
-from tests.helpers import APPROVED_COMMAND, DEFAULT_ADMIN_ROLE, PAUSER, get_dai_for_user
-
-
-@pytest.fixture(autouse=True)
-def shared_setup(fn_isolation):
-    pass
+from data.access_control import APPROVED_COMMAND, DEFAULT_ADMIN_ROLE, ROLE_PAUSER
 
 
 def test_owner(invoker, deployer):
@@ -18,24 +13,20 @@ def invokerNoApproval(deployer, Invoker):
     yield deployer.deploy(Invoker)
 
 
-def test_should_revert_if_command_not_approved(
-    invokerNoApproval, cmove, dai, deployer, weth, uni_router
-):
-    invoker = invokerNoApproval
-    get_dai_for_user(dai, deployer, weth, uni_router)
-    calldata = cmove.moveERC20In.encode_input(dai.address, 100 * 1e18)
+def test_should_revert_if_command_not_approved(invokerNoApproval, cmove, alice, mock_erc20):
+    mock_erc20.mint(alice, 100 * 1e18)
+    calldata = cmove.moveERC20In.encode_input(mock_erc20, 100 * 1e18)
     with brownie.reverts("Command not approved"):
-        invoker.invoke([cmove.address], [calldata], {"from": deployer})
+        invokerNoApproval.invoke([cmove.address], [calldata], {"from": alice})
 
 
-def test_should_permit_approved_commands(invoker, cmove, dai, weth, uni_router, deployer):
-    get_dai_for_user(dai, deployer, weth, uni_router)
+def test_should_permit_approved_commands(invoker, cmove, alice, deployer, mock_erc20):
+    mock_erc20.mint(alice, 100 * 1e18)
     invoker.grantRole(APPROVED_COMMAND, cmove.address, {"from": deployer})
-    calldata = cmove.moveERC20In.encode_input(dai.address, 100 * 1e18)
-    dai.approve(invoker.address, 100 * 1e18, {"from": deployer})
-    assert dai.allowance(deployer, invoker.address) == 100 * 1e18
-    invoker.invoke([cmove.address], [calldata], {"from": deployer})
-    assert dai.balanceOf(invoker.address) == 100 * 1e18
+    calldata = cmove.moveERC20In.encode_input(mock_erc20.address, 100 * 1e18)
+    mock_erc20.approve(invoker.address, 100 * 1e18, {"from": alice})
+    invoker.invoke([cmove.address], [calldata], {"from": alice})
+    assert mock_erc20.balanceOf(invoker.address) == 100 * 1e18
 
 
 def test_non_admin_users_cant_approve_commands(invoker, cmove, alice):
@@ -47,7 +38,7 @@ def test_non_admin_users_cant_approve_commands(invoker, cmove, alice):
 
 
 def test_deployer_is_initial_pauser(invoker, deployer):
-    assert invoker.hasRole(PAUSER, deployer)
+    assert invoker.hasRole(ROLE_PAUSER, deployer)
 
 
 def test_initially_deployed_unpaused(invoker):
@@ -92,13 +83,13 @@ def test_only_approved_can_unpause(invoker, deployer, alice):
 
 
 def test_add_pauser(invoker, deployer, alice):
-    invoker.grantRole(PAUSER, alice, {"from": deployer})
+    invoker.grantRole(ROLE_PAUSER, alice, {"from": deployer})
     invoker.pause({"from": alice})
     assert invoker.paused()
 
 
 def test_remove_pauser(invoker, deployer, alice):
-    invoker.grantRole(PAUSER, alice, {"from": deployer})
-    invoker.revokeRole(PAUSER, alice, {"from": deployer})
+    invoker.grantRole(ROLE_PAUSER, alice, {"from": deployer})
+    invoker.revokeRole(ROLE_PAUSER, alice, {"from": deployer})
     with brownie.reverts("PAC: Invalid role"):
         invoker.pause({"from": alice})

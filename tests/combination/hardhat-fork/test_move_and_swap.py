@@ -1,7 +1,13 @@
 # Move and Swap
-import brownie
+import pytest
+from brownie import Contract, interface, reverts
 
-from tests.helpers import get_dai_for_user
+
+@pytest.fixture(scope="module")
+def dai():
+    yield Contract.from_abi(
+        "Dai", "0x6b175474e89094c44da98b954eedeac495271d0f", interface.IERC20.abi
+    )
 
 
 def test_swap_eth_for_dai(invoker, alice, cmove, cswap, weth, dai):
@@ -35,7 +41,7 @@ def test_swap_eth_for_dai(invoker, alice, cmove, cswap, weth, dai):
     assert dai.balanceOf(alice) == 100 * 1e18
 
 
-def test_swap_dai_to_eth_and_disperse(invoker, bob, cmove, cswap, weth, dai, uni_router, accounts):
+def test_swap_dai_to_eth_and_disperse(invoker, bob, cmove, cswap, weth, dai, accounts):
     """
     Bob wants to quickly fund three accounts to farm airdrops
     First: Approve Dai on invoker
@@ -50,8 +56,7 @@ def test_swap_dai_to_eth_and_disperse(invoker, bob, cmove, cswap, weth, dai, uni
     """
 
     # First get the user one eth worth of dai
-    get_dai_for_user(dai, bob, weth, uni_router)
-
+    dai.transfer(bob.address, 2000 * 1e18, {"from": "0xdA816459F1AB5631232FE5e97a05BBBb94970c95"})
     dai.approve(invoker.address, 2000 * 1e18, {"from": bob.address})
 
     # 1. Move Dai to invoker
@@ -168,7 +173,7 @@ def test_wrap_ether_in_multiple_transactions_should_fail_with_no_ether_attached(
     calldata_move_weth = cmove.moveERC20Out.encode_input(weth.address, alice.address, value_a)
     calldata_wrap_eth_b = cswap.wrapEth.encode_input(value_b)
 
-    with brownie.reverts():
+    with reverts():
         invoker.invoke(
             [cswap.address, cmove.address, cswap.address],
             [calldata_wrap_eth_a, calldata_move_weth, calldata_wrap_eth_b],

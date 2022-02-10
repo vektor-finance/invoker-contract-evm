@@ -1,5 +1,16 @@
+"""
+conftest for fixtures that are present during ALL tests (core + integrations)
+Most fixtures will be generated in subfolders
+"""
+from pathlib import Path
+
 import pytest
-from brownie import Contract
+from brownie import Contract, interface
+from brownie._config import CONFIG
+from brownie.project.main import get_loaded_projects
+
+from data.access_control import APPROVED_COMMAND
+from data.chain import get_chain_from_network_name
 
 
 # User accounts
@@ -23,64 +34,105 @@ def bob(accounts):
     yield accounts[2]
 
 
-# Deploy vektor contracts
-APPROVED_COMMAND = "410a6a8d01da3028e7c041b5925a6d26ed38599db21a26cf9a5e87c68941f98a"
-
-# Mainnet uniswap router
-UNISWAP_ROUTER = "0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D"
+# Vektor contracts
 
 
-@pytest.fixture(scope="module", autouse=True)
-def invoker(deployer, Invoker, cmove, cswap):
-    contract = deployer.deploy(Invoker)
-    contract.grantRole(APPROVED_COMMAND, cmove.address, {"from": deployer})  # approve commands
-    contract.grantRole(APPROVED_COMMAND, cswap.address, {"from": deployer})
+@pytest.fixture(scope="module")
+def invoker(deployer, Invoker):
+    yield deployer.deploy(Invoker)
+
+
+@pytest.fixture(scope="module")
+def cswap(invoker, deployer, CSwap, weth, uni_router):
+    contract = deployer.deploy(CSwap, weth.address, uni_router.address)
+    invoker.grantRole(APPROVED_COMMAND, contract, {"from": deployer})  # approve command
     yield contract
 
 
-@pytest.fixture(scope="module", autouse=True)
-def cswap(deployer, CSwap, weth):
-    yield deployer.deploy(CSwap, weth.address, UNISWAP_ROUTER)
+@pytest.fixture(scope="module")
+def cmove(deployer, invoker, CMove):
+    contract = deployer.deploy(CMove)
+    invoker.grantRole(APPROVED_COMMAND, contract, {"from": deployer})  # approve command
+    yield contract
 
 
-@pytest.fixture(scope="module", autouse=True)
-def cmove(deployer, CMove):
-    yield deployer.deploy(CMove)
-
-
-# Mainnet ethereum contracts
+# Contracts from config file
 
 
 @pytest.fixture(scope="module")
-def uni_router():
-    yield Contract.from_explorer("0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D")
+def uni_router(request):
+    router = request.param
+    yield Contract.from_abi(
+        f"{router['venue']} router", router["address"], interface.IUniswapV2Router02.abi
+    )
 
 
 @pytest.fixture(scope="module")
-def uni_dai_eth():
-    yield Contract.from_explorer("0xa478c2975ab1ea89e8196811f51a7b7ade33eb11")
+def weth(request):
+    yield Contract.from_abi("WETH", request.param["address"], interface.IWETH.abi)
 
 
 @pytest.fixture(scope="module")
-def weth():
-    yield Contract.from_explorer("0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2")
+def token(request):
+    token = request.param
+    yield Contract.from_abi(token["name"], token["address"], interface.IERC20.abi)
 
 
-@pytest.fixture(scope="module")
-def dai():
-    yield Contract.from_explorer("0x6B175474E89094C44Da98b954EedeAC495271d0F")
+# pytest fixtures/collections
+
+_network = ""
+_chain = {}
 
 
-@pytest.fixture(scope="module")
-def usdc():
-    yield Contract.from_explorer("0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48")
+def pytest_sessionstart():
+    global _chain, _network
+    _network = CONFIG.settings["networks"]["default"]
+    if CONFIG.argv["network"]:
+        _network = CONFIG.argv["network"]
+    (_chain, _) = get_chain_from_network_name(_network)
 
 
-@pytest.fixture(scope="module")
-def link():
-    yield Contract.from_explorer("0x514910771AF9Ca656af840dff83E8264EcF986CA")
+def pytest_ignore_collect(path):
+    project = get_loaded_projects()[0]
+    path = Path(path).relative_to(project._path)
+
+    path_parts = path.parts[1:-1]
+
+    if path.is_dir():
+        return None
+
+    # ignore core tests unless you are on 'hardhat' network (dev)
+    if path_parts[:1] == ("core",):
+        return _network != "hardhat"
+
+    # ignore integration tests if on 'hardhat' network (dev)
+    if path_parts[:1] == ("integration",):
+        return _network == "hardhat"
+
+    if path_parts[:1] == ("combination",):
+        return _network != path_parts[1]
 
 
-@pytest.fixture(scope="module")
-def world():  # deflationary token with burn on transfer
-    yield Contract.from_explorer("0xBF494F02EE3FdE1F20BEE6242bCe2d1ED0c15e47")
+def pytest_generate_tests(metafunc):
+
+    if _chain["id"] == "dev":
+        return
+
+    if "token" in metafunc.fixturenames:
+        tokens = [asset for asset in _chain["assets"] if asset.get("address")]
+        token_names = [token["name"] for token in tokens]
+        metafunc.parametrize("token", tokens, ids=token_names, indirect=True)
+
+    if "uni_router" in metafunc.fixturenames:
+        routers = [
+            contract
+            for contract in _chain["contracts"]
+            if "uniswap_router_v2_02" in contract.get("interfaces")
+        ]
+        router_names = [router["venue"] for router in routers]
+        metafunc.parametrize("uni_router", routers, ids=router_names, indirect=True)
+
+    if "weth" in metafunc.fixturenames:
+        wrapped_natives = [asset for asset in _chain["assets"] if asset.get("wrapped_native")]
+        wrapped_names = [token["name"] for token in wrapped_natives]
+        metafunc.parametrize("weth", wrapped_natives, ids=wrapped_names, indirect=True)

@@ -1,11 +1,3 @@
-import pytest
-
-
-@pytest.fixture(autouse=True)
-def shared_setup(fn_isolation):
-    pass
-
-
 def test_is_event_logged_log_invocation_on_invoke(invoker, alice, bob, cmove):
     calldata_transfer_one_eth = cmove.moveEth.encode_input(bob.address, "1 ether")
 
@@ -37,15 +29,19 @@ def test_is_event_logged_single_log_vek_on_invoke(invoker, alice, bob, cmove):
     assert event["params"] == calldata_transfer_one_eth
 
 
-def test_is_event_logged_multiple_log_veks_on_invoke(invoker, alice, bob, weth, cmove, cswap):
+def test_is_event_logged_multiple_log_veks_on_invoke(invoker, alice, bob, mock_erc20, cmove):
     value = "1 ether"
-    calldata_wrap_eth = cswap.wrapEth.encode_input(value)
-    calldata_move_weth = cmove.moveERC20Out.encode_input(weth.address, bob.address, value)
+    mock_erc20.mint(alice, value, {"from": alice})
+    mock_erc20.approve(invoker.address, value, {"from": alice})
+    fn_move_in = cmove.moveERC20In
+    fn_move_out = cmove.moveERC20Out
+    calldata_move_erc20_in = fn_move_in.encode_input(mock_erc20.address, value)
+    calldata_move_erc20_out = fn_move_out.encode_input(mock_erc20.address, bob.address, value)
 
     tx = invoker.invoke(
-        [cswap.address, cmove.address],
-        [calldata_wrap_eth, calldata_move_weth],
-        {"from": alice, "value": value},
+        [cmove.address, cmove.address],
+        [calldata_move_erc20_in, calldata_move_erc20_out],
+        {"from": alice},
     )
     events = tx.events
     assert "LogStep" in events
@@ -54,11 +50,9 @@ def test_is_event_logged_multiple_log_veks_on_invoke(invoker, alice, bob, weth, 
     ev1 = events["LogStep"][1]
     # Check first event
     assert ev0["user"] == alice.address
-    assert ev0["sigHash"] == "0xae9779c6"  # Function selector for wrapEth(uint256)
-    assert ev0["params"] == calldata_wrap_eth
+    assert ev0["sigHash"] == fn_move_in.signature
+    assert ev0["params"] == calldata_move_erc20_in
     # Check second event
     assert ev1["user"] == alice.address
-    assert (
-        ev1["sigHash"] == "0x7f914ce0"
-    )  # Function selector for moveERC20Out(address,address,uint256)
-    assert ev1["params"] == calldata_move_weth
+    assert ev1["sigHash"] == fn_move_out.signature
+    assert ev1["params"] == calldata_move_erc20_out
