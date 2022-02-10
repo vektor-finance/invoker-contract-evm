@@ -2,7 +2,6 @@
 import pytest
 from brownie import Contract, interface, reverts
 
-<<<<<<< HEAD:tests/combination/hardhat-fork/test_move_and_swap.py
 
 @pytest.fixture(scope="module")
 def dai():
@@ -10,8 +9,6 @@ def dai():
         "Dai", "0x6b175474e89094c44da98b954eedeac495271d0f", interface.IERC20.abi
     )
 
-=======
->>>>>>> 352bc93 (feat: 3 types of testing):tests/combinations/hardhat-fork/test_move_and_swap.py
 
 def test_swap_eth_for_dai(invoker, alice, cmove, cswap, weth, dai):
     """
@@ -59,12 +56,8 @@ def test_swap_dai_to_eth_and_disperse(invoker, bob, cmove, cswap, weth, dai, acc
     """
 
     # First get the user one eth worth of dai
-<<<<<<< HEAD:tests/combination/hardhat-fork/test_move_and_swap.py
     dai.transfer(bob.address, 2000 * 1e18, {"from": "0xdA816459F1AB5631232FE5e97a05BBBb94970c95"})
-=======
     # get_dai_for_user(dai, bob, weth, uni_router)
-
->>>>>>> 352bc93 (feat: 3 types of testing):tests/combinations/hardhat-fork/test_move_and_swap.py
     dai.approve(invoker.address, 2000 * 1e18, {"from": bob.address})
 
     # 1. Move Dai to invoker

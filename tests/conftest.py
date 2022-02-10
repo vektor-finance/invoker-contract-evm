@@ -106,10 +106,10 @@ def pytest_ignore_collect(path):
         return _network != "hardhat"
 
     # ignore integration tests if on 'hardhat' network (dev)
-    if path_parts[:1] == ("integrations",):
+    if path_parts[:1] == ("integration",):
         return _network == "hardhat"
 
-    if path_parts[:1] == ("combinations",):
+    if path_parts[:1] == ("combination",):
         return _network != path_parts[1]
 
 
