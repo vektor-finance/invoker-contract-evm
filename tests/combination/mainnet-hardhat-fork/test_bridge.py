@@ -30,7 +30,11 @@ def test_native_bridge(cbridge, alice, invoker, bob):
     assert evt["toChainID"] == 4
 
 
-def test_erc20_bridge(cbridge, cmove, alice, invoker, bob, weth, uni_router, anyswap_token_v4):
+def test_erc20_bridge(
+    cbridge, cmove, alice, invoker, bob, weth, uni_router, anyswap_token_v4, anyswap_router_v4
+):
+    if anyswap_token_v4["router"] != anyswap_router_v4.address.lower():
+        pytest.skip("Testing incorrect router for token")
     token = anyswap_token_v4["underlying"]
     anytoken = anyswap_token_v4["anyToken"]
 
@@ -59,3 +63,4 @@ def test_erc20_bridge(cbridge, cmove, alice, invoker, bob, weth, uni_router, any
     assert evt["to"] == bob
     assert evt["fromChainID"] == 1337
     assert evt["toChainID"] == 4
+    assert evt["amount"] == amount

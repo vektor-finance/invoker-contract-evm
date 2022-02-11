@@ -91,6 +91,7 @@ def anyswap_router_v4(request):
 def anyswap_token_v4(request):
     token = request.param
     yield {
+        "router": token["router"],
         "underlying": Contract.from_abi(
             token["underlyingName"], token["underlyingAddress"], interface.IERC20.abi
         ),
