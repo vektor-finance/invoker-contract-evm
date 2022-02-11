@@ -14,10 +14,15 @@ contract CBridge {
 
     IWETH public immutable WETH;
 
-    IAnyswapV5Router public immutable ANYSWAP_ROUTER;
+    IAnyswapV4Router public immutable ANYSWAP_ROUTER;
 
-    constructor(address _weth, address _router) {
+    constructor(
+        address _weth,
+        address _anyWETH,
+        address _router
+    ) {
         WETH = IWETH(_weth);
+        ANY_WETH = IERC20(_anyWETH);
         ANYSWAP_ROUTER = IAnyswapV5Router(_router);
     }
 
@@ -26,9 +31,12 @@ contract CBridge {
         address destinationAddress,
         uint256 destinationChainID
     ) external payable {
-        ANYSWAP_ROUTER.anySwapOutNative{value: amount}(
-            address(WETH),
+        WETH.deposit{value: amount}();
+        WETH.approve(address(ANYSWAP_ROUTER), amount);
+        ANYSWAP_ROUTER.anySwapOutUnderlying(
+            address(ANY_WETH),
             destinationAddress,
+            amount,
             destinationChainID
         );
     }
