@@ -78,6 +78,14 @@ def token(request):
     yield Contract.from_abi(token["name"], token["address"], interface.IERC20.abi)
 
 
+@pytest.fixture(scope="module")
+def anyswap_router_v4(request):
+    router = request.param
+    yield Contract.from_abi(
+        f"{router['venue']} router", router["address"], interface.AnyswapV4Router.abi
+    )
+
+
 # pytest fixtures/collections
 
 _network = ""
@@ -136,3 +144,12 @@ def pytest_generate_tests(metafunc):
         wrapped_natives = [asset for asset in _chain["assets"] if asset.get("wrapped_native")]
         wrapped_names = [token["name"] for token in wrapped_natives]
         metafunc.parametrize("weth", wrapped_natives, ids=wrapped_names, indirect=True)
+
+    if "anyswap_router_v4" in metafunc.fixturenames:
+        routers = [
+            contract
+            for contract in _chain["contracts"]
+            if "anyswap_router_v4" in contract.get("interfaces")
+        ]
+        router_names = [router["venue"] for router in routers]
+        metafunc.parametrize("anyswap_router_v4", routers, ids=router_names, indirect=True)

@@ -7,26 +7,28 @@ from data.access_control import APPROVED_COMMAND
 
 
 @pytest.fixture
-def cbridge(deployer, invoker, CBridge, weth):
-    contract = deployer.deploy(CBridge, weth, "0x6b7a87899490EcE95443e979cA9485CBE7E71522")
+def cbridge(deployer, invoker, CBridge, anyswap_router_v4, weth):
+    contract = deployer.deploy(
+        CBridge, weth, "0xB153FB3d196A8eB25522705560ac152eeEc57901", anyswap_router_v4.address
+    )
     invoker.grantRole(APPROVED_COMMAND, contract, {"from": deployer})
     yield contract
 
 
-@pytest.fixture
-def anyswaprouter(interface, autouse=True):
-    # this is a hack to get the anyswap router into memory -> allows for event logging
-    Contract.from_abi(
-        "ANYSWAP ROUTER",
-        "0x6b7a87899490EcE95443e979cA9485CBE7E71522",
-        interface.AnyswapV5Router.abi,
+def test_native_bridge(cbridge, alice, invoker, bob):
+    amount = 100
+    calldata_bridge_native = cbridge.bridgeNative.encode_input(amount, bob, 4)
+    tx = invoker.invoke(
+        [cbridge.address], [calldata_bridge_native], {"from": alice, "value": amount}
     )
-
-
-# def test_native_bridge(cbridge, alice, invoker, bob):
-#     amount = 100
-#     calldata_bridge_native = cbridge.bridgeNative.encode_input(amount, bob, 4)
-#     invoker.invoke([cbridge.address], [calldata_bridge_native], {"from": alice, "value": amount})
+    assert "LogAnySwapOut" in tx.events
+    evt = tx.events["LogAnySwapOut"]
+    assert evt["token"] == "0xB153FB3d196A8eB25522705560ac152eeEc57901"
+    assert evt["from"] == invoker.address
+    assert evt["to"] == bob.address
+    assert evt["amount"] == amount
+    assert evt["fromChainID"] == 1337
+    assert evt["toChainID"] == 4
 
 
 def test_erc20_bridge(cbridge, cmove, alice, invoker, bob, weth, uni_router, interface):
