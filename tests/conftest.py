@@ -10,6 +10,7 @@ from brownie._config import CONFIG
 from brownie.project.main import get_loaded_projects
 
 from data.access_control import APPROVED_COMMAND
+from data.anyswap import get_anyswap_tokens_for_chain
 from data.chain import get_chain_from_network_name
 
 
@@ -86,6 +87,19 @@ def anyswap_router_v4(request):
     )
 
 
+@pytest.fixture(scope="module")
+def anyswap_token_v4(request):
+    token = request.param
+    yield {
+        "underlying": Contract.from_abi(
+            token["underlyingName"], token["underlyingAddress"], interface.IERC20.abi
+        ),
+        "anyToken": Contract.from_abi(
+            f"any{token['underlyingName']}", token["anyAddress"], interface.AnyswapV5ERC20.abi
+        ),
+    }
+
+
 # pytest fixtures/collections
 
 _network = ""
@@ -153,3 +167,9 @@ def pytest_generate_tests(metafunc):
         ]
         router_names = [router["venue"] for router in routers]
         metafunc.parametrize("anyswap_router_v4", routers, ids=router_names, indirect=True)
+
+    if "anyswap_token_v4" in metafunc.fixturenames:
+        anyswap_tokens = get_anyswap_tokens_for_chain(_chain["chain_id"])
+        tokens = [asset for asset in anyswap_tokens if asset.get("anyAddress")]
+        token_names = [token["underlyingName"] for token in tokens]
+        metafunc.parametrize("anyswap_token_v4", tokens, ids=token_names, indirect=True)

@@ -1,7 +1,6 @@
 import time
 
 import pytest
-from brownie import Contract
 
 from data.access_control import APPROVED_COMMAND
 
@@ -31,13 +30,10 @@ def test_native_bridge(cbridge, alice, invoker, bob):
     assert evt["toChainID"] == 4
 
 
-def test_erc20_bridge(cbridge, cmove, alice, invoker, bob, weth, uni_router, interface):
-    token = Contract.from_abi(
-        "TOKEN", "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48", interface.IERC20.abi
-    )
-    anytoken = Contract.from_abi(
-        "ANYTOKEN", "0x7ea2be2df7ba6e54b1a9c70676f668455e329d29", interface.IERC20.abi
-    )
+def test_erc20_bridge(cbridge, cmove, alice, invoker, bob, weth, uni_router, anyswap_token_v4):
+    token = anyswap_token_v4["underlying"]
+    anytoken = anyswap_token_v4["anyToken"]
+
     path = [weth.address, token.address]
     uni_router.swapExactETHForTokens(
         0, path, alice, time.time() + 1, {"from": alice, "value": 1e18}
