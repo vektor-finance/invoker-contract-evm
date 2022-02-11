@@ -5,7 +5,7 @@
 
 pragma solidity ^0.8.6;
 
-import "../../interfaces/IAnyswapV5Router.sol";
+import "../../interfaces/IAnyswapV4Router.sol";
 import "../../interfaces/IWeth.sol";
 import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 
@@ -14,16 +14,18 @@ contract CBridge {
 
     IWETH public immutable WETH;
 
+    IERC20 public immutable ANY_WETH;
+
     IAnyswapV4Router public immutable ANYSWAP_ROUTER;
 
     constructor(
-        address _weth,
-        address _anyWETH,
-        address _router
+        IWETH _weth,
+        IERC20 _anyWETH,
+        IAnyswapV4Router _router
     ) {
-        WETH = IWETH(_weth);
-        ANY_WETH = IERC20(_anyWETH);
-        ANYSWAP_ROUTER = IAnyswapV5Router(_router);
+        WETH = _weth;
+        ANY_WETH = _anyWETH;
+        ANYSWAP_ROUTER = _router;
     }
 
     function bridgeNative(
