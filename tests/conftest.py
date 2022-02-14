@@ -11,7 +11,7 @@ from brownie.project.main import get_loaded_projects
 
 from data.access_control import APPROVED_COMMAND
 from data.anyswap import get_anyswap_tokens_for_chain
-from data.chain import get_chain_from_network_name
+from data.chain import get_chain_from_network_name, get_chain_name
 
 
 # User accounts
@@ -101,6 +101,11 @@ def anyswap_token_v4(request):
     }
 
 
+@pytest.fixture(scope="module")
+def anyswap_token_dest_chain(request):
+    return request.param
+
+
 # pytest fixtures/collections
 
 _network = ""
@@ -174,3 +179,14 @@ def pytest_generate_tests(metafunc):
         tokens = [asset for asset in anyswap_tokens if asset.get("anyAddress")]
         token_names = [token["underlyingName"] for token in tokens]
         metafunc.parametrize("anyswap_token_v4", tokens, ids=token_names, indirect=True)
+
+    if "anyswap_token_dest_chain" in metafunc.fixturenames:
+        anyswap_tokens = get_anyswap_tokens_for_chain(_chain["chain_id"])
+        all_dest = []
+        for token in anyswap_tokens:
+            for chain in token.get("destChains"):
+                if chain not in all_dest:
+                    all_dest.append(chain)
+        metafunc.parametrize(
+            "anyswap_token_dest_chain", all_dest, indirect=True, ids=get_chain_name
+        )

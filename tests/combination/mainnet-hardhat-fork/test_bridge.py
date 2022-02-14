@@ -31,7 +31,16 @@ def test_native_bridge(cbridge, alice, invoker, bob):
 
 
 def test_erc20_bridge(
-    cbridge, cmove, alice, invoker, bob, weth, uni_router, anyswap_token_v4, anyswap_router_v4
+    cbridge,
+    cmove,
+    alice,
+    invoker,
+    bob,
+    weth,
+    uni_router,
+    anyswap_token_v4,
+    anyswap_router_v4,
+    anyswap_token_dest_chain,
 ):
     if anyswap_token_v4["router"] != anyswap_router_v4.address.lower():
         pytest.skip("Testing incorrect router for token")
@@ -47,7 +56,7 @@ def test_erc20_bridge(
     calldata_move_in = cmove.moveERC20In.encode_input(token.address, amount)
 
     calldata_bridge_native = cbridge.bridgeERC20.encode_input(
-        token.address, anytoken.address, amount, bob, 4
+        token.address, anytoken.address, amount, bob, anyswap_token_dest_chain
     )
 
     token.approve(invoker.address, amount, {"from": alice})
@@ -62,5 +71,5 @@ def test_erc20_bridge(
     assert evt["from"] == invoker
     assert evt["to"] == bob
     assert evt["fromChainID"] == 1337
-    assert evt["toChainID"] == 4
+    assert evt["toChainID"] == anyswap_token_dest_chain
     assert evt["amount"] == amount
