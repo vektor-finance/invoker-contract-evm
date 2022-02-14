@@ -59,3 +59,19 @@ def get_uni_router_address(chain):
                 yield contract
 
     return next(generator(chain))["address"]
+
+
+CHAINS = {
+    "1": "mainnet",
+    "56": "binance smart chain",
+    "66": "okex chain",
+    "137": "polygon",
+    "42161": "arbitrum",
+    "43114": "avalanche",
+    "250": "fantom",
+    "128": "huobi eco",
+}
+
+
+def get_chain_name(chain_id):
+    return CHAINS[chain_id]
