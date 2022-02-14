@@ -7,9 +7,12 @@ compiler:
     version: 0.3.1
 
 networks:
-  default: hardhat-fork
+  default: mainnet-hardhat-fork
 
 dependencies:
   - OpenZeppelin/openzeppelin-contracts@4.2.0
+
+hypothesis:
+  max_examples: 10
 
 dotenv: .env

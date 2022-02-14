@@ -22,7 +22,7 @@ contract CMove {
     **/
     function moveERC20In(IERC20 _token, uint256 _amount) external payable {
         uint256 balanceBefore = _token.balanceOf(address(this));
-        _token.transferFrom(msg.sender, address(this), _amount);
+        _token.safeTransferFrom(msg.sender, address(this), _amount);
         uint256 balanceAfter = _token.balanceOf(address(this));
         require(balanceAfter == balanceBefore + _amount, "CMove: Deflationary token");
     }
@@ -42,7 +42,7 @@ contract CMove {
         uint256 _amount
     ) external payable {
         uint256 balanceBefore = _token.balanceOf(_to);
-        _token.transfer(_to, _amount);
+        _token.safeTransfer(_to, _amount);
         uint256 balanceAfter = _token.balanceOf(_to);
         require(balanceAfter == balanceBefore + _amount, "CMove: Deflationary token");
     }
@@ -59,7 +59,7 @@ contract CMove {
         uint256 amount = _token.balanceOf(address(this));
         if (amount > 0) {
             uint256 balanceBefore = _token.balanceOf(_to);
-            _token.transfer(_to, amount);
+            _token.safeTransfer(_to, amount);
             uint256 balanceAfter = _token.balanceOf(_to);
             require(balanceAfter == balanceBefore + amount, "CMove: Deflationary token");
         }

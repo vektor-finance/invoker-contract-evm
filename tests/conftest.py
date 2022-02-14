@@ -105,6 +105,13 @@ def anyswap_token_v4(request):
 def anyswap_token_dest_chain(request):
     return request.param
 
+def tokens_for_alice(request, alice):
+    token = request.param
+    contract = Contract.from_abi(token["name"], token["address"], interface.ERC20Detailed.abi)
+    contract.transfer(alice, 100 * (10 ** token["decimals"]), {"from": token["benefactor"]})
+    yield contract
+
+
 
 # pytest fixtures/collections
 
@@ -150,6 +157,11 @@ def pytest_generate_tests(metafunc):
         tokens = [asset for asset in _chain["assets"] if asset.get("address")]
         token_names = [token["name"] for token in tokens]
         metafunc.parametrize("token", tokens, ids=token_names, indirect=True)
+
+    if "tokens_for_alice" in metafunc.fixturenames:
+        tokens = [asset for asset in _chain["assets"] if asset.get("address")]
+        token_names = [token["name"] for token in tokens]
+        metafunc.parametrize("tokens_for_alice", tokens, ids=token_names, indirect=True)
 
     if "uni_router" in metafunc.fixturenames:
         routers = [
