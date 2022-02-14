@@ -21,6 +21,7 @@ def test_move_erc20_out(alice, tokens_for_alice, invoker, cmove):
 
 def test_move_all_erc20_out(alice, tokens_for_alice, invoker, cmove):
     amount = tokens_for_alice.balanceOf(alice)
+    tokens_for_alice.transfer(invoker.address, amount, {"from": alice})
     calldata_move_all_out = cmove.moveAllERC20Out.encode_input(tokens_for_alice.address, alice)
     invoker.invoke([cmove.address], [calldata_move_all_out], {"from": alice})
     assert tokens_for_alice.balanceOf(invoker.address) == 0
