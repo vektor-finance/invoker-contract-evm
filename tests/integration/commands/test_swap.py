@@ -1,11 +1,12 @@
 import time
 
+import pytest
 from brownie.test import given, strategy
 
 
 def test_buy_token(alice, weth, uni_router, token):
     if token == weth:
-        return
+        pytest.skip("Cannot buy WETH")
     amount_in = 1e18
     path = [weth.address, token.address]
     [_, amount_out] = uni_router.getAmountsOut(amount_in, path)
@@ -19,7 +20,7 @@ def test_buy_token(alice, weth, uni_router, token):
 def test_buy_with_invoker(alice, weth, uni_router, token, invoker, cswap, amount_in):
     """Test simple BUY via invoker"""
     if token == weth:
-        return
+        pytest.skip("Cannot buy WETH")
     path = [weth.address, token.address]
     [_, amount_out] = uni_router.getAmountsOut(amount_in, path)
 
@@ -35,6 +36,47 @@ def test_buy_with_invoker(alice, weth, uni_router, token, invoker, cswap, amount
         {"from": alice, "value": amount_in},
     )
     assert token.balanceOf(invoker.address) >= amount_out
+
+
+def test_sell_token(alice, weth, uni_router, tokens_for_alice):
+    if tokens_for_alice == weth:
+        pytest.skip("Cannot sell WETH")
+    amount_in = tokens_for_alice.balanceOf(alice)
+    path = [tokens_for_alice.address, weth.address]
+    prev_balance = alice.balance()
+    [_, amount_out] = uni_router.getAmountsOut(amount_in, path)
+    tokens_for_alice.approve(uni_router.address, amount_in, {"from": alice})
+    uni_router.swapExactTokensForETH(
+        amount_in, amount_out, path, alice, time.time() + 1, {"from": alice}
+    )
+    assert alice.balance() >= prev_balance + amount_out
+
+
+@given(amount_in=strategy("uint256", min_value="1", max_value="100"))
+def test_sell_with_invoker(
+    alice, weth, uni_router, tokens_for_alice, invoker, cmove, cswap, amount_in
+):
+    value = amount_in * (10 ** tokens_for_alice.decimals())
+    """Test simple SELL via invoker"""
+    if tokens_for_alice == weth:
+        pytest.skip("Cannot sell WETH")
+    path = [tokens_for_alice.address, weth.address]
+    [_, amount_out] = uni_router.getAmountsOut(value, path)
+
+    if amount_out == 0:
+        return
+
+    calldata_move = cmove.moveERC20In.encode_input(tokens_for_alice, value)
+    calldata_sell = cswap.swapUniswapIn.encode_input(value, amount_out, path)
+
+    tokens_for_alice.approve(invoker.address, value, {"from": alice})
+
+    invoker.invoke(
+        [cmove.address, cswap.address],
+        [calldata_move, calldata_sell],
+        {"from": alice},
+    )
+    assert weth.balanceOf(invoker.address) >= amount_out
 
 
 @given(value=strategy("uint256", max_value="1000 ether"))
