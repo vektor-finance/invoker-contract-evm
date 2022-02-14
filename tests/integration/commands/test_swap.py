@@ -10,6 +10,10 @@ def test_buy_token(alice, weth, uni_router, token):
     amount_in = 1e18
     path = [weth.address, token.address]
     [_, amount_out] = uni_router.getAmountsOut(amount_in, path)
+
+    if amount_out == 0:
+        pytest.skip("Insufficient liquidity")
+
     uni_router.swapExactETHForTokens(
         amount_out, path, alice, time.time() + 1, {"from": alice, "value": amount_in}
     )
@@ -25,7 +29,7 @@ def test_buy_with_invoker(alice, weth, uni_router, token, invoker, cswap, amount
     [_, amount_out] = uni_router.getAmountsOut(amount_in, path)
 
     if amount_out == 0:
-        return
+        pytest.skip("Insufficient liquidity")
 
     calldata_wrap = cswap.wrapEth.encode_input(amount_in)
     calldata_buy = cswap.swapUniswapIn.encode_input(amount_in, amount_out, path)
@@ -46,6 +50,10 @@ def test_sell_token(alice, weth, uni_router, tokens_for_alice):
     prev_balance = alice.balance()
     [_, amount_out] = uni_router.getAmountsOut(amount_in, path)
     tokens_for_alice.approve(uni_router.address, amount_in, {"from": alice})
+
+    if amount_out == 0:
+        pytest.skip("Insufficient liquidity")
+
     uni_router.swapExactTokensForETH(
         amount_in, amount_out, path, alice, time.time() + 1, {"from": alice}
     )
@@ -64,7 +72,7 @@ def test_sell_with_invoker(
     [_, amount_out] = uni_router.getAmountsOut(value, path)
 
     if amount_out == 0:
-        return
+        pytest.skip("Insufficient liquidity")
 
     calldata_move = cmove.moveERC20In.encode_input(tokens_for_alice, value)
     calldata_sell = cswap.swapUniswapIn.encode_input(value, amount_out, path)
