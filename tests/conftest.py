@@ -106,6 +106,7 @@ def anyswap_token_dest_chain(request):
     return request.param
 
 
+@pytest.fixture(scope="module")
 def tokens_for_alice(request, alice):
     token = request.param
     contract = Contract.from_abi(token["name"], token["address"], interface.ERC20Detailed.abi)
