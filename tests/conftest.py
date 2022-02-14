@@ -78,6 +78,14 @@ def token(request):
     yield Contract.from_abi(token["name"], token["address"], interface.IERC20.abi)
 
 
+@pytest.fixture(scope="module")
+def tokens_for_alice(request, alice):
+    token = request.param
+    contract = Contract.from_abi(token["name"], token["address"], interface.ERC20Detailed.abi)
+    contract.transfer(alice, 100 * (10 ** token["decimals"]), {"from": token["benefactor"]})
+    yield contract
+
+
 # pytest fixtures/collections
 
 _network = ""
@@ -122,6 +130,11 @@ def pytest_generate_tests(metafunc):
         tokens = [asset for asset in _chain["assets"] if asset.get("address")]
         token_names = [token["name"] for token in tokens]
         metafunc.parametrize("token", tokens, ids=token_names, indirect=True)
+
+    if "tokens_for_alice" in metafunc.fixturenames:
+        tokens = [asset for asset in _chain["assets"] if asset.get("address")]
+        token_names = [token["name"] for token in tokens]
+        metafunc.parametrize("tokens_for_alice", tokens, ids=token_names, indirect=True)
 
     if "uni_router" in metafunc.fixturenames:
         routers = [
