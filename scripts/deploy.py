@@ -8,7 +8,6 @@
 # -- RPC url: http://127.0.0.1:8545
 # -- Chain ID: 1337
 # The other settings can be left blank
-# In the future, we could deploy/mint ether/erc20 tokens for users
 
 
 import json
