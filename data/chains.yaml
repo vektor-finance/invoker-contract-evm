@@ -121,7 +121,6 @@ polygon:
   id: polygon
   name: Polygon Mainnet
   chain_id: 137
-  eip1559: true
   network:
     prod: polygon-prod
     fork: polygon-hardhat-fork
