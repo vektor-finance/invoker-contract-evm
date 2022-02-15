@@ -14,5 +14,3 @@ dependencies:
 
 hypothesis:
   max_examples: 10
-
-dotenv: .env
