@@ -45,7 +45,7 @@ def test_buy_with_invoker(alice, weth, uni_router, token, invoker, cswap, amount
 def test_sell_token(alice, weth, uni_router, tokens_for_alice):
     if tokens_for_alice == weth:
         pytest.skip("Cannot sell WETH")
-    amount_in = tokens_for_alice.balanceOf(alice)
+    amount_in = 100 * (10 ** tokens_for_alice.decimals())
     path = [tokens_for_alice.address, weth.address]
     prev_balance = alice.balance()
     [_, amount_out] = uni_router.getAmountsOut(amount_in, path)
