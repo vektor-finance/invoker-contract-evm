@@ -11,6 +11,8 @@
 # In the future, we could deploy/mint ether/erc20 tokens for users
 
 
+import time
+
 from brownie import CMove, CSwap, Invoker, accounts, network
 
 from data.chain import get_chain_from_network_name, get_uni_router_address, get_weth_address
@@ -37,7 +39,7 @@ def deploy_commands(deployer, invoker, chain):
     UNI_ROUTER_ADDRESS = get_uni_router_address(chain)
 
     for command in commands:
-        print(f"Deploying {command._name}")
+        print(f"==Deploying {command._name}==")
         if command is CSwap:
             deployed_command = command.deploy(
                 WETH_ADDRESS,
@@ -49,10 +51,11 @@ def deploy_commands(deployer, invoker, chain):
         invoker.grantRole(
             APPROVED_COMMAND, deployed_command.address, get_deployer_opts(deployer, chain)
         )
+        print(f"Deployed {command._name} and authorised contract to be used in invoker")
+        time.sleep(1)
 
 
 def main():
-
     (chain, mode) = get_chain_from_network_name(network.show_active())
     if not chain:
         raise ValueError(
