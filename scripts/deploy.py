@@ -11,19 +11,50 @@
 # In the future, we could deploy/mint ether/erc20 tokens for users
 
 
+import json
+import os
 import time
-from os import environ
 
 from brownie import CMove, CSwap, Invoker, accounts, network
 
+from data.access_control import APPROVED_COMMAND
 from data.chain import get_chain_from_network_name, get_uni_router_address, get_weth_address
+from data.git import get_git_revision_hash, get_git_revision_short_hash
 
 commands = [CMove, CSwap]
-APPROVED_COMMAND = "410a6a8d01da3028e7c041b5925a6d26ed38599db21a26cf9a5e87c68941f98a"
+
+OUTPUTS_DEPLOYMENT_DIR = "deployments"
+
+
+def log_deployment(contract, chain):
+    if not os.path.exists(OUTPUTS_DEPLOYMENT_DIR):
+        os.makedirs(OUTPUTS_DEPLOYMENT_DIR)
+    try:
+        with open(os.path.join(OUTPUTS_DEPLOYMENT_DIR, "deployments.json"), "r") as infile:
+            data = json.load(infile)
+    except FileNotFoundError:
+        data = {}
+    chain_id = str(chain.get("chain_id"))
+    deployments = data.get(chain_id)
+    deployments = [] if deployments is None else deployments
+    deployments.append(
+        {
+            "contract": contract._name,
+            "address": contract.address,
+            "block_number": contract.tx.block_number,
+            "timestamp": int(time.time()),
+            "git_sha": get_git_revision_short_hash(),
+            "git_sha_long": get_git_revision_hash(),
+        }
+    )
+    data[chain_id] = deployments
+
+    with open(os.path.join(OUTPUTS_DEPLOYMENT_DIR, "deployments.json"), "w") as outfile:
+        json.dump(data, outfile)
 
 
 def get_deployer_opts(deployer, chain):
-    gas_override = environ.get("gwei")
+    gas_override = os.environ.get("gwei")
     if gas_override:
         return {"from": deployer, "gas_price": f"{gas_override} gwei"}
     if chain.get("eip1559"):
@@ -32,13 +63,15 @@ def get_deployer_opts(deployer, chain):
         return {"from": deployer}
 
 
-def deploy_invoker(deployer, chain):
+def deploy_invoker(deployer, chain, log=False):
     print("Deploying invoker")
     invoker = Invoker.deploy(get_deployer_opts(deployer, chain))
+    if log:
+        log_deployment(invoker, chain)
     return invoker
 
 
-def deploy_commands(deployer, invoker, chain):
+def deploy_commands(deployer, invoker, chain, log=False):
     WETH_ADDRESS = get_weth_address(chain)
     UNI_ROUTER_ADDRESS = get_uni_router_address(chain)
 
@@ -52,6 +85,8 @@ def deploy_commands(deployer, invoker, chain):
             )
         else:
             deployed_command = command.deploy(get_deployer_opts(deployer, chain))
+        if log:
+            log_deployment(deployed_command, chain)
         invoker.grantRole(
             APPROVED_COMMAND, deployed_command.address, get_deployer_opts(deployer, chain)
         )
@@ -81,7 +116,9 @@ def main():
 
     start_gas = deployer.gas_used  # in case somebody has sent tx with deployer
 
-    invoker = deploy_invoker(deployer, chain)
-    deploy_commands(deployer, invoker, chain)
+    log = mode == "prod"
+
+    invoker = deploy_invoker(deployer, chain, log=log)
+    deploy_commands(deployer, invoker, chain, log=log)
 
     print(f"Gas used for deployment: {deployer.gas_used-start_gas} gwei\n")
