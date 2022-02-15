@@ -31,7 +31,7 @@ def test_buy_with_invoker(alice, weth, uni_router, token, invoker, cswap, amount
     if amount_out == 0:
         pytest.skip("Insufficient liquidity")
 
-    calldata_wrap = cswap.wrapEth.encode_input(amount_in)
+    calldata_wrap = cswap.wrapNative.encode_input(amount_in)
     calldata_buy = cswap.swapUniswapIn.encode_input(amount_in, amount_out, path)
 
     invoker.invoke(
@@ -90,7 +90,7 @@ def test_sell_with_invoker(
 @given(value=strategy("uint256", max_value="1000 ether"))
 def test_wrap_native(alice, invoker, weth, cswap, value):
     starting_balance = alice.balance()
-    calldata_wrap = cswap.wrapEth.encode_input(value)
+    calldata_wrap = cswap.wrapNative.encode_input(value)
     invoker.invoke([cswap.address], [calldata_wrap], {"from": alice, "value": value})
     assert alice.balance() == starting_balance - value
     assert weth.balanceOf(invoker) == value
@@ -101,7 +101,7 @@ def test_unwrap_native(alice, invoker, weth, cswap, value, bob):
     # bob mints wrapped native and sends to invoker
     weth.deposit({"from": bob, "value": value})
     weth.transfer(invoker, value, {"from": bob})
-    calldata_unwrap = cswap.unwrapWeth.encode_input(value)
+    calldata_unwrap = cswap.unwrapWrappedNative.encode_input(value)
     invoker.invoke([cswap.address], [calldata_unwrap], {"from": alice})
     assert invoker.balance() == value
     assert weth.balanceOf(invoker) == 0
@@ -113,7 +113,7 @@ def test_unwrap_all_native(alice, invoker, weth, cswap, value, bob):
     weth.deposit({"from": bob, "value": value})
     weth.transfer(invoker, value, {"from": bob})
 
-    calldata_unwrap_all = cswap.unwrapAllWeth.encode_input()
+    calldata_unwrap_all = cswap.unwrapAllWrappedNative.encode_input()
     invoker.invoke([cswap.address], [calldata_unwrap_all], {"from": alice})
     assert invoker.balance() == value
     assert weth.balanceOf(invoker) == 0

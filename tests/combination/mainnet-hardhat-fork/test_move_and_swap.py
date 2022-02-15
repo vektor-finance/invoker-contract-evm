@@ -23,7 +23,7 @@ def test_swap_eth_for_dai(invoker, alice, cmove, cswap, weth, dai):
     starting_balance = alice.balance()
 
     # 1. Wrap ETH
-    calldata_wrap_eth = cswap.wrapEth.encode_input(value)
+    calldata_wrap_eth = cswap.wrapNative.encode_input(value)
 
     # 2. Swap WETH -> Dai
     calldata_swap_weth_dai = cswap.swapUniswapIn.encode_input(value, 0, [weth.address, dai.address])
@@ -68,12 +68,12 @@ def test_swap_dai_to_eth_and_disperse(invoker, bob, cmove, cswap, weth, dai, acc
     )
 
     # 3. Unwrap ETH -> ETH
-    calldata_unwrap_weth = cswap.unwrapWeth.encode_input("0.3 ether")
+    calldata_unwrap_weth = cswap.unwrapWrappedNative.encode_input("0.3 ether")
 
     # 4-6. Move ETH -> account 3,4,5
-    calldata_move_eth_3 = cmove.moveEth.encode_input(accounts[3], "0.1 ether")
-    calldata_move_eth_4 = cmove.moveEth.encode_input(accounts[4], "0.1 ether")
-    calldata_move_eth_5 = cmove.moveEth.encode_input(accounts[5], "0.1 ether")
+    calldata_move_eth_3 = cmove.moveNative.encode_input(accounts[3], "0.1 ether")
+    calldata_move_eth_4 = cmove.moveNative.encode_input(accounts[4], "0.1 ether")
+    calldata_move_eth_5 = cmove.moveNative.encode_input(accounts[5], "0.1 ether")
 
     account_3_starting_balance = accounts[3].balance()
     account_4_starting_balance = accounts[4].balance()
@@ -112,9 +112,9 @@ def test_wrap_ether_in_multiple_transactions(invoker, alice, weth, cswap, cmove)
     value_a = "1 ether"
     value_b = "0.5 ether"
     total_value = "1.5 ether"  # can't do string multiplication
-    calldata_wrap_eth_a = cswap.wrapEth.encode_input(value_a)
+    calldata_wrap_eth_a = cswap.wrapNative.encode_input(value_a)
     calldata_move_weth = cmove.moveERC20Out.encode_input(weth.address, alice.address, value_a)
-    calldata_wrap_eth_b = cswap.wrapEth.encode_input(value_b)
+    calldata_wrap_eth_b = cswap.wrapNative.encode_input(value_b)
 
     invoker.invoke(
         [cswap.address, cmove.address, cswap.address],
@@ -147,7 +147,7 @@ def test_wrap_ether_in_multiple_transactions_can_leave_eth_on_invoker(
     value_a = "1 ether"
     value_b = "0.5 ether"
     total_value = "1.5 ether"  # can't do string multiplication
-    calldata_wrap_eth_a = cswap.wrapEth.encode_input(value_a)
+    calldata_wrap_eth_a = cswap.wrapNative.encode_input(value_a)
     calldata_move_weth = cmove.moveERC20Out.encode_input(weth.address, alice.address, value_a)
 
     invoker.invoke(
@@ -169,9 +169,9 @@ def test_wrap_ether_in_multiple_transactions_should_fail_with_no_ether_attached(
 
     value_a = "1 ether"
     value_b = "0.5 ether"
-    calldata_wrap_eth_a = cswap.wrapEth.encode_input(value_a)
+    calldata_wrap_eth_a = cswap.wrapNative.encode_input(value_a)
     calldata_move_weth = cmove.moveERC20Out.encode_input(weth.address, alice.address, value_a)
-    calldata_wrap_eth_b = cswap.wrapEth.encode_input(value_b)
+    calldata_wrap_eth_b = cswap.wrapNative.encode_input(value_b)
 
     with reverts():
         invoker.invoke(
@@ -192,7 +192,7 @@ def test_move_swap_then_sweep_rest(invoker, alice, bob, cswap, dai, weth, cmove)
     value = "1 ether"
 
     # 1. Wrap ETH
-    calldata_wrap_eth = cswap.wrapEth.encode_input(value)
+    calldata_wrap_eth = cswap.wrapNative.encode_input(value)
 
     # 2. Swap WETH -> Dai
     calldata_swap_weth_dai = cswap.swapUniswapIn.encode_input(value, 0, [weth.address, dai.address])

@@ -12,19 +12,19 @@ import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 contract CBridge {
     using SafeERC20 for IERC20;
 
-    IWETH public immutable WETH;
+    IWETH public immutable WNATIVE;
 
-    IERC20 public immutable ANY_WETH;
+    IERC20 public immutable ANY_WNATIVE;
 
     IAnyswapV4Router public immutable ANYSWAP_ROUTER;
 
     constructor(
-        IWETH _weth,
-        IERC20 _anyWETH,
+        IWETH _wnative,
+        IERC20 _anyWNATIVE,
         IAnyswapV4Router _router
     ) {
-        WETH = _weth;
-        ANY_WETH = _anyWETH;
+        WNATIVE = _wnative;
+        ANY_WNATIVE = _anyWNATIVE;
         ANYSWAP_ROUTER = _router;
     }
 
@@ -33,10 +33,10 @@ contract CBridge {
         address destinationAddress,
         uint256 destinationChainID
     ) external payable {
-        WETH.deposit{value: amount}();
-        WETH.approve(address(ANYSWAP_ROUTER), amount);
+        WNATIVE.deposit{value: amount}();
+        WNATIVE.approve(address(ANYSWAP_ROUTER), amount);
         ANYSWAP_ROUTER.anySwapOutUnderlying(
-            address(ANY_WETH),
+            address(ANY_WNATIVE),
             destinationAddress,
             amount,
             destinationChainID
