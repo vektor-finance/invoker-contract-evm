@@ -12,6 +12,7 @@
 
 
 import time
+from os import environ
 
 from brownie import CMove, CSwap, Invoker, accounts, network
 
@@ -22,6 +23,9 @@ APPROVED_COMMAND = "410a6a8d01da3028e7c041b5925a6d26ed38599db21a26cf9a5e87c68941
 
 
 def get_deployer_opts(deployer, chain):
+    gas_override = environ.get("gwei")
+    if gas_override:
+        return {"from": deployer, "gas_price": f"{gas_override} gwei"}
     if chain.get("eip1559"):
         return {"from": deployer, "priority_fee": "2 gwei"}
     else:
