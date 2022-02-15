@@ -4,12 +4,12 @@ import pytest
 
 from data.access_control import APPROVED_COMMAND
 
+MAINNET_ANY_ETH_ADDRESS = "0xB153FB3d196A8eB25522705560ac152eeEc57901"
+
 
 @pytest.fixture
 def cbridge(deployer, invoker, CBridge, anyswap_router_v4, weth):
-    contract = deployer.deploy(
-        CBridge, weth, "0xB153FB3d196A8eB25522705560ac152eeEc57901", anyswap_router_v4.address
-    )
+    contract = deployer.deploy(CBridge, weth, MAINNET_ANY_ETH_ADDRESS, anyswap_router_v4.address)
     invoker.grantRole(APPROVED_COMMAND, contract, {"from": deployer})
     yield contract
 
@@ -22,7 +22,7 @@ def test_native_bridge(cbridge, alice, invoker, bob):
     )
     assert "LogAnySwapOut" in tx.events
     evt = tx.events["LogAnySwapOut"]
-    assert evt["token"] == "0xB153FB3d196A8eB25522705560ac152eeEc57901"
+    assert evt["token"] == MAINNET_ANY_ETH_ADDRESS
     assert evt["from"] == invoker.address
     assert evt["to"] == bob.address
     assert evt["amount"] == amount
