@@ -15,14 +15,6 @@ repos:
       - id: check-merge-conflict
       - id: detect-private-key
 
-  - repo: https://github.com/igorshubovych/markdownlint-cli
-    rev: v0.30.0
-    hooks:
-      - id: markdownlint
-        name: markdownlint
-        args: ["--fix"]
-        types: [markdown]
-
   - repo: https://github.com/psf/black
     rev: 21.7b0
     hooks:
