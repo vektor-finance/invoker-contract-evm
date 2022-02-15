@@ -19,7 +19,7 @@ class NativeEthStateMachine:
         self.balances = {i: i.balance() for i in self.accounts}
 
     def rule_move_to_single(self, from_address, to_address, value):
-        calldata_transfer_eth = self.cmove.moveEth.encode_input(to_address, value)
+        calldata_transfer_eth = self.cmove.moveNative.encode_input(to_address, value)
         if value <= self.balances[from_address]:
             self.invoker.invoke(
                 [self.cmove.address],
@@ -33,7 +33,7 @@ class NativeEthStateMachine:
 
     def rule_move_to_multiple(self, from_address, multiple_recv):
         cmoves = [self.cmove.address] * len(multiple_recv)
-        calldatas = [self.cmove.moveEth.encode_input(i[0].address, i[1]) for i in multiple_recv]
+        calldatas = [self.cmove.moveNative.encode_input(i[0].address, i[1]) for i in multiple_recv]
         total_value = sum(i[1] for i in multiple_recv)
         if total_value <= self.balances[from_address]:
             self.invoker.invoke(cmoves, calldatas, {"from": from_address, "value": total_value})
@@ -44,7 +44,7 @@ class NativeEthStateMachine:
             pass
 
     def rule_move_sweep(self, from_address, to_address, value):
-        calldata_sweep_eth = self.cmove.moveAllEthOut.encode_input(to_address)
+        calldata_sweep_eth = self.cmove.moveAllNativeOut.encode_input(to_address)
         if value <= self.balances[from_address]:
             self.invoker.invoke(
                 [self.cmove.address],

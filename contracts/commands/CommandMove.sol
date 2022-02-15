@@ -66,30 +66,30 @@ contract CMove {
     }
 
     /**
-        @notice Allows a user to move their ETH to another address
-        @dev The transferred amount of eth is specified by _amount rather than msg.value
-            This is intentional to allow users to make multiple ETH transfers
-        @param _to The address you wish to send ETH to
-        @param _amount The amount of ETH to transfer (in Wei)
+        @notice Allows a user to move their native asset to another address
+        @dev The transferred amount of native is specified by _amount rather than msg.value
+            This is intentional to allow users to make multiple native transfers
+        @param _to The address you wish to send native to
+        @param _amount The amount of native to transfer (in Wei)
     **/
-    function moveEth(address _to, uint256 _amount) external payable {
+    function moveNative(address _to, uint256 _amount) external payable {
         //solhint-disable-next-line avoid-low-level-calls
         (bool success, ) = _to.call{value: _amount}(new bytes(0));
-        require(success, "Cmove: ETH transfer failed");
+        require(success, "CMove: Native transfer failed");
     }
 
     /**
-        @notice Allows a user to move all the ETH in the Invoker to another address
-        @dev The transferred amount of eth is specified by current balance of the Invoker
+        @notice Allows a user to move all the native asset in the Invoker to another address
+        @dev The transferred amount of native is specified by current balance of the Invoker
         at the time of being called
-        @param _to The address you wish to send ETH to
+        @param _to The address you wish to send native to
     **/
-    function moveAllEthOut(address _to) external payable {
+    function moveAllNativeOut(address _to) external payable {
         uint256 balance = address(this).balance;
         if (balance > 0) {
             //solhint-disable-next-line avoid-low-level-calls
             (bool success, ) = _to.call{value: balance}(new bytes(0));
-            require(success, "Cmove: ETH transfer failed");
+            require(success, "CMove: Native transfer failed");
         }
     }
 }

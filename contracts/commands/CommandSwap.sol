@@ -12,13 +12,13 @@ import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 contract CSwap {
     using SafeERC20 for IERC20;
 
-    IWETH public immutable WETH;
+    IWETH public immutable WNATIVE;
 
     IUniswapV2Router02 public immutable UNISWAP_ROUTER;
 
-    // When deploying on alternate networks, the WETH address should be specified in constructor
-    constructor(address _weth, address _router) {
-        WETH = IWETH(_weth);
+    // When deploying on alternate networks, the WNATIVE address should be specified in constructor
+    constructor(address _wnative, address _router) {
+        WNATIVE = IWETH(_wnative);
         UNISWAP_ROUTER = IUniswapV2Router02(_router);
     }
 
@@ -86,52 +86,52 @@ contract CSwap {
     }
 
     /**
-        @notice Allows a user to wrap their ETH into WETH
-        @dev The transferred amount of eth is specified by _amount rather than msg.value
-            This is intentional to allow users to make multiple ETH transfers
-            Note: User deposits ETH, but WETH given to invoker contract
-                You can then MOVE this WETH
+        @notice Allows a user to wrap their NATIVE into WNATIVE
+        @dev The transferred amount of native is specified by _amount rather than msg.value
+            This is intentional to allow users to make multiple native transfers
+            Note: User deposits native, but WNATIVE given to invoker contract
+                You can then MOVE this WNATIVE
             Validation checks to support wrapping of native tokens that may not conform to WETH9
-        @param _amount The amount of ETH to wrap (in Wei)
+        @param _amount The amount of NATIVE to wrap (in Wei)
     **/
-    function wrapEth(uint256 _amount) external payable {
-        uint256 balanceBefore = WETH.balanceOf(address(this));
-        WETH.deposit{value: _amount}();
-        uint256 balanceAfter = WETH.balanceOf(address(this));
-        require(balanceAfter == balanceBefore + _amount, "CSwap: Error wrapping ETH");
+    function wrapNative(uint256 _amount) external payable {
+        uint256 balanceBefore = WNATIVE.balanceOf(address(this));
+        WNATIVE.deposit{value: _amount}();
+        uint256 balanceAfter = WNATIVE.balanceOf(address(this));
+        require(balanceAfter == balanceBefore + _amount, "CSwap: Error wrapping NATIVE");
     }
 
     /**
-        @notice Allows a user to unwrap their WETH into ETH
+        @notice Allows a user to unwrap their WNATIVE into NATIVE
         @dev Transferred amount is specified by _amount
-            Note: The WETH must be located on the invoker contract
-                The returned ETH will be sent to the invoker contract
+            Note: The WNATIVE must be located on the invoker contract
+                The returned NATIVE will be sent to the invoker contract
                 This will then need to be MOVED to the user
             Validation checks to support unwrapping of native tokens that may not conform to WETH9
-        @param _amount The amount of WETH to unwrap (in Wei)
+        @param _amount The amount of WNATIVE to unwrap (in Wei)
     **/
-    function unwrapWeth(uint256 _amount) external payable {
+    function unwrapWrappedNative(uint256 _amount) external payable {
         uint256 balanceBefore = address(this).balance;
-        WETH.withdraw(_amount);
+        WNATIVE.withdraw(_amount);
         uint256 balanceAfter = address(this).balance;
-        require(balanceAfter == balanceBefore + _amount, "CSwap: Error unwrapping WETH");
+        require(balanceAfter == balanceBefore + _amount, "CSwap: Error unwrapping WNATIVE");
     }
 
     /**
-        @notice Allows a user to unwrap their all their WETH into ETH
-        @dev Transferred amount is the total balance of WETH
-            Note: The WETH must be located on the invoker contract
-                The returned ETH will be sent to the invoker contract
+        @notice Allows a user to unwrap their all their WNATIVE into NATIVE
+        @dev Transferred amount is the total balance of WNATIVE
+            Note: The WNATIVE must be located on the invoker contract
+                The returned NATIVE will be sent to the invoker contract
                 This will then need to be MOVED to the user
             Validation checks to support unwrapping of native tokens that may not conform to WETH9
     **/
-    function unwrapAllWeth() external payable {
-        uint256 balance = WETH.balanceOf(address(this));
+    function unwrapAllWrappedNative() external payable {
+        uint256 balance = WNATIVE.balanceOf(address(this));
         if (balance > 0) {
             uint256 balanceBefore = address(this).balance;
-            WETH.withdraw(balance);
+            WNATIVE.withdraw(balance);
             uint256 balanceAfter = address(this).balance;
-            require(balanceAfter == balanceBefore + balance, "CSwap: Error unwrapping WETH");
+            require(balanceAfter == balanceBefore + balance, "CSwap: Error unwrapping WNATIVE");
         }
     }
 }
