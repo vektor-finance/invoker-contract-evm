@@ -105,10 +105,6 @@ jobs:
         id: run_pre_commit
         run: pre-commit run --all-files
 
-      - name: Replace .env file (unused)
-        id: env_file
-        run: rm .env && touch .env
-
       - name: Copy network-config.yaml to ~/.brownie
         id: copy_network_config
         run: mkdir ~/.brownie && cp network-config.yaml ~/.brownie/
