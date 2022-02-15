@@ -54,7 +54,7 @@ def log_deployment(contract, chain):
 
 
 def get_deployer_opts(deployer, chain):
-    gas_override = os.environ.get("gwei")
+    gas_override = os.environ.get("GAS_GWEI")
     if gas_override:
         return {"from": deployer, "gas_price": f"{gas_override} gwei"}
     if chain.get("eip1559"):
