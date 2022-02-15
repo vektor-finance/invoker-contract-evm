@@ -1,5 +1,5 @@
 def test_is_event_logged_log_invocation_on_invoke(invoker, alice, bob, cmove):
-    calldata_transfer_one_eth = cmove.moveEth.encode_input(bob.address, "1 ether")
+    calldata_transfer_one_eth = cmove.moveNative.encode_input(bob.address, "1 ether")
 
     tx = invoker.invoke(
         [cmove.address], [calldata_transfer_one_eth], {"from": alice, "value": "1 ether"}
@@ -9,13 +9,13 @@ def test_is_event_logged_log_invocation_on_invoke(invoker, alice, bob, cmove):
     assert "LogInvocation" in events
     event = events["LogInvocation"]
     assert event["user"] == alice.address
-    assert event["sigHash"] == "0x567b3a1b"  # Function selector for invoke()
+    assert event["sigHash"] == "0x567b3a1b"  # Function selector for invoke(address[],bytes[])
     assert event["params"] == tx.input
     assert event["value"] == "1 ether"
 
 
 def test_is_event_logged_single_log_vek_on_invoke(invoker, alice, bob, cmove):
-    calldata_transfer_one_eth = cmove.moveEth.encode_input(bob.address, "1 ether")
+    calldata_transfer_one_eth = cmove.moveNative.encode_input(bob.address, "1 ether")
 
     tx = invoker.invoke(
         [cmove.address], [calldata_transfer_one_eth], {"from": alice, "value": "1 ether"}
@@ -25,7 +25,7 @@ def test_is_event_logged_single_log_vek_on_invoke(invoker, alice, bob, cmove):
     assert "LogStep" in events
     event = events["LogStep"]
     assert event["user"] == alice.address
-    assert event["sigHash"] == "0x1cc1472d"  # Function selector for moveEth()
+    assert event["sigHash"] == "0x71096cbb"  # Function selector for moveNative(address,uint256)
     assert event["params"] == calldata_transfer_one_eth
 
 
