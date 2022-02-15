@@ -70,6 +70,9 @@ mainnet:
     - venue: sushiswap
       interfaces: [uniswap_router_v2_02]
       address: "0xd9e1cE17f2641f24aE83637ab66a2cca9C378B9F"
+    - venue: anyswap
+      interfaces: [anyswap_router_v4]
+      address: "0x6b7a87899490EcE95443e979cA9485CBE7E71522"
 
 rinkeby:
   id: rinkeby
@@ -165,7 +168,7 @@ polygon:
       address: "0xa5E0829CaCEd8fFDD4De3c43696c57F7D7A678ff"
 
 mumbai:
-  id: mumbaiuni
+  id: mumbai
   name: Mumbai
   chain_id: 80001
   explorer: https://mumbai.polygonscan.com/

@@ -10,7 +10,8 @@ from brownie._config import CONFIG
 from brownie.project.main import get_loaded_projects
 
 from data.access_control import APPROVED_COMMAND
-from data.chain import get_chain_from_network_name
+from data.anyswap import get_anyswap_tokens_for_chain
+from data.chain import get_chain_from_network_name, get_chain_name
 
 
 # User accounts
@@ -76,6 +77,33 @@ def weth(request):
 def token(request):
     token = request.param
     yield Contract.from_abi(token["name"], token["address"], interface.IERC20.abi)
+
+
+@pytest.fixture(scope="module")
+def anyswap_router_v4(request):
+    router = request.param
+    yield Contract.from_abi(
+        f"{router['venue']} router", router["address"], interface.AnyswapV4Router.abi
+    )
+
+
+@pytest.fixture(scope="module")
+def anyswap_token_v4(request):
+    token = request.param
+    yield {
+        "router": token["router"],
+        "underlying": Contract.from_abi(
+            token["underlyingName"], token["underlyingAddress"], interface.IERC20.abi
+        ),
+        "anyToken": Contract.from_abi(
+            f"any{token['underlyingName']}", token["anyAddress"], interface.AnyswapV5ERC20.abi
+        ),
+    }
+
+
+@pytest.fixture(scope="module")
+def anyswap_token_dest_chain(request):
+    return request.param
 
 
 @pytest.fixture(scope="module")
@@ -149,3 +177,29 @@ def pytest_generate_tests(metafunc):
         wrapped_natives = [asset for asset in _chain["assets"] if asset.get("wrapped_native")]
         wrapped_names = [token["name"] for token in wrapped_natives]
         metafunc.parametrize("weth", wrapped_natives, ids=wrapped_names, indirect=True)
+
+    if "anyswap_router_v4" in metafunc.fixturenames:
+        routers = [
+            contract
+            for contract in _chain["contracts"]
+            if "anyswap_router_v4" in contract.get("interfaces")
+        ]
+        router_names = [router["venue"] for router in routers]
+        metafunc.parametrize("anyswap_router_v4", routers, ids=router_names, indirect=True)
+
+    if "anyswap_token_v4" in metafunc.fixturenames:
+        anyswap_tokens = get_anyswap_tokens_for_chain(_chain["chain_id"])
+        tokens = [asset for asset in anyswap_tokens if asset.get("anyAddress")]
+        token_names = [token["underlyingName"] for token in tokens]
+        metafunc.parametrize("anyswap_token_v4", tokens, ids=token_names, indirect=True)
+
+    if "anyswap_token_dest_chain" in metafunc.fixturenames:
+        anyswap_tokens = get_anyswap_tokens_for_chain(_chain["chain_id"])
+        all_dest = []
+        for token in anyswap_tokens:
+            for chain in token.get("destChains"):
+                if chain not in all_dest:
+                    all_dest.append(chain)
+        metafunc.parametrize(
+            "anyswap_token_dest_chain", all_dest, indirect=True, ids=get_chain_name
+        )
