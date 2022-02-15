@@ -5,11 +5,13 @@
 
 pragma solidity ^0.8.6;
 
-import "../../interfaces/IERC20.sol";
-import "../../interfaces/IWeth.sol";
 import "../../interfaces/IUniswapV2Router02.sol";
+import "../../interfaces/IWeth.sol";
+import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 
 contract CSwap {
+    using SafeERC20 for IERC20;
+
     IWETH public immutable WETH;
 
     IUniswapV2Router02 public immutable UNISWAP_ROUTER;
@@ -37,8 +39,8 @@ contract CSwap {
         require(_path.length > 1, "CSwap: invalid path");
         IERC20 tokenIn = IERC20(_path[0]);
         IERC20 tokenOut = IERC20(_path[_path.length - 1]);
-        tokenIn.approve(address(UNISWAP_ROUTER), 0); // To support tether
-        tokenIn.approve(address(UNISWAP_ROUTER), _amountIn);
+        tokenIn.safeApprove(address(UNISWAP_ROUTER), 0); // To support tether
+        tokenIn.safeApprove(address(UNISWAP_ROUTER), _amountIn);
         uint256 balanceBefore = tokenOut.balanceOf(address(this));
         UNISWAP_ROUTER.swapExactTokensForTokens(
             _amountIn,
@@ -68,8 +70,8 @@ contract CSwap {
     ) external payable {
         require(_path.length > 1, "CSwap: invalid path");
         IERC20 tokenIn = IERC20(_path[0]);
-        tokenIn.approve(address(UNISWAP_ROUTER), 0); // To support tether
-        tokenIn.approve(address(UNISWAP_ROUTER), _amountInMax);
+        tokenIn.safeApprove(address(UNISWAP_ROUTER), 0); // To support tether
+        tokenIn.safeApprove(address(UNISWAP_ROUTER), _amountInMax);
         uint256 balanceBefore = tokenIn.balanceOf(address(this));
         UNISWAP_ROUTER.swapTokensForExactTokens(
             _amountOut,
