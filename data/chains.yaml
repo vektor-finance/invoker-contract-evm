@@ -1,7 +1,6 @@
 # Prod: the actual blockchain. Will require private keys
 # Fork: forked version of the blockchain, for local testing
 ---
-
 dev:
   id: dev
   name: Development Network
@@ -173,7 +172,7 @@ mumbai:
   chain_id: 80001
   explorer: https://mumbai.polygonscan.com/
   network:
-    prod: mumbai-prod
+    prod: mumbai-test
     fork: mumbai-hardhat-fork
   assets:
     - name: Matic
