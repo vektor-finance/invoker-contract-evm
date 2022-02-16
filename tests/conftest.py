@@ -189,12 +189,16 @@ def pytest_generate_tests(metafunc):
 
     if "anyswap_token_v4" in metafunc.fixturenames:
         anyswap_tokens = get_anyswap_tokens_for_chain(_chain["chain_id"])
+        if anyswap_tokens is None:
+            pytest.skip()
         tokens = [asset for asset in anyswap_tokens if asset.get("anyAddress")]
         token_names = [token["underlyingName"] for token in tokens]
         metafunc.parametrize("anyswap_token_v4", tokens, ids=token_names, indirect=True)
 
     if "anyswap_token_dest_chain" in metafunc.fixturenames:
         anyswap_tokens = get_anyswap_tokens_for_chain(_chain["chain_id"])
+        if anyswap_tokens is None:
+            pytest.skip()
         all_dest = []
         for token in anyswap_tokens:
             for chain in token.get("destChains"):
