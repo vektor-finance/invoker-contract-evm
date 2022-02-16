@@ -34,7 +34,9 @@ edit .env
 
 ### Setup
 
-To get started, first create and initialize a Python [virtual environment](https://docs.python.org/3/library/venv.html). Next, clone the repo and install the developer dependencies:
+To get started, first create and initialize a Python [virtual environment](https://docs.python.org/3/library/venv.html).
+
+Next, clone the repo and install the developer dependencies:
 
 ```bash
 git clone https://github.com/vektor-finance/invoker-contract-evm.git
@@ -45,7 +47,9 @@ yarn install
 
 ### Configuring Pre-commit
 
-[Pre-commit](https://pre-commit.com/) is a tool that executes linting checks each time you make a commit. It is useful for enforcing proper codestyle and preventing commits that would fail the linting build.
+[Pre-commit](https://pre-commit.com/) is a tool that executes linting checks each time you make a commit.
+
+It is useful for enforcing proper codestyle and preventing commits that would fail the linting build.
 
 To install pre-commit locally:
 
