@@ -10,8 +10,8 @@ from brownie._config import CONFIG
 from brownie.project.main import get_loaded_projects
 
 from data.access_control import APPROVED_COMMAND
-from data.anyswap import get_anyswap_native_for_chain, get_anyswap_tokens_for_chain
-from data.chain import get_chain_from_network_name, get_chain_name
+from data.anyswap import get_anyswap_tokens_for_chain
+from data.chain import get_chain_from_network_name, get_chain_name, get_wnative_address
 
 
 # User accounts
@@ -44,8 +44,8 @@ def invoker(deployer, Invoker):
 
 
 @pytest.fixture(scope="module")
-def cswap(invoker, deployer, CSwap, weth, uni_router):
-    contract = deployer.deploy(CSwap, weth.address, uni_router.address)
+def cswap(invoker, deployer, CSwap, wnative, uni_router):
+    contract = deployer.deploy(CSwap, wnative.address, uni_router.address)
     invoker.grantRole(APPROVED_COMMAND, contract, {"from": deployer})  # approve command
     yield contract
 
@@ -58,8 +58,8 @@ def cmove(deployer, invoker, CMove):
 
 
 @pytest.fixture(scope="module")
-def cbridge(deployer, invoker, CBridge, anyswap_router_v4, any_native_address, weth):
-    contract = deployer.deploy(CBridge, weth, any_native_address, anyswap_router_v4.address)
+def cbridge(deployer, invoker, CBridge, anyswap_router_v4, any_native_address, wnative):
+    contract = deployer.deploy(CBridge, wnative, any_native_address, anyswap_router_v4.address)
     invoker.grantRole(APPROVED_COMMAND, contract, {"from": deployer})
     yield contract
 
@@ -76,8 +76,10 @@ def uni_router(request):
 
 
 @pytest.fixture(scope="module")
-def weth(request):
-    yield Contract.from_abi("Wrapped Native", request.param["address"], interface.IWETH.abi)
+def wnative(request):
+    chain = getattr(request.module, "chain")
+    address = get_wnative_address(chain)
+    yield Contract.from_abi("Wrapped Native", address, interface.IWETH.abi)
 
 
 @pytest.fixture(scope="module")
@@ -115,7 +117,7 @@ def anyswap_token_dest_chain(request):
 
 @pytest.fixture(scope="module")
 def any_native_address(request):
-    return request.param
+    return request.param["address"]
 
 
 @pytest.fixture(scope="module")
@@ -185,11 +187,6 @@ def pytest_generate_tests(metafunc):
         router_names = [router["venue"] for router in routers]
         metafunc.parametrize("uni_router", routers, ids=router_names, indirect=True)
 
-    if "weth" in metafunc.fixturenames:
-        wrapped_natives = [asset for asset in _chain["assets"] if asset.get("wrapped_native")]
-        wrapped_names = [token["name"] for token in wrapped_natives]
-        metafunc.parametrize("weth", wrapped_natives, ids=wrapped_names, indirect=True)
-
     if "anyswap_router_v4" in metafunc.fixturenames:
         routers = [
             contract
@@ -221,7 +218,7 @@ def pytest_generate_tests(metafunc):
         )
 
     if "any_native_address" in metafunc.fixturenames:
-        native_address = get_anyswap_native_for_chain(_chain["chain_id"])
+        native_address = None  # get_anyswap_native_for_chain(_chain["chain_id"])
         if native_address is None:
             pytest.skip()
         metafunc.parametrize("any_native_address", [native_address], indirect=True)
