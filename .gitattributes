@@ -1,2 +1,4 @@
 *.sol linguist-language=Solidity
 *.vy linguist-language=Python
+
+.env* filter=git-crypt diff=git-crypt
