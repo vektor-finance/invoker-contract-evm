@@ -12,4 +12,11 @@ def get_anyswap_tokens_for_chain(chain_id):
     data = _get_anyswap_data()
     chain_id = str(chain_id)
 
-    return data.get(chain_id)
+    return data.get(chain_id).get("assets")
+
+
+def get_anyswap_native_for_chain(chain_id):
+    data = _get_anyswap_data()
+    chain_id = str(chain_id)
+
+    return data.get(chain_id).get("anyNative")
