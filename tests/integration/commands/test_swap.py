@@ -2,6 +2,7 @@ import time
 
 import pytest
 from brownie.test import given, strategy
+from hypothesis import assume
 
 from data.chain import get_chain, get_chain_id
 
@@ -16,8 +17,9 @@ def test_buy_token(alice, wnative, uni_router, token):
     path = [wnative.address, token.address]
     [_, amount_out] = uni_router.getAmountsOut(amount_in, path)
 
-    if amount_out == 0:
-        pytest.skip("Insufficient liquidity")
+    # When amount_out is zero there is insufficient liquidity.
+    # This is a 'bad' example and should be ignored (not failed)
+    assume(amount_out > 0)
 
     uni_router.swapExactETHForTokens(
         amount_out, path, alice, time.time() + 1, {"from": alice, "value": amount_in}
@@ -33,8 +35,7 @@ def test_buy_with_invoker(alice, wnative, uni_router, token, invoker, cswap, amo
     path = [wnative.address, token.address]
     [_, amount_out] = uni_router.getAmountsOut(amount_in, path)
 
-    if amount_out == 0:
-        pytest.skip("Insufficient liquidity")
+    assume(amount_out > 0)
 
     calldata_wrap = cswap.wrapNative.encode_input(amount_in)
     calldata_buy = cswap.swapUniswapIn.encode_input(amount_in, amount_out, path)
@@ -56,8 +57,7 @@ def test_sell_token(alice, wnative, uni_router, tokens_for_alice):
     [_, amount_out] = uni_router.getAmountsOut(amount_in, path)
     tokens_for_alice.approve(uni_router.address, amount_in, {"from": alice})
 
-    if amount_out == 0:
-        pytest.skip("Insufficient liquidity")
+    assume(amount_out > 0)
 
     uni_router.swapExactTokensForETH(
         amount_in, amount_out, path, alice, time.time() + 1, {"from": alice}
@@ -76,8 +76,7 @@ def test_sell_with_invoker(
     path = [tokens_for_alice.address, wnative.address]
     [_, amount_out] = uni_router.getAmountsOut(value, path)
 
-    if amount_out == 0:
-        pytest.skip("Insufficient liquidity")
+    assume(amount_out > 0)
 
     calldata_move = cmove.moveERC20In.encode_input(tokens_for_alice, value)
     calldata_sell = cswap.swapUniswapIn.encode_input(value, amount_out, path)
