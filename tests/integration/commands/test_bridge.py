@@ -2,19 +2,8 @@ import time
 
 import pytest
 
-from data.access_control import APPROVED_COMMAND
 
-MAINNET_ANY_ETH_ADDRESS = "0xB153FB3d196A8eB25522705560ac152eeEc57901"
-
-
-@pytest.fixture
-def cbridge(deployer, invoker, CBridge, anyswap_router_v4, weth):
-    contract = deployer.deploy(CBridge, weth, MAINNET_ANY_ETH_ADDRESS, anyswap_router_v4.address)
-    invoker.grantRole(APPROVED_COMMAND, contract, {"from": deployer})
-    yield contract
-
-
-def test_native_bridge(cbridge, alice, invoker, bob):
+def test_native_bridge(cbridge, alice, any_native_address, invoker, bob):
     amount = 100
     calldata_bridge_native = cbridge.bridgeNative.encode_input(amount, bob, 4)
     tx = invoker.invoke(
@@ -22,7 +11,7 @@ def test_native_bridge(cbridge, alice, invoker, bob):
     )
     assert "LogAnySwapOut" in tx.events
     evt = tx.events["LogAnySwapOut"]
-    assert evt["token"] == MAINNET_ANY_ETH_ADDRESS
+    assert evt["token"] == any_native_address
     assert evt["from"] == invoker.address
     assert evt["to"] == bob.address
     assert evt["amount"] == amount

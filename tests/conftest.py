@@ -10,7 +10,7 @@ from brownie._config import CONFIG
 from brownie.project.main import get_loaded_projects
 
 from data.access_control import APPROVED_COMMAND
-from data.anyswap import get_anyswap_tokens_for_chain
+from data.anyswap import get_anyswap_native_for_chain, get_anyswap_tokens_for_chain
 from data.chain import get_chain_from_network_name, get_chain_name
 
 
@@ -57,6 +57,13 @@ def cmove(deployer, invoker, CMove):
     yield contract
 
 
+@pytest.fixture(scope="module")
+def cbridge(deployer, invoker, CBridge, anyswap_router_v4, any_native_address, weth):
+    contract = deployer.deploy(CBridge, weth, any_native_address, anyswap_router_v4.address)
+    invoker.grantRole(APPROVED_COMMAND, contract, {"from": deployer})
+    yield contract
+
+
 # Contracts from config file
 
 
@@ -64,13 +71,13 @@ def cmove(deployer, invoker, CMove):
 def uni_router(request):
     router = request.param
     yield Contract.from_abi(
-        f"{router['venue']} router", router["address"], interface.IUniswapV2Router02.abi
+        f"{router['venue']}Router", router["address"], interface.IUniswapV2Router02.abi
     )
 
 
 @pytest.fixture(scope="module")
 def weth(request):
-    yield Contract.from_abi("WETH", request.param["address"], interface.IWETH.abi)
+    yield Contract.from_abi("Wrapped Native", request.param["address"], interface.IWETH.abi)
 
 
 @pytest.fixture(scope="module")
@@ -103,6 +110,11 @@ def anyswap_token_v4(request):
 
 @pytest.fixture(scope="module")
 def anyswap_token_dest_chain(request):
+    return request.param
+
+
+@pytest.fixture(scope="module")
+def any_native_address(request):
     return request.param
 
 
@@ -207,3 +219,9 @@ def pytest_generate_tests(metafunc):
         metafunc.parametrize(
             "anyswap_token_dest_chain", all_dest, indirect=True, ids=get_chain_name
         )
+
+    if "any_native_address" in metafunc.fixturenames:
+        native_address = get_anyswap_native_for_chain(_chain["chain_id"])
+        if native_address is None:
+            pytest.skip()
+        metafunc.parametrize("any_native_address", [native_address], indirect=True)
