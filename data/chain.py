@@ -1,6 +1,7 @@
 import os
 
 import yaml
+from brownie._config import CONFIG
 
 
 def get_chain_data():
@@ -31,8 +32,8 @@ def get_chain_from_network_name(network_name):
     return (chain, mode)
 
 
-def get_weth_address(chain):
-    """Get the first WETH address from chain
+def get_wnative_address(chain):
+    """Get the first wrapped native address from chain
     Does this by checking for wrapped_native
     If multiple assets exists, it returns the first
     """
@@ -81,3 +82,16 @@ CHAINS = {
 
 def get_chain_name(chain_id):
     return CHAINS[chain_id]
+
+
+def get_chain():
+    network = CONFIG.settings["networks"]["default"]
+    if CONFIG.argv["network"]:
+        network = CONFIG.argv["network"]
+    (chain, _) = get_chain_from_network_name(network)
+    return chain
+
+
+def get_chain_id():
+    chain = get_chain()
+    return chain["chain_id"]
