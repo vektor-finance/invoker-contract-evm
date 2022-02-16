@@ -35,7 +35,6 @@ env:
     ${{ github.workspace }}/node_modules
 
 jobs:
-
   lint_and_tests:
     name: Install deps, lint & test
     runs-on: ubuntu-latest
@@ -105,10 +104,6 @@ jobs:
       - name: Run pre-commit checks
         id: run_pre_commit
         run: pre-commit run --all-files
-
-      - name: Create .env file (unused)
-        id: create_env_file
-        run: touch .env
 
       - name: Copy network-config.yaml to ~/.brownie
         id: copy_network_config

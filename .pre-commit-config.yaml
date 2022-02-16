@@ -1,22 +1,35 @@
+default_language_version:
+  python: python3.8
+
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.0.1
     hooks:
+      - id: end-of-file-fixer
       - id: check-yaml
         args: ["--allow-multiple-documents"]
-      - id: trailing-whitespace
+      - id: check-json
+      - id: check-toml
+      - id: requirements-txt-fixer
+      - id: check-added-large-files
+      - id: check-merge-conflict
+      - id: detect-private-key
+
   - repo: https://github.com/psf/black
     rev: 21.7b0
     hooks:
       - id: black
+
   - repo: https://gitlab.com/pycqa/flake8
     rev: 3.8.1
     hooks:
       - id: flake8
+
   - repo: https://github.com/pycqa/isort
     rev: 5.9.3
     hooks:
       - id: isort
+
   - repo: local
     hooks:
       - id: yarn-run-pre-commit
@@ -25,6 +38,3 @@ repos:
         entry: yarn pre-commit
         pass_filenames: false
         always_run: true
-
-default_language_version:
-  python: python3.8
