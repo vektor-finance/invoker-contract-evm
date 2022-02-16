@@ -70,6 +70,12 @@ CHAINS = {
     "43114": "avalanche",
     "250": "fantom",
     "128": "huobi eco",
+    "25": "cronos mainnet beta",
+    "40": "telos evm",
+    "288": "boba network",
+    "1088": "metis andromeda",
+    "42220": "celo mainnet",
+    "1313161554": "aurora mainnet",
 }
 
 

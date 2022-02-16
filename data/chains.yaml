@@ -166,6 +166,9 @@ polygon:
     - venue: quickswap
       interfaces: [uniswap_router_v2_02]
       address: "0xa5E0829CaCEd8fFDD4De3c43696c57F7D7A678ff"
+    - venue: anyswap
+      interfaces: [anyswap_router_v4]
+      address: "0x4f3aff3a747fcade12598081e80c6605a8be192f"
 
 mumbai:
   id: mumbai
