@@ -50,3 +50,76 @@
     router: "0x765277eebeca2e31912c9946eae1021199b39c61"
     destChains:
       - "56"
+
+"137":
+  - anyAddress: '0xd69b31c3225728cc57ddaf9be532a4ee1620be51'
+    destChains:
+      - '1'
+      - '56'
+      - '66'
+      - '250'
+      - '42161'
+      - '43114'
+    router: '0x4f3aff3a747fcade12598081e80c6605a8be192f'
+    underlyingAddress: '0x2791bca1f2de4661ed88a30c99a7a9449aa84174'
+    underlyingName: USDCoin(PoS)
+
+  - anyAddress: '0x9b17baadf0f21f03e35249e0e59723f34994f806'
+    destChains:
+      - '1'
+      - '56'
+      - '250'
+      - '43114'
+    router: '0x4f3aff3a747fcade12598081e80c6605a8be192f'
+    underlyingAddress: '0x8f3cf7ad23cd3cadbd9735aff958023239c6a063'
+    underlyingName: (PoS)DaiStablecoin
+
+  - anyAddress: '0xbd83010eb60f12112908774998f65761cf9f6f9a'
+    destChains:
+      - '1'
+      - '56'
+      - '66'
+      - '128'
+      - '250'
+      - '43114'
+    router: '0x4f3aff3a747fcade12598081e80c6605a8be192f'
+    underlyingAddress: '0x7ceb23fd6bc0add59e62ac25578270cff1b9f619'
+    underlyingName: WrappedEther
+
+  - anyAddress: '0xe3eeda11f06a656fcaee19de663e84c7e61d3cac'
+    destChains:
+      - '1'
+      - '56'
+      - '66'
+      - '128'
+      - '250'
+      - '43114'
+    router: '0x4f3aff3a747fcade12598081e80c6605a8be192f'
+    underlyingAddress: '0xc2132d05d31c914a87c6611c10748aeb04b58e8f'
+    underlyingName: (PoS)TetherUSD
+
+  - anyAddress: '0x161de8f0b9a59c8197e152da422b9031d3eaf338'
+    destChains:
+      - '1'
+      - '56'
+      - '66'
+      - '128'
+      - '250'
+      - '43114'
+    router: '0x4f3aff3a747fcade12598081e80c6605a8be192f'
+    underlyingAddress: '0x1bfd67037b42cf73acf2047067bd4f2c47d9bfd6'
+    underlyingName: (PoS)WrappedBTC
+
+  - anyAddress: '0x21804205c744dd98fbc87898704564d5094bb167'
+    destChains:
+      - '1'
+      - '25'
+      - '40'
+      - '56'
+      - '288'
+      - '1088'
+      - '42220'
+      - '1313161554'
+    router: '0x2ef4a574b72e1f555185afa8a09c6d1a8ac4025c'
+    underlyingAddress: '0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270'
+    underlyingName: WrappedMatic
