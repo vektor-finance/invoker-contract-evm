@@ -9,7 +9,5 @@ reports/
 venv/
 outputs/
 
-.env
-
 # JavaScript
 node_modules/
