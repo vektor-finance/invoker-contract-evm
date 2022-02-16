@@ -27,11 +27,12 @@ def test_buy_token(alice, wnative, uni_router, token):
     assert token.balanceOf(alice) >= amount_out
 
 
-@given(amount_in=strategy("uint256", min_value="1", max_value="1000 ether"))
-def test_buy_with_invoker(alice, wnative, uni_router, token, invoker, cswap, amount_in):
+@given(value=strategy("uint256", min_value="1", max_value="100"))
+def test_buy_with_invoker(alice, wnative, uni_router, token, invoker, cswap, value):
     """Test simple BUY via invoker"""
     if token == wnative:
         pytest.skip("Cannot buy WNATIVE")
+    amount_in = value * 1e18  # wnative decimals
     path = [wnative.address, token.address]
     [_, amount_out] = uni_router.getAmountsOut(amount_in, path)
 
