@@ -1,4 +1,5 @@
 import os
+import sys
 
 import yaml
 from brownie._config import CONFIG
@@ -84,11 +85,25 @@ def get_chain_name(chain_id):
     return CHAINS[chain_id]
 
 
-def get_chain():
+def get_network():
+    # Difficult to get network before brownie is connected
+    # This is a hack/workaround to get the default network
+    # Or the network specificed in the CLI.
     network = CONFIG.settings["networks"]["default"]
     if CONFIG.argv["network"]:
         network = CONFIG.argv["network"]
-    (chain, _) = get_chain_from_network_name(network)
+    else:
+        try:
+            _net = sys.argv.index("--network")
+            network = sys.argv[_net + 1]
+        except ValueError:
+            pass
+    return network
+
+
+def get_chain():
+    connected_network = get_network()
+    (chain, _) = get_chain_from_network_name(connected_network)
     return chain
 
 
