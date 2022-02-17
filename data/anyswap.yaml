@@ -2,7 +2,6 @@
 # It should be generated automatically
 ---
 "1":
-  anyNative: "0xB153FB3d196A8eB25522705560ac152eeEc57901"
   assets:
     - underlyingName: USDCoin
       underlyingAddress: "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"
@@ -54,7 +53,6 @@
         - "56"
 
 "137":
-  anyNative: "0x21804205c744dd98fbc87898704564d5094bb167"
   assets:
     - anyAddress: '0xd69b31c3225728cc57ddaf9be532a4ee1620be51'
       destChains:
