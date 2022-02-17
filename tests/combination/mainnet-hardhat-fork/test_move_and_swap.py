@@ -10,6 +10,13 @@ def dai():
     )
 
 
+@pytest.fixture(scope="module")
+def weth():
+    yield Contract.from_abi(
+        "WETH", "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2", interface.IWETH.abi
+    )
+
+
 def test_swap_eth_for_dai(invoker, alice, cmove, cswap, weth, dai):
     """
     ALICE wants to swap her ETH for DAI
@@ -56,7 +63,7 @@ def test_swap_dai_to_eth_and_disperse(invoker, bob, cmove, cswap, weth, dai, acc
     """
 
     # First get the user one eth worth of dai
-    dai.transfer(bob.address, 2000 * 1e18, {"from": "0xdA816459F1AB5631232FE5e97a05BBBb94970c95"})
+    dai.transfer(bob.address, 2000 * 1e18, {"from": "0xbebc44782c7db0a1a60cb6fe97d0b483032ff1c7"})
     dai.approve(invoker.address, 2000 * 1e18, {"from": bob.address})
 
     # 1. Move Dai to invoker
