@@ -6,6 +6,7 @@
 pragma solidity ^0.8.6;
 
 import "../../interfaces/IAnyswapV4Router.sol";
+import "../../interfaces/IAnyswapV3ERC20.sol";
 import "../../interfaces/IWeth.sol";
 import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 
@@ -14,9 +15,17 @@ contract CBridge {
 
     IWETH public immutable WNATIVE;
 
-    IERC20 public immutable ANY_WNATIVE;
+    IAnyswapV3ERC20 public immutable ANY_WNATIVE;
 
-    constructor(IWETH _wnative, IERC20 _anyWNATIVE) {
+    /**
+        @notice Constructor params for CBridge
+        @param _wnative The canonical 'wrapped native' erc20 asset on this network
+        @param _anyWNATIVE The `anyToken` for the '_wnative' token
+        @dev Although it is possible to derive '_wnative' from '_anyWNATIVE' by calling 'any.underlying()'
+            This ensures no accidental deployments
+    **/
+    constructor(IWETH _wnative, IAnyswapV3ERC20 _anyWNATIVE) {
+        require(_anyWNATIVE.underlying() == address(_wnative), "CBridge: Invalid tokens");
         WNATIVE = _wnative;
         ANY_WNATIVE = _anyWNATIVE;
     }
