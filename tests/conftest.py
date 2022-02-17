@@ -66,6 +66,22 @@ def anyswap_token_v4(request):
 
 
 @pytest.fixture(scope="module")
+def mint_anyswap_token_v4(alice, request):
+    token = request.param
+    underlying = Contract.from_abi(
+        token["underlyingName"], token["underlyingAddress"], interface.IERC20.abi
+    )
+    underlying.transfer(alice, 100 * (10 ** token["decimals"]), {"from": token["benefactor"]})
+    yield {
+        "router": token["router"],
+        "underlying": underlying,
+        "anyToken": Contract.from_abi(
+            f"any{token['underlyingName']}", token["anyAddress"], interface.AnyswapV5ERC20.abi
+        ),
+    }
+
+
+@pytest.fixture(scope="module")
 def anyswap_token_dest_chain(request):
     return request.param
 
@@ -160,6 +176,20 @@ def pytest_generate_tests(metafunc):
         tokens = [asset for asset in anyswap_tokens if asset.get("anyAddress")]
         token_names = [token["underlyingName"] for token in tokens]
         metafunc.parametrize("anyswap_token_v4", tokens, ids=token_names, indirect=True)
+
+    if "mint_anyswap_token_v4" in metafunc.fixturenames:
+        anyswap_tokens = get_anyswap_tokens_for_chain(chain)
+        if anyswap_tokens is None:
+            pytest.skip("No native token to bridge")
+        any_tokens = [asset for asset in anyswap_tokens if asset.get("anyAddress")]
+        all_tokens = [asset for asset in chain["assets"] if asset.get("address")]
+        for token in any_tokens:
+            for a in all_tokens:
+                if token["underlyingAddress"] in a["address"]:
+                    token["benefactor"] = a["benefactor"]
+                    token["decimals"] = a["decimals"]
+        token_names = [token["underlyingName"] for token in any_tokens]
+        metafunc.parametrize("mint_anyswap_token_v4", any_tokens, ids=token_names, indirect=True)
 
     if "anyswap_token_dest_chain" in metafunc.fixturenames:
         anyswap_tokens = get_anyswap_tokens_for_chain(chain)

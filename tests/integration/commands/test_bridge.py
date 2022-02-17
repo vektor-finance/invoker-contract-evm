@@ -1,5 +1,3 @@
-import time
-
 import pytest
 
 
@@ -27,21 +25,15 @@ def test_erc20_bridge(
     alice,
     invoker,
     bob,
-    wnative,
-    uni_router,
-    anyswap_token_v4,
+    mint_anyswap_token_v4,
     anyswap_router_v4,
     anyswap_token_dest_chain,
 ):
-    if anyswap_token_v4["router"] != anyswap_router_v4.address.lower():
+    if mint_anyswap_token_v4["router"] != anyswap_router_v4.address.lower():
         pytest.skip("Testing incorrect router for token")
-    token = anyswap_token_v4["underlying"]
-    anytoken = anyswap_token_v4["anyToken"]
+    token = mint_anyswap_token_v4["underlying"]
+    anytoken = mint_anyswap_token_v4["anyToken"]
 
-    path = [wnative.address, token.address]
-    uni_router.swapExactETHForTokens(
-        0, path, alice, time.time() + 1, {"from": alice, "value": 1e18}
-    )
     amount = token.balanceOf(alice)
 
     calldata_move_in = cmove.moveERC20In.encode_input(token.address, amount)
