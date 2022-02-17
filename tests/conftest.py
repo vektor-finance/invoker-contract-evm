@@ -210,6 +210,7 @@ def pytest_generate_tests(metafunc):
         any_native = [
             token for token in anyswap_tokens if token["underlyingAddress"] == wrapped_native
         ]
+        native_names = [token["underlyingName"] for token in any_native]
         if any_native is []:
             pytest.skip("Cannot bridge native token using anyswap")
-        metafunc.parametrize("any_native_token", any_native, indirect=True)
+        metafunc.parametrize("any_native_token", any_native, ids=native_names, indirect=True)

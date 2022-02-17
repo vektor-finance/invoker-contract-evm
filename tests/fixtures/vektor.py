@@ -23,9 +23,7 @@ def cmove(deployer, invoker, CMove):
 
 
 @pytest.fixture(scope="module")
-def cbridge(deployer, invoker, CBridge, anyswap_router_v4, any_native_token, wnative):
-    contract = deployer.deploy(
-        CBridge, wnative, any_native_token["address"], anyswap_router_v4.address
-    )
+def cbridge(deployer, invoker, CBridge, any_native_token, wnative):
+    contract = deployer.deploy(CBridge, wnative, any_native_token["address"])
     invoker.grantRole(APPROVED_COMMAND, contract, {"from": deployer})
     yield contract
