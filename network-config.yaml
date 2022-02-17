@@ -35,7 +35,13 @@ development:
   host: http://localhost
   id: mumbai-hardhat-fork
   name: Hardhat (Mumbai Fork)
-
+- cmd: npx hardhat node
+  cmd_settings:
+    fork: arbitrum-prod
+    port: 8545
+  host: http://localhost
+  id: arbitrum-hardhat-fork
+  name: Hardhat (Arbitrum Fork)
 live:
 - name: Ethereum
   networks:
@@ -65,3 +71,11 @@ live:
     id: mumbai-test
     multicall2: '0x6842E0412AC1c00464dc48961330156a07268d14'
     name: Mumbai Testnet
+- name: Arbitrum
+  networks:
+  - chainid: 42161
+    explorer: https://api.arbiscan.io/api
+    host: $NODE_ARBITRUM_MAINNET_URL
+    id: arbitrum-prod
+    multicall2: "0x842eC2c7D803033Edf55E478F461FC547Bc54EB2"
+    name: Arbitrum Main
