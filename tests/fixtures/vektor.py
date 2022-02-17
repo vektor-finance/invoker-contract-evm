@@ -1,6 +1,8 @@
 import pytest
 
 from data.access_control import APPROVED_COMMAND
+from data.anyswap import get_anyswap_tokens_for_chain
+from data.chain import get_wnative_address
 
 
 @pytest.fixture(scope="module")
@@ -23,7 +25,12 @@ def cmove(deployer, invoker, CMove):
 
 
 @pytest.fixture(scope="module")
-def cbridge(deployer, invoker, CBridge, any_native_token, wnative):
-    contract = deployer.deploy(CBridge, wnative, any_native_token["address"])
+def cbridge(deployer, invoker, CBridge, connected_chain):
+    wnative = get_wnative_address(connected_chain)
+    anyswap_tokens = get_anyswap_tokens_for_chain(connected_chain)
+    any_native_token = [
+        token["anyAddress"] for token in anyswap_tokens if token["underlyingAddress"] == wnative
+    ][0]
+    contract = deployer.deploy(CBridge, wnative, any_native_token)
     invoker.grantRole(APPROVED_COMMAND, contract, {"from": deployer})
     yield contract

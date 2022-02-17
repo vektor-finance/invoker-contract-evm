@@ -22,18 +22,18 @@ def test_erc20_bridge(
     invoker,
     bob,
     mint_anyswap_token_v4,
-    anyswap_router_v4,
     anyswap_token_dest_chain,
 ):
     token = mint_anyswap_token_v4["underlying"]
     anytoken = mint_anyswap_token_v4["anyToken"]
+    router = mint_anyswap_token_v4["router"]
 
     amount = token.balanceOf(alice)
 
     calldata_move_in = cmove.moveERC20In.encode_input(token.address, amount)
 
     calldata_bridge_native = cbridge.bridgeERC20.encode_input(
-        anyswap_router_v4.address,
+        router,
         token.address,
         anytoken.address,
         amount,
