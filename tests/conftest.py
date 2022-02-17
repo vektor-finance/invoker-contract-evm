@@ -99,7 +99,9 @@ def any_native_token(request):
             request.param["anyAddress"],
             interface.AnyswapV5ERC20.abi,
         ),
-        "router": request.param["router"],
+        "router": Contract.from_abi(
+            "AnyswapRouter", token["router"], interface.AnyswapV4Router.abi
+        ),
     }
     return request.param["anyAddress"]
 
