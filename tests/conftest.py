@@ -92,11 +92,12 @@ def anyswap_token_dest_chain(request):
 
 @pytest.fixture(scope="module")
 def any_native_token(request):
+    token = request.param
     yield {
-        "address": request.param["anyAddress"],
+        "address": token["anyAddress"],
         "token": Contract.from_abi(
-            f"any{request.param['underlyingName']}",
-            request.param["anyAddress"],
+            f"any{token['underlyingName']}",
+            token["anyAddress"],
             interface.AnyswapV5ERC20.abi,
         ),
         "router": Contract.from_abi(
