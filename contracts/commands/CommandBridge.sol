@@ -30,6 +30,17 @@ contract CBridge {
         ANY_WNATIVE = _anyWNATIVE;
     }
 
+    /**
+        @notice Bridge the native asset of this network to destination chain
+        @param router The router necessary for this bridge (returned by Anyswap API)
+        @param amount The amount of tokens (in Wei) to bridge
+        @param destinationAddress The address which will receive the tokens
+        @param destinationChainID The chainID of the destination network 
+            note: the contract cannot verify that the address-chainID pair is valid
+        @dev This wraps the native asset and tries to bridge the wrapped ERC20. 
+            This route may not be available on every network. This is the responsibility of the caller to
+            ensure that the route is valid. 
+    **/
     function bridgeNative(
         IAnyswapV4Router router,
         uint256 amount,
@@ -46,6 +57,18 @@ contract CBridge {
         );
     }
 
+    /**
+        @notice Bridge an ERC20 token from this network to destination chain
+        @param router The router necessary for this bridge (returned by Anyswap API)
+        @param fromToken The token you are attempting to bridge (also known as underlyingToken)
+        @param anyToken The corresponding anyToken for your chosen asset.
+        @param amount The amount of tokens (in Wei) to bridge
+        @param destinationAddress The address which will receive the tokens
+        @param destinationChainID The chainID of the destination network 
+            note: the contract cannot verify that the address-chainID pair is valid
+        @dev This route may not be available on every network. This is the responsibility of the caller to
+            ensure that the route is valid. 
+    **/
     function bridgeERC20(
         IAnyswapV4Router router,
         IERC20 fromToken,
