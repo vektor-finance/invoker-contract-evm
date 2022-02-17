@@ -16,26 +16,20 @@ contract CBridge {
 
     IERC20 public immutable ANY_WNATIVE;
 
-    IAnyswapV4Router public immutable ANYSWAP_ROUTER;
-
-    constructor(
-        IWETH _wnative,
-        IERC20 _anyWNATIVE,
-        IAnyswapV4Router _router
-    ) {
+    constructor(IWETH _wnative, IERC20 _anyWNATIVE) {
         WNATIVE = _wnative;
         ANY_WNATIVE = _anyWNATIVE;
-        ANYSWAP_ROUTER = _router;
     }
 
     function bridgeNative(
+        IAnyswapV4Router router,
         uint256 amount,
         address destinationAddress,
         uint256 destinationChainID
     ) external payable {
         WNATIVE.deposit{value: amount}();
-        WNATIVE.approve(address(ANYSWAP_ROUTER), amount);
-        ANYSWAP_ROUTER.anySwapOutUnderlying(
+        WNATIVE.approve(address(router), amount);
+        router.anySwapOutUnderlying(
             address(ANY_WNATIVE),
             destinationAddress,
             amount,
@@ -44,6 +38,7 @@ contract CBridge {
     }
 
     function bridgeERC20(
+        IAnyswapV4Router router,
         IERC20 fromToken,
         IERC20 anyToken,
         uint256 amount,
@@ -51,9 +46,9 @@ contract CBridge {
         uint256 destinationChainID
     ) external payable {
         IERC20 token = fromToken;
-        token.safeApprove(address(ANYSWAP_ROUTER), 0);
-        token.safeApprove(address(ANYSWAP_ROUTER), amount);
-        ANYSWAP_ROUTER.anySwapOutUnderlying(
+        token.safeApprove(address(router), 0);
+        token.safeApprove(address(router), amount);
+        router.anySwapOutUnderlying(
             address(anyToken),
             destinationAddress,
             amount,
