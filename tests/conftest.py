@@ -6,11 +6,10 @@ from pathlib import Path
 
 import pytest
 from brownie import Contract, interface
-from brownie._config import CONFIG
 from brownie.project.main import get_loaded_projects
 
 from data.anyswap import get_anyswap_tokens_for_chain
-from data.chain import get_chain_from_network_name, get_chain_name, get_wnative_address
+from data.chain import get_chain, get_chain_name, get_network, get_wnative_address
 
 pytest_plugins = ["fixtures.accounts", "fixtures.vektor", "fixtures.chain"]
 
@@ -72,8 +71,17 @@ def anyswap_token_dest_chain(request):
 
 
 @pytest.fixture(scope="module")
-def any_native_address(request):
-    return request.param["address"]
+def any_native_token(request):
+    yield {
+        "address": request.param["anyAddress"],
+        "token": Contract.from_abi(
+            f"any{request.param['underlyingName']}",
+            request.param["anyAddress"],
+            interface.AnyswapV5ERC20.abi,
+        ),
+        "router": request.param["router"],
+    }
+    return request.param["anyAddress"]
 
 
 @pytest.fixture(scope="module")
@@ -86,17 +94,6 @@ def tokens_for_alice(request, alice):
 
 # pytest fixtures/collections
 
-_network = ""
-_chain = {}
-
-
-def pytest_sessionstart():
-    global _chain, _network
-    _network = CONFIG.settings["networks"]["default"]
-    if CONFIG.argv["network"]:
-        _network = CONFIG.argv["network"]
-    (_chain, _) = get_chain_from_network_name(_network)
-
 
 def pytest_ignore_collect(path):
     project = get_loaded_projects()[0]
@@ -107,37 +104,41 @@ def pytest_ignore_collect(path):
     if path.is_dir():
         return None
 
+    network = get_network()
+
     # ignore core tests unless you are on 'hardhat' network (dev)
     if path_parts[:1] == ("core",):
-        return _network != "hardhat"
+        return network != "hardhat"
 
     # ignore integration tests if on 'hardhat' network (dev)
     if path_parts[:1] == ("integration",):
-        return _network == "hardhat"
+        return network == "hardhat"
 
     if path_parts[:1] == ("combination",):
-        return _network != path_parts[1]
+        return network != path_parts[1]
 
 
 def pytest_generate_tests(metafunc):
 
-    if _chain["id"] == "dev":
+    chain = get_chain()
+
+    if chain["id"] == "dev":
         return
 
     if "token" in metafunc.fixturenames:
-        tokens = [asset for asset in _chain["assets"] if asset.get("address")]
+        tokens = [asset for asset in chain["assets"] if asset.get("address")]
         token_names = [token["name"] for token in tokens]
         metafunc.parametrize("token", tokens, ids=token_names, indirect=True)
 
     if "tokens_for_alice" in metafunc.fixturenames:
-        tokens = [asset for asset in _chain["assets"] if asset.get("address")]
+        tokens = [asset for asset in chain["assets"] if asset.get("address")]
         token_names = [token["name"] for token in tokens]
         metafunc.parametrize("tokens_for_alice", tokens, ids=token_names, indirect=True)
 
     if "uni_router" in metafunc.fixturenames:
         routers = [
             contract
-            for contract in _chain["contracts"]
+            for contract in chain["contracts"]
             if "uniswap_router_v2_02" in contract.get("interfaces")
         ]
         router_names = [router["venue"] for router in routers]
@@ -146,35 +147,39 @@ def pytest_generate_tests(metafunc):
     if "anyswap_router_v4" in metafunc.fixturenames:
         routers = [
             contract
-            for contract in _chain["contracts"]
+            for contract in chain["contracts"]
             if "anyswap_router_v4" in contract.get("interfaces")
         ]
         router_names = [router["venue"] for router in routers]
         metafunc.parametrize("anyswap_router_v4", routers, ids=router_names, indirect=True)
 
     if "anyswap_token_v4" in metafunc.fixturenames:
-        anyswap_tokens = get_anyswap_tokens_for_chain(_chain["chain_id"])
+        anyswap_tokens = get_anyswap_tokens_for_chain(chain)
         if anyswap_tokens is None:
-            pytest.skip()
+            pytest.skip("No native token to bridge")
         tokens = [asset for asset in anyswap_tokens if asset.get("anyAddress")]
         token_names = [token["underlyingName"] for token in tokens]
         metafunc.parametrize("anyswap_token_v4", tokens, ids=token_names, indirect=True)
 
     if "anyswap_token_dest_chain" in metafunc.fixturenames:
-        anyswap_tokens = get_anyswap_tokens_for_chain(_chain["chain_id"])
+        anyswap_tokens = get_anyswap_tokens_for_chain(chain)
         if anyswap_tokens is None:
-            pytest.skip()
+            pytest.skip("No anyswap tokens specified")
         all_dest = []
         for token in anyswap_tokens:
-            for chain in token.get("destChains"):
-                if chain not in all_dest:
-                    all_dest.append(chain)
+            for dest_chain in token.get("destChains"):
+                if dest_chain not in all_dest:
+                    all_dest.append(dest_chain)
         metafunc.parametrize(
             "anyswap_token_dest_chain", all_dest, indirect=True, ids=get_chain_name
         )
 
-    if "any_native_address" in metafunc.fixturenames:
-        native_address = None  # get_anyswap_native_for_chain(_chain["chain_id"])
-        if native_address is None:
-            pytest.skip()
-        metafunc.parametrize("any_native_address", [native_address], indirect=True)
+    if "any_native_token" in metafunc.fixturenames:
+        wrapped_native = get_wnative_address(chain)
+        anyswap_tokens = get_anyswap_tokens_for_chain(chain)
+        any_native = [
+            token for token in anyswap_tokens if token["underlyingAddress"] == wrapped_native
+        ]
+        if any_native is []:
+            pytest.skip("Cannot bridge native token using anyswap")
+        metafunc.parametrize("any_native_token", any_native, indirect=True)
