@@ -82,7 +82,7 @@ CHAINS = {
 
 
 def get_chain_name(chain_id):
-    return CHAINS[chain_id]
+    return CHAINS.get(str(chain_id))
 
 
 def get_network():
