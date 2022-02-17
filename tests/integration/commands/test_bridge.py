@@ -3,7 +3,9 @@ import time
 import pytest
 
 
-def test_native_bridge(cbridge, alice, any_native_address, invoker, bob):
+def test_native_bridge(cbridge, alice, any_native_token, anyswap_router_v4, invoker, bob):
+    if any_native_token["router"] != anyswap_router_v4.address.lower():
+        pytest.skip("Testing incorrect router for token")
     amount = 100
     calldata_bridge_native = cbridge.bridgeNative.encode_input(amount, bob, 4)
     tx = invoker.invoke(
@@ -11,7 +13,7 @@ def test_native_bridge(cbridge, alice, any_native_address, invoker, bob):
     )
     assert "LogAnySwapOut" in tx.events
     evt = tx.events["LogAnySwapOut"]
-    assert evt["token"] == any_native_address
+    assert evt["token"] == any_native_token["address"]
     assert evt["from"] == invoker.address
     assert evt["to"] == bob.address
     assert evt["amount"] == amount
@@ -25,7 +27,7 @@ def test_erc20_bridge(
     alice,
     invoker,
     bob,
-    weth,
+    wnative,
     uni_router,
     anyswap_token_v4,
     anyswap_router_v4,
@@ -36,7 +38,7 @@ def test_erc20_bridge(
     token = anyswap_token_v4["underlying"]
     anytoken = anyswap_token_v4["anyToken"]
 
-    path = [weth.address, token.address]
+    path = [wnative.address, token.address]
     uni_router.swapExactETHForTokens(
         0, path, alice, time.time() + 1, {"from": alice, "value": 1e18}
     )
