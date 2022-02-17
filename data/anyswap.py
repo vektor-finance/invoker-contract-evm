@@ -1,22 +1,6 @@
 import requests
 
-# def _get_anyswap_data():
-#     with open(os.path.join("data", "anyswap.yaml"), "r") as file:
-#         return yaml.safe_load(file)
-
-
-# def get_anyswap_tokens_for_chain(chain_id):
-#     data = _get_anyswap_data()
-#     chain_id = str(chain_id)
-
-#     return data.get(chain_id).get("assets")
-
-
-# def get_anyswap_native_for_chain(chain_id):
-#     data = _get_anyswap_data()
-#     chain_id = str(chain_id)
-
-#     return data.get(chain_id).get("anyNative")
+cached_anyswap_tokens = []
 
 
 def _parse_v3_dict(token):
@@ -30,6 +14,9 @@ def _parse_v3_dict(token):
 
 
 def get_anyswap_tokens_for_chain(chain):
+    global cached_anyswap_tokens
+    if len(cached_anyswap_tokens) > 0:
+        return cached_anyswap_tokens
 
     chain_id = str(chain["chain_id"])
     r = requests.get(
@@ -40,6 +27,7 @@ def get_anyswap_tokens_for_chain(chain):
     tokens = [asset for asset in chain["assets"] if asset.get("address")]
 
     output = {chain_id: {"assets": []}}
+    ret = []
 
     # Get data from V3 api
 
@@ -54,5 +42,6 @@ def get_anyswap_tokens_for_chain(chain):
                 for chain_token in tokens:
                     if parsed["underlyingAddress"] == chain_token.get("address"):
                         output[chain_id]["assets"].append(parsed)
-
-    return output
+                        ret.append(parsed)
+    cached_anyswap_tokens = ret
+    return ret
