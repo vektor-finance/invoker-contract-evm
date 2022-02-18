@@ -65,3 +65,15 @@ live:
     id: mumbai-test
     multicall2: '0x6842E0412AC1c00464dc48961330156a07268d14'
     name: Mumbai Testnet
+- name: Fantom Opera
+  networks:
+  - chainid: 4002
+    explorer: https://explorer.testnet.fantom.network
+    host: https://rpc.testnet.fantom.network
+    id: ftm-test
+    name: Testnet
+  - chainid: 250
+    explorer: https://api.ftmscan.com/api
+    host: $NODE_FANTOM_MAINNET_URL
+    id: ftm-prod
+    name: Mainnet

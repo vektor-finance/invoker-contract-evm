@@ -48,6 +48,7 @@ jobs:
           - rinkeby-hardhat-fork
           - polygon-hardhat-fork
           - mumbai-hardhat-fork
+          - fantom-hardhat-fork
 
     steps:
       - name: Checkout current commit (${{ github.sha }})
