@@ -54,6 +54,7 @@ jobs:
           - polygon-hardhat-fork
           - mumbai-hardhat-fork
           - fantom-hardhat-fork
+          - arbitrum-hardhat-fork
 
     steps:
       - name: Checkout current commit (${{ github.sha }})
