@@ -28,9 +28,13 @@ def cmove(deployer, invoker, CMove):
 def cbridge(deployer, invoker, CBridge, connected_chain):
     wnative = get_wnative_address(connected_chain)
     anyswap_tokens = get_anyswap_tokens_for_chain(connected_chain)
-    any_native_token = [
+    any_native_tokens = [
         token["anyAddress"] for token in anyswap_tokens if token["underlyingAddress"] == wnative
-    ][0]
+    ]
+    try:
+        any_native_token = any_native_tokens[0]
+    except IndexError:
+        pytest.skip("No native anyToken")
     contract = deployer.deploy(CBridge, wnative, any_native_token)
     invoker.grantRole(APPROVED_COMMAND, contract, {"from": deployer})
     yield contract
