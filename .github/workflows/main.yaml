@@ -19,6 +19,11 @@ env:
   NODE_ETHEREUM_RINKEBY_URL: ${{ secrets.NODE_ETHEREUM_RINKEBY_URL }}
   NODE_POLYGON_MAINNET_URL: ${{ secrets.NODE_POLYGON_MAINNET_URL }}
   NODE_POLYGON_MUMBAI_URL: ${{ secrets.NODE_POLYGON_MUMBAI_URL }}
+  NODE_ARBITRUM_MAINNET_URL: ${{ secrets.NODE_ARBITRUM_MAINNET_URL }}
+  NODE_ARBITRUM_RINKEBY_URL: ${{ secrets.NODE_ARBITRUM_RINKEBY_URL }}
+  NODE_OPTIMISM_MAINNET_URL: ${{ secrets.NODE_OPTIMISM_MAINNET_URL }}
+  NODE_OPTIMISM_TESTNET_URL: ${{ secrets.NODE_OPTIMISM_TESTNET_URL }}
+  NODE_FANTOM_MAINNET_URL: ${{ secrets.NODE_FANTOM_MAINNET_URL }}
 
   # increasing available memory for node reduces issues with ganache crashing
   # https://nodejs.org/api/cli.html#cli_max_old_space_size_size_in_megabytes
@@ -48,6 +53,8 @@ jobs:
           - rinkeby-hardhat-fork
           - polygon-hardhat-fork
           - mumbai-hardhat-fork
+          - fantom-hardhat-fork
+          - arbitrum-hardhat-fork
 
     steps:
       - name: Checkout current commit (${{ github.sha }})

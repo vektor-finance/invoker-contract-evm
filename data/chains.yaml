@@ -209,3 +209,95 @@ mumbai:
     - venue: quickswap
       interfaces: [uniswap_router_v2_02]
       address: "0x8954afa98594b838bda56fe4c12a09d7739d179b"
+
+arbitrum:
+  id: arbitrum
+  name: Artbitrum Mainnet
+  chain_id: 42161
+  network:
+    prod: arbitrum-prod
+    fork: arbitrum-hardhat-fork
+  assets:
+    - name: Ethereum
+      symbol: ETH
+      decimals: 18
+      address: ~
+    - name: Wrapped Ethereum
+      symbol: WETH
+      decimals: 18
+      address: "0x82af49447d8a07e3bd95bd0d56f35241523fbab1"
+      benefactor: "0x74c764d41b77dbbb4fe771dab1939b00b146894a"
+      wrapped_native: true
+      interfaces: [weth9, erc20]
+    - name: DAI
+      symbol: DAI
+      decimals: 18
+      address: "0xda10009cbd5d07dd0cecc66161fc93d7c9000da1"
+      benefactor: "0x489ee077994b6658eafa855c308275ead8097c4a"
+      interfaces: [erc20]
+    - name: Tether
+      symbol: USDT
+      decimals: 6
+      address: "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9"
+      benefactor: "0x607312a5c671d0c511998171e634de32156e69d0"
+      interfaces: [erc20]
+    - name: USD Coin
+      symbol: USDC
+      decimals: 6
+      address: "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8"
+      benefactor: "0x489ee077994b6658eafa855c308275ead8097c4a"
+      interfaces: [erc20]
+    - name: Wrapped BTC
+      symbol: WBTC
+      decimals: 8
+      address: "0x2f2a2543b76a4166549f7aab2e75bef0aefc5b0f"
+      benefactor: "0x3e01dd8a5e1fb3481f0f589056b428fc308af0fb"
+      interfaces: [erc20]
+  contracts:
+    - venue: sushiswap
+      interfaces: [uniswap_router_v2_02]
+      address: "0x1b02dA8Cb0d097eB8D57A175b88c7D8b47997506"
+
+fantom:
+  id: fantom
+  name: Fantom
+  chain_id: 250
+  explorer: https://ftmscan.com
+  network:
+    prod: fantom-prod
+    fork: fantom-hardhat-fork
+  assets:
+        - name: Fantom
+          symbol: FTM
+          decimals: 18
+          address: ~
+        - name: Wrapped Fantom
+          symbol: WFTM
+          decimals: 18
+          address: "0x21be370D5312f44cB42ce377BC9b8a0cEF1A4C83"
+          benefactor: "0x5aa53f03197e08c4851cad8c92c7922da5857e5d"
+          wrapped_native: true
+        - name: Dai Stablecoin
+          symbol: DAI
+          decimals: 18
+          address: "0x8d11ec38a3eb5e956b052f67da8bdc9bef8abf3e"
+          benefactor: "0x8d9aed9882b4953a0c9fa920168fa1fdfa0ebe75"
+        - name: USD Coin
+          symbol: USDC
+          decimals: 6
+          address: "0x04068da6c83afcfa0e13ba15a6696662335d5b75"
+          benefactor: "0xe45ac34e528907d0a0239ab5db507688070b20bf"
+        - name: Frapped USDT
+          symbol: fUSDT
+          decimals: 6
+          address: "0x049d68029688eabf473097a2fc38ef61633a3c7a"
+          benefactor: "0x02224765bc8d54c21bb51b0951c80315e1c263f9"
+        - name: Bitcoin
+          symbol: BTC
+          decimals: 8
+          address: "0x321162cd933e2be498cd2267a90534a804051b11"
+          benefactor: "0x38aca5484b8603373acc6961ecd57a6a594510a3"
+  contracts:
+    - venue: spookyswap
+      interfaces: [uniswap_router_v2_02]
+      address: "0xf491e7b69e4244ad4002bc14e878a34207e38c29"
