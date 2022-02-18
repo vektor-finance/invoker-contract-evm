@@ -37,11 +37,13 @@ development:
   name: Hardhat (Mumbai Fork)
 - cmd: npx hardhat node
   cmd_settings:
-  fork: arbitrum-prod
+    fork: arbitrum-prod
     port: 8545
   host: http://localhost
   id: arbitrum-hardhat-fork
   name: Hardhat (Arbitrum Fork)
+- cmd: npx hardhat node
+  cmd_settings:  
     fork: fantom-prod
     port: 8545
   host: http://localhost
