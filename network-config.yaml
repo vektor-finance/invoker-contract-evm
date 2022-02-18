@@ -77,10 +77,10 @@ live:
   - chainid: 4002
     explorer: https://explorer.testnet.fantom.network
     host: https://rpc.testnet.fantom.network
-    id: ftm-test
+    id: fantom-test
     name: Testnet
   - chainid: 250
     explorer: https://api.ftmscan.com/api
     host: $NODE_FANTOM_MAINNET_URL
-    id: ftm-prod
+    id: fantom-prod
     name: Mainnet
