@@ -35,6 +35,13 @@ development:
   host: http://localhost
   id: mumbai-hardhat-fork
   name: Hardhat (Mumbai Fork)
+- cmd: npx hardhat node
+  cmd_settings:
+    fork: fantom-prod
+    port: 8545
+  host: http://localhost
+  id: fantom-hardhat-fork
+  name: Hardhat (Fantom Fork)
 
 live:
 - name: Ethereum
