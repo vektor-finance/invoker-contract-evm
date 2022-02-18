@@ -203,3 +203,48 @@ mumbai:
     - venue: quickswap
       interfaces: [uniswap_router_v2_02]
       address: "0x8954afa98594b838bda56fe4c12a09d7739d179b"
+
+
+fantom:
+  id: fantom
+  name: Fantom
+  chain_id: 250
+  explorer: https://ftmscan.com
+  network:
+    prod: fantom-prod
+    fork: fantom-hardhat-fork
+  assets:
+        - name: Fantom
+          symbol: FTM
+          decimals: 18
+          address: ~
+        - name: Wrapped Fantom
+          symbol: WFTM
+          decimals: 18
+          address: "0x21be370D5312f44cB42ce377BC9b8a0cEF1A4C83"
+          benefactor: "0x5aa53f03197e08c4851cad8c92c7922da5857e5d"
+          wrapped_native: true
+        - name: Dai Stablecoin
+          symbol: DAI
+          decimals: 18
+          address: "0x8d11ec38a3eb5e956b052f67da8bdc9bef8abf3e"
+          benefactor: "0x8d9aed9882b4953a0c9fa920168fa1fdfa0ebe75"
+        - name: USD Coin
+          symbol: USDC
+          decimals: 6
+          address: "0x04068da6c83afcfa0e13ba15a6696662335d5b75"
+          benefactor: "0xe45ac34e528907d0a0239ab5db507688070b20bf"
+        - name: Frapped USDT
+          symbol: fUSDT
+          decimals: 6
+          address: "0x049d68029688eabf473097a2fc38ef61633a3c7a"
+          benefactor: "0x02224765bc8d54c21bb51b0951c80315e1c263f9"
+        - name: Bitcoin
+          symbol: BTC
+          decimals: 8
+          address: "0x321162cd933e2be498cd2267a90534a804051b11"
+          benefactor: "0x38aca5484b8603373acc6961ecd57a6a594510a3"
+  contracts:
+    - venue: spookyswap
+      interfaces: [uniswap_router_v2_02]
+      address: "0xf491e7b69e4244ad4002bc14e878a34207e38c29"
