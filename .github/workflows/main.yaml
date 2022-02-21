@@ -4,6 +4,14 @@ on:
   pull_request:
     branches:
       - main
+    paths:
+      - "contracts/**"
+      - "data/**"
+      - "interfaces/**"
+      - "tests/**"
+      - "!**.md"
+      - "**.yaml"
+      - "**.js"
 
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
