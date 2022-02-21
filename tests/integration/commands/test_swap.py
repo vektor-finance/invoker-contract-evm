@@ -1,7 +1,24 @@
 import time
 
 import pytest
+from brownie._config import CONFIG
 from brownie.test import given, strategy
+
+
+def fn_native_for_token(uni_router):
+    # TODO: refactor this to use connected_chain after merged
+    network = CONFIG.active_network
+    if network["chainid"] == "43114":
+        return uni_router.swapExactAVAXForTokens
+    return uni_router.swapExactETHForTokens
+
+
+def fn_token_for_native(uni_router):
+    # TODO: refactor this to use connected_chain after merged
+    network = CONFIG.active_network
+    if network["chainid"] == "43114":
+        return uni_router.swapExactTokensForAVAX
+    return uni_router.swapExactTokensForETH
 
 
 def test_buy_token(alice, weth, uni_router, token):
@@ -14,9 +31,9 @@ def test_buy_token(alice, weth, uni_router, token):
     if amount_out == 0:
         pytest.skip("Insufficient liquidity")
 
-    uni_router.swapExactETHForTokens(
-        amount_out, path, alice, time.time() + 1, {"from": alice, "value": amount_in}
-    )
+    fn = fn_native_for_token(uni_router)
+
+    fn(amount_out, path, alice, time.time() + 1, {"from": alice, "value": amount_in})
     assert token.balanceOf(alice) >= amount_out
 
 
@@ -54,9 +71,9 @@ def test_sell_token(alice, weth, uni_router, tokens_for_alice):
     if amount_out == 0:
         pytest.skip("Insufficient liquidity")
 
-    uni_router.swapExactTokensForETH(
-        amount_in, amount_out, path, alice, time.time() + 1, {"from": alice}
-    )
+    fn = fn_token_for_native(uni_router)
+
+    fn(amount_in, amount_out, path, alice, time.time() + 1, {"from": alice})
     assert alice.balance() >= prev_balance + amount_out
 
 

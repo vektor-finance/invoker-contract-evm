@@ -62,10 +62,17 @@ def cmove(deployer, invoker, CMove):
 
 @pytest.fixture(scope="module")
 def uni_router(request):
+    # TODO: refactor this to use connected_chain once merged
     router = request.param
-    yield Contract.from_abi(
-        f"{router['venue']} router", router["address"], interface.IUniswapV2Router02.abi
-    )
+    network = CONFIG.active_network
+    if network["chainid"] == "43114":
+        yield Contract.from_abi(
+            f"{router['venue']} router", router["address"], interface.PangolinV2Router.abi
+        )
+    else:
+        yield Contract.from_abi(
+            f"{router['venue']} router", router["address"], interface.IUniswapV2Router02.abi
+        )
 
 
 @pytest.fixture(scope="module")
