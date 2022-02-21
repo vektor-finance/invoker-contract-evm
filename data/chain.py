@@ -45,7 +45,7 @@ def get_wnative_address(chain):
             if token.get("wrapped_native"):
                 yield token
 
-    return next(generator(chain))["address"]
+    return next(generator(chain))["address"].lower()
 
 
 def get_uni_router_address(chain):
@@ -60,7 +60,7 @@ def get_uni_router_address(chain):
             if "uniswap_router_v2_02" in contract["interfaces"]:
                 yield contract
 
-    return next(generator(chain))["address"]
+    return next(generator(chain))["address"].lower()
 
 
 CHAINS = {
@@ -78,6 +78,8 @@ CHAINS = {
     "1088": "metis andromeda",
     "42220": "celo mainnet",
     "1313161554": "aurora mainnet",
+    "1666600000": "harmony mainnet",
+    "1284": "moonbeam",
 }
 
 

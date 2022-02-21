@@ -272,7 +272,7 @@ fantom:
         - name: Wrapped Fantom
           symbol: WFTM
           decimals: 18
-          address: "0x21be370D5312f44cB42ce377BC9b8a0cEF1A4C83"
+          address: "0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83"
           benefactor: "0x5aa53f03197e08c4851cad8c92c7922da5857e5d"
           wrapped_native: true
         - name: Dai Stablecoin
