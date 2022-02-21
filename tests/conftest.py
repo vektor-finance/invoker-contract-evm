@@ -67,7 +67,7 @@ def uni_router(request):
     network = CONFIG.active_network
     if network["chainid"] == "43114":
         yield Contract.from_abi(
-            f"{router['venue']} router", router["address"], interface.PangolinV2Router.abi
+            f"{router['venue']} router", router["address"], interface.JoeRouterV2.abi
         )
     else:
         yield Contract.from_abi(
