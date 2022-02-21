@@ -77,9 +77,8 @@ contract CBridge {
         address destinationAddress,
         uint256 destinationChainID
     ) external payable {
-        IERC20 token = fromToken;
-        token.safeApprove(address(router), 0);
-        token.safeApprove(address(router), amount);
+        fromToken.safeApprove(address(router), 0);
+        fromToken.safeApprove(address(router), amount);
         router.anySwapOutUnderlying(
             address(anyToken),
             destinationAddress,
