@@ -4,6 +4,17 @@
 
 Solidity contracts for Vektor's EVM invoker.
 
+- [Overview](#overview)
+- [Testing and Development](#testing-and-development)
+  - [Dependencies](#dependencies)
+  - [Setup](#setup)
+  - [Configuring Pre-Commit](#configuring-pre-commit)
+  - [Running The Tests](#running-the-tests)
+- [Scripts](#scripts)
+  - [Faucet](#faucet)
+  - [GPG Key](#create-and-setup-gpg-key-on-macos)
+  - [Git-crypt](#setup-git-encrypt)
+
 ## Overview
 
 TODO
