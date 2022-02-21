@@ -49,6 +49,13 @@ development:
   host: http://localhost
   id: fantom-hardhat-fork
   name: Hardhat (Fantom Fork)
+- cmd: npx hardhat node
+  cmd_settings:  
+    fork: avalanche-prod
+    port: 8545
+  host: http://localhost
+  id: avalanche-hardhat-fork
+  name: Hardhat (Avalanche Fork)
 
 live:
 - name: Ethereum
@@ -98,4 +105,11 @@ live:
     explorer: https://api.ftmscan.com/api
     host: $NODE_FANTOM_MAINNET_URL
     id: fantom-prod
+    name: Mainnet
+- name: Avalanche
+  networks:
+  - chainid: 43114
+    explorer: https://snowtrace.io/
+    host: $NODE_AVALANCHE_MAINNET_URL
+    id: avalanche-prod
     name: Mainnet
