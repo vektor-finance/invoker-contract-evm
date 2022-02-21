@@ -21,23 +21,21 @@ def isolation(fn_isolation):
 
 # Contracts from config file
 
+UNISWAP_ROUTER_V2_ABI = {"43114": interface.JoeRouterV2.abi}
+
+DEFAULT_UNISWAP_ROUTER_V2_ABI = interface.IUniswapV2Router02.abi
+
 
 @pytest.fixture(scope="module")
 def uni_router(request, connected_chain):
     router = request.param
-    if connected_chain["chain_id"] == 43114:
-        yield Contract.from_abi(
-            f"{router['venue']} router", router["address"], interface.JoeRouterV2.abi
-        )
-    else:
-        yield Contract.from_abi(
-            f"{router['venue']} router", router["address"], interface.IUniswapV2Router02.abi
-        )
+    chain_id = str(connected_chain["chain_id"])
+    abi = UNISWAP_ROUTER_V2_ABI.get(chain_id, DEFAULT_UNISWAP_ROUTER_V2_ABI)
+    yield Contract.from_abi(f"{router['venue']} router", router["address"], abi)
 
 
 @pytest.fixture(scope="module")
 def wnative(connected_chain):
-    # chain = getattr(request.module, "chain")
     address = get_wnative_address(connected_chain)
     yield Contract.from_abi("Wrapped Native", address, interface.IWETH.abi)
 

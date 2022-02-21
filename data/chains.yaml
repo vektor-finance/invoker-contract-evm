@@ -352,6 +352,6 @@ avalanche:
       address: "0x50b7545627a5162f82a992c33b87adc75187b218"
       benefactor: "0x686bef2417b6dc32c50a3cbfbcc3bb60e1e9a15d"
   contracts:
-    - venue: trader joe
+    - venue: trader_joe
       interfaces: [uniswap_router_v2_02]
       address: "0x60ae616a2155ee3d9a68541ba4544862310933d4"

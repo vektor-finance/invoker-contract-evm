@@ -6,15 +6,15 @@ from hypothesis import assume
 
 
 def fn_native_for_token(uni_router, chain_id):
-    if chain_id == 43114:
-        return uni_router.swapExactAVAXForTokens
-    return uni_router.swapExactETHForTokens
+    DEFAULT_NATIVE_FOR_TOKEN = uni_router.swapExactETHForTokens
+    NATIVE_FOR_TOKEN = {"43114": uni_router.swapExactAVAXForTokens}
+    return NATIVE_FOR_TOKEN.get(str(chain_id), DEFAULT_NATIVE_FOR_TOKEN)
 
 
 def fn_token_for_native(uni_router, chain_id):
-    if chain_id == 43114:
-        return uni_router.swapExactTokensForAVAX
-    return uni_router.swapExactTokensForETH
+    DEFAULT_TOKEN_FOR_NATIVE = uni_router.swapExactTokensForETH
+    TOKEN_FOR_NATIVE = {"43114": uni_router.swapExactTokensForAVAX}
+    return TOKEN_FOR_NATIVE.get(str(chain_id), DEFAULT_TOKEN_FOR_NATIVE)
 
 
 def test_buy_token(alice, wnative, uni_router, token, connected_chain):
