@@ -23,11 +23,9 @@ def isolation(fn_isolation):
 
 
 @pytest.fixture(scope="module")
-def uni_router(request):
-    # TODO: refactor this to use connected_chain once merged
+def uni_router(request, connected_chain):
     router = request.param
-    network = CONFIG.active_network
-    if network["chainid"] == "43114":
+    if connected_chain["chain_id"] == 43114:
         yield Contract.from_abi(
             f"{router['venue']} router", router["address"], interface.JoeRouterV2.abi
         )

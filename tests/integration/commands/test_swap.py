@@ -1,31 +1,25 @@
 import time
 
 import pytest
-from brownie._config import CONFIG
 from brownie.test import given, strategy
 from hypothesis import assume
 
-from data.chain import get_chain, get_chain_id
 
-def fn_native_for_token(uni_router):
-    # TODO: refactor this to use connected_chain after merged
-    network = CONFIG.active_network
-    if network["chainid"] == "43114":
+def fn_native_for_token(uni_router, chain_id):
+    if chain_id == 43114:
         return uni_router.swapExactAVAXForTokens
     return uni_router.swapExactETHForTokens
 
 
-def fn_token_for_native(uni_router):
-    # TODO: refactor this to use connected_chain after merged
-    network = CONFIG.active_network
-    if network["chainid"] == "43114":
+def fn_token_for_native(uni_router, chain_id):
+    if chain_id == 43114:
         return uni_router.swapExactTokensForAVAX
     return uni_router.swapExactTokensForETH
 
 
-def test_buy_token(alice, weth, uni_router, token):
-    if token == weth:
-        pytest.skip("Cannot buy WETH")
+def test_buy_token(alice, wnative, uni_router, token, connected_chain):
+    if token == wnative:
+        pytest.skip("Cannot buy WNATIVE")
     amount_in = 1e18
     path = [wnative.address, token.address]
     [_, amount_out] = uni_router.getAmountsOut(amount_in, path)
@@ -34,7 +28,7 @@ def test_buy_token(alice, weth, uni_router, token):
     # This is a 'bad' example and should be ignored (not failed)
     assume(amount_out > 0)
 
-    fn = fn_native_for_token(uni_router)
+    fn = fn_native_for_token(uni_router, connected_chain["chain_id"])
 
     fn(amount_out, path, alice, time.time() + 1, {"from": alice, "value": amount_in})
     assert token.balanceOf(alice) >= amount_out
@@ -62,7 +56,7 @@ def test_buy_with_invoker(alice, wnative, uni_router, token, invoker, cswap, val
     assert token.balanceOf(invoker.address) >= amount_out
 
 
-def test_sell_token(alice, wnative, uni_router, tokens_for_alice):
+def test_sell_token(alice, wnative, uni_router, tokens_for_alice, connected_chain):
     if tokens_for_alice == wnative:
         pytest.skip("Cannot sell wnative")
     amount_in = 100 * (10 ** tokens_for_alice.decimals())
@@ -73,7 +67,7 @@ def test_sell_token(alice, wnative, uni_router, tokens_for_alice):
 
     assume(amount_out > 0)
 
-    fn = fn_token_for_native(uni_router)
+    fn = fn_token_for_native(uni_router, connected_chain["chain_id"])
 
     fn(amount_in, amount_out, path, alice, time.time() + 1, {"from": alice})
     assert alice.balance() >= prev_balance + amount_out
