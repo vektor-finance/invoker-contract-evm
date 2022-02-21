@@ -20,7 +20,7 @@ contract CBridge {
     /**
         @notice Constructor params for CBridge
         @param _wnative The canonical 'wrapped native' erc20 asset on this network
-        @param _anyWNATIVE The `anyToken` for the '_wnative' token
+        @param _anyWNATIVE The 'anyToken' for the '_wnative' token
         @dev Although it is possible to derive '_wnative' from '_anyWNATIVE' by calling 'any.underlying()'
             This ensures no accidental deployments
     **/
