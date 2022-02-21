@@ -104,7 +104,7 @@ Many of the fields are self-explanatory, however please note:
 2. Update `network-config.yaml` in root directory with the relevant information. You will likely need to create two entries. One for the 'prod' network, and one for the 'fork' network
 3. Update the CI and Makefile to include the network name (only the fork).
 4. Ensure any private RPC url are located within encrypted .env file.
-5. Add the RPC url to GitHub Secrets and import in the `env` block of [CI workflow](.github/workflows/main.yaml).
+5. Add the RPC url to GitHub Secrets and import in the `env` block of the [CI workflow](.github/workflows/main.yaml).
 
 ## Scripts
 
