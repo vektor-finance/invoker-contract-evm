@@ -10,6 +10,13 @@ def dai():
     )
 
 
+@pytest.fixture(scope="module")
+def weth():
+    yield Contract.from_abi(
+        "WETH", "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2", interface.IWETH.abi
+    )
+
+
 def test_swap_eth_for_dai(invoker, alice, cmove, cswap, weth, dai):
     """
     ALICE wants to swap her ETH for DAI
