@@ -40,7 +40,7 @@ def get_anyswap_tokens_for_chain(chain):
 
                 # Filter over the tokens we are interested in
                 for chain_token in tokens:
-                    if parsed["underlyingAddress"] == chain_token.get("address"):
+                    if parsed["underlyingAddress"].lower() == chain_token.get("address").lower():
                         output[chain_id]["assets"].append(parsed)
                         ret.append(parsed)
     cached_anyswap_tokens = ret
