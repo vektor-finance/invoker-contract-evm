@@ -1,6 +1,5 @@
-import json
-
 import requests
+import yaml
 from brownie import network
 
 from data.chain import get_chain_from_network_name
@@ -55,7 +54,7 @@ def main():
                 # Filter over the tokens we are interested in
                 for chain_token in tokens:
                     if parsed["underlyingAddress"] == chain_token.get("address"):
-                        print(json.dumps(parsed, indent=2))
+                        print(yaml.dump(parsed))
 
     r = requests.get(
         f"https://bridgeapi.anyswap.exchange/v3/serverinfoV4?chainId={chain_id}&version=all"
@@ -73,4 +72,4 @@ def main():
                 # Filter over the tokens we are interested in
                 for chain_token in tokens:
                     if parsed["underlyingAddress"] == chain_token.get("address"):
-                        print(json.dumps(parsed, indent=2))
+                        print(yaml.dump(parsed))

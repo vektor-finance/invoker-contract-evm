@@ -6,6 +6,7 @@
 pragma solidity ^0.8.6;
 
 import "../../interfaces/IAnyswapV4Router.sol";
+import "../../interfaces/IAnyswapV3ERC20.sol";
 import "../../interfaces/IWeth.sol";
 import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 
@@ -14,28 +15,41 @@ contract CBridge {
 
     IWETH public immutable WNATIVE;
 
-    IERC20 public immutable ANY_WNATIVE;
+    IAnyswapV3ERC20 public immutable ANY_WNATIVE;
 
-    IAnyswapV4Router public immutable ANYSWAP_ROUTER;
-
-    constructor(
-        IWETH _wnative,
-        IERC20 _anyWNATIVE,
-        IAnyswapV4Router _router
-    ) {
+    /**
+        @notice Constructor params for CBridge
+        @param _wnative The canonical 'wrapped native' erc20 asset on this network
+        @param _anyWNATIVE The 'anyToken' for the '_wnative' token
+        @dev Although it is possible to derive '_wnative' from '_anyWNATIVE' by calling 'any.underlying()'
+            This ensures no accidental deployments
+    **/
+    constructor(IWETH _wnative, IAnyswapV3ERC20 _anyWNATIVE) {
+        require(_anyWNATIVE.underlying() == address(_wnative), "CBridge: Invalid tokens");
         WNATIVE = _wnative;
         ANY_WNATIVE = _anyWNATIVE;
-        ANYSWAP_ROUTER = _router;
     }
 
+    /**
+        @notice Bridge the native asset of this network to destination chain
+        @param router The router necessary for this bridge (returned by Anyswap API)
+        @param amount The amount of tokens (in Wei) to bridge
+        @param destinationAddress The address which will receive the tokens
+        @param destinationChainID The chainID of the destination network 
+            note: the contract cannot verify that the address-chainID pair is valid
+        @dev This wraps the native asset and tries to bridge the wrapped ERC20. 
+            This route may not be available on every network. This is the responsibility of the caller to
+            ensure that the route is valid. 
+    **/
     function bridgeNative(
+        IAnyswapV4Router router,
         uint256 amount,
         address destinationAddress,
         uint256 destinationChainID
     ) external payable {
         WNATIVE.deposit{value: amount}();
-        WNATIVE.approve(address(ANYSWAP_ROUTER), amount);
-        ANYSWAP_ROUTER.anySwapOutUnderlying(
+        WNATIVE.approve(address(router), amount);
+        router.anySwapOutUnderlying(
             address(ANY_WNATIVE),
             destinationAddress,
             amount,
@@ -43,17 +57,29 @@ contract CBridge {
         );
     }
 
+    /**
+        @notice Bridge an ERC20 token from this network to destination chain
+        @param router The router necessary for this bridge (returned by Anyswap API)
+        @param fromToken The token you are attempting to bridge (also known as underlyingToken)
+        @param anyToken The corresponding anyToken for your chosen asset.
+        @param amount The amount of tokens (in Wei) to bridge
+        @param destinationAddress The address which will receive the tokens
+        @param destinationChainID The chainID of the destination network 
+            note: the contract cannot verify that the address-chainID pair is valid
+        @dev This route may not be available on every network. This is the responsibility of the caller to
+            ensure that the route is valid. 
+    **/
     function bridgeERC20(
+        IAnyswapV4Router router,
         IERC20 fromToken,
         IERC20 anyToken,
         uint256 amount,
         address destinationAddress,
         uint256 destinationChainID
     ) external payable {
-        IERC20 token = fromToken;
-        token.safeApprove(address(ANYSWAP_ROUTER), 0);
-        token.safeApprove(address(ANYSWAP_ROUTER), amount);
-        ANYSWAP_ROUTER.anySwapOutUnderlying(
+        fromToken.safeApprove(address(router), 0);
+        fromToken.safeApprove(address(router), amount);
+        router.anySwapOutUnderlying(
             address(anyToken),
             destinationAddress,
             amount,
