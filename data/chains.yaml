@@ -175,7 +175,6 @@ mumbai:
   id: mumbai
   name: Mumbai
   chain_id: 80001
-  explorer: https://mumbai.polygonscan.com/
   network:
     prod: mumbai-test
     fork: mumbai-hardhat-fork
@@ -262,7 +261,6 @@ fantom:
   id: fantom
   name: Fantom
   chain_id: 250
-  explorer: https://ftmscan.com
   network:
     prod: fantom-prod
     fork: fantom-hardhat-fork
@@ -306,7 +304,6 @@ avalanche:
   id: avalanche
   name: Avalanche
   chain_id: 43114
-  explorer: https://snowtrace.io
   network:
     prod: avalanche-prod
     fork: avalanche-hardhat-fork
