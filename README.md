@@ -10,6 +10,8 @@ Solidity contracts for Vektor's EVM invoker.
   - [Setup](#setup)
   - [Configuring Pre-Commit](#configuring-pre-commit)
   - [Running The Tests](#running-the-tests)
+- [Integration Testing](#integration-testing)
+  - [Adding new blockchains](#adding-new-blockchains)
 - [Scripts](#scripts)
   - [Faucet](#faucet)
   - [GPG Key](#create-and-setup-gpg-key-on-macos)
@@ -67,6 +69,22 @@ To run the entire suite:
 ```bash
 brownie test
 ```
+
+## Integration Testing
+
+### Adding new Blockchains
+
+In order to add a new blockchain to the testing suite, perform the following:
+
+1. Create an entry in `data/chains.yaml` with the relevant contract addresses.  
+Many of the fields are self-explanatory, however please note:
+    - The `network` field refers to the name of the network in the brownie config. We distinguish between a 'prod' network (which is the real network, and will be used for any deployments) and a 'fork' network (which will be a hardhat fork, used for all the testing).
+    - EIP1559 status is specified by a flag (It is possible to disable 1559, even when a network supports it)
+    - For each asset, please enter the name, symbol and decimals as directed by the smart contract. Please lowercase the address (for consistency)
+    -  The `benefactor` is an address that contains a large sum of the relevant token. (The testing suite moves tokens from the benefactor to the test users). For the purposes of these tests, it is best to pick a smart contract benefactor that we are unlikely to interact with (a yearn/aave vault is a good example)
+2. Update `network-config.yaml` in root directory with the relevant information. You will likely need to create two entries. One for the 'prod' network, and one for the 'fork' network
+3. Update the CI and Makefile to include the network name (only the fork).
+4. Ensure any private RPC url are located within encrypted .env file.
 
 ## Scripts
 
