@@ -301,3 +301,13 @@ fantom:
     - venue: spookyswap
       interfaces: [uniswap_router_v2_02]
       address: "0xf491e7b69e4244ad4002bc14e878a34207e38c29"
+
+fuji:
+  id: fuji
+  name: Avalanche Fuji
+  chain_id: 43113
+  network:
+    prod: fuji-test
+    fork: fuji-hardhat-fork
+  assets:
+  contracts:
