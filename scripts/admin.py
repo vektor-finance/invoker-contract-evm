@@ -2,13 +2,9 @@ import json
 import os
 import sys
 
-import brownie
 from brownie import Contract, Invoker, accounts, network
 
-from data.access_control import ROLE_PAUSER
 from data.chain import get_chain_from_network_name
-
-block_number = 0
 
 
 def get_opts(user, chain):
@@ -41,22 +37,6 @@ def get_invoker_chainid(chain_id):
         return sorted_invokers[0]["address"]
 
 
-def get_pausers(invoker):
-    global block_number
-    # TODO: Will need to iterate over blocks once this method hits block limit
-    web3c = brownie.web3.eth.contract(address=invoker.address, abi=invoker.abi)
-    event_filter = web3c.events.RoleGranted.createFilter(fromBlock=block_number)
-    result = event_filter.get_all_entries()
-    pausers = []
-    for log in result:
-        role = brownie.web3.toHex(log["args"]["role"])
-        if role == "0x" + ROLE_PAUSER:
-            pauser = log["args"]["account"]
-            pausers.append(pauser)
-    print(f"The following accounts are able to pause/unpause: {pausers}")
-    return pausers
-
-
 def get_signer():
     print(f"Available accounts: {accounts.load()}")
     account = accounts.load(input("Select account to sign with: "))
@@ -65,13 +45,11 @@ def get_signer():
 
 
 def pause(invoker, chain):
-    get_pausers(invoker)
     signer = get_signer()
     invoker.pause(get_opts(signer, chain))
 
 
 def unpause(invoker, chain):
-    get_pausers(invoker)
     signer = get_signer()
     invoker.unpause(get_opts(signer, chain))
 
