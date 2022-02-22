@@ -25,7 +25,6 @@ contract CBridge {
             This ensures no accidental deployments
     **/
     constructor(IWETH _wnative, IAnyswapV3ERC20 _anyWNATIVE) {
-        require(_anyWNATIVE.underlying() == address(_wnative), "CBridge: Invalid tokens");
         WNATIVE = _wnative;
         ANY_WNATIVE = _anyWNATIVE;
     }
@@ -47,6 +46,7 @@ contract CBridge {
         address destinationAddress,
         uint256 destinationChainID
     ) external payable {
+        require(address(ANY_WNATIVE) != address(0), "CBridge: Cannot bridge Native");
         WNATIVE.deposit{value: amount}();
         WNATIVE.approve(address(router), amount);
         router.anySwapOutUnderlying(
