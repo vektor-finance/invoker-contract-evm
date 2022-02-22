@@ -164,12 +164,17 @@ polygon:
     - venue: quickswap
       interfaces: [uniswap_router_v2_02]
       address: "0xa5E0829CaCEd8fFDD4De3c43696c57F7D7A678ff"
+    - venue: anyswap
+      interfaces: [anyswap_router_v4]
+      address: "0x4f3aff3a747fcade12598081e80c6605a8be192f"
+    - venue: anyswap
+      interfaces: [anyswap_router_v4, anyswap_router_v6]
+      address: "0x2ef4a574b72e1f555185afa8a09c6d1a8ac4025c"
 
 mumbai:
   id: mumbai
   name: Mumbai
   chain_id: 80001
-  explorer: https://mumbai.polygonscan.com/
   network:
     prod: mumbai-test
     fork: mumbai-hardhat-fork
@@ -256,7 +261,6 @@ fantom:
   id: fantom
   name: Fantom
   chain_id: 250
-  explorer: https://ftmscan.com
   network:
     prod: fantom-prod
     fork: fantom-hardhat-fork
@@ -268,7 +272,7 @@ fantom:
         - name: Wrapped Fantom
           symbol: WFTM
           decimals: 18
-          address: "0x21be370D5312f44cB42ce377BC9b8a0cEF1A4C83"
+          address: "0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83"
           benefactor: "0x5aa53f03197e08c4851cad8c92c7922da5857e5d"
           wrapped_native: true
         - name: Dai Stablecoin
@@ -295,3 +299,56 @@ fantom:
     - venue: spookyswap
       interfaces: [uniswap_router_v2_02]
       address: "0xf491e7b69e4244ad4002bc14e878a34207e38c29"
+
+avalanche:
+  id: avalanche
+  name: Avalanche
+  chain_id: 43114
+  network:
+    prod: avalanche-prod
+    fork: avalanche-hardhat-fork
+  assets:
+    - name: Avalanche
+      symbol: AVAX
+      decimals: 18
+      address: ~
+    - name: Wrapped AVAX
+      symbol: WAVAX
+      decimals: 18
+      address: "0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7"
+      benefactor: "0xdfe521292ece2a4f44242efbcd66bc594ca9714b"
+      wrapped_native: true
+    - name: Dai Stablecoin
+      symbol: DAI.e
+      decimals: 18
+      address: "0xd586e7f844cea2f87f50152665bcbc2c279d8d70"
+      benefactor: "0x47afa96cdc9fab46904a55a6ad4bf6660b53c38a"
+    - name: USD Coin
+      symbol: USDC.e
+      decimals: 6
+      address: "0xa7d7079b0fead91f3e65f86e8915cb59c1a4c664"
+      benefactor: "0x46a51127c3ce23fb7ab1de06226147f446e4a857"
+    - name: USD Coin
+      symbol: USDC
+      decimals: 6
+      address: "0xb97ef9ef8734c71904d8002f8b6bc66dd9c48a6e"
+      benefactor: "0xaef735b1e7ecfaf8209ea46610585817dc0a2e16"
+    - name: Tether USD
+      symbol: USDT.e
+      decimals: 6
+      address: "0xc7198437980c041c805a1edcba50c1ce5db95118"
+      benefactor: "0x0d26d103c91f63052fbca88aaf01d5304ae40015"
+    - name: Wrapped Ether
+      symbol: WETH.e
+      decimals: 18
+      address: "0x49d5c2bdffac6ce2bfdb6640f4f80f226bc10bab"
+      benefactor: "0x53f7c5869a859f0aec3d334ee8b4cf01e3492f21"
+    - name: Wrapped BTC
+      symbol: WBTC.e
+      decimals: 8
+      address: "0x50b7545627a5162f82a992c33b87adc75187b218"
+      benefactor: "0x686bef2417b6dc32c50a3cbfbcc3bb60e1e9a15d"
+  contracts:
+    - venue: trader_joe
+      interfaces: [uniswap_router_v2_02]
+      address: "0x60ae616a2155ee3d9a68541ba4544862310933d4"

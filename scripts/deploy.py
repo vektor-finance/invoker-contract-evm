@@ -17,7 +17,7 @@ import time
 from brownie import CMove, CSwap, Invoker, accounts, network
 
 from data.access_control import APPROVED_COMMAND
-from data.chain import get_chain_from_network_name, get_uni_router_address, get_weth_address
+from data.chain import get_chain_from_network_name, get_uni_router_address, get_wnative_address
 from data.git import get_git_revision_hash, get_git_revision_short_hash
 
 commands = [CMove, CSwap]
@@ -71,7 +71,7 @@ def deploy_invoker(deployer, chain, log=False):
 
 
 def deploy_commands(deployer, invoker, chain, log=False):
-    WETH_ADDRESS = get_weth_address(chain)
+    WETH_ADDRESS = get_wnative_address(chain)
     UNI_ROUTER_ADDRESS = get_uni_router_address(chain)
 
     for command in commands:

@@ -4,27 +4,25 @@
 
 Solidity contracts for Vektor's EVM invoker.
 
+- [Overview](#overview)
+- [Testing and Development](#testing-and-development)
+  - [Dependencies](#dependencies)
+  - [Setup](#setup)
+  - [GPG Key](#create-and-setup-gpg-key-on-macos)
+  - [Git-crypt](#setup-git-encrypt)
+  - [Configuring Pre-Commit](#configuring-pre-commit)
+  - [Running The Tests](#running-the-tests)
+- [Integration Testing](#integration-testing)
+  - [Adding new blockchains](#adding-new-blockchains)
+- [Scripts](#scripts)
+  - [Faucet](#faucet)
+
+
 ## Overview
 
 TODO
 
 ## Testing and Development
-
-### Environment Variables
-
-For testing, this project requires you have an API key for (both are free to create):
-
-- [Etherscan](https://etherscan.io/apis)
-- [Infura](https://infura.io/)
-
-They must be set in the shell environment before running most `brownie` commands.
-
-Copy the `.env.template` file and set the values:
-
-```bash
-cp .env.template .env
-edit .env
-```
 
 ### Dependencies
 
@@ -44,6 +42,24 @@ cd invoker-contract-evm
 pip install -r requirements.txt -r requirements.dev.txt
 yarn install
 ```
+
+### Create and Setup GPG key on macOS
+
+1. Install `gnugpg` and `pinentry-mac` - `brew install gnupg pinentry-mac`
+2. Generate a GPG key - `gpg --full-generate-key`. Use defaults, your `@vektor.finance` email and add a passphrase
+3. Get the key id by using - `gpg --list-secret-keys --keyid-format=long`. It's the value after the encryption format e.g. `sec ed25519/<key-id>`
+4. Configure git with the GPG key - `git config --global user.signingkey <key-id>`
+5. Add the GPG key to GitHub [here](https://github.com/settings/gpg/new) - `gpg --armor --export <key-id> | pbcopy`
+6. Open the file `~/.gnupg/gpg-agent.conf` and add `pinentry-program /opt/homebrew/bin/pinentry-mac`
+7. Tell `git` to use your GPG key for all signing going forward `git config --global commit.gpgsign true`
+
+Some other useful steps for debugging can be found [here](https://gist.github.com/troyfontaine/18c9146295168ee9ca2b30c00bd1b41e)
+
+### Setup git-encrypt
+
+1. Install [git-encrypt](https://github.com/AGWA/git-crypt/blob/master/INSTALL.md) - `brew install git-crypt`
+2. Ensure your `GPG` Key identifier is added - e.g. key ID, a full fingerprint, an email address - speak to @akramhussein
+3. Once your `GPG` key has been added to the repo, you can pull the latest repo and run `git-crypt unlock`
 
 ### Configuring Pre-commit
 
@@ -73,6 +89,23 @@ To run the entire suite:
 brownie test
 ```
 
+## Integration Testing
+
+### Adding new Blockchains
+
+In order to add a new blockchain to the testing suite, perform the following:
+
+1. Create an entry in `data/chains.yaml` with the relevant contract addresses.  
+Many of the fields are self-explanatory, however please note:
+    - The `network` field refers to the name of the network in the brownie config. We distinguish between a 'prod' network (which is the real network, and will be used for any deployments) and a 'fork' network (which will be a hardhat fork, used for all the testing).
+    - EIP1559 status is specified by a flag (It is possible to disable 1559, even when a network supports it)
+    - For each asset, please enter the name, symbol and decimals as directed by the smart contract. Please lowercase the address (for consistency)
+    -  The `benefactor` is an address that contains a large sum of the relevant token. (The testing suite moves tokens from the benefactor to the test users). For the purposes of these tests, it is best to pick a smart contract benefactor that we are unlikely to interact with (a yearn/aave vault is a good example)
+2. Update `network-config.yaml` in root directory with the relevant information. You will likely need to create two entries. One for the 'prod' network, and one for the 'fork' network
+3. Update the CI and Makefile to include the network name (only the fork).
+4. Ensure any private RPC url are located within encrypted .env file.
+5. Add the RPC url to GitHub Secrets and import in the `env` block of the [CI workflow](.github/workflows/main.yaml).
+
 ## Scripts
 
 Brownie scripts can be called with `brownie run <script-name>`
@@ -89,21 +122,3 @@ Prefix the `key=value` before calling the command e.g. `ACCOUNT=2 ETH=1.5 browni
 
 - `ACCOUNT` - account index (e.g. 12) or address `0x....` to use. Defaults to account index 0.
 - `ETH` - ETH to use per swap. Defaults to 0.5 ETH.
-
-### Create and Setup GPG key on macOS
-
-1. Install `gnugpg` and `pinentry-mac` - `brew install gnupg pinentry-mac`
-2. Generate a GPG key - `gpg --full-generate-key`. Use defaults, your `@vektor.finance` email and add a passphrase
-3. Get the key id by using - `gpg --list-secret-keys --keyid-format=long`. It's the value after the encryption format e.g. `sec ed25519/<key-id>`
-4. Configure git with the GPG key - `git config --global user.signingkey <key-id>`
-5. Add the GPG key to GitHub [here](https://github.com/settings/gpg/new) - `gpg --armor --export <key-id> | pbcopy`
-6. Open the file `~/.gnupg/gpg-agent.conf` and add `pinentry-program /opt/homebrew/bin/pinentry-mac`
-7. Tell `git` to use your GPG key for all signing going forward `git config --global commit.gpgsign true`
-
-Some other useful steps for debugging can be found [here](https://gist.github.com/troyfontaine/18c9146295168ee9ca2b30c00bd1b41e)
-
-### Setup git-encrypt
-
-1. Install [git-encrypt](https://github.com/AGWA/git-crypt/blob/master/INSTALL.md) - `brew install git-crypt`
-2. Ensure your `GPG` Key identifier is added - e.g. key ID, a full fingerprint, an email address - speak to @akramhussein
-3. Once your `GPG` key has been added to the repo, you can pull the latest repo and run `git-crypt unlock`

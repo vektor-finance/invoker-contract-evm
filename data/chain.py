@@ -1,6 +1,8 @@
 import os
+import sys
 
 import yaml
+from brownie._config import CONFIG
 
 
 def get_chain_data():
@@ -31,8 +33,8 @@ def get_chain_from_network_name(network_name):
     return (chain, mode)
 
 
-def get_weth_address(chain):
-    """Get the first WETH address from chain
+def get_wnative_address(chain):
+    """Get the first wrapped native address from chain
     Does this by checking for wrapped_native
     If multiple assets exists, it returns the first
     """
@@ -43,7 +45,7 @@ def get_weth_address(chain):
             if token.get("wrapped_native"):
                 yield token
 
-    return next(generator(chain))["address"]
+    return next(generator(chain))["address"].lower()
 
 
 def get_uni_router_address(chain):
@@ -58,7 +60,7 @@ def get_uni_router_address(chain):
             if "uniswap_router_v2_02" in contract["interfaces"]:
                 yield contract
 
-    return next(generator(chain))["address"]
+    return next(generator(chain))["address"].lower()
 
 
 CHAINS = {
@@ -70,8 +72,43 @@ CHAINS = {
     "43114": "avalanche",
     "250": "fantom",
     "128": "huobi eco",
+    "25": "cronos mainnet beta",
+    "40": "telos evm",
+    "288": "boba network",
+    "1088": "metis andromeda",
+    "42220": "celo mainnet",
+    "1313161554": "aurora mainnet",
+    "1666600000": "harmony mainnet",
+    "1284": "moonbeam",
 }
 
 
 def get_chain_name(chain_id):
-    return CHAINS[chain_id]
+    return CHAINS.get(str(chain_id))
+
+
+def get_network():
+    # Difficult to get network before brownie is connected
+    # This is a hack/workaround to get the default network
+    # Or the network specificed in the CLI.
+    network = CONFIG.settings["networks"]["default"]
+    if CONFIG.argv["network"]:
+        network = CONFIG.argv["network"]
+    else:
+        try:
+            _net = sys.argv.index("--network")
+            network = sys.argv[_net + 1]
+        except ValueError:
+            pass
+    return network
+
+
+def get_chain():
+    connected_network = get_network()
+    (chain, _) = get_chain_from_network_name(connected_network)
+    return chain
+
+
+def get_chain_id():
+    chain = get_chain()
+    return chain["chain_id"]

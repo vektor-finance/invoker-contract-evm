@@ -6,71 +6,38 @@ from pathlib import Path
 
 import pytest
 from brownie import Contract, interface
-from brownie._config import CONFIG
 from brownie.project.main import get_loaded_projects
 
-from data.access_control import APPROVED_COMMAND
 from data.anyswap import get_anyswap_tokens_for_chain
-from data.chain import get_chain_from_network_name, get_chain_name
+from data.chain import get_chain, get_chain_name, get_network, get_wnative_address
+
+pytest_plugins = ["fixtures.accounts", "fixtures.vektor", "fixtures.chain"]
 
 
-# User accounts
 @pytest.fixture(autouse=True)
 def isolation(fn_isolation):
     pass
 
 
-@pytest.fixture(scope="module")
-def deployer(accounts):
-    yield accounts[0]
-
-
-@pytest.fixture(scope="module")
-def alice(accounts):
-    yield accounts[1]
-
-
-@pytest.fixture(scope="module")
-def bob(accounts):
-    yield accounts[2]
-
-
-# Vektor contracts
-
-
-@pytest.fixture(scope="module")
-def invoker(deployer, Invoker):
-    yield deployer.deploy(Invoker)
-
-
-@pytest.fixture(scope="module")
-def cswap(invoker, deployer, CSwap, weth, uni_router):
-    contract = deployer.deploy(CSwap, weth.address, uni_router.address)
-    invoker.grantRole(APPROVED_COMMAND, contract, {"from": deployer})  # approve command
-    yield contract
-
-
-@pytest.fixture(scope="module")
-def cmove(deployer, invoker, CMove):
-    contract = deployer.deploy(CMove)
-    invoker.grantRole(APPROVED_COMMAND, contract, {"from": deployer})  # approve command
-    yield contract
-
-
 # Contracts from config file
 
+UNISWAP_ROUTER_V2_ABI = {"43114": interface.JoeRouterV2.abi}
+
+DEFAULT_UNISWAP_ROUTER_V2_ABI = interface.IUniswapV2Router02.abi
+
 
 @pytest.fixture(scope="module")
-def uni_router(request):
+def uni_router(request, connected_chain):
     router = request.param
-    yield Contract.from_abi(
-        f"{router['venue']} router", router["address"], interface.IUniswapV2Router02.abi
-    )
+    chain_id = str(connected_chain["chain_id"])
+    abi = UNISWAP_ROUTER_V2_ABI.get(chain_id, DEFAULT_UNISWAP_ROUTER_V2_ABI)
+    yield Contract.from_abi(f"{router['venue']} router", router["address"], abi)
 
 
 @pytest.fixture(scope="module")
-def weth(request):
-    yield Contract.from_abi("WETH", request.param["address"], interface.IWETH.abi)
+def wnative(connected_chain):
+    address = get_wnative_address(connected_chain)
+    yield Contract.from_abi("Wrapped Native", address, interface.IWETH.abi)
 
 
 @pytest.fixture(scope="module")
@@ -91,10 +58,30 @@ def anyswap_router_v4(request):
 def anyswap_token_v4(request):
     token = request.param
     yield {
-        "router": token["router"],
+        "router": Contract.from_abi(
+            "AnyswapRouter", token["router"], interface.AnyswapV4Router.abi
+        ),
         "underlying": Contract.from_abi(
             token["underlyingName"], token["underlyingAddress"], interface.IERC20.abi
         ),
+        "anyToken": Contract.from_abi(
+            f"any{token['underlyingName']}", token["anyAddress"], interface.AnyswapV5ERC20.abi
+        ),
+    }
+
+
+@pytest.fixture(scope="module")
+def mint_anyswap_token_v4(alice, request):
+    token = request.param
+    underlying = Contract.from_abi(
+        token["underlyingName"], token["underlyingAddress"], interface.IERC20.abi
+    )
+    underlying.transfer(alice, 100 * (10 ** token["decimals"]), {"from": token["benefactor"]})
+    yield {
+        "router": Contract.from_abi(
+            "AnyswapRouter", token["router"], interface.AnyswapV4Router.abi
+        ),
+        "underlying": underlying,
         "anyToken": Contract.from_abi(
             f"any{token['underlyingName']}", token["anyAddress"], interface.AnyswapV5ERC20.abi
         ),
@@ -107,6 +94,23 @@ def anyswap_token_dest_chain(request):
 
 
 @pytest.fixture(scope="module")
+def any_native_token(request):
+    token = request.param
+    yield {
+        "address": token["anyAddress"],
+        "token": Contract.from_abi(
+            f"any{token['underlyingName']}",
+            token["anyAddress"],
+            interface.AnyswapV5ERC20.abi,
+        ),
+        "router": Contract.from_abi(
+            "AnyswapRouter", token["router"], interface.AnyswapV4Router.abi
+        ),
+    }
+    return request.param["anyAddress"]
+
+
+@pytest.fixture(scope="module")
 def tokens_for_alice(request, alice):
     token = request.param
     contract = Contract.from_abi(token["name"], token["address"], interface.ERC20Detailed.abi)
@@ -115,17 +119,6 @@ def tokens_for_alice(request, alice):
 
 
 # pytest fixtures/collections
-
-_network = ""
-_chain = {}
-
-
-def pytest_sessionstart():
-    global _chain, _network
-    _network = CONFIG.settings["networks"]["default"]
-    if CONFIG.argv["network"]:
-        _network = CONFIG.argv["network"]
-    (_chain, _) = get_chain_from_network_name(_network)
 
 
 def pytest_ignore_collect(path):
@@ -137,69 +130,97 @@ def pytest_ignore_collect(path):
     if path.is_dir():
         return None
 
+    network = get_network()
+
     # ignore core tests unless you are on 'hardhat' network (dev)
     if path_parts[:1] == ("core",):
-        return _network != "hardhat"
+        return network != "hardhat"
 
     # ignore integration tests if on 'hardhat' network (dev)
     if path_parts[:1] == ("integration",):
-        return _network == "hardhat"
+        return network == "hardhat"
 
     if path_parts[:1] == ("combination",):
-        return _network != path_parts[1]
+        return network != path_parts[1]
 
 
 def pytest_generate_tests(metafunc):
 
-    if _chain["id"] == "dev":
+    chain = get_chain()
+
+    if chain["id"] == "dev":
         return
 
     if "token" in metafunc.fixturenames:
-        tokens = [asset for asset in _chain["assets"] if asset.get("address")]
+        tokens = [asset for asset in chain["assets"] if asset.get("address")]
         token_names = [token["name"] for token in tokens]
         metafunc.parametrize("token", tokens, ids=token_names, indirect=True)
 
     if "tokens_for_alice" in metafunc.fixturenames:
-        tokens = [asset for asset in _chain["assets"] if asset.get("address")]
+        tokens = [asset for asset in chain["assets"] if asset.get("address")]
         token_names = [token["name"] for token in tokens]
         metafunc.parametrize("tokens_for_alice", tokens, ids=token_names, indirect=True)
 
     if "uni_router" in metafunc.fixturenames:
         routers = [
             contract
-            for contract in _chain["contracts"]
+            for contract in chain["contracts"]
             if "uniswap_router_v2_02" in contract.get("interfaces")
         ]
         router_names = [router["venue"] for router in routers]
         metafunc.parametrize("uni_router", routers, ids=router_names, indirect=True)
 
-    if "weth" in metafunc.fixturenames:
-        wrapped_natives = [asset for asset in _chain["assets"] if asset.get("wrapped_native")]
-        wrapped_names = [token["name"] for token in wrapped_natives]
-        metafunc.parametrize("weth", wrapped_natives, ids=wrapped_names, indirect=True)
-
     if "anyswap_router_v4" in metafunc.fixturenames:
         routers = [
             contract
-            for contract in _chain["contracts"]
+            for contract in chain["contracts"]
             if "anyswap_router_v4" in contract.get("interfaces")
         ]
         router_names = [router["venue"] for router in routers]
         metafunc.parametrize("anyswap_router_v4", routers, ids=router_names, indirect=True)
 
     if "anyswap_token_v4" in metafunc.fixturenames:
-        anyswap_tokens = get_anyswap_tokens_for_chain(_chain["chain_id"])
+        anyswap_tokens = get_anyswap_tokens_for_chain(chain)
+        if anyswap_tokens is None:
+            pytest.skip("No native token to bridge")
         tokens = [asset for asset in anyswap_tokens if asset.get("anyAddress")]
         token_names = [token["underlyingName"] for token in tokens]
         metafunc.parametrize("anyswap_token_v4", tokens, ids=token_names, indirect=True)
 
+    if "mint_anyswap_token_v4" in metafunc.fixturenames:
+        anyswap_tokens = get_anyswap_tokens_for_chain(chain)
+        if anyswap_tokens is None:
+            pytest.skip("No native token to bridge")
+        any_tokens = [asset for asset in anyswap_tokens if asset.get("anyAddress")]
+        all_tokens = [asset for asset in chain["assets"] if asset.get("address")]
+        for token in any_tokens:
+            for a in all_tokens:
+                if token["underlyingAddress"] in a["address"]:
+                    token["benefactor"] = a["benefactor"]
+                    token["decimals"] = a["decimals"]
+        token_names = [token["underlyingName"] for token in any_tokens]
+        metafunc.parametrize("mint_anyswap_token_v4", any_tokens, ids=token_names, indirect=True)
+
     if "anyswap_token_dest_chain" in metafunc.fixturenames:
-        anyswap_tokens = get_anyswap_tokens_for_chain(_chain["chain_id"])
+        anyswap_tokens = get_anyswap_tokens_for_chain(chain)
+        if anyswap_tokens is None:
+            pytest.skip("No anyswap tokens specified")
         all_dest = []
         for token in anyswap_tokens:
-            for chain in token.get("destChains"):
-                if chain not in all_dest:
-                    all_dest.append(chain)
+            for dest_chain in token.get("destChains"):
+                if dest_chain not in all_dest:
+                    all_dest.append(dest_chain)
         metafunc.parametrize(
             "anyswap_token_dest_chain", all_dest, indirect=True, ids=get_chain_name
         )
+
+    if "any_native_token" in metafunc.fixturenames:
+        wrapped_native = get_wnative_address(chain)
+        anyswap_tokens = get_anyswap_tokens_for_chain(chain)
+        any_native = [
+            token for token in anyswap_tokens if token["underlyingAddress"] == wrapped_native
+        ]
+        native_names = [token["underlyingName"] for token in any_native]
+        if any_native is []:
+            pytest.skip("Cannot bridge native token using anyswap")
+        metafunc.parametrize("any_native_token", any_native, ids=native_names, indirect=True)
