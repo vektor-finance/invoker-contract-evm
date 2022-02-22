@@ -63,8 +63,10 @@ def main():
 
     print(
         f"Currently connected to network: '{chain['id']}' network (Chain ID: {chain['chain_id']})"
-        f" with mode '{mode}'."
     )
+
+    if mode != "prod":
+        raise ValueError(f"Cannot run script in {mode} environment.")
 
     invoker_address = get_invoker_chainid(chain["chain_id"])
 
