@@ -25,7 +25,7 @@ contract CBridge {
     **/
     constructor(IWETH _wnative, IAnyswapV3ERC20 _anyWNATIVE) {
         require(
-            _anyWNATIVE.underlying() == address(_wnative) || address(_anyWNATIVE) == address(0),
+            address(_anyWNATIVE) == address(0) || _anyWNATIVE.underlying() == address(_wnative),
             "CBridge: Invalid tokens"
         );
         WNATIVE = _wnative;
