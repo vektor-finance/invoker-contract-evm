@@ -21,10 +21,13 @@ contract CBridge {
         @notice Constructor params for CBridge
         @param _wnative The canonical 'wrapped native' erc20 asset on this network
         @param _anyWNATIVE The 'anyToken' for the '_wnative' token
-        @dev Although it is possible to derive '_wnative' from '_anyWNATIVE' by calling 'any.underlying()'
-            This ensures no accidental deployments
+        @dev If native bridging is not supported, please use zero address for '_anyWNATIVE'
     **/
     constructor(IWETH _wnative, IAnyswapV3ERC20 _anyWNATIVE) {
+        require(
+            _anyWNATIVE.underlying() == address(_wnative) || address(_anyWNATIVE) == address(0),
+            "CBridge: Invalid tokens"
+        );
         WNATIVE = _wnative;
         ANY_WNATIVE = _anyWNATIVE;
     }
