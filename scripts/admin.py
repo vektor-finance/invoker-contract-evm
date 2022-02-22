@@ -71,7 +71,7 @@ def main():
     invoker_address = get_invoker_chainid(chain["chain_id"])
 
     if invoker_address is None:
-        sys.exit(1)
+        raise ValueError(f"Could not find deployed invoker on network {chain['id']}")
 
     invoker = Contract.from_abi("Invoker", invoker_address, Invoker.abi)
 
