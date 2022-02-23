@@ -1,4 +1,5 @@
 import pytest
+from brownie import ZERO_ADDRESS
 
 from data.access_control import APPROVED_COMMAND
 from data.anyswap import get_anyswap_tokens_for_chain
@@ -34,7 +35,7 @@ def cbridge(deployer, invoker, CBridge, connected_chain):
     try:
         any_native_token = any_native_tokens[0]
     except IndexError:
-        pytest.skip("No native anyToken")
+        any_native_token = ZERO_ADDRESS
     contract = deployer.deploy(CBridge, wnative, any_native_token)
     invoker.grantRole(APPROVED_COMMAND, contract, {"from": deployer})
     yield contract
