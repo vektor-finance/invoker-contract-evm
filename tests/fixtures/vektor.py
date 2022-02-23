@@ -19,6 +19,14 @@ def cswap(invoker, deployer, CSwap, wnative, uni_router):
 
 
 @pytest.fixture(scope="module")
+def cswap_venue(invoker, deployer, CSwapVenue, wnative, uni_router):
+    contract = deployer.deploy(CSwapVenue, wnative.address, uni_router.address)
+    invoker.grantRole(APPROVED_COMMAND, contract, {"from": deployer})  # approve command
+    invoker.invoke([contract], [contract.init.encode_input(uni_router.address)], {"from": deployer})
+    yield contract
+
+
+@pytest.fixture(scope="module")
 def cmove(deployer, invoker, CMove):
     contract = deployer.deploy(CMove)
     invoker.grantRole(APPROVED_COMMAND, contract, {"from": deployer})  # approve command
