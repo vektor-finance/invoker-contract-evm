@@ -88,7 +88,7 @@ def main():
             elif val == "pause":
                 pause(invoker, chain)
             elif val == "unpause":
-                unpause(invoker.chain)
+                unpause(invoker, chain)
             else:
                 print(f"Unrecognised command: {val}")
     except KeyboardInterrupt:
