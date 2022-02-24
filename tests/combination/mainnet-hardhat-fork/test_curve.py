@@ -15,28 +15,20 @@ def cswap_curve(invoker, deployer, CSwapCurve):
 
 
 @pytest.fixture(scope="module")
-def curve_pool(tokens_for_alice, request, interface, registry):
+def curve_dest(request, interface):
     dest_token = Contract.from_abi(
         request.param["name"], request.param["address"], interface.IERC20.abi
     )
-    address = registry.find_pool_for_coins(tokens_for_alice, dest_token)
-    if address != "0x0000000000000000000000000000000000000000":
-        yield {
-            "pool": Contract.from_abi("Curve Pool", address, interface.CurvePool.abi),
-            "src_token": tokens_for_alice,
-            "dest_token": dest_token,
-        }
-    else:
-        pytest.skip(f"Pair does not exist for {tokens_for_alice._name} -> {dest_token._name}")
+    yield dest_token
 
 
 def pytest_generate_tests(metafunc):
     chain = get_chain()
 
-    if "curve_pool" in metafunc.fixturenames:
+    if "curve_dest" in metafunc.fixturenames:
         tokens = [asset for asset in chain["assets"] if asset.get("address")]
         token_names = [token["name"] for token in tokens]
-        metafunc.parametrize("curve_pool", tokens, ids=token_names, indirect=True)
+        metafunc.parametrize("curve_dest", tokens, ids=token_names, indirect=True)
 
 
 @pytest.fixture(scope="module")
@@ -51,23 +43,32 @@ def registry(provider, interface):
     yield Contract.from_abi("Curve Registry", provider.get_registry(), interface.CurveRegistry.abi)
 
 
-def test_buy_with_curve(curve_pool, invoker, alice, cswap_curve, cmove, registry):
+@pytest.fixture(scope="module")
+def swap_registry(provider, interface):
+    yield Contract.from_abi(
+        "Swap Registry", provider.get_address(2), interface.CurveSwapRegistry.abi
+    )
+
+
+def test_buy_with_curve(
+    tokens_for_alice, curve_dest, invoker, alice, cswap_curve, cmove, swap_registry
+):
     # need to unselect unnecssary parametrized tests
     # review https://github.com/pytest-dev/pytest/issues/3730
-    pool = curve_pool["pool"]
-    src = curve_pool["src_token"]
-    dst = curve_pool["dest_token"]
-    print(f"{src._name} -> {dst._name}")
-    value = 10 ** src.decimals()
-    (i, j, underlying) = registry.get_coin_indices(pool, src, dst)
-    amount_out = pool.get_dy(i, j, value)
 
-    print(i, j, underlying, amount_out)
+    value = 10 ** tokens_for_alice.decimals()
+    print(swap_registry, tokens_for_alice, curve_dest, value)
 
-    src.approve(invoker, value, {"from": alice})
-    calldata_move = cmove.moveERC20In.encode_input(src, value)
-    calldata_swap = cswap_curve.swapCurve.encode_input(value, amount_out, [src, dst], pool, i, j)
+    (pool, amount_out) = swap_registry.get_best_rate(
+        tokens_for_alice, curve_dest, value, {"gasLimit": 2_000_000}
+    )
+    if pool == "0x0000000000000000000000000000000000000000":
+        pytest.skip("No route available")
 
-    invoker.invoke([cmove, cswap_curve], [calldata_move, calldata_swap], {"from": alice})
+    # src.approve(invoker, value, {"from": alice})
+    # calldata_move = cmove.moveERC20In.encode_input(src, value)
+    # calldata_swap = cswap_curve.swapCurve.encode_input(value, amount_out, [src, dst], pool, i, j)
 
-    assert dst.balanceOf(invoker) >= amount_out
+    # invoker.invoke([cmove, cswap_curve], [calldata_move, calldata_swap], {"from": alice})
+
+    # assert dst.balanceOf(invoker) >= amount_out
