@@ -65,7 +65,7 @@ interface ISwapTemplateCurve {
         int128 _j,
         uint256 _dx,
         uint256 _minDy
-    ) external returns (uint256);
+    ) external;
 
     function remove_liquidity(uint256 _amount, uint256[2] calldata _minAmounts)
         external
