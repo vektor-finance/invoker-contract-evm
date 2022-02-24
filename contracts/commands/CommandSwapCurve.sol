@@ -1,3 +1,7 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
+// Vektor SWAP COMMAND (Curve)
+// Version 1.0.0
+// Not production-safe
 pragma solidity ^0.8.6;
 
 import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
@@ -16,12 +20,12 @@ contract CSwapCurve {
     ) external payable {
         IERC20 tokenIn = IERC20(_tokens[0]);
         IERC20 tokenOut = IERC20(_tokens[1]);
-        _tokenIn.safeApprove(_pool, 0);
-        _tokenIn.safeApprove(_pool, _amountIn);
-        POOL = ISwapTemplateCurve(_pool);
-        uint256 balanceBefore = _tokenOut.balanceOf(address(this));
+        tokenIn.safeApprove(_pool, 0);
+        tokenIn.safeApprove(_pool, _amountIn);
+        ISwapTemplateCurve POOL = ISwapTemplateCurve(_pool);
+        uint256 balanceBefore = tokenOut.balanceOf(address(this));
         POOL.exchange(_i, _j, _amountIn, _minAmountOut);
-        uint256 balanceAfter = _tokenOut.balanceOf(address(this));
-        require(balanceAfter >= balanceBefore + _amountOutMin, "CSwap: Slippage in");
+        uint256 balanceAfter = tokenOut.balanceOf(address(this));
+        require(balanceAfter >= balanceBefore + _minAmountOut, "CSwap: Slippage in");
     }
 }
