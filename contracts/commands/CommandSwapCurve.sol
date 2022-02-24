@@ -28,4 +28,7 @@ contract CSwapCurve {
         uint256 balanceAfter = tokenOut.balanceOf(address(this));
         require(balanceAfter >= balanceBefore + _minAmountOut, "CSwap: Slippage in");
     }
+
+    // need to handle eth
+    // need to handle underlying / other types of pools
 }
