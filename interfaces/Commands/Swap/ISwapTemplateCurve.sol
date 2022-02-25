@@ -65,7 +65,14 @@ interface ISwapTemplateCurve {
         int128 _j,
         uint256 _dx,
         uint256 _minDy
-    ) external;
+    ) external payable;
+
+    function exchange_underlying(
+        int128 _i,
+        int128 _j,
+        uint256 _dx,
+        uint256 _min_dy
+    ) external payable;
 
     function remove_liquidity(uint256 _amount, uint256[2] calldata _minAmounts)
         external

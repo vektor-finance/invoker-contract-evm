@@ -8,8 +8,8 @@ from data.chain import get_chain
 
 
 @pytest.fixture(scope="module")
-def cswap_curve(invoker, deployer, CSwapCurve):
-    contract = deployer.deploy(CSwapCurve)
+def cswap_curve(invoker, deployer, CSwapCurve, registry):
+    contract = deployer.deploy(CSwapCurve, registry.address)
     invoker.grantRole(APPROVED_COMMAND, contract, {"from": deployer})  # approve command
     yield contract
 
@@ -51,24 +51,33 @@ def swap_registry(provider, interface):
 
 
 def test_buy_with_curve(
-    tokens_for_alice, curve_dest, invoker, alice, cswap_curve, cmove, swap_registry
+    tokens_for_alice,
+    curve_dest,
+    invoker,
+    alice,
+    cswap_curve,
+    cmove,
+    registry,
+    swap_registry,
+    interface,
 ):
     # need to unselect unnecssary parametrized tests
     # review https://github.com/pytest-dev/pytest/issues/3730
 
     value = 10 ** tokens_for_alice.decimals()
-    print(swap_registry, tokens_for_alice, curve_dest, value)
 
-    (pool, amount_out) = swap_registry.get_best_rate(
-        tokens_for_alice, curve_dest, value, {"gasLimit": 2_000_000}
-    )
+    (pool, amount_out) = swap_registry.get_best_rate(tokens_for_alice, curve_dest, value)
     if pool == "0x0000000000000000000000000000000000000000":
         pytest.skip("No route available")
+    pool = Contract.from_abi("Curve Pool", pool, interface.CurvePool.abi)
+    print(pool, amount_out)
 
-    # src.approve(invoker, value, {"from": alice})
-    # calldata_move = cmove.moveERC20In.encode_input(src, value)
-    # calldata_swap = cswap_curve.swapCurve.encode_input(value, amount_out, [src, dst], pool, i, j)
+    tokens_for_alice.approve(invoker, value, {"from": alice})
+    calldata_move = cmove.moveERC20In.encode_input(tokens_for_alice, value)
+    calldata_swap = cswap_curve.swapCurve.encode_input(
+        value, amount_out, [tokens_for_alice, curve_dest], pool
+    )
 
-    # invoker.invoke([cmove, cswap_curve], [calldata_move, calldata_swap], {"from": alice})
+    invoker.invoke([cmove, cswap_curve], [calldata_move, calldata_swap], {"from": alice})
 
-    # assert dst.balanceOf(invoker) >= amount_out
+    assert curve_dest.balanceOf(invoker) >= amount_out
