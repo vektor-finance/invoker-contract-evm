@@ -2,19 +2,10 @@ import json
 import os
 import sys
 
-from brownie import Contract, Invoker, accounts, network
+from brownie import Contract, Invoker, network
 
 from data.chain import get_chain_from_network_name
-
-
-def get_opts(user, chain):
-    gas_override = os.environ.get("GAS_GWEI")
-    if gas_override:
-        return {"from": user, "gas_price": f"{gas_override} gwei"}
-    if chain.get("eip1559"):
-        return {"from": user, "priority_fee": "2 gwei"}
-    else:
-        return {"from": user}
+from data.utils import get_opts, get_signer
 
 
 def get_invoker_chainid(chain_id):
@@ -35,13 +26,6 @@ def get_invoker_chainid(chain_id):
         sorted_invokers = sorted(invokers, key=lambda d: d["timestamp"], reverse=True)
         print(f"Returning the most recently deployed invoker ({sorted_invokers[0]['address']})")
         return sorted_invokers[0]["address"]
-
-
-def get_signer():
-    print(f"Available accounts: {accounts.load()}")
-    account = accounts.load(input("Select account to sign with: "))
-    print(f"Signing with {account}")
-    return account
 
 
 def pause(invoker, chain):
@@ -70,7 +54,7 @@ def main():
 
     invoker_address = get_invoker_chainid(chain["chain_id"])
 
-    if invoker_address is None:
+    if not invoker_address:
         raise ValueError(f"Could not find deployed invoker on network {chain['id']}")
 
     invoker = Contract.from_abi("Invoker", invoker_address, Invoker.abi)
@@ -91,10 +75,5 @@ def main():
                 unpause(invoker, chain)
             else:
                 print(f"Unrecognised command: {val}")
-    except KeyboardInterrupt:
-        print("")
+    except (KeyboardInterrupt, EOFError):
         print("Quitting gracefully..")
-        pass
-    except EOFError:
-        print("Quitting gracefully..")
-        pass
