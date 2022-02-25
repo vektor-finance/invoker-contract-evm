@@ -28,6 +28,7 @@ env:
   NODE_OPTIMISM_TESTNET_URL: ${{ secrets.NODE_OPTIMISM_TESTNET_URL }}
   NODE_FANTOM_MAINNET_URL: ${{ secrets.NODE_FANTOM_MAINNET_URL }}
   NODE_AVALANCHE_MAINNET_URL: ${{ secrets.NODE_AVALANCHE_MAINNET_URL }}
+  NODE_BINANCE_MAINNET_URL: ${{ secrets.NODE_BINANCE_MAINNET_URL }}
 
   # increasing available memory for node reduces issues with ganache crashing
   # https://nodejs.org/api/cli.html#cli_max_old_space_size_size_in_megabytes
@@ -60,6 +61,7 @@ jobs:
           - fantom-hardhat-fork
           - arbitrum-hardhat-fork
           - avalanche-hardhat-fork
+          - bsc-hardhat-fork
 
     steps:
       - name: Checkout current commit (${{ github.sha }})
