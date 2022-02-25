@@ -56,6 +56,13 @@ development:
   host: http://localhost
   id: avalanche-hardhat-fork
   name: Hardhat (Avalanche Fork)
+- cmd: npx hardhat node
+  cmd_settings:
+    fork: bsc-prod
+    port: 8545
+  host: http://localhost
+  id: bsc-hardhat-fork
+  name: Hardhat (BSC Fork)
 
 live:
 - name: Ethereum
@@ -112,4 +119,11 @@ live:
     explorer: https://snowtrace.io/
     host: $NODE_AVALANCHE_MAINNET_URL
     id: avalanche-prod
+    name: Mainnet
+- name: Binance Smart Chain
+  networks:
+  - chainid: 56
+    explorer: https://bscscan.com
+    host: $NODE_BINANCE_MAINNET_URL
+    id: bsc-prod
     name: Mainnet

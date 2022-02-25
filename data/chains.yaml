@@ -352,3 +352,51 @@ avalanche:
     - venue: trader_joe
       interfaces: [uniswap_router_v2_02]
       address: "0x60ae616a2155ee3d9a68541ba4544862310933d4"
+
+bsc:
+  id: bsc
+  name: Binance Smart Chain
+  chain_id: 56
+  network:
+    prod: bsc-prod
+    fork: bsc-hardhat-fork
+  assets:
+    - name: BNB
+      symbol: BNB
+      decimals: 18
+      address: ~
+    - name: Wrapped BNB
+      symbol: WBNB
+      decimals: 18
+      address: "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c"
+      benefactor: "0x48d807e5cb92617953a88cce78dcf31012f4d6b6"
+      wrapped_native: True
+    - name: Binance-Peg USD Coin
+      symbol: USDC
+      decimals: 18 # yes, really, 18
+      address: "0x8ac76a51cc950d9822d68b83fe1ad97b32cd580d"
+      benefactor: "0x5a3615dcf179d1a3446c59473e281d5c6a006e4b"
+    - name: Binance-Peg BSC-USD # Tether
+      symbol: USDT
+      decimals: 18 # yes, 18
+      address: "0x55d398326f99059ff775485246999027b3197955"
+      benefactor: "0xb3f0c9ea1f05e312093fdb031e789a756659b0ac"
+    - name: Binance-Peg Ethereum Token
+      symbol: ETH
+      decimals: 18
+      address: "0x2170ed0880ac9a755fd29b2688956bd959f933f8"
+      benefactor: "0xbff4a34a4644a113e8200d7f1d79b3555f723afe"
+    - name: Binance-Peg BTCB Token
+      symbol: BTCB
+      decimals: 18
+      address: "0x7130d2a12b9bcbfae4f2634d864a1ee1ce3ead9c"
+      benefactor: "0xd171b26e4484402de70e3ea256be5a2630d7e88d"
+    - name: Binance-Peg Dai Token
+      symbol: DAI
+      decimals: 18
+      address: "0x1af3f329e8be154074d8769d1ffa4ee058b1dbc3"
+      benefactor: "0x41772edd47d9ddf9ef848cdb34fe76143908c7ad"
+  contracts:
+    - venue: pancakeswap
+      interfaces: [uniswap_router_v2_02]
+      address: "0x10ed43c718714eb63d5aa57b78b54704e256024e"
