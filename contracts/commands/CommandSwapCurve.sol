@@ -5,46 +5,89 @@
 pragma solidity ^0.8.6;
 
 import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
-import "../../interfaces/Commands/Swap/ISwapTemplateCurve.sol";
-import "../../interfaces/Commands/Swap/ICurveRegistry.sol";
+
+interface ICurvePool {
+    function exchange(
+        int128 i,
+        int128 j,
+        uint256 dx,
+        uint256 min_dy
+    ) external;
+
+    function exchange_underlying(
+        int128 i,
+        int128 j,
+        uint256 dx,
+        uint256 min_dy
+    ) external;
+}
+
+interface ICryptoPool {
+    function exchange(
+        uint256 i,
+        uint256 j,
+        uint256 dx,
+        uint256 min_dy
+    ) external;
+
+    function exchange_underlying(
+        uint256 i,
+        uint256 j,
+        uint256 dx,
+        uint256 min_dy
+    ) external;
+}
 
 contract CSwapCurve {
     using SafeERC20 for IERC20;
 
-    event Log(uint256 a);
+    event Log(uint256 i);
 
-    ICurveRegistry public immutable CURVE_REGISTRY;
-
-    constructor(ICurveRegistry _registry) {
-        CURVE_REGISTRY = _registry;
-    }
-
+    // https://github.com/curvefi/curve-pool-registry/blob/master/contracts/Swaps.vy#L446
     function swapCurve(
         uint256 _amountIn,
         uint256 _minAmountOut,
         address[2] calldata _tokens,
-        address _pool
+        address _pool,
+        uint256[3] calldata _swapParams
     ) external payable {
         IERC20 tokenIn = IERC20(_tokens[0]);
         IERC20 tokenOut = IERC20(_tokens[1]);
         tokenIn.safeApprove(_pool, 0);
         tokenIn.safeApprove(_pool, _amountIn);
-        ISwapTemplateCurve POOL = ISwapTemplateCurve(_pool);
+
         uint256 balanceBefore = tokenOut.balanceOf(address(this));
-        (int128 i, int128 j, bool isUnderlying) = CURVE_REGISTRY.get_coin_indices(
-            _pool,
-            _tokens[0],
-            _tokens[1]
-        );
-        emit Log(address(this).balance);
-        emit Log(balanceBefore);
-        if (isUnderlying) {
-            POOL.exchange_underlying(i, j, _amountIn, _minAmountOut);
+
+        if (_swapParams[2] == 1) {
+            // Stableswap `exchange`
+            ICurvePool(_pool).exchange(
+                int128(int256(_swapParams[0])),
+                int128(int256(_swapParams[1])),
+                _amountIn,
+                0
+            );
+        } else if (_swapParams[2] == 2) {
+            // Stableswap `exchange_underlying`
+            ICurvePool(_pool).exchange_underlying(
+                int128(int256(_swapParams[0])),
+                int128(int256(_swapParams[1])),
+                _amountIn,
+                0
+            );
+        } else if (_swapParams[2] == 3) {
+            // Cryptoswap `exchange`
+            ICryptoPool(_pool).exchange(_swapParams[0], _swapParams[1], _amountIn, 0);
+        } else if (_swapParams[2] == 4) {
+            // Cryptoswap `exchange_underlying`
+            ICryptoPool(_pool).exchange_underlying(_swapParams[0], _swapParams[1], _amountIn, 0);
+        } else if (_swapParams[2] == 5) {
+            // Polygon factory metapool `exchange_underlying
         } else {
-            POOL.exchange(i, j, _amountIn, _minAmountOut);
+            revert("CSwapCurve: Unknown swapParam");
         }
+
+        emit Log(balanceBefore);
         uint256 balanceAfter = tokenOut.balanceOf(address(this));
-        emit Log(address(this).balance);
         emit Log(balanceAfter);
         require(balanceAfter >= balanceBefore + _minAmountOut, "CSwap: Slippage in");
     }
