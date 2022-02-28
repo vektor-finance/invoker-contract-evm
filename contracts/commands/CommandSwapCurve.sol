@@ -41,8 +41,6 @@ interface ICryptoPool {
 contract CSwapCurve {
     using SafeERC20 for IERC20;
 
-    event Log(uint256 i);
-
     // https://github.com/curvefi/curve-pool-registry/blob/master/contracts/Swaps.vy#L446
     function swapCurve(
         uint256 _amountIn,
@@ -80,15 +78,11 @@ contract CSwapCurve {
         } else if (_swapParams[2] == 4) {
             // Cryptoswap `exchange_underlying`
             ICryptoPool(_pool).exchange_underlying(_swapParams[0], _swapParams[1], _amountIn, 0);
-        } else if (_swapParams[2] == 5) {
-            // Polygon factory metapool `exchange_underlying
         } else {
             revert("CSwapCurve: Unknown swapParam");
         }
 
-        emit Log(balanceBefore);
         uint256 balanceAfter = tokenOut.balanceOf(address(this));
-        emit Log(balanceAfter);
         require(balanceAfter >= balanceBefore + _minAmountOut, "CSwap: Slippage in");
     }
 
