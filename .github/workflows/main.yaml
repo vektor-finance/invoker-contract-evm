@@ -9,6 +9,7 @@ on:
       - "data/**"
       - "interfaces/**"
       - "tests/**"
+      - "scripts/**"
       - "!**.md"
       - "**.yaml"
       - "**.js"
