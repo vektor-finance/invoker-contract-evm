@@ -1,7 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Vektor SWAP COMMAND
-// Version 1.0.0
-// Not production-safe
 
 pragma solidity ^0.8.6;
 
