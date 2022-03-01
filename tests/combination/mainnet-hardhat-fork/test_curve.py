@@ -2,11 +2,10 @@
 
 import pytest
 from brownie import Contract
-from brownie.exceptions import VirtualMachineError
 
 from data.access_control import APPROVED_COMMAND
 from data.chain import get_chain
-from data.curve import get_curve_pools
+from data.curve import CURVE_ASSET_TYPE_CRYPTO, get_curve_pools
 
 
 @pytest.fixture(scope="module")
@@ -77,27 +76,17 @@ def test_buysell_with_curve(
     alice,
     cswap_curve,
     cmove,
-    swap_registry,
     crypto_registry,
     interface,
     registry,
 ):
 
     value = 10 ** tokens_for_alice.decimals()
-
-    (pool, _) = swap_registry.get_best_rate(tokens_for_alice, curve_dest, value)
-    if pool == "0x0000000000000000000000000000000000000000":
-        pytest.skip("No route available")
-
     underlying = False
-    is_crypto_pool = False
-
-    try:
-        (i, j, underlying) = registry.get_coin_indices(pool, tokens_for_alice, curve_dest)
-    except VirtualMachineError:
-        (i, j) = crypto_registry.get_coin_indices(pool, tokens_for_alice, curve_dest)
-        is_crypto_pool = True
-    params = [i, j, 1]
+    is_crypto_pool = curve_pool.asset_type == CURVE_ASSET_TYPE_CRYPTO
+    pool = curve_pool.swap_address
+    (i, j, underlying) = registry.get_coin_indices(pool, tokens_for_alice, curve_dest)
+    params = [i, j, None]
 
     if is_crypto_pool:
         pool = Contract.from_abi("Curve Crypto Pool", pool, interface.CurveCryptoPool.abi)
