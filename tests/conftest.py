@@ -76,7 +76,7 @@ def mint_anyswap_token_v4(alice, request):
     underlying = Contract.from_abi(
         token["underlyingName"], token["underlyingAddress"], interface.IERC20.abi
     )
-    underlying.transfer(alice, 100 * (10 ** token["decimals"]), {"from": token["benefactor"]})
+    underlying.transfer(alice, 10 * (10 ** token["decimals"]), {"from": token["benefactor"]})
     yield {
         "router": Contract.from_abi(
             "AnyswapRouter", token["router"], interface.AnyswapV4Router.abi
