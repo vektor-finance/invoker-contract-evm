@@ -86,6 +86,5 @@ contract CSwapCurve {
         require(balanceAfter >= balanceBefore + _minAmountOut, "CSwap: Slippage in");
     }
 
-    // need to handle eth
-    // need to handle underlying / other types of pools
+    // need to consider how to handle native eth (alternatively, enforce wrapped eth)
 }
