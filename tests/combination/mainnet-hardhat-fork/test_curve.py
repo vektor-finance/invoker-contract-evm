@@ -35,20 +35,6 @@ def registry(provider, interface):
     yield Contract.from_abi("Curve Registry", provider.get_registry(), interface.CurveRegistry.abi)
 
 
-@pytest.fixture(scope="module")
-def swap_registry(provider, interface):
-    yield Contract.from_abi(
-        "Swap Registry", provider.get_address(2), interface.CurveSwapRegistry.abi
-    )
-
-
-@pytest.fixture(scope="module")
-def crypto_registry(provider, interface):
-    yield Contract.from_abi(
-        "Crypto Registry", provider.get_address(5), interface.CurveCryptoRegistry.abi
-    )
-
-
 @pytest.fixture(scope="function")
 def curve_pool(request):
     yield request.param
@@ -76,7 +62,6 @@ def test_buysell_with_curve(
     alice,
     cswap_curve,
     cmove,
-    crypto_registry,
     interface,
     registry,
 ):
@@ -86,7 +71,7 @@ def test_buysell_with_curve(
     is_crypto_pool = curve_pool.asset_type == CURVE_ASSET_TYPE_CRYPTO
     pool = curve_pool.swap_address
     (i, j, underlying) = registry.get_coin_indices(pool, tokens_for_alice, curve_dest)
-    params = [i, j, None]
+    params = [pool, i, j, None]
 
     if is_crypto_pool:
         pool = Contract.from_abi("Curve Crypto Pool", pool, interface.CurveCryptoPool.abi)
@@ -98,12 +83,12 @@ def test_buysell_with_curve(
     else:
         amount_out = int(pool.get_dy(i, j, value) // 1.01)
 
-    params[2] = (is_crypto_pool * 2) + underlying + 1
+    params[3] = (is_crypto_pool * 2) + underlying + 1
 
     tokens_for_alice.approve(invoker, value, {"from": alice})
     calldata_move = cmove.moveERC20In.encode_input(tokens_for_alice, value)
-    calldata_swap = cswap_curve.swapCurve.encode_input(
-        value, amount_out, [tokens_for_alice, curve_dest], pool, params
+    calldata_swap = cswap_curve.sell.encode_input(
+        value, amount_out, [tokens_for_alice, curve_dest], params
     )
 
     invoker.invoke([cmove, cswap_curve], [calldata_move, calldata_swap], {"from": alice})

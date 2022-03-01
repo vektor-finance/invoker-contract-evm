@@ -2,86 +2,61 @@
 // Vektor SWAP COMMAND (Curve)
 pragma solidity ^0.8.6;
 
+import "../../interfaces/Commands/Swap/Curve/ICryptoPool.sol";
+import "../../interfaces/Commands/Swap/Curve/ICSwapCurve.sol";
+import "../../interfaces/Commands/Swap/Curve/ICurvePool.sol";
 import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 
-interface ICurvePool {
-    function exchange(
-        int128 i,
-        int128 j,
-        uint256 dx,
-        uint256 min_dy
-    ) external;
-
-    function exchange_underlying(
-        int128 i,
-        int128 j,
-        uint256 dx,
-        uint256 min_dy
-    ) external;
-}
-
-interface ICryptoPool {
-    function exchange(
-        uint256 i,
-        uint256 j,
-        uint256 dx,
-        uint256 min_dy
-    ) external;
-
-    function exchange_underlying(
-        uint256 i,
-        uint256 j,
-        uint256 dx,
-        uint256 min_dy
-    ) external;
-}
-
-contract CSwapCurve {
+contract CSwapCurve is ICSwapCurve {
     using SafeERC20 for IERC20;
 
     // https://github.com/curvefi/curve-pool-registry/blob/master/contracts/Swaps.vy#L446
-    function swapCurve(
-        uint256 _amountIn,
-        uint256 _minAmountOut,
-        address[2] calldata _tokens,
-        address _pool,
-        uint256[3] calldata _swapParams
+    function sell(
+        uint256 amountIn,
+        uint256 minAmountOut,
+        address[2] calldata tokens,
+        CurveSwapParams calldata params
     ) external payable {
-        IERC20 tokenIn = IERC20(_tokens[0]);
-        IERC20 tokenOut = IERC20(_tokens[1]);
-        tokenIn.safeApprove(_pool, 0);
-        tokenIn.safeApprove(_pool, _amountIn);
+        IERC20 tokenIn = IERC20(tokens[0]);
+        IERC20 tokenOut = IERC20(tokens[1]);
+        tokenIn.safeApprove(params.poolAddress, 0);
+        tokenIn.safeApprove(params.poolAddress, amountIn);
 
         uint256 balanceBefore = tokenOut.balanceOf(address(this));
 
-        if (_swapParams[2] == 1) {
+        if (params.swapType == 1) {
             // Stableswap `exchange`
-            ICurvePool(_pool).exchange(
-                int128(int256(_swapParams[0])),
-                int128(int256(_swapParams[1])),
-                _amountIn,
+            ICurvePool(params.poolAddress).exchange(
+                int128(int256(params.tokenI)),
+                int128(int256(params.tokenJ)),
+                amountIn,
                 0
             );
-        } else if (_swapParams[2] == 2) {
+        } else if (params.swapType == 2) {
             // Stableswap `exchange_underlying`
-            ICurvePool(_pool).exchange_underlying(
-                int128(int256(_swapParams[0])),
-                int128(int256(_swapParams[1])),
-                _amountIn,
+            ICurvePool(params.poolAddress).exchange_underlying(
+                int128(int256(params.tokenI)),
+                int128(int256(params.tokenJ)),
+                amountIn,
                 0
             );
-        } else if (_swapParams[2] == 3) {
+        } else if (params.swapType == 3) {
             // Cryptoswap `exchange`
-            ICryptoPool(_pool).exchange(_swapParams[0], _swapParams[1], _amountIn, 0);
-        } else if (_swapParams[2] == 4) {
+            ICryptoPool(params.poolAddress).exchange(params.tokenI, params.tokenJ, amountIn, 0);
+        } else if (params.swapType == 4) {
             // Cryptoswap `exchange_underlying`
-            ICryptoPool(_pool).exchange_underlying(_swapParams[0], _swapParams[1], _amountIn, 0);
+            ICryptoPool(params.poolAddress).exchange_underlying(
+                params.tokenI,
+                params.tokenJ,
+                amountIn,
+                0
+            );
         } else {
-            revert("CSwapCurve: Unknown swapParam");
+            revert("CSwapCurve: Unknown swapType");
         }
 
         uint256 balanceAfter = tokenOut.balanceOf(address(this));
-        require(balanceAfter >= balanceBefore + _minAmountOut, "CSwap: Slippage in");
+        require(balanceAfter >= balanceBefore + minAmountOut, "CSwap: Slippage in");
     }
 
     // need to consider how to handle native eth (alternatively, enforce wrapped eth)
