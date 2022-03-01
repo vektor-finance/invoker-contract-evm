@@ -68,7 +68,7 @@ def pytest_generate_tests(metafunc):
         metafunc.parametrize("curve_dest", tokens, ids=token_names, indirect=True)
 
 
-@pytest.mark.only_curve_pool_tokens()
+@pytest.mark.only_curve_pool_tokens("tokens_for_alice", "curve_dest")
 def test_buysell_with_curve(
     curve_pool,
     tokens_for_alice,

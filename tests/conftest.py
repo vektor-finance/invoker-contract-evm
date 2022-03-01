@@ -121,6 +121,10 @@ def tokens_for_alice(request, alice):
 # pytest fixtures/collections
 
 
+def is_list_unique(_list):
+    return len(set(_list)) == len(_list)
+
+
 def pytest_collection_modifyitems(items):
     for item in items.copy():
         try:
@@ -128,14 +132,13 @@ def pytest_collection_modifyitems(items):
         except Exception:
             continue
 
-        for _ in item.iter_markers(name="only_curve_pool_tokens"):
-            pool_coins = params["curve_pool"].coins
-            from_token = params["tokens_for_alice"]["address"]
-            to_token = params["curve_dest"]["address"]
-            if from_token == to_token:
+        for marker in item.iter_markers(name="only_curve_pool_tokens"):
+            tokens = [params[x]["address"] for x in marker.args]
+            if not is_list_unique(tokens):
                 items.remove(item)
                 continue
-            if not all(tokens in pool_coins for tokens in [from_token, to_token]):
+            pool_coins = params["curve_pool"].coins
+            if not all(token in pool_coins for token in tokens):
                 items.remove(item)
 
 
