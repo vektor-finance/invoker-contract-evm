@@ -6,6 +6,7 @@ from brownie.exceptions import VirtualMachineError
 
 from data.access_control import APPROVED_COMMAND
 from data.chain import get_chain
+from data.curve import get_curve_pools
 
 
 @pytest.fixture(scope="module")
@@ -21,15 +22,6 @@ def curve_dest(request, interface):
         request.param["name"], request.param["address"], interface.IERC20.abi
     )
     yield dest_token
-
-
-def pytest_generate_tests(metafunc):
-    chain = get_chain()
-
-    if "curve_dest" in metafunc.fixturenames:
-        tokens = [asset for asset in chain["assets"] if asset.get("address")]
-        token_names = [token["name"] for token in tokens]
-        metafunc.parametrize("curve_dest", tokens, ids=token_names, indirect=True)
 
 
 @pytest.fixture(scope="module")
@@ -58,7 +50,27 @@ def crypto_registry(provider, interface):
     )
 
 
-def test_buy_with_curve(
+@pytest.fixture(scope="function")
+def curve_pool(request):
+    yield request.param
+
+
+def pytest_generate_tests(metafunc):
+    chain = get_chain()
+
+    if "curve_pool" in metafunc.fixturenames:
+        pools = get_curve_pools(chain["chain_id"])
+        pool_names = [pool.name for pool in pools]
+        metafunc.parametrize("curve_pool", pools, ids=pool_names, indirect=True)
+    if "curve_dest" in metafunc.fixturenames:
+        tokens = [asset for asset in chain["assets"] if asset.get("address")]
+        token_names = [token["name"] for token in tokens]
+        metafunc.parametrize("curve_dest", tokens, ids=token_names, indirect=True)
+
+
+@pytest.mark.only_curve_pool_tokens()
+def test_buysell_with_curve(
+    curve_pool,
     tokens_for_alice,
     curve_dest,
     invoker,
@@ -70,8 +82,6 @@ def test_buy_with_curve(
     interface,
     registry,
 ):
-    # need to unselect unnecssary parametrized tests
-    # review https://github.com/pytest-dev/pytest/issues/3730
 
     value = 10 ** tokens_for_alice.decimals()
 

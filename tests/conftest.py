@@ -121,6 +121,24 @@ def tokens_for_alice(request, alice):
 # pytest fixtures/collections
 
 
+def pytest_collection_modifyitems(items):
+    for item in items.copy():
+        try:
+            params = item.callspec.params
+        except Exception:
+            continue
+
+        for _ in item.iter_markers(name="only_curve_pool_tokens"):
+            pool_coins = params["curve_pool"].coins
+            from_token = params["tokens_for_alice"]["address"]
+            to_token = params["curve_dest"]["address"]
+            if from_token == to_token:
+                items.remove(item)
+                continue
+            if not all(tokens in pool_coins for tokens in [from_token, to_token]):
+                items.remove(item)
+
+
 def pytest_ignore_collect(path):
     project = get_loaded_projects()[0]
     path = Path(path).relative_to(project._path)
