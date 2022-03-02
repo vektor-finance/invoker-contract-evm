@@ -7,6 +7,8 @@ import "../../interfaces/Commands/Swap/Curve/ICSwapCurve.sol";
 import "../../interfaces/Commands/Swap/Curve/ICurvePool.sol";
 import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 
+// interfaces necessary for get_input_amount
+// if we disable BUY, can remove these
 interface IRegistry {
     function get_coin_indices(
         address _pool,
@@ -113,25 +115,29 @@ contract CSwapCurve is ICSwapCurve {
         require(balanceAfter >= balanceBefore + minAmountOut, "CSwap: Slippage in");
     }
 
+    // TODO: fix this
+    // `inputAmount` should be calculated on-chain
+    // currently calculated in python for prototyping
     function buy(
         uint256 amountOut,
         uint256 maxAmountIn,
         address[2] calldata tokens,
-        CurveSwapParams calldata params
+        CurveSwapParams calldata params,
+        uint256 inputAmount
     ) external payable {
         IERC20 tokenIn = IERC20(tokens[0]);
         IERC20 tokenOut = IERC20(tokens[1]);
         // Add 1 wei as rounding error may reduce amount of tokens received
-        uint256 inputAmount = 1 +
-            get_input_amount(
-                params.poolAddress,
-                amountOut,
-                GIAParams({
-                    i: int128(int256(params.tokenI)),
-                    j: int128(int256(params.tokenJ)),
-                    is_underlying: params.swapType % 2 == 0
-                })
-            );
+        // uint256 inputAmount = 1 +
+        //     get_input_amount(
+        //         params.poolAddress,
+        //         amountOut,
+        //         GIAParams({
+        //             i: int128(int256(params.tokenI)),
+        //             j: int128(int256(params.tokenJ)),
+        //             is_underlying: params.swapType % 2 == 0
+        //         })
+        //     );
 
         require(inputAmount <= maxAmountIn, "CSwap: Slippage out");
 
@@ -176,6 +182,7 @@ contract CSwapCurve is ICSwapCurve {
         require(balanceAfter >= balanceBefore + amountOut, "CSwap: Slippage in");
     }
 
+    // structs needed to prevent stack too deep errors
     struct CalculatorParams {
         uint256 n_coins;
         uint256[8] balances;
@@ -193,13 +200,15 @@ contract CSwapCurve is ICSwapCurve {
         bool is_underlying;
     }
 
+    // https://etherscan.io/address/0xd1602f68cc7c4c7b59d686243ea35a9c73b0c6a2#code
+    // TODO: this should be a 'view' function, but leaving it as a transaction
+    // to allow for stack tracing in brownie
     function get_input_amount(
         address pool,
         uint256 amount,
         GIAParams memory params
-    ) public view returns (uint256) {
+    ) public returns (uint256) {
         CalculatorParams memory vars;
-        int128 nc;
 
         vars.amp = REGISTRY.get_A(pool);
         vars.fee = REGISTRY.get_fees(pool)[0];
