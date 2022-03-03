@@ -114,7 +114,7 @@ def any_native_token(request):
 def tokens_for_alice(request, alice):
     token = request.param
     contract = Contract.from_abi(token["name"], token["address"], interface.ERC20Detailed.abi)
-    contract.transfer(alice, 100 * (10 ** token["decimals"]), {"from": token["benefactor"]})
+    contract.transfer(alice, 10 * (10 ** token["decimals"]), {"from": token["benefactor"]})
     yield contract
 
 
