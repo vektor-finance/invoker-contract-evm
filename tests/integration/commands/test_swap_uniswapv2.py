@@ -8,12 +8,15 @@ def sync(uni_router, token0, token1):
         f"{uni_router._name} Factory", uni_router.factory(), interface.UniswapV2Factory.abi
     )
 
-    pair = Contract.from_abi(
-        f"{uni_router._name} Pair",
-        factory.getPair(token0, token1),
-        interface.UniswapV2Pair.abi,
-    )
-    pair.sync({"from": accounts[0]})
+    pair_addr = factory.getPair(token0, token1)
+
+    if pair_addr != ZERO_ADDRESS:
+        pair = Contract.from_abi(
+            f"{uni_router._name} Pair",
+            pair_addr,
+            interface.UniswapV2Pair.abi,
+        )
+        pair.sync({"from": accounts[0]})
 
 
 @pytest.mark.dedupe("tokens_for_alice", "token")
