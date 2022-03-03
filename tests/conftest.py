@@ -121,6 +121,23 @@ def tokens_for_alice(request, alice):
 # pytest fixtures/collections
 
 
+def is_list_unique(_list):
+    return len(set(_list)) == len(_list)
+
+
+def pytest_collection_modifyitems(items):
+    for item in items.copy():
+        try:
+            params = item.callspec.params
+        except Exception:
+            continue
+
+        for marker in item.iter_markers(name="dedupe"):
+            tokens = [params[x]["address"] for x in marker.args]
+            if not is_list_unique(tokens):
+                items.remove(item)
+
+
 def pytest_ignore_collect(path):
     project = get_loaded_projects()[0]
     path = Path(path).relative_to(project._path)

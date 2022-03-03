@@ -21,8 +21,8 @@ contract CSwapUniswapV2 is ICSwapUniswapV2 {
         require(params.path.length > 1, "CSwap: invalid path");
         IERC20 tokenIn = IERC20(tokens[0]);
         IERC20 tokenOut = IERC20(tokens[1]);
-        tokenIn.safeApprove(address(params.router), 0); // To support tether
-        tokenIn.safeApprove(address(params.router), amountIn);
+        tokenIn.safeApprove(params.router, 0); // To support tether
+        tokenIn.safeApprove(params.router, amountIn);
         address receiver = params.receiver == address(0) ? address(this) : params.receiver;
         //solhint-disable-next-line not-rely-on-time
         uint256 deadline = params.deadline == 0 ? block.timestamp + 1 : params.deadline;
@@ -47,8 +47,8 @@ contract CSwapUniswapV2 is ICSwapUniswapV2 {
     ) external payable {
         require(params.path.length > 1, "CSwap: invalid path");
         IERC20 tokenIn = IERC20(tokens[0]);
-        tokenIn.safeApprove(address(params.router), 0); // To support tether
-        tokenIn.safeApprove(address(params.router), maxAmountIn);
+        tokenIn.safeApprove(params.router, 0); // To support tether
+        tokenIn.safeApprove(params.router, maxAmountIn);
         address receiver = params.receiver == address(0) ? address(this) : params.receiver;
         //solhint-disable-next-line not-rely-on-time
         uint256 deadline = params.deadline == 0 ? block.timestamp + 1 : params.deadline;

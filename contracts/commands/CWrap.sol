@@ -5,7 +5,7 @@ pragma solidity ^0.8.6;
 
 import "../../interfaces/IWeth.sol";
 
-contract CSwap {
+contract CWrap {
     IWETH public immutable WNATIVE;
 
     // When deploying on alternate networks, the WNATIVE address should be specified in constructor
