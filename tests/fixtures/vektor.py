@@ -12,7 +12,14 @@ def invoker(deployer, Invoker):
 
 
 @pytest.fixture(scope="module")
-def cswap(invoker, deployer, CSwap, wnative, uni_router):
+def cswap(invoker, deployer, CSwapUniswapV2):
+    contract = deployer.deploy(CSwapUniswapV2)
+    invoker.grantRole(APPROVED_COMMAND, contract, {"from": deployer})  # approve command
+    yield contract
+
+
+@pytest.fixture(scope="module")
+def cswap_old(invoker, deployer, CSwap, wnative, uni_router):
     contract = deployer.deploy(CSwap, wnative.address, uni_router.address)
     invoker.grantRole(APPROVED_COMMAND, contract, {"from": deployer})  # approve command
     yield contract

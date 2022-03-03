@@ -11,6 +11,7 @@ import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 contract CSwapUniswapV2 is ICSwapUniswapV2 {
     using SafeERC20 for IERC20;
 
+    // swapIn
     function sell(
         uint256 amountIn,
         uint256 minAmountOut,
@@ -37,6 +38,7 @@ contract CSwapUniswapV2 is ICSwapUniswapV2 {
         require(balanceAfter >= balanceBefore + minAmountOut, "CSwap: Slippage in");
     }
 
+    // swapOut
     function buy(
         uint256 amountOut,
         uint256 maxAmountIn,
