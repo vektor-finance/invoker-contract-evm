@@ -19,8 +19,11 @@ contract CSwapUniswapV2 is ICSwapUniswapV2 {
         uint256 minAmountOut,
         UniswapV2SwapParams calldata params
     ) external payable {
-        require(params.path[0] == address(tokenIn), "CSwap: invalid path");
-        require(params.path[params.path.length - 1] == address(tokenOut), "CSwap: invalid path");
+        require(params.path[0] == address(tokenIn), "CSwapUniswapV2: invalid path");
+        require(
+            params.path[params.path.length - 1] == address(tokenOut),
+            "CSwapUniswapV2: invalid path"
+        );
         tokenIn.safeApprove(params.router, 0); // To support tether
         tokenIn.safeApprove(params.router, amountIn);
         address receiver = params.receiver == address(0) ? address(this) : params.receiver;
@@ -35,7 +38,7 @@ contract CSwapUniswapV2 is ICSwapUniswapV2 {
             deadline
         );
         uint256 balanceAfter = tokenOut.balanceOf(receiver);
-        require(balanceAfter >= balanceBefore + minAmountOut, "CSwap: Slippage in");
+        require(balanceAfter >= balanceBefore + minAmountOut, "CSwapUniswapV2: Slippage in");
     }
 
     // swapOut
@@ -46,8 +49,11 @@ contract CSwapUniswapV2 is ICSwapUniswapV2 {
         uint256 maxAmountIn,
         UniswapV2SwapParams calldata params
     ) external payable {
-        require(params.path[0] == address(tokenIn), "CSwap: invalid path");
-        require(params.path[params.path.length - 1] == address(tokenOut), "CSwap: invalid path");
+        require(params.path[0] == address(tokenIn), "CSwapUniswapV2: invalid path");
+        require(
+            params.path[params.path.length - 1] == address(tokenOut),
+            "CSwapUniswapV2: invalid path"
+        );
         tokenIn.safeApprove(params.router, 0); // To support tether
         tokenIn.safeApprove(params.router, maxAmountIn);
         address receiver = params.receiver == address(0) ? address(this) : params.receiver;
@@ -62,6 +68,6 @@ contract CSwapUniswapV2 is ICSwapUniswapV2 {
             deadline
         );
         uint256 balanceAfter = tokenIn.balanceOf(receiver);
-        require(balanceAfter + maxAmountIn >= balanceBefore, "CSwap: Slippage out");
+        require(balanceAfter + maxAmountIn >= balanceBefore, "CSwapUniswapV2: Slippage out");
     }
 }
