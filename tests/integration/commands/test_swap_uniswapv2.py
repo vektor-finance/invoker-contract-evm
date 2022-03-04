@@ -36,7 +36,7 @@ def test_sell_invoker(tokens_for_alice, token, uni_router, alice, cmove, cswap, 
 
     calldata_move_in = cmove.moveERC20In.encode_input(tokens_for_alice, amount_in)
     calldata_sell = cswap.sell.encode_input(
-        amount_in, amount_out, path, (uni_router, path, ZERO_ADDRESS, 0)
+        amount_in, tokens_for_alice, token, amount_out, (uni_router, path, ZERO_ADDRESS, 0)
     )
     calldata_move_out = cmove.moveAllERC20Out.encode_input(token, alice)
 
@@ -77,7 +77,7 @@ def test_buy_invoker(tokens_for_alice, token, uni_router, alice, cmove, cswap, i
 
     calldata_move_in = cmove.moveERC20In.encode_input(tokens_for_alice, amount_in)
     calldata_buy = cswap.buy.encode_input(
-        amount_out, amount_in, path, (uni_router, path, ZERO_ADDRESS, 0)
+        amount_out, token, tokens_for_alice, amount_in, (uni_router, path, ZERO_ADDRESS, 0)
     )
     calldata_sweep_input = cmove.moveAllERC20Out.encode_input(tokens_for_alice, alice)
     calldata_move_out = cmove.moveERC20Out.encode_input(token, alice, amount_out)

@@ -14,13 +14,13 @@ contract CSwapUniswapV2 is ICSwapUniswapV2 {
     // swapIn
     function sell(
         uint256 amountIn,
+        IERC20 tokenIn,
+        IERC20 tokenOut,
         uint256 minAmountOut,
-        address[2] calldata tokens,
         UniswapV2SwapParams calldata params
     ) external payable {
-        require(params.path.length > 1, "CSwap: invalid path");
-        IERC20 tokenIn = IERC20(tokens[0]);
-        IERC20 tokenOut = IERC20(tokens[1]);
+        require(params.path[0] == address(tokenIn), "CSwap: invalid path");
+        require(params.path[params.path.length - 1] == address(tokenOut), "CSwap: invalid path");
         tokenIn.safeApprove(params.router, 0); // To support tether
         tokenIn.safeApprove(params.router, amountIn);
         address receiver = params.receiver == address(0) ? address(this) : params.receiver;
@@ -41,12 +41,13 @@ contract CSwapUniswapV2 is ICSwapUniswapV2 {
     // swapOut
     function buy(
         uint256 amountOut,
+        IERC20 tokenOut,
+        IERC20 tokenIn,
         uint256 maxAmountIn,
-        address[2] calldata tokens,
         UniswapV2SwapParams calldata params
     ) external payable {
-        require(params.path.length > 1, "CSwap: invalid path");
-        IERC20 tokenIn = IERC20(tokens[0]);
+        require(params.path[0] == address(tokenIn), "CSwap: invalid path");
+        require(params.path[params.path.length - 1] == address(tokenOut), "CSwap: invalid path");
         tokenIn.safeApprove(params.router, 0); // To support tether
         tokenIn.safeApprove(params.router, maxAmountIn);
         address receiver = params.receiver == address(0) ? address(this) : params.receiver;

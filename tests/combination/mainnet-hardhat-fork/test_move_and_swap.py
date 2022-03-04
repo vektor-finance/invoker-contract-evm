@@ -34,7 +34,7 @@ def test_swap_eth_for_dai(invoker, alice, cmove, cswap, cwrap, weth, dai, uni_ro
 
     # 2. Swap WETH -> Dai
     calldata_swap_weth_dai = cswap.sell.encode_input(
-        value, 0, [weth.address, dai.address], (uni_router, [weth, dai], ZERO_ADDRESS, 0)
+        value, weth, dai, 0, (uni_router, [weth, dai], ZERO_ADDRESS, 0)
     )
 
     # 3. Move Dai -> Alice
@@ -77,8 +77,9 @@ def test_swap_dai_to_eth_and_disperse(
     # will stop working when eth > 6000 dai
     calldata_swap_dai_eth = cswap.buy.encode_input(
         "0.3 ether",
+        weth,
+        dai,
         2000 * 1e18,
-        [dai.address, weth.address],
         (uni_router, [dai, weth], ZERO_ADDRESS, 0),
     )
 
@@ -218,7 +219,7 @@ def test_move_swap_then_sweep_rest(invoker, alice, bob, cswap, cwrap, dai, weth,
 
     # 2. Swap WETH -> Dai
     calldata_swap_weth_dai = cswap.sell.encode_input(
-        value, 0, [weth.address, dai.address], (uni_router, [weth, dai], ZERO_ADDRESS, 0)
+        value, weth, dai, 0, (uni_router, [weth, dai], ZERO_ADDRESS, 0)
     )
 
     # 3. Move Dai -> Bob
