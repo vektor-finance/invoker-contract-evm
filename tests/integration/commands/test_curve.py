@@ -84,7 +84,7 @@ def test_sell_with_curve(
     else:
         amount_out = int(pool.get_dy(i, j, value) // 1.01)
 
-    params[3] = (is_crypto_pool * 2) + underlying + 1
+    params[3] = (is_crypto_pool * 2) + underlying
 
     tokens_for_alice.approve(invoker, value, {"from": alice})
     calldata_move = cmove.moveERC20In.encode_input(tokens_for_alice, value)

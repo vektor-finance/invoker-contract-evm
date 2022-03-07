@@ -25,7 +25,9 @@ def main():
     registry = Contract.from_abi(
         "Curve Registry", provider.get_registry(), interface.CurveRegistry.abi
     )
-    pool_info = Contract.from_explorer(provider.get_address(1))
+    pool_info = Contract.from_abi(
+        "Curve Pool Info", provider.get_address(1), interface.CurvePoolInfo.abi
+    )
 
     max_len = registry.pool_count()
 
