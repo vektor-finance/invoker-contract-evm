@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-License-Identifier: Unlicensed
 // Vektor SWAP COMMAND
 
 pragma solidity ^0.8.6;
@@ -6,12 +6,14 @@ pragma solidity ^0.8.6;
 import "../../interfaces/IUniswapV2Router02.sol";
 import "../../interfaces/IWeth.sol";
 import "../../interfaces/Commands/Swap/UniswapV2/ICSwapUniswapV2.sol";
-import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
+import "./CSwapBase.sol";
 
-contract CSwapUniswapV2 is ICSwapUniswapV2 {
-    using SafeERC20 for IERC20;
+contract CSwapUniswapV2 is CSwapBase, ICSwapUniswapV2 {
+    function _getContractName() internal pure override returns (string memory) {
+        return "CSwapUniswapV2";
+    }
 
-    /** @notice Use this function to perform VXL SELL.
+    /** @notice Use this function to SELL a fixed amount of an asset.
         @dev This function sells an EXACT amount of `tokenIn` to receive `tokenOut`.
         If the price is worse than a threshold, the transaction will revert.
         This function was previously known as 'swapUniswapIn'
@@ -28,17 +30,15 @@ contract CSwapUniswapV2 is ICSwapUniswapV2 {
         uint256 minAmountOut,
         UniswapV2SwapParams calldata params
     ) external payable {
-        require(params.path[0] == address(tokenIn), "CSwapUniswapV2: invalid path");
+        require(params.path[0] == address(tokenIn), "CSwapUniswapV2: invalid path in");
         require(
             params.path[params.path.length - 1] == address(tokenOut),
-            "CSwapUniswapV2: invalid path"
+            "CSwapUniswapV2: invalid path out"
         );
-        tokenIn.safeApprove(params.router, 0); // To support tether
-        tokenIn.safeApprove(params.router, amountIn);
         address receiver = params.receiver == address(0) ? address(this) : params.receiver;
         //solhint-disable-next-line not-rely-on-time
         uint256 deadline = params.deadline == 0 ? block.timestamp + 1 : params.deadline;
-        uint256 balanceBefore = tokenOut.balanceOf(receiver);
+        uint256 balanceBefore = _preSwap(tokenIn, tokenOut, params.router, amountIn);
         IUniswapV2Router02(params.router).swapExactTokensForTokens(
             amountIn,
             minAmountOut,
@@ -46,11 +46,10 @@ contract CSwapUniswapV2 is ICSwapUniswapV2 {
             receiver,
             deadline
         );
-        uint256 balanceAfter = tokenOut.balanceOf(receiver);
-        require(balanceAfter >= balanceBefore + minAmountOut, "CSwapUniswapV2: Slippage in");
+        _postSwap(balanceBefore, tokenOut, minAmountOut);
     }
 
-    /** @notice Use this function to perform VXL BUY.
+    /** @notice Use this function to perform BUY a fixed amount of an asset.
         @dev This function buys an EXACT amount of `tokenOut` by spending `tokenIn`.
         If the price is worse than a threshold, the transaction will revert.
         This function was previously known as 'swapUniswapOut`
@@ -67,17 +66,15 @@ contract CSwapUniswapV2 is ICSwapUniswapV2 {
         uint256 maxAmountIn,
         UniswapV2SwapParams calldata params
     ) external payable {
-        require(params.path[0] == address(tokenIn), "CSwapUniswapV2: invalid path");
+        require(params.path[0] == address(tokenIn), "CSwapUniswapV2: invalid path in");
         require(
             params.path[params.path.length - 1] == address(tokenOut),
-            "CSwapUniswapV2: invalid path"
+            "CSwapUniswapV2: invalid path out"
         );
-        tokenIn.safeApprove(params.router, 0); // To support tether
-        tokenIn.safeApprove(params.router, maxAmountIn);
         address receiver = params.receiver == address(0) ? address(this) : params.receiver;
         //solhint-disable-next-line not-rely-on-time
         uint256 deadline = params.deadline == 0 ? block.timestamp + 1 : params.deadline;
-        uint256 balanceBefore = tokenIn.balanceOf(receiver);
+        uint256 balanceBefore = _preSwap(tokenIn, tokenOut, params.router, maxAmountIn);
         IUniswapV2Router02(params.router).swapTokensForExactTokens(
             amountOut,
             maxAmountIn,
@@ -85,7 +82,6 @@ contract CSwapUniswapV2 is ICSwapUniswapV2 {
             receiver,
             deadline
         );
-        uint256 balanceAfter = tokenIn.balanceOf(receiver);
-        require(balanceAfter + maxAmountIn >= balanceBefore, "CSwapUniswapV2: Slippage out");
+        _postSwap(balanceBefore, tokenOut, amountOut);
     }
 }
