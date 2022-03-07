@@ -75,7 +75,7 @@ live:
     name: Mainnet
   - chainid: 4
     explorer: https://api-rinkeby.etherscan.io/api
-    host: $NODE_ETHEREUM_RINKEBY_URL
+    host: https://rinkeby.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161
     id: rinkeby-test
     multicall2: '0x5BA1e12693Dc8F9c48aAD8770482f4739bEeD696'
     name: Rinkeby
