@@ -23,4 +23,5 @@ def get_curve_pools(chain_id: str):
     with open(os.path.join("data", "curve.json"), "r") as infile:
         CURVE_POOLS = json.load(infile)
     obj = CURVE_POOLS.get(chain_id)
-    return [CurvePool(**o) for o in obj]
+    if obj is not None:
+        return [CurvePool(**o) for o in obj]

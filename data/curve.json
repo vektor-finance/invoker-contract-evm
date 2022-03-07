@@ -518,7 +518,7 @@
     {
       "name": "tricrypto",
       "swap_address": "0x960ea3e3C7FB317332d990873d354E18d7645590",
-      "asset_type": 0,
+      "asset_type": 4,
       "coins": [
         "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
         "0x2f2a2543b76a4166549f7aab2e75bef0aefc5b0f",

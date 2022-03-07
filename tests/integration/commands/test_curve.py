@@ -46,6 +46,8 @@ def pytest_generate_tests(metafunc):
 
     if "curve_pool" in metafunc.fixturenames:
         pools = get_curve_pools(chain["chain_id"])
+        if pools is None:
+            pytest.skip("No Curve Pools")
         pool_names = [pool.name for pool in pools]
         metafunc.parametrize("curve_pool", pools, ids=pool_names, indirect=True)
     if "curve_dest" in metafunc.fixturenames:
