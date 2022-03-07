@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-License-Identifier: Unlicensed
 // Utility contract to enable "PAUSER" as a role
 // Uses OpenZeppelin AccessControl for roles
 
