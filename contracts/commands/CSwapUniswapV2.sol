@@ -3,9 +3,9 @@
 
 pragma solidity ^0.8.6;
 
-import "../../interfaces/IUniswapV2Router02.sol";
-import "../../interfaces/IWeth.sol";
 import "../../interfaces/Commands/Swap/UniswapV2/ICSwapUniswapV2.sol";
+import "../../interfaces/Commands/Swap/UniswapV2/IUniswapV2Router02.sol";
+import "../../interfaces/Commands/Wrap/IWeth.sol";
 import "./CSwapBase.sol";
 
 contract CSwapUniswapV2 is CSwapBase, ICSwapUniswapV2 {
