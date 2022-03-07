@@ -114,11 +114,28 @@ def any_native_token(request):
 def tokens_for_alice(request, alice):
     token = request.param
     contract = Contract.from_abi(token["name"], token["address"], interface.ERC20Detailed.abi)
-    contract.transfer(alice, 100 * (10 ** token["decimals"]), {"from": token["benefactor"]})
+    contract.transfer(alice, 10 * (10 ** token["decimals"]), {"from": token["benefactor"]})
     yield contract
 
 
 # pytest fixtures/collections
+
+
+def is_list_unique(_list):
+    return len(set(_list)) == len(_list)
+
+
+def pytest_collection_modifyitems(items):
+    for item in items.copy():
+        try:
+            params = item.callspec.params
+        except Exception:
+            continue
+
+        for marker in item.iter_markers(name="dedupe"):
+            tokens = [params[x]["address"] for x in marker.args]
+            if not is_list_unique(tokens):
+                items.remove(item)
 
 
 def pytest_ignore_collect(path):

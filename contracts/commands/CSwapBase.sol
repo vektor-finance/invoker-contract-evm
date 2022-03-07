@@ -1,0 +1,46 @@
+// SPDX-License-Identifier: Unlicensed
+pragma solidity ^0.8.6;
+
+import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
+
+abstract contract CSwapBase {
+    using SafeERC20 for IERC20;
+
+    function _getContractName() internal pure virtual returns (string memory);
+
+    function _requireMsg(bool condition, string memory message) internal {
+        if (!condition) {
+            revert(string(abi.encodePacked(_getContractName(), ":", message)));
+        }
+    }
+
+    function _tokenApprove(
+        IERC20 token,
+        address spender,
+        uint256 amount
+    ) internal {
+        if (token.allowance(address(this), spender) > 0) {
+            token.safeApprove(spender, 0);
+        }
+        token.safeApprove(spender, amount);
+    }
+
+    function _preSwap(
+        IERC20 tokenIn,
+        IERC20 tokenOut,
+        address router,
+        uint256 amount
+    ) internal returns (uint256 balanceBefore) {
+        balanceBefore = tokenOut.balanceOf(address(this));
+        _tokenApprove(tokenIn, router, amount);
+    }
+
+    function _postSwap(
+        uint256 balanceBefore,
+        IERC20 tokenOut,
+        uint256 minReceived
+    ) internal {
+        uint256 balanceAfter = tokenOut.balanceOf(address(this));
+        _requireMsg(balanceAfter >= balanceBefore + minReceived, "Slippage in");
+    }
+}
