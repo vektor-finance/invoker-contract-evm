@@ -14,13 +14,13 @@ import json
 import os
 import time
 
-from brownie import CMove, CSwap, Invoker, accounts, network
+from brownie import CMove, CSwapUniswapV2, CWrap, Invoker, accounts, network
 
 from data.access_control import APPROVED_COMMAND
-from data.chain import get_chain_from_network_name, get_uni_router_address, get_wnative_address
+from data.chain import get_chain_from_network_name, get_wnative_address
 from data.git import get_git_revision_hash, get_git_revision_short_hash
 
-commands = [CMove, CSwap]
+commands = [CMove, CWrap, CSwapUniswapV2]
 
 OUTPUTS_DEPLOYMENT_DIR = "deployments"
 
@@ -72,18 +72,13 @@ def deploy_invoker(deployer, chain, log=False):
 
 def deploy_commands(deployer, invoker, chain, log=False):
     WETH_ADDRESS = get_wnative_address(chain)
-    UNI_ROUTER_ADDRESS = get_uni_router_address(chain)
 
     for command in commands:
         print(f"==Deploying {command._name}==")
-        if command is CSwap:
-            deployed_command = command.deploy(
-                WETH_ADDRESS,
-                UNI_ROUTER_ADDRESS,
-                get_deployer_opts(deployer, chain),
-            )
-        else:
-            deployed_command = command.deploy(get_deployer_opts(deployer, chain))
+        args = []
+        if command == CWrap:
+            args = [WETH_ADDRESS]
+        deployed_command = command.deploy(*args, get_deployer_opts(deployer, chain))
         if log:
             log_deployment(deployed_command, chain)
         invoker.grantRole(
