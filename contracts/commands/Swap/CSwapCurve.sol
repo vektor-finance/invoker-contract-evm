@@ -11,7 +11,15 @@ contract CSwapCurve is CSwapBase, ICSwapCurve {
         return "CSwapCurve";
     }
 
-    // https://github.com/curvefi/curve-pool-registry/blob/master/contracts/Swaps.vy#L446
+    /** @notice Use this function to SELL a fixed amount of an asset.
+        @dev This function sells an EXACT amount of `tokenIn` to receive `tokenOut`.
+        If the price is worse than a threshold, the transaction will revert.
+        @param amountIn The exact amount of `tokenIn` to sell.
+        @param tokenIn The token to sell. Note: This must be an ERC20 token.
+        @param tokenOut The token that the user wishes to receive. Note: This must be an ERC20 token.
+        @param minAmountOut The minimum amount of `tokenOut` the user wishes to receive.
+        @param params Additional parameters to specify Curve specific parameters. See ICSwapCurve.sol
+     */
     function sell(
         uint256 amountIn,
         IERC20 tokenIn,
@@ -21,7 +29,7 @@ contract CSwapCurve is CSwapBase, ICSwapCurve {
     ) external payable {
         uint256 balanceBefore = _preSwap(tokenIn, tokenOut, params.poolAddress, amountIn);
 
-        if (params.swapType == 1) {
+        if (params.swapType == CurveSwapType.STABLESWAP_EXCHANGE) {
             // Stableswap `exchange`
             ICurvePool(params.poolAddress).exchange(
                 int128(int256(params.tokenI)),
@@ -29,7 +37,7 @@ contract CSwapCurve is CSwapBase, ICSwapCurve {
                 amountIn,
                 minAmountOut
             );
-        } else if (params.swapType == 2) {
+        } else if (params.swapType == CurveSwapType.STABLESWAP_UNDERLYING) {
             // Stableswap `exchange_underlying`
             ICurvePool(params.poolAddress).exchange_underlying(
                 int128(int256(params.tokenI)),
@@ -37,7 +45,7 @@ contract CSwapCurve is CSwapBase, ICSwapCurve {
                 amountIn,
                 minAmountOut
             );
-        } else if (params.swapType == 3) {
+        } else if (params.swapType == CurveSwapType.CRYPTOSWAP_EXCHANGE) {
             // Cryptoswap `exchange`
             ICryptoPool(params.poolAddress).exchange(
                 params.tokenI,
@@ -45,7 +53,7 @@ contract CSwapCurve is CSwapBase, ICSwapCurve {
                 amountIn,
                 minAmountOut
             );
-        } else if (params.swapType == 4) {
+        } else if (params.swapType == CurveSwapType.CRYPTOSWAP_UNDERLYING) {
             // Cryptoswap `exchange_underlying`
             ICryptoPool(params.poolAddress).exchange_underlying(
                 params.tokenI,
@@ -60,6 +68,9 @@ contract CSwapCurve is CSwapBase, ICSwapCurve {
         _postSwap(balanceBefore, tokenOut, minAmountOut);
     }
 
+    /** @notice This function is not implemented
+        @dev It is not possible to specify an EXACT number of tokens to buy using curve.
+     */
     function buy(
         uint256 amountOut,
         IERC20 tokenOut,
