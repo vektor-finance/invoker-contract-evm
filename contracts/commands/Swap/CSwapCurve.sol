@@ -1,5 +1,4 @@
-// SPDX-License-Identifier: GPL-3.0-or-later
-// Vektor SWAP COMMAND (Curve)
+// SPDX-License-Identifier: Unlicensed
 pragma solidity ^0.8.6;
 
 import "../../../interfaces/Commands/Swap/Curve/ICryptoPool.sol";
@@ -15,16 +14,12 @@ contract CSwapCurve is CSwapBase, ICSwapCurve {
     // https://github.com/curvefi/curve-pool-registry/blob/master/contracts/Swaps.vy#L446
     function sell(
         uint256 amountIn,
+        IERC20 tokenIn,
+        IERC20 tokenOut,
         uint256 minAmountOut,
-        address[2] calldata tokens,
         CurveSwapParams calldata params
     ) external payable {
-        IERC20 tokenIn = IERC20(tokens[0]);
-        IERC20 tokenOut = IERC20(tokens[1]);
-        tokenIn.safeApprove(params.poolAddress, 0);
-        tokenIn.safeApprove(params.poolAddress, amountIn);
-
-        uint256 balanceBefore = tokenOut.balanceOf(address(this));
+        uint256 balanceBefore = _preSwap(tokenIn, tokenOut, params.poolAddress, amountIn);
 
         if (params.swapType == 1) {
             // Stableswap `exchange`
@@ -32,7 +27,7 @@ contract CSwapCurve is CSwapBase, ICSwapCurve {
                 int128(int256(params.tokenI)),
                 int128(int256(params.tokenJ)),
                 amountIn,
-                0
+                minAmountOut
             );
         } else if (params.swapType == 2) {
             // Stableswap `exchange_underlying`
@@ -40,31 +35,36 @@ contract CSwapCurve is CSwapBase, ICSwapCurve {
                 int128(int256(params.tokenI)),
                 int128(int256(params.tokenJ)),
                 amountIn,
-                0
+                minAmountOut
             );
         } else if (params.swapType == 3) {
             // Cryptoswap `exchange`
-            ICryptoPool(params.poolAddress).exchange(params.tokenI, params.tokenJ, amountIn, 0);
+            ICryptoPool(params.poolAddress).exchange(
+                params.tokenI,
+                params.tokenJ,
+                amountIn,
+                minAmountOut
+            );
         } else if (params.swapType == 4) {
             // Cryptoswap `exchange_underlying`
             ICryptoPool(params.poolAddress).exchange_underlying(
                 params.tokenI,
                 params.tokenJ,
                 amountIn,
-                0
+                minAmountOut
             );
         } else {
             _revertMsg("Unknown swapType");
         }
 
-        uint256 balanceAfter = tokenOut.balanceOf(address(this));
-        require(balanceAfter >= balanceBefore + minAmountOut, "CSwap: Slippage in");
+        _postSwap(balanceBefore, tokenOut, minAmountOut);
     }
 
     function buy(
         uint256 amountOut,
+        IERC20 tokenOut,
+        IERC20 tokenIn,
         uint256 maxAmountIn,
-        address[2] calldata tokens,
         CurveSwapParams calldata params
     ) external payable {
         _revertMsg("buy not supported");
