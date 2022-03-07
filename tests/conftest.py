@@ -114,7 +114,7 @@ def any_native_token(request):
 def tokens_for_alice(request, alice):
     token = request.param
     contract = Contract.from_abi(token["name"], token["address"], interface.ERC20Detailed.abi)
-    contract.transfer(alice, 100 * (10 ** token["decimals"]), {"from": token["benefactor"]})
+    contract.transfer(alice, 10 * (10 ** token["decimals"]), {"from": token["benefactor"]})
     yield contract
 
 
@@ -139,6 +139,11 @@ def pytest_collection_modifyitems(items):
                 continue
             pool_coins = params["curve_pool"].coins
             if not all(token in pool_coins for token in tokens):
+                items.remove(item)
+
+        for marker in item.iter_markers(name="dedupe"):
+            tokens = [params[x]["address"] for x in marker.args]
+            if not is_list_unique(tokens):
                 items.remove(item)
 
 

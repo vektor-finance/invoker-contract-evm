@@ -1,6 +1,4 @@
-// SPDX-License-Identifier: GPL-3.0-or-later
-// Vektor BRIDGE COMMAND
-// DO NOT DEPLOY
+// SPDX-License-Identifier: Unlicensed
 
 pragma solidity ^0.8.6;
 

@@ -1,0 +1,95 @@
+// SPDX-License-Identifier: Unlicensed
+// Vektor SWAP COMMAND
+
+pragma solidity ^0.8.6;
+
+import "../../interfaces/IUniswapV2Router02.sol";
+import "../../interfaces/IWeth.sol";
+import "../../interfaces/Commands/Swap/UniswapV2/ICSwapUniswapV2.sol";
+import "./CSwapBase.sol";
+
+contract CSwapUniswapV2 is CSwapBase, ICSwapUniswapV2 {
+    function _getContractName() internal pure override returns (string memory) {
+        return "CSwapUniswapV2";
+    }
+
+    function _validateParams(
+        IERC20 tokenIn,
+        IERC20 tokenOut,
+        UniswapV2SwapParams calldata params
+    ) internal view returns (UniswapV2SwapParams memory) {
+        require(params.path[0] == address(tokenIn), "CSwapUniswapV2: invalid path in");
+        require(
+            params.path[params.path.length - 1] == address(tokenOut),
+            "CSwapUniswapV2: invalid path out"
+        );
+        address receiver = params.receiver == address(0) ? address(this) : params.receiver;
+        //solhint-disable-next-line not-rely-on-time
+        uint256 deadline = params.deadline == 0 ? block.timestamp + 1 : params.deadline;
+        return
+            UniswapV2SwapParams({
+                router: params.router,
+                path: params.path,
+                receiver: receiver,
+                deadline: deadline
+            });
+    }
+
+    /** @notice Use this function to SELL a fixed amount of an asset.
+        @dev This function sells an EXACT amount of `tokenIn` to receive `tokenOut`.
+        If the price is worse than a threshold, the transaction will revert.
+        This function was previously known as 'swapUniswapIn'
+        @param amountIn The exact amount of `tokenIn` to sell.
+        @param tokenIn The token to sell. Note: This must be an ERC20 token.
+        @param tokenOut The token that the user wishes to receive. Note: This must be an ERC20 token.
+        @param minAmountOut The minimum amount of `tokenOut` the user wishes to receive.
+        @param _params Additional parameters to specify UniswapV2 specific parameters. See ICSwapUniswapV2.sol
+     */
+    function sell(
+        uint256 amountIn,
+        IERC20 tokenIn,
+        IERC20 tokenOut,
+        uint256 minAmountOut,
+        UniswapV2SwapParams calldata _params
+    ) external payable {
+        UniswapV2SwapParams memory params = _validateParams(tokenIn, tokenOut, _params);
+        uint256 balanceBefore = _preSwap(tokenIn, tokenOut, params.router, amountIn);
+        IUniswapV2Router02(params.router).swapExactTokensForTokens(
+            amountIn,
+            minAmountOut,
+            params.path,
+            params.receiver,
+            params.deadline
+        );
+        _postSwap(balanceBefore, tokenOut, minAmountOut);
+    }
+
+    /** @notice Use this function to perform BUY a fixed amount of an asset.
+        @dev This function buys an EXACT amount of `tokenOut` by spending `tokenIn`.
+        If the price is worse than a threshold, the transaction will revert.
+        This function was previously known as 'swapUniswapOut`
+        @param amountOut The exact amount of `tokenOut` to buy.
+        @param tokenOut The token to buy. Note: This must be an ERC20 token.
+        @param tokenIn The token that the user wishes to spend. Note: This must be an ERC20 token.
+        @param maxAmountIn The maximum amount of `tokenIn` that the user wishes to spend.
+        @param _params Additional parameters to specify UniswapV2 specific parameters. See ICSwapUniswapV2.sol
+     */
+    function buy(
+        uint256 amountOut,
+        IERC20 tokenOut,
+        IERC20 tokenIn,
+        uint256 maxAmountIn,
+        UniswapV2SwapParams calldata _params
+    ) external payable {
+        UniswapV2SwapParams memory params = _validateParams(tokenIn, tokenOut, _params);
+        uint256 balanceBefore = _preSwap(tokenIn, tokenOut, params.router, maxAmountIn);
+        IUniswapV2Router02(params.router).swapTokensForExactTokens(
+            amountOut,
+            maxAmountIn,
+            params.path,
+            params.receiver,
+            params.deadline
+        );
+        _postSwap(balanceBefore, tokenOut, amountOut);
+    }
+}
