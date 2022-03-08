@@ -43,7 +43,7 @@ def wnative(connected_chain):
 @pytest.fixture(scope="module")
 def token(request):
     token = request.param
-    yield Contract.from_abi(token["name"], token["address"], interface.IERC20.abi)
+    yield Contract.from_abi(token["name"], token["address"], interface.ERC20Detailed.abi)
 
 
 @pytest.fixture(scope="module")
