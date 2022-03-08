@@ -8,14 +8,9 @@ import "../../../interfaces/Commands/Swap/UniswapV3/ISwapRouter.sol";
 import "./CSwapBase.sol";
 
 contract CSwapUniswapV3 is CSwapBase, ICSwapUniswapV3 {
-    // We have hardcoded ROUTER as there aren't any uni v3 forks.
-    // Maybe we should take this as a parameter?
-
     function _getContractName() internal pure override returns (string memory) {
         return "CSwapUniswapV3";
     }
-
-    ISwapRouter public constant ROUTER = ISwapRouter(0xE592427A0AEce92De3Edee1F18E0157C05861564);
 
     function sell(
         uint256 amountIn,
@@ -24,16 +19,13 @@ contract CSwapUniswapV3 is CSwapBase, ICSwapUniswapV3 {
         uint256 minAmountOut,
         UniswapV3SwapParams calldata params
     ) external payable {
-        // check tokenIn
-        // check tokenOut
-
-        uint256 balanceBefore = _preSwap(tokenIn, tokenOut, address(ROUTER), amountIn);
+        uint256 balanceBefore = _preSwap(tokenIn, tokenOut, address(params.router), amountIn);
 
         address receiver = params.receiver == address(0) ? address(this) : params.receiver;
         //solhint-disable-next-line not-rely-on-time
         uint256 deadline = params.deadline == 0 ? block.timestamp + 1 : params.deadline;
 
-        ROUTER.exactInput(
+        ISwapRouter(params.router).exactInput(
             ISwapRouter.ExactInputParams({
                 path: params.path,
                 recipient: receiver,
@@ -46,13 +38,29 @@ contract CSwapUniswapV3 is CSwapBase, ICSwapUniswapV3 {
         _postSwap(balanceBefore, tokenOut, minAmountOut);
     }
 
-    /*
     function buy(
-        uint256 amountIn,
-        IERC20 tokenIn,
+        uint256 amountOut,
         IERC20 tokenOut,
-        uint256 minAmountOut,
+        IERC20 tokenIn,
+        uint256 maxAmountIn,
         UniswapV3SwapParams calldata params
-    ) external payable {}
-    */
+    ) external payable {
+        uint256 balanceBefore = _preSwap(tokenIn, tokenOut, address(params.router), maxAmountIn);
+
+        address receiver = params.receiver == address(0) ? address(this) : params.receiver;
+        //solhint-disable-next-line not-rely-on-time
+        uint256 deadline = params.deadline == 0 ? block.timestamp + 1 : params.deadline;
+
+        ISwapRouter(params.router).exactOutput(
+            ISwapRouter.ExactOutputParams({
+                path: params.path,
+                recipient: receiver,
+                deadline: deadline,
+                amountOut: amountOut,
+                amountInMaximum: maxAmountIn
+            })
+        );
+
+        _postSwap(balanceBefore, tokenOut, amountOut);
+    }
 }
