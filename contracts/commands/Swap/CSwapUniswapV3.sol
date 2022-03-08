@@ -12,6 +12,16 @@ contract CSwapUniswapV3 is CSwapBase, ICSwapUniswapV3 {
         return "CSwapUniswapV3";
     }
 
+    /** @notice Use this function to SELL a fixed amount of an asset.
+        @dev This function sells an EXACT amount of `tokenIn` to receive `tokenOut`.
+        If the price is worse than a threshold, the transaction will revert.
+        This function was previously known as 'swapUniswapIn'
+        @param amountIn The exact amount of `tokenIn` to sell.
+        @param tokenIn The token to sell. Note: This must be an ERC20 token.
+        @param tokenOut The token that the user wishes to receive. Note: This must be an ERC20 token.
+        @param minAmountOut The minimum amount of `tokenOut` the user wishes to receive.
+        @param params Additional parameters to specify UniswapV3 specific parameters. See ICSwapUniswapV3.sol
+     */
     function sell(
         uint256 amountIn,
         IERC20 tokenIn,
@@ -38,6 +48,15 @@ contract CSwapUniswapV3 is CSwapBase, ICSwapUniswapV3 {
         _postSwap(balanceBefore, tokenOut, minAmountOut);
     }
 
+    /** @notice Use this function to perform BUY a fixed amount of an asset.
+        @dev This function buys an EXACT amount of `tokenOut` by spending `tokenIn`.
+        If the price is worse than a threshold, the transaction will revert.
+        @param amountOut The exact amount of `tokenOut` to buy.
+        @param tokenOut The token to buy. Note: This must be an ERC20 token.
+        @param tokenIn The token that the user wishes to spend. Note: This must be an ERC20 token.
+        @param maxAmountIn The maximum amount of `tokenIn` that the user wishes to spend.
+        @param params Additional parameters to specify UniswapV3 specific parameters. See ICSwapUniswapV3.sol
+     */
     function buy(
         uint256 amountOut,
         IERC20 tokenOut,
