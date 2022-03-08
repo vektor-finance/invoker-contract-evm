@@ -72,6 +72,9 @@ mainnet:
     - venue: anyswap
       interfaces: [anyswap_router_v4]
       address: "0x6b7a87899490EcE95443e979cA9485CBE7E71522"
+    - venue: uniswap_v3
+      interfaces: [uniswap_router_v3]
+      address: "0xE592427A0AEce92De3Edee1F18E0157C05861564"
 
 rinkeby:
   id: rinkeby
@@ -170,6 +173,9 @@ polygon:
     - venue: anyswap
       interfaces: [anyswap_router_v4, anyswap_router_v6]
       address: "0x2ef4a574b72e1f555185afa8a09c6d1a8ac4025c"
+    - venue: uniswap_v3
+      interfaces: [uniswap_router_v3]
+      address: "0xE592427A0AEce92De3Edee1F18E0157C05861564"
 
 mumbai:
   id: mumbai
@@ -208,6 +214,9 @@ mumbai:
     - venue: quickswap
       interfaces: [uniswap_router_v2_02]
       address: "0x8954afa98594b838bda56fe4c12a09d7739d179b"
+    - venue: uniswap_v3
+      interfaces: [uniswap_router_v3]
+      address: "0xE592427A0AEce92De3Edee1F18E0157C05861564"
 
 arbitrum:
   id: arbitrum
@@ -256,7 +265,10 @@ arbitrum:
     - venue: sushiswap
       interfaces: [uniswap_router_v2_02]
       address: "0x1b02dA8Cb0d097eB8D57A175b88c7D8b47997506"
-
+    - venue: uniswap_v3
+      interfaces: [uniswap_router_v3]
+      address: "0xE592427A0AEce92De3Edee1F18E0157C05861564"
+      
 fantom:
   id: fantom
   name: Fantom

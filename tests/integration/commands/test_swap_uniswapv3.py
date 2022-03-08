@@ -4,6 +4,7 @@ import pytest
 from brownie import ZERO_ADDRESS, interface, web3
 
 from data.access_control import APPROVED_COMMAND
+from data.chain import get_chain, is_uniswapv3_on_chain
 
 
 @pytest.fixture(scope="module")
@@ -76,6 +77,15 @@ class UniswapV3Quoter:
 @pytest.fixture(scope="module")
 def quoter():
     yield UniswapV3Quoter("0xb27308f9F90D607463bb33eA1BeBb41C27CE5AB6")
+
+
+def pytest_generate_tests(metafunc):
+    chain = get_chain()
+
+    if "quoter" in metafunc.fixturenames:
+        enabled = is_uniswapv3_on_chain(chain)
+        if not enabled:
+            pytest.skip("No Uniswap V3")
 
 
 @pytest.mark.parametrize("fees", FeeAmount.list(), ids=FeeAmount.labels())
