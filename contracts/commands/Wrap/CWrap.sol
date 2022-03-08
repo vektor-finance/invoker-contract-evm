@@ -2,7 +2,7 @@
 
 pragma solidity ^0.8.6;
 
-import "../../interfaces/IWeth.sol";
+import "../../../interfaces/Commands/Wrap/IWeth.sol";
 
 contract CWrap {
     IWETH public immutable WNATIVE;

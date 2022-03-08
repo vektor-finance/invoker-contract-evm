@@ -3,9 +3,9 @@
 
 pragma solidity ^0.8.6;
 
-import "../../interfaces/IUniswapV2Router02.sol";
-import "../../interfaces/IWeth.sol";
-import "../../interfaces/Commands/Swap/UniswapV2/ICSwapUniswapV2.sol";
+import "../../../interfaces/Commands/Swap/UniswapV2/ICSwapUniswapV2.sol";
+import "../../../interfaces/Commands/Swap/UniswapV2/IUniswapV2Router02.sol";
+import "../../../interfaces/Commands/Wrap/IWeth.sol";
 import "./CSwapBase.sol";
 
 contract CSwapUniswapV2 is CSwapBase, ICSwapUniswapV2 {
@@ -43,23 +43,23 @@ contract CSwapUniswapV2 is CSwapBase, ICSwapUniswapV2 {
         @param tokenIn The token to sell. Note: This must be an ERC20 token.
         @param tokenOut The token that the user wishes to receive. Note: This must be an ERC20 token.
         @param minAmountOut The minimum amount of `tokenOut` the user wishes to receive.
-        @param _params Additional parameters to specify UniswapV2 specific parameters. See ICSwapUniswapV2.sol
+        @param params Additional parameters to specify UniswapV2 specific parameters. See ICSwapUniswapV2.sol
      */
     function sell(
         uint256 amountIn,
         IERC20 tokenIn,
         IERC20 tokenOut,
         uint256 minAmountOut,
-        UniswapV2SwapParams calldata _params
+        UniswapV2SwapParams calldata params
     ) external payable {
-        UniswapV2SwapParams memory params = _validateParams(tokenIn, tokenOut, _params);
-        uint256 balanceBefore = _preSwap(tokenIn, tokenOut, params.router, amountIn);
-        IUniswapV2Router02(params.router).swapExactTokensForTokens(
+        UniswapV2SwapParams memory validatedParams = _validateParams(tokenIn, tokenOut, params);
+        uint256 balanceBefore = _preSwap(tokenIn, tokenOut, validatedParams.router, amountIn);
+        IUniswapV2Router02(validatedParams.router).swapExactTokensForTokens(
             amountIn,
             minAmountOut,
-            params.path,
-            params.receiver,
-            params.deadline
+            validatedParams.path,
+            validatedParams.receiver,
+            validatedParams.deadline
         );
         _postSwap(balanceBefore, tokenOut, minAmountOut);
     }
@@ -72,23 +72,23 @@ contract CSwapUniswapV2 is CSwapBase, ICSwapUniswapV2 {
         @param tokenOut The token to buy. Note: This must be an ERC20 token.
         @param tokenIn The token that the user wishes to spend. Note: This must be an ERC20 token.
         @param maxAmountIn The maximum amount of `tokenIn` that the user wishes to spend.
-        @param _params Additional parameters to specify UniswapV2 specific parameters. See ICSwapUniswapV2.sol
+        @param params Additional parameters to specify UniswapV2 specific parameters. See ICSwapUniswapV2.sol
      */
     function buy(
         uint256 amountOut,
         IERC20 tokenOut,
         IERC20 tokenIn,
         uint256 maxAmountIn,
-        UniswapV2SwapParams calldata _params
+        UniswapV2SwapParams calldata params
     ) external payable {
-        UniswapV2SwapParams memory params = _validateParams(tokenIn, tokenOut, _params);
-        uint256 balanceBefore = _preSwap(tokenIn, tokenOut, params.router, maxAmountIn);
-        IUniswapV2Router02(params.router).swapTokensForExactTokens(
+        UniswapV2SwapParams memory validatedParams = _validateParams(tokenIn, tokenOut, params);
+        uint256 balanceBefore = _preSwap(tokenIn, tokenOut, validatedParams.router, maxAmountIn);
+        IUniswapV2Router02(validatedParams.router).swapTokensForExactTokens(
             amountOut,
             maxAmountIn,
-            params.path,
-            params.receiver,
-            params.deadline
+            validatedParams.path,
+            validatedParams.receiver,
+            validatedParams.deadline
         );
         _postSwap(balanceBefore, tokenOut, amountOut);
     }

@@ -5,6 +5,7 @@ development:
   host: http://localhost
   id: hardhat
   name: Hardhat
+  timeout: 120
 - cmd: npx hardhat node
   cmd_settings:
     fork: polygon-prod
@@ -28,6 +29,7 @@ development:
   host: http://localhost
   id: rinkeby-hardhat-fork
   name: Hardhat (Rinkeby Fork)
+  timeout: 120
 - cmd: npx hardhat node
   cmd_settings:
     fork: mumbai-test
@@ -35,6 +37,7 @@ development:
   host: http://localhost
   id: mumbai-hardhat-fork
   name: Hardhat (Mumbai Fork)
+  timeout: 120
 - cmd: npx hardhat node
   cmd_settings:
     fork: arbitrum-prod
@@ -42,6 +45,7 @@ development:
   host: http://localhost
   id: arbitrum-hardhat-fork
   name: Hardhat (Arbitrum Fork)
+  timeout: 120
 - cmd: npx hardhat node
   cmd_settings:  
     fork: fantom-prod
@@ -49,6 +53,7 @@ development:
   host: http://localhost
   id: fantom-hardhat-fork
   name: Hardhat (Fantom Fork)
+  timeout: 120
 - cmd: npx hardhat node
   cmd_settings:  
     fork: avalanche-prod
@@ -56,6 +61,7 @@ development:
   host: http://localhost
   id: avalanche-hardhat-fork
   name: Hardhat (Avalanche Fork)
+  timeout: 120
 - cmd: npx hardhat node
   cmd_settings:
     fork: bsc-prod
@@ -63,6 +69,7 @@ development:
   host: http://localhost
   id: bsc-hardhat-fork
   name: Hardhat (BSC Fork)
+  timeout: 120
 
 live:
 - name: Ethereum

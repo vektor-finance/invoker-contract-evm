@@ -13,3 +13,9 @@ test-all:
 		echo "Testing $$network"; \
 		brownie test --network $$network; \
 	done
+
+get-all-curve:
+	for network in ${NETWORKS}; do \
+		echo "Getting Curve pools for $$network"; \
+		brownie run get_curve.py --network $$network; \
+	done
