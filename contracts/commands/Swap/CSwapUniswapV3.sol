@@ -3,15 +3,17 @@
 
 pragma solidity ^0.8.6;
 
-import "../../interfaces/Commands/Swap/UniswapV3/ICSwapUniswapV3.sol";
-import "../../interfaces/Commands/Swap/UniswapV3/ISwapRouter.sol";
-import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
+import "../../../interfaces/Commands/Swap/UniswapV3/ICSwapUniswapV3.sol";
+import "../../../interfaces/Commands/Swap/UniswapV3/ISwapRouter.sol";
+import "./CSwapBase.sol";
 
-contract CSwapUniswapV3 is ICSwapUniswapV3 {
+contract CSwapUniswapV3 is CSwapBase, ICSwapUniswapV3 {
     // We have hardcoded ROUTER as there aren't any uni v3 forks.
     // Maybe we should take this as a parameter?
 
-    using SafeERC20 for IERC20;
+    function _getContractName() internal pure override returns (string memory) {
+        return "CSwapUniswapV3";
+    }
 
     ISwapRouter public constant ROUTER = ISwapRouter(0xE592427A0AEce92De3Edee1F18E0157C05861564);
 
@@ -25,9 +27,7 @@ contract CSwapUniswapV3 is ICSwapUniswapV3 {
         // check tokenIn
         // check tokenOut
 
-        tokenIn.safeApprove(address(ROUTER), 0); // To support tether
-        tokenIn.safeApprove(address(ROUTER), amountIn);
-        uint256 balanceBefore = tokenOut.balanceOf(address(this));
+        uint256 balanceBefore = _preSwap(tokenIn, tokenOut, address(ROUTER), amountIn);
 
         address receiver = params.receiver == address(0) ? address(this) : params.receiver;
         //solhint-disable-next-line not-rely-on-time
@@ -43,8 +43,7 @@ contract CSwapUniswapV3 is ICSwapUniswapV3 {
             })
         );
 
-        uint256 balanceAfter = tokenOut.balanceOf(address(this));
-        require(balanceAfter >= balanceBefore + minAmountOut, "CSwapUniswapV3: Slippage in");
+        _postSwap(balanceBefore, tokenOut, minAmountOut);
     }
 
     /*

@@ -1,5 +1,7 @@
+from enum import IntEnum
+
 import pytest
-from brownie import ZERO_ADDRESS
+from brownie import ZERO_ADDRESS, interface, web3
 
 from data.access_control import APPROVED_COMMAND
 
@@ -19,20 +21,54 @@ def encode_path(path, fees):
         encoded += path[i][2:]
         encoded += hex(fees[i])[2:].rjust(6, "0")
     encoded += path[len(path) - 1][2:]
-    print(encoded)
     return encoded
 
 
-FEE_AMOUNT_LOW = 500
-FEE_AMOUNT_MEDIUM = 3000
-FEE_AMOUNT_HIGH = 10000
+class FeeAmount(IntEnum):
+    VERY_LOW = 100
+    LOW = 500
+    MEDIUM = 3000
+    HIGH = 10000
+
+    @staticmethod
+    def list():
+        return list(map(lambda c: c.value, FeeAmount))
+
+    @staticmethod
+    def labels():
+        return list(map(lambda c: "FEE_" + c.name, FeeAmount))
 
 
-def test_sell_invoker(cswap_uniswapv3, invoker, alice, tokens_for_alice, token, cmove):
+class UniswapV3Quoter:
+    def __init__(self, address):
+        self.web3contract = web3.eth.contract(address=address, abi=interface.Quoter.abi)
+
+    def quote_exact_input(self, path, amount_in):
+        try:
+            return self.web3contract.functions.quoteExactInput(path, amount_in).call()
+        except ValueError:
+            return None
+
+
+@pytest.fixture(scope="module")
+def quoter():
+    yield UniswapV3Quoter("0xb27308f9F90D607463bb33eA1BeBb41C27CE5AB6")
+
+
+@pytest.mark.parametrize("fees", FeeAmount.list(), ids=FeeAmount.labels())
+@pytest.mark.dedupe("tokens_for_alice", "token")
+def test_sell_invoker(
+    cswap_uniswapv3, invoker, alice, tokens_for_alice, token, cmove, fees, quoter
+):
+
     amount_in = tokens_for_alice.balanceOf(alice)
 
-    min_amount_out = 0
-    path = encode_path([tokens_for_alice.address, token.address], [FEE_AMOUNT_MEDIUM])
+    path = encode_path([tokens_for_alice.address, token.address], [fees])
+
+    min_amount_out = quoter.quote_exact_input(path, amount_in)
+
+    if min_amount_out is None:
+        pytest.skip("Can't get output price")
 
     tokens_for_alice.approve(invoker, amount_in, {"from": alice})
 
