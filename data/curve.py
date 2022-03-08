@@ -1,13 +1,20 @@
 import json
 import os
 from dataclasses import dataclass
+from enum import IntEnum
 from typing import List
 
-CURVE_ASSET_TYPE_USD = 0
-CURVE_ASSET_TYPE_BTC = 1
-CURVE_ASSET_TYPE_ETH = 2
-CURVE_ASSET_TYPE_STABLE = 3
-CURVE_ASSET_TYPE_CRYPTO = 4
+
+class CurveAssetType(IntEnum):
+    """CurveAssetType is required to be IntEnum to allow comparison with integers
+    https://docs.python.org/3/library/enum.html#intenum
+    """
+
+    USD = 0
+    BTC = 1
+    ETH = 2
+    STABLE = 3
+    CRYPTO = 4
 
 
 @dataclass

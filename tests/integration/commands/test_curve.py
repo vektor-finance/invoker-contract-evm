@@ -1,11 +1,12 @@
 # Will eventually move this file into test_swap
 
+import brownie
 import pytest
 from brownie import Contract
 
 from data.access_control import APPROVED_COMMAND
 from data.chain import get_chain
-from data.curve import CURVE_ASSET_TYPE_CRYPTO, get_curve_pools
+from data.curve import CurveAssetType, get_curve_pools
 
 
 @pytest.fixture(scope="module")
@@ -71,7 +72,7 @@ def test_sell_with_curve(
 
     value = 10 ** tokens_for_alice.decimals()
     underlying = False
-    is_crypto_pool = curve_pool.asset_type == CURVE_ASSET_TYPE_CRYPTO
+    is_crypto_pool = curve_pool.asset_type == CurveAssetType.CRYPTO
     pool = curve_pool.swap_address
     (i, j, underlying) = registry.get_coin_indices(pool, tokens_for_alice, curve_dest)
     params = [pool, i, j, None]
@@ -97,3 +98,47 @@ def test_sell_with_curve(
     invoker.invoke([cmove, cswap_curve], [calldata_move, calldata_swap], {"from": alice})
 
     assert curve_dest.balanceOf(invoker) >= amount_out
+
+
+@pytest.mark.only_curve_pool_tokens("tokens_for_alice", "curve_dest")
+def test_buy_with_curve(
+    curve_pool,
+    tokens_for_alice,
+    curve_dest,
+    invoker,
+    alice,
+    cswap_curve,
+    cmove,
+    interface,
+    registry,
+):
+
+    value = 10 ** tokens_for_alice.decimals()
+    underlying = False
+    is_crypto_pool = curve_pool.asset_type == CurveAssetType.CRYPTO
+    pool = curve_pool.swap_address
+    (i, j, underlying) = registry.get_coin_indices(pool, tokens_for_alice, curve_dest)
+    params = [pool, i, j, None]
+
+    if is_crypto_pool:
+        pool = Contract.from_abi("Curve Crypto Pool", pool, interface.CurveCryptoPool.abi)
+    else:
+        pool = Contract.from_abi("Curve Pool", pool, interface.CurvePool.abi)
+
+    if underlying:
+        amount_out = int(pool.get_dy_underlying(i, j, value) // 1.01)
+    else:
+        amount_out = int(pool.get_dy(i, j, value) // 1.01)
+
+    params[3] = (is_crypto_pool * 2) + underlying
+
+    tokens_for_alice.approve(invoker, value, {"from": alice})
+    calldata_move = cmove.moveERC20In.encode_input(tokens_for_alice, value)
+
+    # These are the same parameters for sell, just changed for buy
+    calldata_swap = cswap_curve.buy.encode_input(
+        value, tokens_for_alice, curve_dest, amount_out, params
+    )
+
+    with brownie.reverts("CSwapCurve:buy not supported"):
+        invoker.invoke([cmove, cswap_curve], [calldata_move, calldata_swap], {"from": alice})
