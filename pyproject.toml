@@ -18,3 +18,8 @@ exclude = '''
   | venv
 )/
 '''
+
+[tool.pytest.ini_options]
+markers = [
+  "dedupe: (remove duplicate tokens)"
+]

@@ -1,8 +1,4 @@
-// SPDX-License-Identifier: GPL-3.0-or-later
-// Vektor storage
-// Version 0.0.1
-// Not production-safe
-
+// SPDX-License-Identifier: Unlicensed
 // Needed to persist variables between executions
 // Variables are stored in cache mapping with key and value
 
