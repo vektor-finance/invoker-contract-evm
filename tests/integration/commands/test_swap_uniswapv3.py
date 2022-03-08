@@ -52,7 +52,7 @@ class FeeAmount(IntEnum):
 class UniswapV3Quoter:
     """
     UniswapV3 Quoter.sol intentionally reverts and loads the quoted price into the revert message.
-    Perfoming this using brownie will cause trigger 'debug_traceTransaction' to the node which
+    Performing this using brownie will cause trigger 'debug_traceTransaction' to the node which
     results in TimeoutError.
     Future optimisation idea:
         Multicall these values
