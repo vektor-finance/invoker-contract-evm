@@ -1,0 +1,570 @@
+{
+  "1": [
+    {
+      "name": "3pool",
+      "swap_address": "0xbEbc44782C7dB0a1A60Cb6fe97d0b483032FF1C7",
+      "asset_type": 0,
+      "coins": [
+        "0x6b175474e89094c44da98b954eedeac495271d0f",
+        "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+        "0xdac17f958d2ee523a2206206994597c13d831ec7"
+      ]
+    },
+    {
+      "name": "aave",
+      "swap_address": "0xDeBF20617708857ebe4F679508E7b7863a8A8EeE",
+      "asset_type": 0,
+      "coins": [
+        "0x6b175474e89094c44da98b954eedeac495271d0f",
+        "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+        "0xdac17f958d2ee523a2206206994597c13d831ec7"
+      ]
+    },
+    {
+      "name": "aeth",
+      "swap_address": "0xA96A65c051bF88B4095Ee1f2451C2A9d43F53Ae2",
+      "asset_type": 1,
+      "coins": ["0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"]
+    },
+    {
+      "name": "busd",
+      "swap_address": "0x79a8C46DeA5aDa233ABaFFD40F3A0A2B1e5A4F27",
+      "asset_type": 0,
+      "coins": [
+        "0x6b175474e89094c44da98b954eedeac495271d0f",
+        "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+        "0xdac17f958d2ee523a2206206994597c13d831ec7",
+        "0x4fabb145d64652a948d72533023f6e7a623c7c53"
+      ]
+    },
+    {
+      "name": "compound",
+      "swap_address": "0xA2B47E3D5c44877cca798226B7B8118F9BFb7A56",
+      "asset_type": 0,
+      "coins": [
+        "0x6b175474e89094c44da98b954eedeac495271d0f",
+        "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"
+      ]
+    },
+    {
+      "name": "eurs",
+      "swap_address": "0x0Ce6a5fF5217e38315f87032CF90686C96627CAA",
+      "asset_type": 3,
+      "coins": [
+        "0xdb25f211ab05b1c97d595516f45794528a807ad8",
+        "0xd71ecff9342a5ced620049e616c5035f1db98620"
+      ]
+    },
+    {
+      "name": "hbtc",
+      "swap_address": "0x4CA9b3063Ec5866A4B82E437059D2C43d1be596F",
+      "asset_type": 2,
+      "coins": [
+        "0x0316eb71485b0ab14103307bf65a021042c6d380",
+        "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599"
+      ]
+    },
+    {
+      "name": "ib",
+      "swap_address": "0x2dded6Da1BF5DBdF597C45fcFaa3194e53EcfeAF",
+      "asset_type": 0,
+      "coins": [
+        "0x6b175474e89094c44da98b954eedeac495271d0f",
+        "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+        "0xdac17f958d2ee523a2206206994597c13d831ec7"
+      ]
+    },
+    {
+      "name": "link",
+      "swap_address": "0xF178C0b5Bb7e7aBF4e12A4838C7b7c5bA2C623c0",
+      "asset_type": 3,
+      "coins": [
+        "0x514910771af9ca656af840dff83e8264ecf986ca",
+        "0xbbc455cb4f1b9e4bfc4b73970d360c8f032efee6"
+      ]
+    },
+    {
+      "name": "pax",
+      "swap_address": "0x06364f10B501e868329afBc005b3492902d6C763",
+      "asset_type": 0,
+      "coins": [
+        "0x6b175474e89094c44da98b954eedeac495271d0f",
+        "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+        "0xdac17f958d2ee523a2206206994597c13d831ec7",
+        "0x8e870d67f660d95d5be530380d0ec0bd388289e1"
+      ]
+    },
+    {
+      "name": "ren",
+      "swap_address": "0x93054188d876f558f4a66B2EF1d97d16eDf0895B",
+      "asset_type": 2,
+      "coins": ["0x2260fac5e5542a773aa44fbcfedf7c193bc2c599"]
+    },
+    {
+      "name": "saave",
+      "swap_address": "0xEB16Ae0052ed37f479f7fe63849198Df1765a733",
+      "asset_type": 0,
+      "coins": [
+        "0x6b175474e89094c44da98b954eedeac495271d0f",
+        "0x57ab1ec28d129707052df4df418d58a2d46d5f51"
+      ]
+    },
+    {
+      "name": "sbtc",
+      "swap_address": "0x7fC77b5c7614E1533320Ea6DDc2Eb61fa00A9714",
+      "asset_type": 2,
+      "coins": [
+        "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599",
+        "0xfe18be6b3bd88a2d2a7f928d00292e7a9963cfc6"
+      ]
+    },
+    {
+      "name": "seth",
+      "swap_address": "0xc5424B857f758E906013F3555Dad202e4bdB4567",
+      "asset_type": 1,
+      "coins": [
+        "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+        "0x5e74c9036fb86bd7ecdcb084a0673efc32ea31cb"
+      ]
+    },
+    {
+      "name": "steth",
+      "swap_address": "0xDC24316b9AE028F1497c275EB9192a3Ea0f67022",
+      "asset_type": 1,
+      "coins": [
+        "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+        "0xae7ab96520de3a18e5e111b5eaab095312d7fe84"
+      ]
+    },
+    {
+      "name": "susd",
+      "swap_address": "0xA5407eAE9Ba41422680e2e00537571bcC53efBfD",
+      "asset_type": 0,
+      "coins": [
+        "0x6b175474e89094c44da98b954eedeac495271d0f",
+        "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+        "0xdac17f958d2ee523a2206206994597c13d831ec7",
+        "0x57ab1ec28d129707052df4df418d58a2d46d5f51"
+      ]
+    },
+    {
+      "name": "usdt",
+      "swap_address": "0x52EA46506B9CC5Ef470C5bf89f17Dc28bB35D85C",
+      "asset_type": 0,
+      "coins": [
+        "0x6b175474e89094c44da98b954eedeac495271d0f",
+        "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+        "0xdac17f958d2ee523a2206206994597c13d831ec7"
+      ]
+    },
+    {
+      "name": "y",
+      "swap_address": "0x45F783CCE6B7FF23B2ab2D70e416cdb7D6055f51",
+      "asset_type": 0,
+      "coins": [
+        "0x6b175474e89094c44da98b954eedeac495271d0f",
+        "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+        "0xdac17f958d2ee523a2206206994597c13d831ec7",
+        "0x0000000000085d4780b73119b644ae5ecd22b376"
+      ]
+    },
+    {
+      "name": "dusd",
+      "swap_address": "0x8038C01A0390a8c547446a0b2c18fc9aEFEcc10c",
+      "asset_type": 0,
+      "coins": [
+        "0x5bc25f649fc4e26069ddf4cf4010f9f706c23831",
+        "0x6b175474e89094c44da98b954eedeac495271d0f",
+        "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+        "0xdac17f958d2ee523a2206206994597c13d831ec7"
+      ]
+    },
+    {
+      "name": "gusd",
+      "swap_address": "0x4f062658EaAF2C1ccf8C8e36D6824CDf41167956",
+      "asset_type": 0,
+      "coins": [
+        "0x056fd409e1d7a124bd7017459dfea2f387b6d5cd",
+        "0x6b175474e89094c44da98b954eedeac495271d0f",
+        "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+        "0xdac17f958d2ee523a2206206994597c13d831ec7"
+      ]
+    },
+    {
+      "name": "husd",
+      "swap_address": "0x3eF6A01A0f81D6046290f3e2A8c5b843e738E604",
+      "asset_type": 0,
+      "coins": [
+        "0xdf574c24545e5ffecb9a659c229253d4111d87e1",
+        "0x6b175474e89094c44da98b954eedeac495271d0f",
+        "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+        "0xdac17f958d2ee523a2206206994597c13d831ec7"
+      ]
+    },
+    {
+      "name": "linkusd",
+      "swap_address": "0xE7a24EF0C5e95Ffb0f6684b813A78F2a3AD7D171",
+      "asset_type": 0,
+      "coins": [
+        "0x0e2ec54fc0b509f445631bf4b91ab8168230c752",
+        "0x6b175474e89094c44da98b954eedeac495271d0f",
+        "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+        "0xdac17f958d2ee523a2206206994597c13d831ec7"
+      ]
+    },
+    {
+      "name": "musd",
+      "swap_address": "0x8474DdbE98F5aA3179B3B3F5942D724aFcdec9f6",
+      "asset_type": 0,
+      "coins": [
+        "0xe2f2a5c287993345a840db3b0845fbc70f5935a5",
+        "0x6b175474e89094c44da98b954eedeac495271d0f",
+        "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+        "0xdac17f958d2ee523a2206206994597c13d831ec7"
+      ]
+    },
+    {
+      "name": "rsv",
+      "swap_address": "0xC18cC39da8b11dA8c3541C598eE022258F9744da",
+      "asset_type": 0,
+      "coins": [
+        "0x196f4727526ea7fb1e17b2071b3d8eaa38486988",
+        "0x6b175474e89094c44da98b954eedeac495271d0f",
+        "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+        "0xdac17f958d2ee523a2206206994597c13d831ec7"
+      ]
+    },
+    {
+      "name": "usdk",
+      "swap_address": "0x3E01dD8a5E1fb3481F0F589056b428Fc308AF0Fb",
+      "asset_type": 0,
+      "coins": [
+        "0x1c48f86ae57291f7686349f12601910bd8d470bb",
+        "0x6b175474e89094c44da98b954eedeac495271d0f",
+        "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+        "0xdac17f958d2ee523a2206206994597c13d831ec7"
+      ]
+    },
+    {
+      "name": "usdn",
+      "swap_address": "0x0f9cb53Ebe405d49A0bbdBD291A65Ff571bC83e1",
+      "asset_type": 0,
+      "coins": [
+        "0x674c6ad92fd080e4004b2312b45f796a192d27a0",
+        "0x6b175474e89094c44da98b954eedeac495271d0f",
+        "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+        "0xdac17f958d2ee523a2206206994597c13d831ec7"
+      ]
+    },
+    {
+      "name": "usdp",
+      "swap_address": "0x42d7025938bEc20B69cBae5A77421082407f053A",
+      "asset_type": 0,
+      "coins": [
+        "0x1456688345527be1f37e9e627da0837d6f08c925",
+        "0x6b175474e89094c44da98b954eedeac495271d0f",
+        "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+        "0xdac17f958d2ee523a2206206994597c13d831ec7"
+      ]
+    },
+    {
+      "name": "ust",
+      "swap_address": "0x890f4e345B1dAED0367A877a1612f86A1f86985f",
+      "asset_type": 0,
+      "coins": [
+        "0xa47c8bf37f92abed4a126bda807a7b7498661acd",
+        "0x6b175474e89094c44da98b954eedeac495271d0f",
+        "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+        "0xdac17f958d2ee523a2206206994597c13d831ec7"
+      ]
+    },
+    {
+      "name": "bbtc",
+      "swap_address": "0x071c661B4DeefB59E2a3DdB20Db036821eeE8F4b",
+      "asset_type": 2,
+      "coins": [
+        "0x9be89d2a4cd102d8fecc6bf9da793be995c22541",
+        "0xeb4c2781e4eba804ce9a9803c67d0893436bb27d",
+        "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599",
+        "0xfe18be6b3bd88a2d2a7f928d00292e7a9963cfc6"
+      ]
+    },
+    {
+      "name": "obtc",
+      "swap_address": "0xd81dA8D904b52208541Bade1bD6595D8a251F8dd",
+      "asset_type": 2,
+      "coins": [
+        "0x8064d9ae6cdf087b1bcd5bdf3531bd5d8c537a68",
+        "0xeb4c2781e4eba804ce9a9803c67d0893436bb27d",
+        "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599",
+        "0xfe18be6b3bd88a2d2a7f928d00292e7a9963cfc6"
+      ]
+    },
+    {
+      "name": "pbtc",
+      "swap_address": "0x7F55DDe206dbAD629C080068923b36fe9D6bDBeF",
+      "asset_type": 2,
+      "coins": [
+        "0x5228a22e72ccc52d415ecfd199f99d0665e7733b",
+        "0xeb4c2781e4eba804ce9a9803c67d0893436bb27d",
+        "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599",
+        "0xfe18be6b3bd88a2d2a7f928d00292e7a9963cfc6"
+      ]
+    },
+    {
+      "name": "tbtc",
+      "swap_address": "0xC25099792E9349C7DD09759744ea681C7de2cb66",
+      "asset_type": 2,
+      "coins": [
+        "0x8daebade922df735c38c80c7ebd708af50815faa",
+        "0xeb4c2781e4eba804ce9a9803c67d0893436bb27d",
+        "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599",
+        "0xfe18be6b3bd88a2d2a7f928d00292e7a9963cfc6"
+      ]
+    },
+    {
+      "name": "tusd",
+      "swap_address": "0xEcd5e75AFb02eFa118AF914515D6521aaBd189F1",
+      "asset_type": 0,
+      "coins": [
+        "0x0000000000085d4780b73119b644ae5ecd22b376",
+        "0x6b175474e89094c44da98b954eedeac495271d0f",
+        "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+        "0xdac17f958d2ee523a2206206994597c13d831ec7"
+      ]
+    },
+    {
+      "name": "lusd",
+      "swap_address": "0xEd279fDD11cA84bEef15AF5D39BB4d4bEE23F0cA",
+      "asset_type": 0,
+      "coins": [
+        "0x5f98805a4e8be255a32880fdec7f6728c6568ba0",
+        "0x6b175474e89094c44da98b954eedeac495271d0f",
+        "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+        "0xdac17f958d2ee523a2206206994597c13d831ec7"
+      ]
+    },
+    {
+      "name": "frax",
+      "swap_address": "0xd632f22692FaC7611d2AA1C0D552930D43CAEd3B",
+      "asset_type": 0,
+      "coins": [
+        "0x853d955acef822db058eb8505911ed77f175b99e",
+        "0x6b175474e89094c44da98b954eedeac495271d0f",
+        "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+        "0xdac17f958d2ee523a2206206994597c13d831ec7"
+      ]
+    },
+    {
+      "name": "busdv2",
+      "swap_address": "0x4807862AA8b2bF68830e4C8dc86D0e9A998e085a",
+      "asset_type": 0,
+      "coins": [
+        "0x4fabb145d64652a948d72533023f6e7a623c7c53",
+        "0x6b175474e89094c44da98b954eedeac495271d0f",
+        "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+        "0xdac17f958d2ee523a2206206994597c13d831ec7"
+      ]
+    },
+    {
+      "name": "reth",
+      "swap_address": "0xF9440930043eb3997fc70e1339dBb11F341de7A8",
+      "asset_type": 1,
+      "coins": ["0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"]
+    },
+    {
+      "name": "alusd",
+      "swap_address": "0x43b4FdFD4Ff969587185cDB6f0BD875c5Fc83f8c",
+      "asset_type": 0,
+      "coins": [
+        "0xbc6da0fe9ad5f3b0d58160288917aa56653660e9",
+        "0x6b175474e89094c44da98b954eedeac495271d0f",
+        "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+        "0xdac17f958d2ee523a2206206994597c13d831ec7"
+      ]
+    },
+    {
+      "name": "tricrypto",
+      "swap_address": "0x80466c64868E1ab14a1Ddf27A676C3fcBE638Fe5",
+      "asset_type": 4,
+      "coins": [
+        "0xdac17f958d2ee523a2206206994597c13d831ec7",
+        "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599",
+        "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2"
+      ]
+    },
+    {
+      "name": "rai",
+      "swap_address": "0x618788357D0EBd8A37e763ADab3bc575D54c2C7d",
+      "asset_type": 0,
+      "coins": [
+        "0x03ab458634910aad20ef5f1c8ee96f1d6ac54919",
+        "0x6b175474e89094c44da98b954eedeac495271d0f",
+        "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+        "0xdac17f958d2ee523a2206206994597c13d831ec7"
+      ]
+    },
+    {
+      "name": "mim",
+      "swap_address": "0x5a6A4D54456819380173272A5E8E9B9904BdF41B",
+      "asset_type": 0,
+      "coins": [
+        "0x99d8a9c45b2eca8864373a26d1459e3dff1e17f3",
+        "0x6b175474e89094c44da98b954eedeac495271d0f",
+        "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+        "0xdac17f958d2ee523a2206206994597c13d831ec7"
+      ]
+    },
+    {
+      "name": "eurt",
+      "swap_address": "0xFD5dB7463a3aB53fD211b4af195c5BCCC1A03890",
+      "asset_type": 0,
+      "coins": [
+        "0xc581b735a1688071a1746c968e0798d642ede491",
+        "0xd71ecff9342a5ced620049e616c5035f1db98620"
+      ]
+    }
+  ],
+  "137": [
+    {
+      "name": "aave",
+      "swap_address": "0x445FE580eF8d70FF569aB36e80c647af338db351",
+      "asset_type": 0,
+      "coins": [
+        "0x8f3cf7ad23cd3cadbd9735aff958023239c6a063",
+        "0x2791bca1f2de4661ed88a30c99a7a9449aa84174",
+        "0xc2132d05d31c914a87c6611c10748aeb04b58e8f"
+      ]
+    },
+    {
+      "name": "ren",
+      "swap_address": "0xC2d95EEF97Ec6C17551d45e77B590dc1F9117C67",
+      "asset_type": 0,
+      "coins": [
+        "0x1bfd67037b42cf73acf2047067bd4f2c47d9bfd6",
+        "0xdbf31df14b66535af65aac99c32e9ea844e14501"
+      ]
+    }
+  ],
+  "250": [
+    {
+      "name": "2pool",
+      "swap_address": "0x27E611FD27b276ACbd5Ffd632E5eAEBEC9761E40",
+      "asset_type": 0,
+      "coins": [
+        "0x8d11ec38a3eb5e956b052f67da8bdc9bef8abf3e",
+        "0x04068da6c83afcfa0e13ba15a6696662335d5b75"
+      ]
+    },
+    {
+      "name": "fusdt",
+      "swap_address": "0x92D5ebF3593a92888C25C0AbEF126583d4b5312E",
+      "asset_type": 0,
+      "coins": [
+        "0x049d68029688eabf473097a2fc38ef61633a3c7a",
+        "0x8d11ec38a3eb5e956b052f67da8bdc9bef8abf3e",
+        "0x04068da6c83afcfa0e13ba15a6696662335d5b75"
+      ]
+    },
+    {
+      "name": "btc",
+      "swap_address": "0x3eF6A01A0f81D6046290f3e2A8c5b843e738E604",
+      "asset_type": 0,
+      "coins": [
+        "0x321162cd933e2be498cd2267a90534a804051b11",
+        "0xdbf31df14b66535af65aac99c32e9ea844e14501"
+      ]
+    },
+    {
+      "name": "geist",
+      "swap_address": "0x0fa949783947Bf6c1b171DB13AEACBB488845B3f",
+      "asset_type": 0,
+      "coins": [
+        "0x8d11ec38a3eb5e956b052f67da8bdc9bef8abf3e",
+        "0x04068da6c83afcfa0e13ba15a6696662335d5b75",
+        "0x049d68029688eabf473097a2fc38ef61633a3c7a"
+      ]
+    },
+    {
+      "name": "ib",
+      "swap_address": "0x4FC8D635c3cB1d0aa123859e2B2587d0FF2707b1",
+      "asset_type": 0,
+      "coins": [
+        "0x8d11ec38a3eb5e956b052f67da8bdc9bef8abf3e",
+        "0x04068da6c83afcfa0e13ba15a6696662335d5b75",
+        "0x049d68029688eabf473097a2fc38ef61633a3c7a"
+      ]
+    }
+  ],
+  "42161": [
+    {
+      "name": "2pool",
+      "swap_address": "0x7f90122BF0700F9E7e1F688fe926940E8839F353",
+      "asset_type": 0,
+      "coins": [
+        "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+        "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9"
+      ]
+    },
+    {
+      "name": "ren",
+      "swap_address": "0x3E01dD8a5E1fb3481F0F589056b428Fc308AF0Fb",
+      "asset_type": 0,
+      "coins": [
+        "0x2f2a2543b76a4166549f7aab2e75bef0aefc5b0f",
+        "0xdbf31df14b66535af65aac99c32e9ea844e14501"
+      ]
+    },
+    {
+      "name": "tricrypto",
+      "swap_address": "0x960ea3e3C7FB317332d990873d354E18d7645590",
+      "asset_type": 4,
+      "coins": [
+        "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+        "0x2f2a2543b76a4166549f7aab2e75bef0aefc5b0f",
+        "0x82af49447d8a07e3bd95bd0d56f35241523fbab1"
+      ]
+    },
+    {
+      "name": "mim",
+      "swap_address": "0x30dF229cefa463e991e29D42DB0bae2e122B2AC7",
+      "asset_type": 0,
+      "coins": [
+        "0xfea7a6a0b346362bf88a9e4a88416b77a57d6c2a",
+        "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+        "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9"
+      ]
+    }
+  ],
+  "43114": [
+    {
+      "name": "aave",
+      "swap_address": "0x7f90122BF0700F9E7e1F688fe926940E8839F353",
+      "asset_type": 0,
+      "coins": [
+        "0xd586e7f844cea2f87f50152665bcbc2c279d8d70",
+        "0xa7d7079b0fead91f3e65f86e8915cb59c1a4c664",
+        "0xc7198437980c041c805a1edcba50c1ce5db95118"
+      ]
+    },
+    {
+      "name": "ren",
+      "swap_address": "0x16a7DA911A4DD1d83F3fF066fE28F3C792C50d90",
+      "asset_type": 0,
+      "coins": [
+        "0x50b7545627a5162f82a992c33b87adc75187b218",
+        "0xdbf31df14b66535af65aac99c32e9ea844e14501"
+      ]
+    },
+    {
+      "name": "mim",
+      "swap_address": "0xAEA2E71b631fA93683BCF256A8689dFa0e094fcD",
+      "asset_type": 0,
+      "coins": [
+        "0x130966628846bfd36ff31a822705796e8cb8c18d",
+        "0xc7198437980c041c805a1edcba50c1ce5db95118",
+        "0xa7d7079b0fead91f3e65f86e8915cb59c1a4c664"
+      ]
+    }
+  ]
+}

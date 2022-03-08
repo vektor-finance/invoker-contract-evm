@@ -8,6 +8,10 @@ abstract contract CSwapBase {
 
     function _getContractName() internal pure virtual returns (string memory);
 
+    function _revertMsg(string memory message) internal {
+        revert(string(abi.encodePacked(_getContractName(), ":", message)));
+    }
+
     function _requireMsg(bool condition, string memory message) internal {
         if (!condition) {
             revert(string(abi.encodePacked(_getContractName(), ":", message)));

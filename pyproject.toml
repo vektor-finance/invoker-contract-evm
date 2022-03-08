@@ -21,5 +21,6 @@ exclude = '''
 
 [tool.pytest.ini_options]
 markers = [
+  "only_curve_pool_tokens: (deselect tokens not in specific curve pool)",
   "dedupe: (remove duplicate tokens)"
 ]

@@ -132,6 +132,15 @@ def pytest_collection_modifyitems(items):
         except Exception:
             continue
 
+        for marker in item.iter_markers(name="only_curve_pool_tokens"):
+            tokens = [params[x]["address"] for x in marker.args]
+            if not is_list_unique(tokens):
+                items.remove(item)
+                continue
+            pool_coins = params["curve_pool"].coins
+            if not all(token in pool_coins for token in tokens):
+                items.remove(item)
+
         for marker in item.iter_markers(name="dedupe"):
             tokens = [params[x]["address"] for x in marker.args]
             if not is_list_unique(tokens):
