@@ -3,7 +3,7 @@ pragma solidity ^0.8.0;
 
 interface ICSwapCurve {
     /** @notice There are different interfaces for different CurvePools. This allows the user
-    to specify which pool interfaceto utilise.
+    to specify which pool interface to utilise.
         @param STABLESWAP_EXCHANGE A swap using the StableSwap pools
         @param STABLESWAP_UNDERLYING A swap using the lending version of a StableSwap pool
         @param CRYPTOSWAP_EXCHANGE A swap using the CryptoSwap pools
