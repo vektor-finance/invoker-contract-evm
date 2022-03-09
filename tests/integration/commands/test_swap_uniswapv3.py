@@ -100,7 +100,7 @@ def test_sell_invoker(
 
     min_amount_out = quoter.quote_exact_input(path, amount_in)
 
-    if min_amount_out is None:
+    if not min_amount_out:
         pytest.skip("Insufficient liquidity.")
 
     tokens_for_alice.approve(invoker, amount_in, {"from": alice})
@@ -133,7 +133,7 @@ def test_buy_invoker(cswap_uniswapv3, invoker, alice, tokens_for_alice, token, c
     # Get the maximum amount you could buy
     amount_out = quoter.quote_exact_input(path, amount_in)
 
-    if amount_out is None:
+    if not amount_out:
         pytest.skip("Insufficient liquidity.")
 
     amount_out //= 2
