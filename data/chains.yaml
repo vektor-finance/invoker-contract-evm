@@ -412,3 +412,52 @@ bsc:
     - venue: pancakeswap
       interfaces: [uniswap_router_v2_02]
       address: "0x10ed43c718714eb63d5aa57b78b54704e256024e"
+
+
+optimism:
+  id: optimism
+  name: Optimism Mainnet
+  chain_id: 10
+  network:
+    prod: optimism-prod
+    fork: optimism-hardhat-fork
+  assets:
+    - name: Ethereum
+      symbol: ETH
+      decimals: 18
+      address: ~
+    - name: Wrapped Ethereum
+      symbol: WETH
+      decimals: 18
+      address: "0x4200000000000000000000000000000000000006"
+      benefactor: "0x6202a3b0be1d222971e93aab084c6e584c29db70"
+      wrapped_native: true
+      interfaces: [weth9, erc20]
+    - name: USD Coin
+      symbol: USDC
+      decimals: 6
+      address: "0x7f5c764cbc14f9669b88837ca1490cca17c31607"
+      benefactor: "0xad7b4c162707e0b2b5f6fddbd3f8538a5fba0d60"
+      interfaces: [erc20]
+    - name: Dai Stablecoin
+      symbol: DAI
+      decimals: 18
+      address: "0xda10009cbd5d07dd0cecc66161fc93d7c9000da1"
+      benefactor: "0xf181ed90d6cfac84b8073fdea6d34aa744b41810"
+      interfaces: [erc20]
+    - name: Wrapped BTC
+      symbol: WBTC
+      decimals: 8
+      address: "0x68f180fcce6836688e9084f035309e29bf0a2095"
+      benefactor: "0x251de0f0368c472bba2e1c8f5db5ac7582b5f847"
+      interfaces: [erc20]
+    - name: Tether
+      symbol: USDT
+      decimals: 6
+      address: "0x94b008aa00579c1307b0ef2c499ad98a8ce58e58"
+      benefactor: "0x9d39fc627a6d9d9f8c831c16995b209548cc3401"
+      interfaces: [erc20]
+  contracts:
+    - venue: uniswap_v3
+      interfaces: [uniswap_router_v3]
+      address: "0xE592427A0AEce92De3Edee1F18E0157C05861564"
