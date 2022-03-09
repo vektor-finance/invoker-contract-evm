@@ -109,6 +109,11 @@ def generate_univ3_swap(data):
     return (input_token, output_token, fee, user, amount)
 
 
+# When testing on polygon, or other networks with very few pools, we end up filtering
+# out a lot of pools. We don't wan't these tests to error and instead accept that we
+# might not have as many 'healthy' examples. When we implement a working venue router
+# we can use this to ensure we focus tests on healthy pools.
+@hypothesis.settings(suppress_health_check=(hypothesis.HealthCheck.filter_too_much))
 @given(data=hypothesis.strategies.data())
 def test_sell_invoker(data, cswap_uniswapv3, invoker, cmove, quoter):
     with isolate_fixture():
@@ -140,6 +145,8 @@ def test_sell_invoker(data, cswap_uniswapv3, invoker, cmove, quoter):
         assert received_amount >= min_amount_out
 
 
+# See above note re health
+@hypothesis.settings(suppress_health_check=(hypothesis.HealthCheck.filter_too_much))
 @given(data=hypothesis.strategies.data())
 def test_buy_invoker(data, cswap_uniswapv3, invoker, cmove, quoter):
     with isolate_fixture():
