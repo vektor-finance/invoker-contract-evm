@@ -1,10 +1,11 @@
-from enum import IntEnum
-
+import hypothesis
 import pytest
-from brownie import ZERO_ADDRESS, interface, web3
+from brownie import Contract, interface, web3
+from brownie.test import given
 
 from data.access_control import APPROVED_COMMAND
 from data.chain import get_chain, is_uniswapv3_on_chain
+from data.strategies import strategy, token_strategy
 
 
 @pytest.fixture(scope="module")
@@ -27,26 +28,6 @@ def encode_path(path, fees):
 
 # Parametrize this when other UNI V3 forks exist
 UNI_V3_ROUTER = "0xE592427A0AEce92De3Edee1F18E0157C05861564"
-
-
-class FeeAmount(IntEnum):
-    """
-    Fee provided to the UniswapV3 liquidity providers.
-    Denominated in BIPS.
-    """
-
-    VERY_LOW = 100
-    LOW = 500
-    MEDIUM = 3000
-    HIGH = 10000
-
-    @staticmethod
-    def list():
-        return list(map(lambda c: c.value, FeeAmount))
-
-    @staticmethod
-    def labels():
-        return list(map(lambda c: "FEE_" + c.name, FeeAmount))
 
 
 class UniswapV3Quoter:
@@ -88,7 +69,36 @@ def pytest_generate_tests(metafunc):
             pytest.skip("No Uniswap V3")
 
 
-@pytest.mark.parametrize("fees", FeeAmount.list(), ids=FeeAmount.labels())
+@hypothesis.strategies.composite
+def composite_univ3(draw):
+    a = draw(token_strategy())
+    b = draw(token_strategy())
+    c = draw(strategy("uniswapv3_fee"))
+    hypothesis.assume(a is not b)
+    return (
+        Contract.from_abi(a["name"], a["address"], interface.ERC20Detailed.abi),
+        Contract.from_abi(b["name"], b["address"], interface.ERC20Detailed.abi),
+        c,
+    )
+
+
+def mint_tokens_for(minted_token, user) -> int:
+    chain = get_chain()
+    tokens = [asset for asset in chain["assets"] if asset.get("address")]
+    for token in tokens:
+        if minted_token.address == token["address"]:
+            balance = minted_token.balanceOf(token["benefactor"])
+            minted_token.transfer(user, balance, {"from": token["benefactor"]})
+            return balance
+
+
+@given(swap_fixtures=composite_univ3())
+def test_hypothesis(swap_fixtures, alice):
+    (input_token, output_token, swap_fee) = swap_fixtures
+
+
+"""
+@pytest.mark.parametrize("fees", UniswapV3FeeAmount.list(), ids=UniswapV3FeeAmount.labels())
 @pytest.mark.dedupe("tokens_for_alice", "token")
 def test_sell_invoker(
     cswap_uniswapv3, invoker, alice, tokens_for_alice, token, cmove, fees, quoter
@@ -120,7 +130,7 @@ def test_sell_invoker(
     assert token.balanceOf(alice) >= min_amount_out
 
 
-@pytest.mark.parametrize("fees", FeeAmount.list(), ids=FeeAmount.labels())
+@pytest.mark.parametrize("fees", UniswapV3FeeAmount.list(), ids=UniswapV3FeeAmount.labels())
 @pytest.mark.dedupe("tokens_for_alice", "token")
 def test_buy_invoker(cswap_uniswapv3, invoker, alice, tokens_for_alice, token, cmove, fees, quoter):
 
@@ -163,3 +173,4 @@ def test_buy_invoker(cswap_uniswapv3, invoker, alice, tokens_for_alice, token, c
 
     assert starting_balance - tokens_for_alice.balanceOf(alice) <= amount_in
     assert token.balanceOf(alice) >= amount_out
+"""
