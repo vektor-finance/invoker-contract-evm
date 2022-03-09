@@ -72,22 +72,6 @@ def pytest_generate_tests(metafunc):
             pytest.skip("No Uniswap V3")
 
 
-@hypothesis.strategies.composite
-def composite_univ3(draw):
-    a = draw(token_strategy())
-    b = draw(token_strategy())
-    fee = draw(integration_strategy("uniswapv3_fee"))
-    user = draw(strategy("address"))
-    hypothesis.assume(a is not b)
-    input_token = Contract.from_abi(a["name"], a["address"], interface.ERC20Detailed.abi)
-    output_token = Contract.from_abi(b["name"], b["address"], interface.ERC20Detailed.abi)
-    max_amount = mint_tokens_for(input_token, user)
-    # amount = draw(strategy("uint256", max_value=max_amount, min_value=10 ** a["decimals"]))
-    amount = 0
-    print(a["name"], max_amount)
-    return (input_token, output_token, fee, user, amount)
-
-
 def mint_tokens_for(minted_token, user) -> int:
     chain = get_chain()
     tokens = [asset for asset in chain["assets"] if asset.get("address")]
@@ -101,19 +85,34 @@ def mint_tokens_for(minted_token, user) -> int:
 
 @contextmanager
 def isolate_fixture():
-    print("setup")
     brownie.chain.snapshot()
     try:
         yield
     finally:
-        print("teardown")
         brownie.chain.revert()
 
 
-@given(univ3=composite_univ3())
-def test_sell_invoker(cswap_uniswapv3, invoker, cmove, quoter, univ3):
+def generate_univ3_swap(data):
+    a = data.draw(token_strategy(), label="Input Token")
+    b = data.draw(token_strategy(), label="Output Token")
+
+    fee = data.draw(integration_strategy("uniswapv3_fee"), label="Uniswap V3 Fee")
+    user = data.draw(strategy("address"), label="User")
+    hypothesis.assume(a is not b)
+    input_token = Contract.from_abi(a["name"], a["address"], interface.ERC20Detailed.abi)
+    output_token = Contract.from_abi(b["name"], b["address"], interface.ERC20Detailed.abi)
+    max_amount = mint_tokens_for(input_token, user)
+    amount = data.draw(
+        strategy("uint256", max_value=max_amount, min_value=10 ** a["decimals"]),
+        label="Input Amount",
+    )
+    return (input_token, output_token, fee, user, amount)
+
+
+@given(data=hypothesis.strategies.data())
+def test_sell_invoker(data, cswap_uniswapv3, invoker, cmove, quoter):
     with isolate_fixture():
-        (input_token, output_token, fee, user, amount_in) = univ3
+        (input_token, output_token, fee, user, amount_in) = generate_univ3_swap(data)
         path = encode_path([input_token.address, output_token.address], [fee])
         min_amount_out = quoter.quote_exact_input(path, amount_in)
 
@@ -136,84 +135,47 @@ def test_sell_invoker(cswap_uniswapv3, invoker, cmove, quoter, univ3):
             [calldata_move_in, calldata_sell, calldata_move_out],
             {"from": user},
         )
+        received_amount = output_token.balanceOf(user)
 
-        assert output_token.balanceOf(user) >= min_amount_out
-
-
-"""
-@pytest.mark.parametrize("fees", UniswapV3FeeAmount.list(), ids=UniswapV3FeeAmount.labels())
-@pytest.mark.dedupe("tokens_for_alice", "token")
-def test_sell_invoker(
-    cswap_uniswapv3, invoker, alice, tokens_for_alice, token, cmove, fees, quoter
-):
-
-    amount_in = tokens_for_alice.balanceOf(alice)
-
-    path = encode_path([tokens_for_alice.address, token.address], [fees])
-
-    min_amount_out = quoter.quote_exact_input(path, amount_in)
-
-    if not min_amount_out:
-        pytest.skip("Insufficient liquidity.")
-
-    tokens_for_alice.approve(invoker, amount_in, {"from": alice})
-
-    calldata_move_in = cmove.moveERC20In.encode_input(tokens_for_alice, amount_in)
-    calldata_sell = cswap_uniswapv3.sell.encode_input(
-        amount_in, tokens_for_alice, token, min_amount_out, (UNI_V3_ROUTER, path, ZERO_ADDRESS, 0)
-    )
-    calldata_move_out = cmove.moveAllERC20Out.encode_input(token, alice)
-
-    invoker.invoke(
-        [cmove, cswap_uniswapv3, cmove],
-        [calldata_move_in, calldata_sell, calldata_move_out],
-        {"from": alice},
-    )
-
-    assert token.balanceOf(alice) >= min_amount_out
+        assert received_amount >= min_amount_out
 
 
-@pytest.mark.parametrize("fees", UniswapV3FeeAmount.list(), ids=UniswapV3FeeAmount.labels())
-@pytest.mark.dedupe("tokens_for_alice", "token")
-def test_buy_invoker(cswap_uniswapv3, invoker, alice, tokens_for_alice, token, cmove, fees, quoter):
+@given(data=hypothesis.strategies.data())
+def test_buy_invoker(data, cswap_uniswapv3, invoker, cmove, quoter):
+    with isolate_fixture():
+        (input_token, output_token, fee, user, amount_in) = generate_univ3_swap(data)
 
-    amount_in = tokens_for_alice.balanceOf(alice)
-    # We have this much to start off with
+        path = encode_path([input_token.address, output_token.address], [fee])
+        reversed_path = encode_path([output_token.address, input_token.address], [fee])
 
-    path = encode_path([tokens_for_alice.address, token.address], [fees])
-    reversed_path = encode_path([token.address, tokens_for_alice.address], [fees])
+        # Get the maximum amount you could buy
+        amount_out = quoter.quote_exact_input(path, amount_in)
 
-    # Get the maximum amount you could buy
-    amount_out = quoter.quote_exact_input(path, amount_in)
+        hypothesis.assume(amount_out is not None)
+        hypothesis.assume(amount_out > 0)
 
-    if not amount_out:
-        pytest.skip("Insufficient liquidity.")
+        amount_out //= 2
+        max_amount_in = quoter.quote_exact_output(reversed_path, amount_out)
 
-    amount_out //= 2
-    max_amount_in = quoter.quote_exact_output(reversed_path, amount_out)
+        input_token.approve(invoker, max_amount_in, {"from": user})
 
-    max_amount_in //= 0.99
+        calldata_move_in = cmove.moveERC20In.encode_input(input_token, max_amount_in)
+        calldata_sell = cswap_uniswapv3.buy.encode_input(
+            amount_out,
+            output_token,
+            input_token,
+            max_amount_in,
+            (UNI_V3_ROUTER, reversed_path, ZERO_ADDRESS, 0),
+        )
+        calldata_move_out = cmove.moveAllERC20Out.encode_input(output_token, user)
 
-    tokens_for_alice.approve(invoker, max_amount_in, {"from": alice})
+        starting_balance = input_token.balanceOf(user)
 
-    calldata_move_in = cmove.moveERC20In.encode_input(tokens_for_alice, max_amount_in)
-    calldata_sell = cswap_uniswapv3.buy.encode_input(
-        amount_out,
-        token,
-        tokens_for_alice,
-        max_amount_in,
-        (UNI_V3_ROUTER, reversed_path, ZERO_ADDRESS, 0),
-    )
-    calldata_move_out = cmove.moveAllERC20Out.encode_input(token, alice)
+        invoker.invoke(
+            [cmove, cswap_uniswapv3, cmove],
+            [calldata_move_in, calldata_sell, calldata_move_out],
+            {"from": user},
+        )
 
-    starting_balance = tokens_for_alice.balanceOf(alice)
-
-    invoker.invoke(
-        [cmove, cswap_uniswapv3, cmove],
-        [calldata_move_in, calldata_sell, calldata_move_out],
-        {"from": alice},
-    )
-
-    assert starting_balance - tokens_for_alice.balanceOf(alice) <= amount_in
-    assert token.balanceOf(alice) >= amount_out
-"""
+        assert starting_balance - input_token.balanceOf(user) <= amount_in
+        assert output_token.balanceOf(user) >= amount_out
