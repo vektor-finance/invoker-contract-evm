@@ -47,6 +47,14 @@ development:
   name: Hardhat (Arbitrum Fork)
   timeout: 120
 - cmd: npx hardhat node
+  cmd_settings:
+    fork: optimism-prod
+    port: 8545
+  host: http://localhost
+  id: optimism-hardhat-fork
+  name: Hardhat (Optimism Fork)
+  timeout: 120
+- cmd: npx hardhat node
   cmd_settings:  
     fork: fantom-prod
     port: 8545
@@ -108,6 +116,13 @@ live:
     id: arbitrum-prod
     multicall2: "0x842eC2c7D803033Edf55E478F461FC547Bc54EB2"
     name: Arbitrum Main
+- name: Optimism
+  networks:
+  - chainid: 10
+    explorer: https://optimistic.etherscan.io
+    host: $NODE_OPTIMISM_MAINNET_URL
+    id: optimism-prod
+    name: Optimism Main
 - name: Fantom Opera
   networks:
   - chainid: 4002

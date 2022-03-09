@@ -6,7 +6,8 @@ polygon-hardhat-fork mumbai-hardhat-fork \
 fantom-hardhat-fork \
 arbitrum-hardhat-fork \
 avalanche-hardhat-fork \
-bsc-hardhat-fork
+bsc-hardhat-fork \
+optimism-hardhat-fork
 
 test-all:
 	for network in ${NETWORKS}; do \
