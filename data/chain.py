@@ -112,3 +112,10 @@ def get_chain():
 def get_chain_id():
     chain = get_chain()
     return chain["chain_id"]
+
+
+def is_uniswapv3_on_chain(chain):
+    for contract in chain["contracts"]:
+        if "uniswap_router_v3" in contract["interfaces"]:
+            return True
+    return False
