@@ -1,11 +1,14 @@
+from contextlib import contextmanager
+
+import brownie
 import hypothesis
 import pytest
-from brownie import Contract, interface, web3
-from brownie.test import given
+from brownie import ZERO_ADDRESS, Contract, interface, web3
+from brownie.test import given, strategy
 
 from data.access_control import APPROVED_COMMAND
 from data.chain import get_chain, is_uniswapv3_on_chain
-from data.strategies import strategy, token_strategy
+from data.strategies import integration_strategy, token_strategy
 
 
 @pytest.fixture(scope="module")
@@ -73,28 +76,68 @@ def pytest_generate_tests(metafunc):
 def composite_univ3(draw):
     a = draw(token_strategy())
     b = draw(token_strategy())
-    c = draw(strategy("uniswapv3_fee"))
+    fee = draw(integration_strategy("uniswapv3_fee"))
+    user = draw(strategy("address"))
     hypothesis.assume(a is not b)
-    return (
-        Contract.from_abi(a["name"], a["address"], interface.ERC20Detailed.abi),
-        Contract.from_abi(b["name"], b["address"], interface.ERC20Detailed.abi),
-        c,
-    )
+    input_token = Contract.from_abi(a["name"], a["address"], interface.ERC20Detailed.abi)
+    output_token = Contract.from_abi(b["name"], b["address"], interface.ERC20Detailed.abi)
+    max_amount = mint_tokens_for(input_token, user)
+    # amount = draw(strategy("uint256", max_value=max_amount, min_value=10 ** a["decimals"]))
+    amount = 0
+    print(a["name"], max_amount)
+    return (input_token, output_token, fee, user, amount)
 
 
 def mint_tokens_for(minted_token, user) -> int:
     chain = get_chain()
     tokens = [asset for asset in chain["assets"] if asset.get("address")]
     for token in tokens:
-        if minted_token.address == token["address"]:
+        if minted_token.address.lower() == token["address"].lower():
             balance = minted_token.balanceOf(token["benefactor"])
             minted_token.transfer(user, balance, {"from": token["benefactor"]})
             return balance
+    raise ValueError("could not find token")
 
 
-@given(swap_fixtures=composite_univ3())
-def test_hypothesis(swap_fixtures, alice):
-    (input_token, output_token, swap_fee) = swap_fixtures
+@contextmanager
+def isolate_fixture():
+    print("setup")
+    brownie.chain.snapshot()
+    try:
+        yield
+    finally:
+        print("teardown")
+        brownie.chain.revert()
+
+
+@given(univ3=composite_univ3())
+def test_sell_invoker(cswap_uniswapv3, invoker, cmove, quoter, univ3):
+    with isolate_fixture():
+        (input_token, output_token, fee, user, amount_in) = univ3
+        path = encode_path([input_token.address, output_token.address], [fee])
+        min_amount_out = quoter.quote_exact_input(path, amount_in)
+
+        hypothesis.assume(min_amount_out is not None)
+        hypothesis.assume(min_amount_out > 0)
+
+        input_token.approve(invoker, amount_in, {"from": user})
+        calldata_move_in = cmove.moveERC20In.encode_input(input_token, amount_in)
+        calldata_sell = cswap_uniswapv3.sell.encode_input(
+            amount_in,
+            input_token,
+            output_token,
+            min_amount_out,
+            (UNI_V3_ROUTER, path, ZERO_ADDRESS, 0),
+        )
+        calldata_move_out = cmove.moveAllERC20Out.encode_input(output_token, user)
+
+        invoker.invoke(
+            [cmove, cswap_uniswapv3, cmove],
+            [calldata_move_in, calldata_sell, calldata_move_out],
+            {"from": user},
+        )
+
+        assert output_token.balanceOf(user) >= min_amount_out
 
 
 """

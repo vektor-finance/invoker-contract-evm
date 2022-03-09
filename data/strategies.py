@@ -30,7 +30,7 @@ def token_strategy() -> SearchStrategy:
     return _DeferredStrategyRepr(lambda: st.sampled_from(tokens), "ERC20 token")
 
 
-def strategy(type_str, **kwargs: Any) -> SearchStrategy:
+def integration_strategy(type_str, **kwargs: Any) -> SearchStrategy:
     if type_str == "uniswapv3_fee":
         return _uniswapv3_fee_strategy(**kwargs)
 
