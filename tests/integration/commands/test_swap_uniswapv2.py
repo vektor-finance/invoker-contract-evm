@@ -1,6 +1,6 @@
 import hypothesis
 import pytest
-from brownie import ZERO_ADDRESS, Contract, accounts, interface
+from brownie import ZERO_ADDRESS, Contract, interface
 from brownie.exceptions import VirtualMachineError
 from brownie.test import given, strategy
 from hypothesis.errors import UnsatisfiedAssumption
@@ -17,32 +17,17 @@ def cswap_uniswapv2(invoker, deployer, CSwapUniswapV2):
     yield contract
 
 
-def sync(uni_router, token0, token1):
-    factory = Contract.from_abi(
-        f"{uni_router._name} Factory", uni_router.factory(), interface.UniswapV2Factory.abi
-    )
-
-    pair_addr = factory.getPair(token0, token1)
-
-    if pair_addr != ZERO_ADDRESS:
-        pair = Contract.from_abi(
-            f"{uni_router._name} Pair",
-            pair_addr,
-            interface.UniswapV2Pair.abi,
-        )
-        pair.sync({"from": accounts[0]})
-
-
 def generate_univ2_swap(data):
     a = data.draw(token_strategy(), label="Input Token")
     b = data.draw(token_strategy(), label="Output Token")
-    hypothesis.assume(a is not b)
+    hypothesis.assume(a["address"] != b["address"])
     user = data.draw(strategy("address"), label="User")
     input_token = Contract.from_abi(a["name"], a["address"], interface.ERC20Detailed.abi)
     output_token = Contract.from_abi(b["name"], b["address"], interface.ERC20Detailed.abi)
     max_amount = mint_tokens_for(input_token, user)
+    decimals = a["decimals"] - b["decimals"]
     amount = data.draw(
-        strategy("uint256", max_value=max_amount, min_value=10 ** a["decimals"]),
+        strategy("uint256", max_value=max_amount, min_value=10 ** decimals),
         label="Input Amount",
     )
     return (input_token, output_token, user, amount)
@@ -55,7 +40,6 @@ def test_sell_invoker(data, uni_router, invoker, cmove, cswap_uniswapv2):
         path = [input_token, output_token]
 
         try:
-            sync(uni_router, input_token, output_token)
             (_, amount_out) = uni_router.getAmountsOut(amount_in, path)
         except VirtualMachineError:
             raise UnsatisfiedAssumption
@@ -86,7 +70,6 @@ def test_buy_invoker(data, uni_router, invoker, cmove, cswap_uniswapv2):
         path = [input_token, output_token]
 
         try:
-            sync(uni_router, input_token, output_token)
             (_, amount_out) = uni_router.getAmountsOut(amount_in, path)
         except VirtualMachineError:
             raise UnsatisfiedAssumption
