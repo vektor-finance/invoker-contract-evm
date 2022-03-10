@@ -1,6 +1,3 @@
-from contextlib import contextmanager
-
-import brownie
 import hypothesis
 import pytest
 from brownie import ZERO_ADDRESS, Contract, interface, web3
@@ -9,6 +6,7 @@ from brownie.test import given, strategy
 from data.access_control import APPROVED_COMMAND
 from data.chain import get_chain, is_uniswapv3_on_chain
 from data.strategies import integration_strategy, token_strategy
+from data.test_helpers import isolate_fixture, mint_tokens_for
 
 
 @pytest.fixture(scope="module")
@@ -70,26 +68,6 @@ def pytest_generate_tests(metafunc):
         enabled = is_uniswapv3_on_chain(chain)
         if not enabled:
             pytest.skip("No Uniswap V3")
-
-
-def mint_tokens_for(minted_token, user) -> int:
-    chain = get_chain()
-    tokens = [asset for asset in chain["assets"] if asset.get("address")]
-    for token in tokens:
-        if minted_token.address.lower() == token["address"].lower():
-            balance = minted_token.balanceOf(token["benefactor"])
-            minted_token.transfer(user, balance, {"from": token["benefactor"]})
-            return balance
-    raise ValueError("could not find token")
-
-
-@contextmanager
-def isolate_fixture():
-    brownie.chain.snapshot()
-    try:
-        yield
-    finally:
-        brownie.chain.revert()
 
 
 def generate_univ3_swap(data):

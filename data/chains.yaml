@@ -402,7 +402,7 @@ bsc:
       symbol: BTCB
       decimals: 18
       address: "0x7130d2a12b9bcbfae4f2634d864a1ee1ce3ead9c"
-      benefactor: "0xd171b26e4484402de70e3ea256be5a2630d7e88d"
+      benefactor: "0x882c173bc7ff3b7786ca16dfed3dfffb9ee7847b"
     - name: Binance-Peg Dai Token
       symbol: DAI
       decimals: 18
