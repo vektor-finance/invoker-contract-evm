@@ -63,6 +63,7 @@ jobs:
           - arbitrum-hardhat-fork
           - avalanche-hardhat-fork
           - bsc-hardhat-fork
+          - optimism-hardhat-fork
 
     steps:
       - name: Checkout current commit (${{ github.sha }})
