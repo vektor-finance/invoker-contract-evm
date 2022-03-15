@@ -104,7 +104,7 @@ rinkeby:
       symbol: USDT
       decimals: 18 # yes, this is 18 not 6 on rinkeby
       address: "0xD9BA894E0097f8cC2BBc9D24D308b98e36dc6D02"
-      benefactor: "0xe809c8a56086e73318e9f5fff174801a6e2a1cd5"
+      benefactor: "0x304f1ec2439d0919b27149c8798cba36a251d5ec"
     - name: USD Coin
       symbol: USDC
       decimals: 6
