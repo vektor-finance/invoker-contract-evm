@@ -27,7 +27,7 @@ def generate_univ2_swap(data):
     max_amount = mint_tokens_for(input_token, user)
     decimals = a["decimals"] - b["decimals"]
     amount = data.draw(
-        strategy("uint256", max_value=max_amount, min_value=10 ** decimals),
+        strategy("uint256", max_value=min(max_amount, 2 ** 112), min_value=10 ** decimals),
         label="Input Amount",
     )
     return (input_token, output_token, user, amount)
