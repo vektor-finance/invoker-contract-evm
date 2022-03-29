@@ -2,14 +2,13 @@ name: core
 
 on:
   pull_request:
-    branches:
-      paths:
-        - 'tests/core/**/*.py'
-        - 'contracts/**/*.sol'
-    push:
-      paths:
-        - 'tests/core/**/*.py'
-        - 'contracts/**/*.sol'
+    paths:
+      - 'tests/core/**/*.py'
+      - 'contracts/**/*.sol'
+  push:
+    paths:
+      - 'tests/core/**/*.py'
+      - 'contracts/**/*.sol'
 
 env: 
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
