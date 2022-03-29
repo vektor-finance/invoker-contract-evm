@@ -2,11 +2,15 @@ name: rinkeby
 
 on:
   pull_request:
+    branches:
+      - main
     paths:
       - 'tests/integration/**/*.py'
       - 'tests/network/rinkeby-hardhat-fork/*.py'
       - 'contracts/**/*.sol'
   push:
+    branches:
+      - main
     paths:
       - 'tests/integration/**/*.py'
       - 'tests/network/rinkeby-hardhat-fork/*.py'

@@ -2,11 +2,15 @@ name: mainnet
 
 on:
   pull_request:
+    branches:
+      - main
     paths:
       - 'tests/integration/**/*.py'
       - 'tests/network/mainnet-hardhat-fork/*.py'
       - 'contracts/**/*.sol'
   push:
+    branches:
+      - main
     paths:
       - 'tests/integration/**/*.py'
       - 'tests/network/mainnet-hardhat-fork/*.py'
