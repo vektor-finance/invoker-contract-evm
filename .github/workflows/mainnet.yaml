@@ -8,6 +8,7 @@ on:
       - 'tests/integration/**/*.py'
       - 'tests/network/mainnet-hardhat-fork/*.py'
       - 'contracts/**/*.sol'
+      - 'data/chains.yaml'
   push:
     branches:
       - main
@@ -15,6 +16,7 @@ on:
       - 'tests/integration/**/*.py'
       - 'tests/network/mainnet-hardhat-fork/*.py'
       - 'contracts/**/*.sol'
+      - 'data/chains.yaml'
 
 env:
   NETWORK: 'mainnet-hardhat-fork'

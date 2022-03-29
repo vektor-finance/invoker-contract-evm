@@ -1,4 +1,4 @@
-name: rinkeby
+name: polygon
 
 on:
   pull_request:
@@ -6,7 +6,7 @@ on:
       - main
     paths:
       - 'tests/integration/**/*.py'
-      - 'tests/network/rinkeby-hardhat-fork/*.py'
+      - 'tests/network/polygon-hardhat-fork/*.py'
       - 'contracts/**/*.sol'
       - 'data/chains.yaml'
   push:
@@ -14,14 +14,14 @@ on:
       - main
     paths:
       - 'tests/integration/**/*.py'
-      - 'tests/network/rinkeby-hardhat-fork/*.py'
+      - 'tests/network/polygon-hardhat-fork/*.py'
       - 'contracts/**/*.sol'
       - 'data/chains.yaml'
 
 env:
-  NETWORK: 'rinkeby-hardhat-fork'
+  NETWORK: 'polygon-hardhat-fork'
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  NODE_ETHEREUM_RINKEBY_URL: ${{ secrets.NODE_ETHEREUM_RINKEBY_URL }}
+  NODE_POLYGON_MAINNET_URL: ${{ secrets.NODE_POLYGON_MAINNET_URL }}
   NODE_OPTIONS: --max_old_space_size=4096
 
   CACHED_COMPILER_PATHS: |
@@ -33,8 +33,8 @@ env:
     ${{ github.workspace }}/node_modules
 
 jobs:
-  test_rinkeby:
-    name: Test Ethereum Rinkeby Integration
+  test_polygon:
+    name: Test Ethereum polygon Integration
     runs-on: ubuntu-latest
     timeout-minutes: 20
 
