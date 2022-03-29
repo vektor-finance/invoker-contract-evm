@@ -59,8 +59,13 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: debug
-        run: echo $GITHUB_REF ${{github.ref}}
+      - uses: technote-space/get-diff-action@v6
+        with:
+          PATTERNS: |
+            tests/**/*.py
+      
+      - name: Debug
+        run: echo ${{env.GIT_DIFF}}
 
       - name: Cache Compiler Installations
         uses: actions/cache@v2
