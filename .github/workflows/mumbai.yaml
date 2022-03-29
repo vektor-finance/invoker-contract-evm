@@ -21,7 +21,7 @@ on:
 env:
   NETWORK: 'mumbai-hardhat-fork'
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  NODE_mumbai_MUMBAI_URL: ${{ secrets.NODE_mumbai_MUMBAI_URL }}
+  NODE_POLYGON_MUMBAI_URL: ${{ secrets.NODE_POLYGON_MUMBAI_URL }}
   NODE_OPTIONS: --max_old_space_size=4096
 
   CACHED_COMPILER_PATHS: |
@@ -75,4 +75,4 @@ jobs:
  
       - name: Run Tests
         id: brownie_tests
-        run: brownie test --network ${{ env.NETWORK }}
+        run: brownie test --network ${{ env.NETWORK }} -n auto
