@@ -4,16 +4,6 @@ on:
   pull_request:
     branches:
       - main
-    paths:
-      - "contracts/**"
-      - "data/**"
-      - "interfaces/**"
-      - "tests/**"
-      - "scripts/**"
-      - "!**.md"
-      - "**.yaml"
-      - "**.js"
-      - "package.json"
 
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -51,20 +41,6 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 20
 
-    strategy:
-      matrix:
-        network:
-          - hardhat
-          - mainnet-hardhat-fork
-          - rinkeby-hardhat-fork
-          - polygon-hardhat-fork
-          - mumbai-hardhat-fork
-          - fantom-hardhat-fork
-          - arbitrum-hardhat-fork
-          - avalanche-hardhat-fork
-          - bsc-hardhat-fork
-          - optimism-hardhat-fork
-
     steps:
       - name: Checkout current commit (${{ github.sha }})
         id: checkout
@@ -97,39 +73,6 @@ jobs:
       - name: Run lint checks
         id: lint
         run: yarn run lint
-
-      - name: Setup Python 3.8
-        id: setup_python
-        uses: actions/setup-python@v2
-        with:
-          python-version: 3.8
-
-      - name: Cache Python dependencies
-        uses: actions/cache@v2
-        id: cache_python_dependencies
-        with:
-          path: ${{ env.CACHED_PYTHON_DEPENDENCY_PATHS }}
-          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.*txt') }}
-
-      - name: Install Python dependencies
-        id: install_python_dependencies
-        run: pip install -r requirements.dev.txt -r requirements.txt
-
-      - name: Install pre-commit hooks
-        id: install_pre_commit
-        run: pre-commit install
-
-      - name: Run pre-commit checks
-        id: run_pre_commit
-        run: pre-commit run --all-files
-
-      - name: Copy network-config.yaml to ~/.brownie
-        id: copy_network_config
-        run: mkdir ~/.brownie && cp network-config.yaml ~/.brownie/
-
-      - name: Run Tests
-        id: brownie_tests
-        run: brownie test --network ${{ matrix.network }} -n auto
 
   build_docker:
     name: Build Docker Container
