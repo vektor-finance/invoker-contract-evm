@@ -1,13 +1,13 @@
-name: contracts
+name: core
 
 on:
   pull_request:
-      branches:
-      - main
+    branches:
+    - main
     # paths:
     #   - 'tests/core/invoker/*.py'
     #   - 'contracts/Invoker.sol'
-  push:
+  # push:
     # paths:
     #   - 'tests/core/invoker/*.py'
     #   - 'contracts/Invoker.sol'
@@ -18,8 +18,8 @@ env:
 
 
 jobs:
-  compile_contracts:
-    name: Compile all contracts
+  test_core:
+    name: Test core functionality
     runs-on: ubuntu-latest
 
     steps:
@@ -53,11 +53,5 @@ jobs:
       - name: Compile Contracts
         run: brownie compile
 
-  test_invoker:
-    name: Test Invoker
-    runs-on: ubuntu-latest
-    needs: compile_contracts
-
-    steps:
-      - name: Test Invoker
-        run: brownie test tests/core/invoker --network hardhat
+      - name: Run Tests
+        run: brownie test tests/core --network hardhat
