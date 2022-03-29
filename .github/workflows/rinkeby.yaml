@@ -1,21 +1,21 @@
-name: mainnet
+name: rinkeby
 
 on:
   pull_request:
     paths:
       - 'tests/integration/**/*.py'
-      - 'tests/network/mainnet-hardhat-fork/*.py'
+      - 'tests/network/rinkeby-hardhat-fork/*.py'
       - 'contracts/**/*.sol'
   push:
     paths:
       - 'tests/integration/**/*.py'
-      - 'tests/network/mainnet-hardhat-fork/*.py'
+      - 'tests/network/rinkeby-hardhat-fork/*.py'
       - 'contracts/**/*.sol'
 
 env:
-  NETWORK: 'mainnet-hardhat-fork'
+  NETWORK: 'rinkeby-hardhat-fork'
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  NODE_ETHEREUM_MAINNET_URL: ${{ secrets.NODE_ETHEREUM_MAINNET_URL }}
+  NODE_ETHEREUM_RINKEBY_URL: ${{ secrets.NODE_ETHEREUM_RINKEBY_URL }}
   NODE_OPTIONS: --max_old_space_size=4096
 
   CACHED_COMPILER_PATHS: |
@@ -27,8 +27,8 @@ env:
     ${{ github.workspace }}/node_modules
 
 jobs:
-  test_mainnet:
-    name: Test Ethereum Mainnet Integration
+  test_rinkeby:
+    name: Test Ethereum Rinkeby Integration
     runs-on: ubuntu-latest
     timeout-minutes: 20
 
