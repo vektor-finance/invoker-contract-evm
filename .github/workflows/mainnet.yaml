@@ -4,16 +4,6 @@ on:
   pull_request:
     branches:
       - main
-    paths:
-      - "contracts/**"
-      - "data/**"
-      - "interfaces/**"
-      - "tests/**"
-      - "scripts/**"
-      - "!**.md"
-      - "**.yaml"
-      - "**.js"
-      - "package.json"
 
 env:
   NETWORK: 'mainnet-hardhat-fork'
