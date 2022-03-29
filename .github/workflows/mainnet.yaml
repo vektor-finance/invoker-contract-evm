@@ -1,23 +1,37 @@
-name: core
+name: main
 
 on:
   pull_request:
     branches:
-      paths:
-        - 'tests/core/**/*.py'
-        - 'contracts/**/*.sol'
-    push:
-      paths:
-        - 'tests/core/**/*.py'
-        - 'contracts/**/*.sol'
+      - main
+    paths:
+      - "contracts/**"
+      - "data/**"
+      - "interfaces/**"
+      - "tests/**"
+      - "scripts/**"
+      - "!**.md"
+      - "**.yaml"
+      - "**.js"
+      - "package.json"
 
-env: 
+env:
+  NETWORK: 'mainnet-hardhat-fork'
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  NODE_ETHEREUM_MAINNET_URL: ${{ secrets.NODE_ETHEREUM_MAINNET_URL }}
   NODE_OPTIONS: --max_old_space_size=4096
 
+  CACHED_COMPILER_PATHS: |
+    ~/.solcx
+    ~/.vvm
+  CACHED_PYTHON_DEPENDENCY_PATHS: |
+    ~/.cache/pip
+  CACHED_NODE_DEPENDENCY_PATHS: |
+    ${{ github.workspace }}/node_modules
+
 jobs:
-  test_core:
-    name: Test core functionality
+  test_mainnet:
+    name: Test Ethereum Mainnet Integration
     runs-on: ubuntu-latest
 
     steps:
@@ -50,6 +64,11 @@ jobs:
 
       - name: Compile Contracts
         run: brownie compile
+ 
+      - name: Copy network-config.yaml to ~/.brownie
+        id: copy_network_config
+        run: mkdir ~/.brownie && cp network-config.yaml ~/.brownie/
 
       - name: Run Tests
-        run: brownie test tests/core --network hardhat
+        id: brownie_tests
+        run: brownie test --network ${{ env.NETWORK }} -n auto
