@@ -55,15 +55,6 @@ jobs:
       matrix:
         network:
           - hardhat
-          - mainnet-hardhat-fork
-          - rinkeby-hardhat-fork
-          - polygon-hardhat-fork
-          - mumbai-hardhat-fork
-          - fantom-hardhat-fork
-          - arbitrum-hardhat-fork
-          - avalanche-hardhat-fork
-          - bsc-hardhat-fork
-          - optimism-hardhat-fork
 
     steps:
       - uses: actions/checkout@v2
