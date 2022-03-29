@@ -8,50 +8,19 @@ on:
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-  # Node URLS
-  NODE_ETHEREUM_MAINNET_URL: ${{ secrets.NODE_ETHEREUM_MAINNET_URL }}
-  NODE_ETHEREUM_RINKEBY_URL: ${{ secrets.NODE_ETHEREUM_RINKEBY_URL }}
-  NODE_POLYGON_MAINNET_URL: ${{ secrets.NODE_POLYGON_MAINNET_URL }}
-  NODE_POLYGON_MUMBAI_URL: ${{ secrets.NODE_POLYGON_MUMBAI_URL }}
-  NODE_ARBITRUM_MAINNET_URL: ${{ secrets.NODE_ARBITRUM_MAINNET_URL }}
-  NODE_ARBITRUM_RINKEBY_URL: ${{ secrets.NODE_ARBITRUM_RINKEBY_URL }}
-  NODE_OPTIMISM_MAINNET_URL: ${{ secrets.NODE_OPTIMISM_MAINNET_URL }}
-  NODE_OPTIMISM_TESTNET_URL: ${{ secrets.NODE_OPTIMISM_TESTNET_URL }}
-  NODE_FANTOM_MAINNET_URL: ${{ secrets.NODE_FANTOM_MAINNET_URL }}
-  NODE_AVALANCHE_MAINNET_URL: ${{ secrets.NODE_AVALANCHE_MAINNET_URL }}
-  NODE_BINANCE_MAINNET_URL: ${{ secrets.NODE_BINANCE_MAINNET_URL }}
-
-  # increasing available memory for node reduces issues with ganache crashing
-  # https://nodejs.org/api/cli.html#cli_max_old_space_size_size_in_megabytes
-  NODE_OPTIONS: --max_old_space_size=4096
-
-  CACHED_COMPILER_PATHS: |
-    ~/.solcx
-    ~/.vvm
-
-  CACHED_PYTHON_DEPENDENCY_PATHS: |
-    ~/.cache/pip
-
   CACHED_NODE_DEPENDENCY_PATHS: |
     ${{ github.workspace }}/node_modules
 
 jobs:
   lint_and_tests:
-    name: Install deps, lint & test
+    name: Install deps & lint
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 15
 
     steps:
       - name: Checkout current commit (${{ github.sha }})
         id: checkout
         uses: actions/checkout@v2
-
-      - name: Cache Compiler Installations
-        id: cache_compiler_installations
-        uses: actions/cache@v2
-        with:
-          path: ${{ env.CACHED_COMPILER_PATHS }}
-          key: ${{ runner.os }}-compiler-cache
 
       - name: Setup Node.js
         id: setup_node
@@ -73,24 +42,3 @@ jobs:
       - name: Run lint checks
         id: lint
         run: yarn run lint
-
-  build_docker:
-    name: Build Docker Container
-    runs-on: ubuntu-latest
-    timeout-minutes: 15
-
-    env:
-      DOCKER_TAG_SHA: vektor/invoker-deploy:${{ github.sha }}
-      DOCKER_TAG_LATEST: vektor/invoker-deploy:latest
-
-    steps:
-      - name: Build
-        uses: docker/build-push-action@v2
-        with:
-          tags: |
-            ${{ env.DOCKER_TAG_SHA }}
-            ${{ env.DOCKER_TAG_LATEST }}
-          cache-from: type=registry,ref=${{ env.DOCKER_TAG_LATEST }}
-          cache-to: type=inline
-      - name: Test
-        run: docker run vektor/invoker-deploy:latest brownie
