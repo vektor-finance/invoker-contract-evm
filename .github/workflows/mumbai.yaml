@@ -1,4 +1,4 @@
-name: polygon
+name: mumbai
 
 on:
   pull_request:
@@ -6,7 +6,7 @@ on:
       - main
     paths:
       - 'tests/integration/**/*.py'
-      - 'tests/network/polygon-hardhat-fork/*.py'
+      - 'tests/network/mumbai-hardhat-fork/*.py'
       - 'contracts/**/*.sol'
       - 'data/chains.yaml'
   push:
@@ -14,14 +14,14 @@ on:
       - main
     paths:
       - 'tests/integration/**/*.py'
-      - 'tests/network/polygon-hardhat-fork/*.py'
+      - 'tests/network/mumbai-hardhat-fork/*.py'
       - 'contracts/**/*.sol'
       - 'data/chains.yaml'
 
 env:
-  NETWORK: 'polygon-hardhat-fork'
+  NETWORK: 'mumbai-hardhat-fork'
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  NODE_POLYGON_MAINNET_URL: ${{ secrets.NODE_POLYGON_MAINNET_URL }}
+  NODE_mumbai_MUMBAI_URL: ${{ secrets.NODE_mumbai_MUMBAI_URL }}
   NODE_OPTIONS: --max_old_space_size=4096
 
   CACHED_COMPILER_PATHS: |
@@ -33,8 +33,8 @@ env:
     ${{ github.workspace }}/node_modules
 
 jobs:
-  test_polygon:
-    name: Test Ethereum Polygon Integration
+  test_mumbai:
+    name: Test Ethereum Mumbai Integration
     runs-on: ubuntu-latest
     timeout-minutes: 20
 

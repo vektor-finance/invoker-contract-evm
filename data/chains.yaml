@@ -1,5 +1,6 @@
 # Prod: the actual blockchain. Will require private keys
 # Fork: forked version of the blockchain, for local testing
+# May consider splitting these into separate yaml files if it gets too big
 ---
 dev:
   id: dev
