@@ -59,7 +59,7 @@ jobs:
         # Set outputs using the command.
         run: |
           echo "::set-output name=all::$(git diff --name-only --diff-filter=ACMRT ${{ github.event.pull_request.base.sha }} ${{ github.sha }} | xargs)"
-          
+
   test_network:
     name: Test ${{ matrix.network }} Integration
     runs-on: ubuntu-latest
@@ -76,7 +76,7 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: echo
-        run: ${{needs.changed_files.outputs.all}}
+        run: echo ${{needs.changed_files.outputs.all}}
 
       - name: Cache Compiler Installations
         uses: actions/cache@v2
