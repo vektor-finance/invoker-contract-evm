@@ -1,4 +1,4 @@
-name: mainnet
+name: integration
 
 on:
   pull_request:
@@ -67,6 +67,9 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+
+      - name: debug
+        run: echo $GITHUB_REF ${{github.ref}}
 
       - name: Cache Compiler Installations
         uses: actions/cache@v2
