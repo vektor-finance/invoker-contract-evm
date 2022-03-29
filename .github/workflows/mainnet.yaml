@@ -23,6 +23,7 @@ jobs:
   test_mainnet:
     name: Test Ethereum Mainnet Integration
     runs-on: ubuntu-latest
+    timeout-minutes: 15
 
     steps:
       - uses: actions/checkout@v2
@@ -52,13 +53,13 @@ jobs:
       - name: Install Requirements
         run: pip install -r requirements.txt
 
-      - name: Compile Contracts
-        run: brownie compile
- 
       - name: Copy network-config.yaml to ~/.brownie
         id: copy_network_config
         run: mkdir ~/.brownie && cp network-config.yaml ~/.brownie/
 
+      - name: Compile Contracts
+        run: brownie compile
+ 
       - name: Run Tests
         id: brownie_tests
         run: brownie test --network ${{ env.NETWORK }} -n auto
