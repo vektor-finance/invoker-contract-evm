@@ -1,4 +1,4 @@
-name: polygon
+name: mainnet
 
 on:
   pull_request:
@@ -6,7 +6,7 @@ on:
       - main
     paths:
       - 'tests/integration/**/*.py'
-      - 'tests/network/polygon-hardhat-fork/*.py'
+      - 'tests/network/**/*.py'
       - 'contracts/**/*.sol'
       - 'data/chains.yaml'
   push:
@@ -14,14 +14,26 @@ on:
       - main
     paths:
       - 'tests/integration/**/*.py'
-      - 'tests/network/polygon-hardhat-fork/*.py'
+      - 'tests/network/**/*.py'
       - 'contracts/**/*.sol'
       - 'data/chains.yaml'
 
 env:
-  NETWORK: 'polygon-hardhat-fork'
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  # Node URLS
+  NODE_ETHEREUM_MAINNET_URL: ${{ secrets.NODE_ETHEREUM_MAINNET_URL }}
+  NODE_ETHEREUM_RINKEBY_URL: ${{ secrets.NODE_ETHEREUM_RINKEBY_URL }}
   NODE_POLYGON_MAINNET_URL: ${{ secrets.NODE_POLYGON_MAINNET_URL }}
+  NODE_POLYGON_MUMBAI_URL: ${{ secrets.NODE_POLYGON_MUMBAI_URL }}
+  NODE_ARBITRUM_MAINNET_URL: ${{ secrets.NODE_ARBITRUM_MAINNET_URL }}
+  NODE_ARBITRUM_RINKEBY_URL: ${{ secrets.NODE_ARBITRUM_RINKEBY_URL }}
+  NODE_OPTIMISM_MAINNET_URL: ${{ secrets.NODE_OPTIMISM_MAINNET_URL }}
+  NODE_OPTIMISM_TESTNET_URL: ${{ secrets.NODE_OPTIMISM_TESTNET_URL }}
+  NODE_FANTOM_MAINNET_URL: ${{ secrets.NODE_FANTOM_MAINNET_URL }}
+  NODE_AVALANCHE_MAINNET_URL: ${{ secrets.NODE_AVALANCHE_MAINNET_URL }}
+  NODE_BINANCE_MAINNET_URL: ${{ secrets.NODE_BINANCE_MAINNET_URL }}
+
   NODE_OPTIONS: --max_old_space_size=4096
 
   CACHED_COMPILER_PATHS: |
@@ -33,10 +45,25 @@ env:
     ${{ github.workspace }}/node_modules
 
 jobs:
-  test_polygon:
-    name: Test Ethereum Polygon Integration
+  test_network:
+    name: Test ${{ matrix.network }} Integration
     runs-on: ubuntu-latest
     timeout-minutes: 20
+
+    strategy:
+      fail-fast: false
+      matrix:
+        network:
+          - hardhat
+          - mainnet-hardhat-fork
+          - rinkeby-hardhat-fork
+          - polygon-hardhat-fork
+          - mumbai-hardhat-fork
+          - fantom-hardhat-fork
+          - arbitrum-hardhat-fork
+          - avalanche-hardhat-fork
+          - bsc-hardhat-fork
+          - optimism-hardhat-fork
 
     steps:
       - uses: actions/checkout@v2
@@ -75,4 +102,4 @@ jobs:
  
       - name: Run Tests
         id: brownie_tests
-        run: brownie test --network ${{ env.NETWORK }} -n auto
+        run: brownie test --network ${{ matrix.network }} -n auto
