@@ -1,0 +1,34 @@
+name: docker
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  
+jobs:
+  build_docker:
+    name: Build Docker Container
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    env:
+      DOCKER_TAG_SHA: vektor/invoker-deploy:${{ github.sha }}
+      DOCKER_TAG_LATEST: vektor/invoker-deploy:latest
+
+    steps:
+      - name: Build
+        uses: docker/build-push-action@v2
+        with:
+          tags: |
+            ${{ env.DOCKER_TAG_SHA }}
+            ${{ env.DOCKER_TAG_LATEST }}
+          cache-from: type=registry,ref=${{ env.DOCKER_TAG_LATEST }}
+          cache-to: type=inline
+      - name: Test
+        run: docker run vektor/invoker-deploy:latest brownie
