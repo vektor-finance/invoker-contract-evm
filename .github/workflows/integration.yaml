@@ -69,7 +69,7 @@ jobs:
 
       - run: echo '${{ env.GIT_DIFF }}'
 
-      - run: echo '${{ env.GIT_DIFF }}' | grep 'tests/network/${{ matrix.network }}/*.py'
+      - run: echo ${{ env.GIT_DIFF }} | grep 'tests/network/${{ matrix.network }}/*.py'
 
       - name: Cache Compiler Installations
         uses: actions/cache@v2
