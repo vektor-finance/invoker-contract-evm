@@ -1,6 +1,9 @@
 # invoker-contract-evm
 
-[![main](https://github.com/vektor-finance/invoker-contract-evm/actions/workflows/main.yaml/badge.svg)](https://github.com/vektor-finance/invoker-contract-evm/actions/workflows/main.yaml)
+[![lint](https://github.com/vektor-finance/invoker-contract-evm/actions/workflows/lint.yaml/badge.svg)](https://github.com/vektor-finance/invoker-contract-evm/actions/workflows/lint.yaml)
+[![docker](https://github.com/vektor-finance/invoker-contract-evm/actions/workflows/docker.yaml/badge.svg)](https://github.com/vektor-finance/invoker-contract-evm/actions/workflows/docker.yaml)
+[![core](https://github.com/vektor-finance/invoker-contract-evm/actions/workflows/core.yaml/badge.svg)](https://github.com/vektor-finance/invoker-contract-evm/actions/workflows/core.yaml)
+[![integration](https://github.com/vektor-finance/invoker-contract-evm/actions/workflows/integration.yaml/badge.svg)](https://github.com/vektor-finance/invoker-contract-evm/actions/workflows/integration.yaml)
 
 Solidity contracts for Vektor's EVM invoker.
 
