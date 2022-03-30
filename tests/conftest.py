@@ -166,7 +166,7 @@ def pytest_ignore_collect(path):
     if path_parts[:1] == ("integration",):
         return network == "hardhat"
 
-    if path_parts[:1] == ("combination",):
+    if path_parts[:1] == ("network",):
         return network != path_parts[1]
 
 

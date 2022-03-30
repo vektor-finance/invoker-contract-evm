@@ -1,5 +1,6 @@
 # Prod: the actual blockchain. Will require private keys
 # Fork: forked version of the blockchain, for local testing
+# May consider splitting these into separate yaml files if it gets too big
 ---
 dev:
   id: dev
@@ -94,12 +95,12 @@ rinkeby:
       decimals: 18
       address: "0xc778417e063141139fce010982780140aa0cd5ab"
       wrapped_native: true
-      benefactor: "0x92d4e036df9ecb0f9944f9a2f7e2baea42a9ffe7"
+      benefactor: "0x306dd2eb9ddaceecdba4cfa0eccc009e7291cdde"
     - name: DAI
       symbol: DAI
       decimals: 18
       address: "0xc7ad46e0b8a400bb3c915120d284aafba8fc4735"
-      benefactor: "0xe27a94268f5aa5b70748a38e58293cd993579a91"
+      benefactor: "0x0f04024bda15f6e5d48ed92938654a6449f483ed"
     - name: Tether
       symbol: USDT
       decimals: 18 # yes, this is 18 not 6 on rinkeby

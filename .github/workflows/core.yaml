@@ -1,0 +1,48 @@
+name: core
+
+on:
+  pull_request:
+    branches:
+      - main
+
+env: 
+  NODE_OPTIONS: --max_old_space_size=4096
+
+jobs:
+  test_core:
+    name: Test core functionality
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Cache Compiler Installations
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.solcx
+            ~/.vvm
+          key: compiler-cache
+      
+      - name: Setup Node.js
+        id: setup_node
+        uses: actions/setup-node@v2
+        with:
+          node-version-file: ".nvmrc"
+
+      - name: Install Hardhat
+        run: npm install
+
+      - name: Setup Python 3.8
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+
+      - name: Install Requirements
+        run: pip install -r requirements.txt
+
+      - name: Compile Contracts
+        run: brownie compile
+
+      - name: Run Tests
+        run: brownie test tests/core --network hardhat

@@ -1,0 +1,43 @@
+name: lint
+
+on:
+  pull_request:
+    branches:
+      - main
+
+env:
+
+  CACHED_NODE_DEPENDENCY_PATHS: |
+    ${{ github.workspace }}/node_modules
+
+jobs:
+  lint_and_tests:
+    name: Install deps & lint
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout current commit (${{ github.sha }})
+        id: checkout
+        uses: actions/checkout@v2
+
+      - name: Setup Node.js
+        id: setup_node
+        uses: actions/setup-node@v2
+        with:
+          node-version-file: ".nvmrc"
+
+      - name: Cache Node dependencies
+        id: cache_node_dependencies
+        uses: actions/cache@v2
+        with:
+          path: ${{ env.CACHED_NODE_DEPENDENCY_PATHS }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+
+      - name: Install Node dependencies
+        id: install_node_dependencies
+        run: yarn install
+
+      - name: Run lint checks
+        id: lint
+        run: yarn run lint
