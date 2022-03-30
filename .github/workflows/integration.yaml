@@ -55,6 +55,7 @@ jobs:
       matrix:
         network:
           - hardhat
+          - mainnet-hardhat-fork
 
     steps:
       - uses: actions/checkout@v2
@@ -65,11 +66,10 @@ jobs:
             tests/integration/**/*.py
             tests/network/**/*.py
             data/*.yaml
-          FORMAT: json
 
       - run: echo '${{ env.GIT_DIFF }}'
 
-      - run: echo '${{ env.GIT_DIFF }}' | jq .
+      - run: echo '${{ env.GIT_DIFF }}' | grep 'tests/network/${{ matrix.network }}/*.py'
 
       - name: Cache Compiler Installations
         uses: actions/cache@v2
