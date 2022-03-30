@@ -68,9 +68,8 @@ jobs:
             data/*.yaml
             contracts/**/*.sol
 
-      - run: echo '${{ env.GIT_DIFF }}'
-
       - name: Cache Compiler Installations
+        if: env.GIT_DIFF
         uses: actions/cache@v2
         with:
           path: |
@@ -79,29 +78,40 @@ jobs:
           key: compiler-cache
       
       - name: Setup Node.js
+        if: env.GIT_DIFF
         id: setup_node
         uses: actions/setup-node@v2
         with:
           node-version-file: ".nvmrc"
 
       - name: Install Hardhat
+        if: env.GIT_DIFF
         run: npm install
 
       - name: Setup Python 3.8
+        if: env.GIT_DIFF
         uses: actions/setup-python@v2
         with:
           python-version: 3.8
 
       - name: Install Requirements
+        if: env.GIT_DIFF
         run: pip install -r requirements.txt
 
       - name: Copy network-config.yaml to ~/.brownie
+        if: env.GIT_DIFF
         id: copy_network_config
         run: mkdir ~/.brownie && cp network-config.yaml ~/.brownie/
 
       - name: Compile Contracts
+        if: env.GIT_DIFF
         run: brownie compile
  
       - name: Run Tests
+        if: env.GIT_DIFF
         id: brownie_tests
         run: brownie test --network ${{ matrix.network }} -n auto
+
+      - name: Print no test
+        if: true && !env.GIT_DIFF
+        run: echo "No diffs found - test did not run"
