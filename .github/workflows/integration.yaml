@@ -65,7 +65,7 @@ jobs:
           PATTERNS: |
             tests/integration/**/*.py
             tests/network/${{ matrix.network }}/*.py
-            data/*.yaml
+            # data/*.yaml
             contracts/**/*.sol
 
       - name: Cache Compiler Installations
