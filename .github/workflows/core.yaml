@@ -2,13 +2,8 @@ name: core
 
 on:
   pull_request:
-    paths:
-      - 'tests/core/**/*.py'
-      - 'contracts/**/*.sol'
-  push:
-    paths:
-      - 'tests/core/**/*.py'
-      - 'contracts/**/*.sol'
+    branches:
+      - main
 
 env: 
   NODE_OPTIONS: --max_old_space_size=4096
