@@ -14,13 +14,22 @@ import json
 import os
 import time
 
-from brownie import CMove, CSwapUniswapV2, CWrap, Invoker, accounts, network
+from brownie import (
+    CMove,
+    CSwapCurve,
+    CSwapUniswapV2,
+    CSwapUniswapV3,
+    CWrap,
+    Invoker,
+    accounts,
+    network,
+)
 
 from data.access_control import APPROVED_COMMAND
 from data.chain import get_chain_from_network_name, get_wnative_address
 from data.git import get_git_revision_hash, get_git_revision_short_hash
 
-commands = [CMove, CWrap, CSwapUniswapV2]
+commands = [CMove, CWrap, CSwapUniswapV2, CSwapUniswapV3, CSwapCurve]
 
 OUTPUTS_DEPLOYMENT_DIR = "deployments"
 
