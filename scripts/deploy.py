@@ -110,7 +110,15 @@ def main():
     )
 
     if mode == "fork":
-        deployer = accounts[0]
+        try:
+            deployer = accounts[0]
+        except IndexError:
+            # WARNING: This account, and its private keys, are publicly known.
+            # Bots have been written to sweep any funds sent to this address
+            # Any funds sent to them on Mainnet or any other live network WILL BE LOST.
+            deployer = accounts.add(
+                "0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80"
+            )
     else:
         print(f"Available accounts: {accounts.load()}")
         deployer = accounts.load(input("Which account to deploy from: "))

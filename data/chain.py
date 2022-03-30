@@ -1,5 +1,6 @@
 import os
 import sys
+from collections.abc import Iterable
 
 import yaml
 from brownie._config import CONFIG
@@ -10,6 +11,14 @@ def get_chain_data():
         return yaml.safe_load(file)
 
 
+def flatten(iterable):
+    for el in iterable:
+        if isinstance(el, Iterable) and not isinstance(el, str):
+            yield from flatten(el)
+        else:
+            yield el
+
+
 def get_chain_from_network_name(network_name):
     """Returns 'chain' object from network name
     network_name specifically refers to the network name according to brownie
@@ -18,14 +27,14 @@ def get_chain_from_network_name(network_name):
 
     def generator(data):
         for chain in data:
-            if network_name in data[chain]["network"].values():
+            if network_name in flatten(data[chain]["network"].values()):
                 yield data[chain]
 
     chain = next(generator(data))
 
     def mode_generator(chain):
         for key in chain["network"]:
-            if chain["network"][key] == network_name:
+            if network_name in chain["network"][key]:
                 yield key
 
     mode = next(mode_generator(chain))
