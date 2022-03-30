@@ -4,19 +4,9 @@ on:
   pull_request:
     branches:
       - main
-    paths:
-      - 'tests/integration/**/*.py'
-      - 'tests/network/**/*.py'
-      - 'contracts/**/*.sol'
-      - 'data/chains.yaml'
   push:
     branches:
       - main
-    paths:
-      - 'tests/integration/**/*.py'
-      - 'tests/network/**/*.py'
-      - 'contracts/**/*.sol'
-      - 'data/chains.yaml'
 
 env:
 
