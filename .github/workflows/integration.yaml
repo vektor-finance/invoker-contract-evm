@@ -56,6 +56,14 @@ jobs:
         network:
           - hardhat
           - mainnet-hardhat-fork
+          - rinkeby-hardhat-fork
+          - polygon-hardhat-fork
+          - mumbai-hardhat-fork
+          - fantom-hardhat-fork
+          - arbitrum-hardhat-fork
+          - avalanche-hardhat-fork
+          - bsc-hardhat-fork
+          - optimism-hardhat-fork
 
     steps:
       - uses: actions/checkout@v2
@@ -65,7 +73,7 @@ jobs:
           PATTERNS: |
             tests/integration/**/*.py
             tests/network/${{ matrix.network }}/*.py
-            # data/*.yaml
+            data/*.yaml
             contracts/**/*.sol
 
       - name: Cache Compiler Installations
@@ -113,5 +121,6 @@ jobs:
         run: brownie test --network ${{ matrix.network }} -n auto
 
       - name: Print no test
+      # checkyaml doesnt like the leading ! so this is a hack
         if: true && !env.GIT_DIFF
         run: echo "No diffs found - test did not run"
