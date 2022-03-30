@@ -118,7 +118,7 @@ jobs:
       - name: Run Tests
         if: env.GIT_DIFF
         id: brownie_tests
-        run: brownie test --network ${{ matrix.network }} -n auto
+        run: brownie test --network ${{ matrix.network }} -n auto --failfast
 
       - name: Print no test
       # checkyaml doesnt like the leading ! so this is a hack
