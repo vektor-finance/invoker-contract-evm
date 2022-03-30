@@ -6,7 +6,6 @@ on:
       - main
 
 env:
-  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   CACHED_NODE_DEPENDENCY_PATHS: |
     ${{ github.workspace }}/node_modules

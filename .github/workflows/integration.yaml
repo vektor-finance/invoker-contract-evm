@@ -19,7 +19,6 @@ on:
       - 'data/chains.yaml'
 
 env:
-  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   # Node URLS
   NODE_ETHEREUM_MAINNET_URL: ${{ secrets.NODE_ETHEREUM_MAINNET_URL }}
