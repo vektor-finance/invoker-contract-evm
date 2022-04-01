@@ -1,0 +1,115 @@
+name: integration
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+
+env:
+
+  # Node URLS
+  NODE_ETHEREUM_MAINNET_URL: ${{ secrets.NODE_ETHEREUM_MAINNET_URL }}
+  NODE_ETHEREUM_RINKEBY_URL: ${{ secrets.NODE_ETHEREUM_RINKEBY_URL }}
+  NODE_POLYGON_MAINNET_URL: ${{ secrets.NODE_POLYGON_MAINNET_URL }}
+  NODE_POLYGON_MUMBAI_URL: ${{ secrets.NODE_POLYGON_MUMBAI_URL }}
+  NODE_ARBITRUM_MAINNET_URL: ${{ secrets.NODE_ARBITRUM_MAINNET_URL }}
+  NODE_ARBITRUM_RINKEBY_URL: ${{ secrets.NODE_ARBITRUM_RINKEBY_URL }}
+  NODE_OPTIMISM_MAINNET_URL: ${{ secrets.NODE_OPTIMISM_MAINNET_URL }}
+  NODE_OPTIMISM_TESTNET_URL: ${{ secrets.NODE_OPTIMISM_TESTNET_URL }}
+  NODE_FANTOM_MAINNET_URL: ${{ secrets.NODE_FANTOM_MAINNET_URL }}
+  NODE_AVALANCHE_MAINNET_URL: ${{ secrets.NODE_AVALANCHE_MAINNET_URL }}
+  NODE_BINANCE_MAINNET_URL: ${{ secrets.NODE_BINANCE_MAINNET_URL }}
+
+  NODE_OPTIONS: --max_old_space_size=4096
+
+  CACHED_COMPILER_PATHS: |
+    ~/.solcx
+    ~/.vvm
+  CACHED_PYTHON_DEPENDENCY_PATHS: |
+    ~/.cache/pip
+  CACHED_NODE_DEPENDENCY_PATHS: |
+    ${{ github.workspace }}/node_modules
+
+jobs:
+  test_network:
+    name: Test ${{ matrix.network }} Integration
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    strategy:
+      fail-fast: false
+      matrix:
+        network:
+          - hardhat
+          - mainnet-hardhat-fork
+          - rinkeby-hardhat-fork
+          - polygon-hardhat-fork
+          - mumbai-hardhat-fork
+          - fantom-hardhat-fork
+          - arbitrum-hardhat-fork
+          - avalanche-hardhat-fork
+          - bsc-hardhat-fork
+          - optimism-hardhat-fork
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: technote-space/get-diff-action@v6
+        with:
+          PATTERNS: |
+            tests/integration/**/*.py
+            tests/network/${{ matrix.network }}/*.py
+            data/*.yaml
+            contracts/**/*.sol
+
+      - name: Cache Compiler Installations
+        if: env.GIT_DIFF
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.solcx
+            ~/.vvm
+          key: compiler-cache
+      
+      - name: Setup Node.js
+        if: env.GIT_DIFF
+        id: setup_node
+        uses: actions/setup-node@v2
+        with:
+          node-version-file: ".nvmrc"
+
+      - name: Install Hardhat
+        if: env.GIT_DIFF
+        run: npm install
+
+      - name: Setup Python 3.8
+        if: env.GIT_DIFF
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+
+      - name: Install Requirements
+        if: env.GIT_DIFF
+        run: pip install -r requirements.txt
+
+      - name: Copy network-config.yaml to ~/.brownie
+        if: env.GIT_DIFF
+        id: copy_network_config
+        run: mkdir ~/.brownie && cp network-config.yaml ~/.brownie/
+
+      - name: Compile Contracts
+        if: env.GIT_DIFF
+        run: brownie compile
+ 
+      - name: Run Tests
+        if: env.GIT_DIFF
+        id: brownie_tests
+        run: brownie test --network ${{ matrix.network }} -n auto --failfast
+
+      - name: Print no test
+      # checkyaml doesnt like the leading ! so this is a hack
+        if: true && !env.GIT_DIFF
+        run: echo "No diffs found - test did not run"

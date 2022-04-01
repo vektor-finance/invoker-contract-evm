@@ -12,5 +12,5 @@ In order to support deployment across multiple chains with differing protocols a
 - Tests within `integration` will be performed against all chains, protocols and assets supported by the `*.yaml` files in the data subdirectory from the root directory of this project.
 'integration' tests are performed against many networks. They can be used to establish whether there are any unexpected ABI/token incompatabilities before we deploy on a network. (For example, trader joe using a separate ABI to the standard uniswap router)
 
-- Tests within `combination` are performed only against the specified chain. They are used to test more complicated use-cases of the invoker in a way that would not be possible for us to test using unit-tests.
+- Tests within `network` are performed only against the specified chain. They are used to test more complicated use-cases of the invoker in a way that would not be possible for us to test using unit-tests.
 Examples of this may include MOVE.SPLIT(). The intention of these tests is to test more complicated invocations.
