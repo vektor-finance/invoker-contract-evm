@@ -5,7 +5,7 @@ from brownie.test import given, strategy
 
 from data.access_control import APPROVED_COMMAND
 from data.chain import get_chain, is_uniswapv3_on_chain
-from data.strategies import integration_strategy, token_strategy
+from data.strategies import integration_strategy, receiver_strategy, token_strategy
 from data.test_helpers import isolate_fixture, mint_tokens_for
 
 
@@ -84,7 +84,8 @@ def generate_univ3_swap(data):
         strategy("uint256", max_value=max_amount, min_value=10 ** a["decimals"]),
         label="Input Amount",
     )
-    return (input_token, output_token, fee, user, amount)
+    receiver = data.draw(receiver_strategy(), label="Receiver")
+    return (input_token, output_token, fee, user, amount, receiver)
 
 
 # When testing on polygon, or other networks with very few pools, we end up filtering
@@ -95,7 +96,7 @@ def generate_univ3_swap(data):
 @given(data=hypothesis.strategies.data())
 def test_sell_invoker(data, cswap_uniswapv3, invoker, cmove, quoter):
     with isolate_fixture():
-        (input_token, output_token, fee, user, amount_in) = generate_univ3_swap(data)
+        (input_token, output_token, fee, user, amount_in, receiver) = generate_univ3_swap(data)
         path = encode_path([input_token.address, output_token.address], [fee])
         min_amount_out = quoter.quote_exact_input(path, amount_in)
 
@@ -109,18 +110,26 @@ def test_sell_invoker(data, cswap_uniswapv3, invoker, cmove, quoter):
             input_token,
             output_token,
             min_amount_out,
-            (UNI_V3_ROUTER, path, ZERO_ADDRESS, 0),
+            (UNI_V3_ROUTER, path, receiver, 0),
         )
         calldata_move_out = cmove.moveAllERC20Out.encode_input(output_token, user)
 
+        commands = [cmove, cswap_uniswapv3]
+        calldatas = [calldata_move_in, calldata_sell]
+
+        if receiver == ZERO_ADDRESS:
+            commands.append(cmove)
+            calldatas.append(calldata_move_out)
+
         invoker.invoke(
-            [cmove, cswap_uniswapv3, cmove],
-            [calldata_move_in, calldata_sell, calldata_move_out],
+            commands,
+            calldatas,
             {"from": user},
         )
-        received_amount = output_token.balanceOf(user)
 
-        assert received_amount >= min_amount_out
+        assert (
+            output_token.balanceOf(user if receiver is ZERO_ADDRESS else receiver) >= min_amount_out
+        )
 
 
 # See above note re health
@@ -128,7 +137,7 @@ def test_sell_invoker(data, cswap_uniswapv3, invoker, cmove, quoter):
 @given(data=hypothesis.strategies.data())
 def test_buy_invoker(data, cswap_uniswapv3, invoker, cmove, quoter):
     with isolate_fixture():
-        (input_token, output_token, fee, user, amount_in) = generate_univ3_swap(data)
+        (input_token, output_token, fee, user, amount_in, receiver) = generate_univ3_swap(data)
 
         path = encode_path([input_token.address, output_token.address], [fee])
         reversed_path = encode_path([output_token.address, input_token.address], [fee])
@@ -145,22 +154,30 @@ def test_buy_invoker(data, cswap_uniswapv3, invoker, cmove, quoter):
         input_token.approve(invoker, max_amount_in, {"from": user})
 
         calldata_move_in = cmove.moveERC20In.encode_input(input_token, max_amount_in)
-        calldata_sell = cswap_uniswapv3.buy.encode_input(
+        calldata_buy = cswap_uniswapv3.buy.encode_input(
             amount_out,
             output_token,
             input_token,
             max_amount_in,
-            (UNI_V3_ROUTER, reversed_path, ZERO_ADDRESS, 0),
+            (UNI_V3_ROUTER, reversed_path, receiver, 0),
         )
-        calldata_move_out = cmove.moveAllERC20Out.encode_input(output_token, user)
+        calldata_move_out = cmove.moveERC20Out.encode_input(output_token, user, amount_out)
+        calldata_sweep_out = cmove.moveAllERC20Out.encode_input(input_token, user)
 
         starting_balance = input_token.balanceOf(user)
 
+        commands = [cmove, cswap_uniswapv3]
+        calldatas = [calldata_move_in, calldata_buy]
+
+        if receiver == ZERO_ADDRESS:
+            commands.extend([cmove, cmove])
+            calldatas.extend([calldata_move_out, calldata_sweep_out])
+
         invoker.invoke(
-            [cmove, cswap_uniswapv3, cmove],
-            [calldata_move_in, calldata_sell, calldata_move_out],
+            commands,
+            calldatas,
             {"from": user},
         )
 
         assert starting_balance - input_token.balanceOf(user) <= amount_in
-        assert output_token.balanceOf(user) >= amount_out
+        assert output_token.balanceOf(user if receiver is ZERO_ADDRESS else receiver) >= amount_out

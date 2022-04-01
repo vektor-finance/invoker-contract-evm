@@ -42,9 +42,10 @@ abstract contract CSwapBase {
     function _postSwap(
         uint256 balanceBefore,
         IERC20 tokenOut,
-        uint256 minReceived
+        uint256 minReceived,
+        address receiver
     ) internal {
-        uint256 balanceAfter = tokenOut.balanceOf(address(this));
+        uint256 balanceAfter = tokenOut.balanceOf(address(receiver));
         _requireMsg(balanceAfter >= balanceBefore + minReceived, "Slippage in");
     }
 }

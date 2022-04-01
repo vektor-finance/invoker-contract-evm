@@ -1,5 +1,6 @@
-from typing import Any, Callable
+from typing import Any, Callable, Optional
 
+from brownie import ZERO_ADDRESS, network
 from hypothesis import strategies as st
 from hypothesis.strategies import SearchStrategy
 from hypothesis.strategies._internal.deferred import DeferredStrategy
@@ -28,6 +29,12 @@ def token_strategy() -> SearchStrategy:
     tokens = [asset for asset in chain["assets"] if asset.get("address")]
 
     return _DeferredStrategyRepr(lambda: st.sampled_from(tokens), "ERC20 token")
+
+
+def receiver_strategy(length: Optional[int] = None) -> SearchStrategy:
+    return _DeferredStrategyRepr(
+        lambda: st.sampled_from([*list(network.accounts)[:length], ZERO_ADDRESS]), "accounts"
+    )
 
 
 def integration_strategy(type_str, **kwargs: Any) -> SearchStrategy:

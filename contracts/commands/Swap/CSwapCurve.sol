@@ -65,7 +65,7 @@ contract CSwapCurve is CSwapBase, ICSwapCurve {
             _revertMsg("Unknown swapType");
         }
 
-        _postSwap(balanceBefore, tokenOut, minAmountOut);
+        _postSwap(balanceBefore, tokenOut, minAmountOut, address(this));
     }
 
     /** @notice This function is not implemented
