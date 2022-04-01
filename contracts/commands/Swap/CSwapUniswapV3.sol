@@ -45,7 +45,7 @@ contract CSwapUniswapV3 is CSwapBase, ICSwapUniswapV3 {
             })
         );
 
-        _postSwap(balanceBefore, tokenOut, minAmountOut);
+        _postSwap(balanceBefore, tokenOut, minAmountOut, params.receiver);
     }
 
     /** @notice Use this function to perform BUY a fixed amount of an asset.
@@ -80,6 +80,6 @@ contract CSwapUniswapV3 is CSwapBase, ICSwapUniswapV3 {
             })
         );
 
-        _postSwap(balanceBefore, tokenOut, amountOut);
+        _postSwap(balanceBefore, tokenOut, amountOut, params.receiver);
     }
 }

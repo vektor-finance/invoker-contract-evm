@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: Unlicensed
+// SPDX-License-Identifier: UNLICENSED
 // Vektor SWAP COMMAND
 
 pragma solidity ^0.8.6;
@@ -61,7 +61,7 @@ contract CSwapUniswapV2 is CSwapBase, ICSwapUniswapV2 {
             validatedParams.receiver,
             validatedParams.deadline
         );
-        _postSwap(balanceBefore, tokenOut, minAmountOut);
+        _postSwap(balanceBefore, tokenOut, minAmountOut, validatedParams.receiver);
     }
 
     /** @notice Use this function to perform BUY a fixed amount of an asset.
@@ -90,6 +90,6 @@ contract CSwapUniswapV2 is CSwapBase, ICSwapUniswapV2 {
             validatedParams.receiver,
             validatedParams.deadline
         );
-        _postSwap(balanceBefore, tokenOut, amountOut);
+        _postSwap(balanceBefore, tokenOut, amountOut, validatedParams.receiver);
     }
 }
