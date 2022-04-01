@@ -67,7 +67,7 @@ def test_sell_invoker(data, uni_router, invoker, cmove, cswap_uniswapv2):
             {"from": user},
         )
 
-        assert output_token.balanceOf(receiver) >= amount_out
+        assert output_token.balanceOf(user if receiver is ZERO_ADDRESS else receiver) >= amount_out
 
 
 @given(data=hypothesis.strategies.data())
@@ -111,7 +111,7 @@ def test_buy_invoker(data, uni_router, invoker, cmove, cswap_uniswapv2):
 
         if receiver == ZERO_ADDRESS:
             commands.extend([cmove, cmove])
-            calldatas.extend([calldata_sweep_out, calldata_move_out, calldata_move_out])
+            calldatas.extend([calldata_sweep_out, calldata_move_out])
 
         invoker.invoke(
             commands,
@@ -119,4 +119,4 @@ def test_buy_invoker(data, uni_router, invoker, cmove, cswap_uniswapv2):
             {"from": user},
         )
         assert starting_balance - input_token.balanceOf(user) <= amount_in
-        assert output_token.balanceOf(receiver) >= amount_out
+        assert output_token.balanceOf(user if receiver is ZERO_ADDRESS else receiver) >= amount_out
