@@ -249,6 +249,38 @@
       "timestamp": 1645203368,
       "git_sha": "67d0887",
       "git_sha_long": "67d088779ee344cb43b5d1190acc75abc65b6d20"
+    },
+    {
+      "contract": "CWrap",
+      "address": "0xCD913CFFB331d508587Ad48708189c99D2942c05",
+      "block_number": 9761072,
+      "timestamp": 1649887133,
+      "git_sha": "4bc31fd",
+      "git_sha_long": "4bc31fd48e5a64b670498c995afbe15b1cc92a0c"
+    },
+    {
+      "contract": "CSwapUniswapV2",
+      "address": "0xd4D08cf791ACC6c5f639f698677e395066A219FF",
+      "block_number": 9761083,
+      "timestamp": 1649887142,
+      "git_sha": "4bc31fd",
+      "git_sha_long": "4bc31fd48e5a64b670498c995afbe15b1cc92a0c"
+    },
+    {
+      "contract": "CSwapUniswapV3",
+      "address": "0x96244654Fa112E90Ab107EaFb3E8231c996cfEe9",
+      "block_number": 9761088,
+      "timestamp": 1649887152,
+      "git_sha": "4bc31fd",
+      "git_sha_long": "4bc31fd48e5a64b670498c995afbe15b1cc92a0c"
+    },
+    {
+      "contract": "CSwapCurve",
+      "address": "0x9442009D7454919F5a7c9f66F04f221AC6713480",
+      "block_number": 9761092,
+      "timestamp": 1649887161,
+      "git_sha": "4bc31fd",
+      "git_sha_long": "4bc31fd48e5a64b670498c995afbe15b1cc92a0c"
     }
   ],
   "43114": [
