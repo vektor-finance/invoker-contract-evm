@@ -224,11 +224,11 @@
     },
     {
       "contract": "CSwapCurve",
-      "address": "0x93a6b1B7005545134F42Cf8D98c22B82021be408",
-      "block_number": 14579847,
-      "timestamp": 1649889051,
-      "git_sha": "0743331",
-      "git_sha_long": "0743331726807bdf20cae015297cd009679df00c"
+      "address": "0x9442009D7454919F5a7c9f66F04f221AC6713480",
+      "block_number": 14580245,
+      "timestamp": 1649895252,
+      "git_sha": "a1ad8b6",
+      "git_sha_long": "a1ad8b61b8f7a716cd9cad0950e32bf822adb07b"
     }
   ],
   "250": [
