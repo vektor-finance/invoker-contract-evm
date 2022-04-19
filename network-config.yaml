@@ -56,6 +56,14 @@ development:
     timeout: 120
   - cmd: npx hardhat node
     cmd_settings:
+      fork: optimism-kovan-test
+      port: 8545
+    host: http://localhost
+    id: optimism-kovan-hardhat-fork
+    name: Hardhat (Optimism Kovan Fork)
+    timeout: 120
+  - cmd: npx hardhat node
+    cmd_settings:
       fork: fantom-prod
       port: 8545
     host: http://localhost
