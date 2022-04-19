@@ -1,151 +1,156 @@
 development:
-- cmd: npx hardhat node
-  cmd_settings:
-    port: 8545
-  host: http://localhost
-  id: hardhat
-  name: Hardhat
-  timeout: 120
-- cmd: npx hardhat node
-  cmd_settings:
-    fork: polygon-prod
-    port: 8545
-  host: http://127.0.0.1
-  id: polygon-hardhat-fork
-  timeout: 120
-  name: Hardhat (Polygon Fork)
-- cmd: npx hardhat node
-  cmd_settings:
-    fork: mainnet-prod
-    port: 8545
-  host: http://localhost
-  id: mainnet-hardhat-fork
-  name: Hardhat (Mainnet Fork)
-  timeout: 120
-- cmd: npx hardhat node
-  cmd_settings:
-    fork: rinkeby-test
-    port: 8545
-  host: http://localhost
-  id: rinkeby-hardhat-fork
-  name: Hardhat (Rinkeby Fork)
-  timeout: 120
-- cmd: npx hardhat node
-  cmd_settings:
-    fork: mumbai-test
-    port: 8545
-  host: http://localhost
-  id: mumbai-hardhat-fork
-  name: Hardhat (Mumbai Fork)
-  timeout: 120
-- cmd: npx hardhat node
-  cmd_settings:
-    fork: arbitrum-prod
-    port: 8545
-  host: http://localhost
-  id: arbitrum-hardhat-fork
-  name: Hardhat (Arbitrum Fork)
-  timeout: 120
-- cmd: npx hardhat node
-  cmd_settings:
-    fork: optimism-prod
-    port: 8545
-  host: http://localhost
-  id: optimism-hardhat-fork
-  name: Hardhat (Optimism Fork)
-  timeout: 120
-- cmd: npx hardhat node
-  cmd_settings:  
-    fork: fantom-prod
-    port: 8545
-  host: http://localhost
-  id: fantom-hardhat-fork
-  name: Hardhat (Fantom Fork)
-  timeout: 120
-- cmd: npx hardhat node
-  cmd_settings:  
-    fork: avalanche-prod
-    port: 8545
-  host: http://localhost
-  id: avalanche-hardhat-fork
-  name: Hardhat (Avalanche Fork)
-  timeout: 120
-- cmd: npx hardhat node
-  cmd_settings:
-    fork: bsc-prod
-    port: 8545
-  host: http://localhost
-  id: bsc-hardhat-fork
-  name: Hardhat (BSC Fork)
-  timeout: 120
+  - cmd: npx hardhat node
+    cmd_settings:
+      port: 8545
+    host: http://localhost
+    id: hardhat
+    name: Hardhat
+    timeout: 120
+  - cmd: npx hardhat node
+    cmd_settings:
+      fork: polygon-prod
+      port: 8545
+    host: http://127.0.0.1
+    id: polygon-hardhat-fork
+    timeout: 120
+    name: Hardhat (Polygon Fork)
+  - cmd: npx hardhat node
+    cmd_settings:
+      fork: mainnet-prod
+      port: 8545
+    host: http://localhost
+    id: mainnet-hardhat-fork
+    name: Hardhat (Mainnet Fork)
+    timeout: 120
+  - cmd: npx hardhat node
+    cmd_settings:
+      fork: rinkeby-test
+      port: 8545
+    host: http://localhost
+    id: rinkeby-hardhat-fork
+    name: Hardhat (Rinkeby Fork)
+    timeout: 120
+  - cmd: npx hardhat node
+    cmd_settings:
+      fork: mumbai-test
+      port: 8545
+    host: http://localhost
+    id: mumbai-hardhat-fork
+    name: Hardhat (Mumbai Fork)
+    timeout: 120
+  - cmd: npx hardhat node
+    cmd_settings:
+      fork: arbitrum-prod
+      port: 8545
+    host: http://localhost
+    id: arbitrum-hardhat-fork
+    name: Hardhat (Arbitrum Fork)
+    timeout: 120
+  - cmd: npx hardhat node
+    cmd_settings:
+      fork: optimism-prod
+      port: 8545
+    host: http://localhost
+    id: optimism-hardhat-fork
+    name: Hardhat (Optimism Fork)
+    timeout: 120
+  - cmd: npx hardhat node
+    cmd_settings:
+      fork: fantom-prod
+      port: 8545
+    host: http://localhost
+    id: fantom-hardhat-fork
+    name: Hardhat (Fantom Fork)
+    timeout: 120
+  - cmd: npx hardhat node
+    cmd_settings:
+      fork: avalanche-prod
+      port: 8545
+    host: http://localhost
+    id: avalanche-hardhat-fork
+    name: Hardhat (Avalanche Fork)
+    timeout: 120
+  - cmd: npx hardhat node
+    cmd_settings:
+      fork: bsc-prod
+      port: 8545
+    host: http://localhost
+    id: bsc-hardhat-fork
+    name: Hardhat (BSC Fork)
+    timeout: 120
 
 live:
-- name: Ethereum
-  networks:
-  - chainid: 1
-    explorer: https://api.etherscan.io/api
-    host: $NODE_ETHEREUM_MAINNET_URL
-    id: mainnet-prod
-    multicall2: '0x5BA1e12693Dc8F9c48aAD8770482f4739bEeD696'
-    name: Mainnet
-  - chainid: 4
-    explorer: https://api-rinkeby.etherscan.io/api
-    host: $NODE_ETHEREUM_RINKEBY_URL
-    id: rinkeby-test
-    multicall2: '0x5BA1e12693Dc8F9c48aAD8770482f4739bEeD696'
-    name: Rinkeby
-- name: Polygon
-  networks:
-  - chainid: 137
-    explorer: https://api.polygonscan.com/api
-    host: $NODE_POLYGON_MAINNET_URL
-    id: polygon-prod
-    multicall2: '0xc8E51042792d7405184DfCa245F2d27B94D013b6'
-    name: Polygon Mainnet
-  - chainid: 80001
-    explorer: https://api-testnet.polygonscan.com/api
-    host: $NODE_POLYGON_MUMBAI_URL
-    id: mumbai-test
-    multicall2: '0x6842E0412AC1c00464dc48961330156a07268d14'
-    name: Mumbai Testnet
-- name: Arbitrum
-  networks:
-  - chainid: 42161
-    explorer: https://api.arbiscan.io/api
-    host: $NODE_ARBITRUM_MAINNET_URL
-    id: arbitrum-prod
-    multicall2: "0x842eC2c7D803033Edf55E478F461FC547Bc54EB2"
-    name: Arbitrum Main
-- name: Optimism
-  networks:
-  - chainid: 10
-    explorer: https://optimistic.etherscan.io
-    host: $NODE_OPTIMISM_MAINNET_URL
-    id: optimism-prod
-    name: Optimism Main
-- name: Fantom Opera
-  networks:
-  - chainid: 4002
-    explorer: https://explorer.testnet.fantom.network
-    host: https://rpc.testnet.fantom.network
-    id: fantom-test
-    name: Testnet
-  - chainid: 250
-    explorer: https://api.ftmscan.com/api
-    host: $NODE_FANTOM_MAINNET_URL
-    id: fantom-prod
-    name: Mainnet
-- name: Avalanche
-  networks:
-  - chainid: 43114
-    explorer: https://snowtrace.io/
-    host: $NODE_AVALANCHE_MAINNET_URL
-    id: avalanche-prod
-    name: Mainnet
-- name: Binance Smart Chain
-  networks:
-  - chainid: 56
-    explorer: https://bscscan.com
-    host: $NODE_BINANCE_MAINNET_URL
-    id: bsc-prod
-    name: Mainnet
+  - name: Ethereum
+    networks:
+      - chainid: 1
+        explorer: https://api.etherscan.io/api
+        host: $NODE_ETHEREUM_MAINNET_URL
+        id: mainnet-prod
+        multicall2: "0x5BA1e12693Dc8F9c48aAD8770482f4739bEeD696"
+        name: Mainnet
+      - chainid: 4
+        explorer: https://api-rinkeby.etherscan.io/api
+        host: $NODE_ETHEREUM_RINKEBY_URL
+        id: rinkeby-test
+        multicall2: "0x5BA1e12693Dc8F9c48aAD8770482f4739bEeD696"
+        name: Rinkeby
+  - name: Polygon
+    networks:
+      - chainid: 137
+        explorer: https://api.polygonscan.com/api
+        host: $NODE_POLYGON_MAINNET_URL
+        id: polygon-prod
+        multicall2: "0xc8E51042792d7405184DfCa245F2d27B94D013b6"
+        name: Polygon Mainnet
+      - chainid: 80001
+        explorer: https://api-testnet.polygonscan.com/api
+        host: $NODE_POLYGON_MUMBAI_URL
+        id: mumbai-test
+        multicall2: "0x6842E0412AC1c00464dc48961330156a07268d14"
+        name: Mumbai Testnet
+  - name: Arbitrum
+    networks:
+      - chainid: 42161
+        explorer: https://api.arbiscan.io/api
+        host: $NODE_ARBITRUM_MAINNET_URL
+        id: arbitrum-prod
+        multicall2: "0x842eC2c7D803033Edf55E478F461FC547Bc54EB2"
+        name: Arbitrum Main
+  - name: Optimism
+    networks:
+      - chainid: 10
+        explorer: https://optimistic.etherscan.io
+        host: $NODE_OPTIMISM_MAINNET_URL
+        id: optimism-prod
+        name: Optimism Main
+      - chainid: 69
+        explorer: https://kovan-optimistic.etherscan.io
+        host: $NODE_OPTIMISM_KOVAN_URL
+        id: optimism-kovan-test
+        name: Optimism Kovan
+  - name: Fantom Opera
+    networks:
+      - chainid: 4002
+        explorer: https://explorer.testnet.fantom.network
+        host: https://rpc.testnet.fantom.network
+        id: fantom-test
+        name: Testnet
+      - chainid: 250
+        explorer: https://api.ftmscan.com/api
+        host: $NODE_FANTOM_MAINNET_URL
+        id: fantom-prod
+        name: Mainnet
+  - name: Avalanche
+    networks:
+      - chainid: 43114
+        explorer: https://snowtrace.io/
+        host: $NODE_AVALANCHE_MAINNET_URL
+        id: avalanche-prod
+        name: Mainnet
+  - name: Binance Smart Chain
+    networks:
+      - chainid: 56
+        explorer: https://bscscan.com
+        host: $NODE_BINANCE_MAINNET_URL
+        id: bsc-prod
+        name: Mainnet
