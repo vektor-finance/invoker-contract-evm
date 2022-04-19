@@ -463,7 +463,7 @@ optimism:
       address: "0xE592427A0AEce92De3Edee1F18E0157C05861564"
 
 optimism_kovan:
-  id: optimism-kovan
+  id: optimism- kovan
   name: Optimism Kovan
   chain_id: 69
   network:
@@ -478,32 +478,32 @@ optimism_kovan:
       symbol: WETH
       decimals: 18
       address: "0x4200000000000000000000000000000000000006"
-      benefactor: "="
+      benefactor: "0x03af20bdaaffb4cc0a521796a223f7d85e2aac31"
       wrapped_native: true
       interfaces: [weth9, erc20]
     - name: USD Coin
       symbol: USDC
       decimals: 6
       address: "0x4e62882864fB8CE54AFfcAf8D899A286762B011B"
-      benefactor: "="
+      benefactor: "0x5f1166fffd4cf20cdb04ee9ad367b597eb88c46a"
       interfaces: [erc20]
     - name: Dai Stablecoin
       symbol: DAI
       decimals: 18
       address: "0xDA10009cBd5D07dd0CeCc66161FC93D7c9000da1"
-      benefactor: "="
+      benefactor: "0xe807c2a81366dc10a68cd8e95660477294b6019b"
       interfaces: [erc20]
     - name: Wrapped BTC
       symbol: WBTC
       decimals: 8
       address: "0x2382a8f65b9120E554d1836a504808aC864E169d"
-      benefactor: "="
+      benefactor: "0x5f1166fffd4cf20cdb04ee9ad367b597eb88c46a"
       interfaces: [erc20]
     - name: Tether
       symbol: USDT
       decimals: 6
       address: "0x7F5c764cBc14f9669B88837ca1490cCa17c31607"
-      benefactor: "="
+      benefactor: "0x5f1166fffd4cf20cdb04ee9ad367b597eb88c46a"
       interfaces: [erc20]
   contracts:
     - venue: uniswap_v3
