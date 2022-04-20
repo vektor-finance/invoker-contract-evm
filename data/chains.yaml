@@ -83,8 +83,8 @@ rinkeby:
   chain_id: 4
   eip1559: true
   network:
-    prod: rinkeby-test
-    fork: rinkeby-hardhat-fork
+    prod: ethereum-rinkeby-test
+    fork: ethereum-rinkeby-hardhat-fork
   assets:
     - name: Ethereum
       symbol: ETH
