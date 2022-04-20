@@ -183,8 +183,8 @@ mumbai:
   name: Mumbai
   chain_id: 80001
   network:
-    prod: mumbai-test
-    fork: mumbai-hardhat-fork
+    prod: polygon-mumbai-test
+    fork: polygon-mumbai-hardhat-fork
   assets:
     - name: Matic
       symbol: MATIC

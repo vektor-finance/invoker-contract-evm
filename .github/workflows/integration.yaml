@@ -46,7 +46,7 @@ jobs:
           - mainnet-hardhat-fork
           - ethereum-rinkeby-hardhat-fork
           - polygon-hardhat-fork
-          - mumbai-hardhat-fork
+          - polygon-mumbai-hardhat-fork
           - fantom-hardhat-fork
           - arbitrum-hardhat-fork
           - avalanche-hardhat-fork
