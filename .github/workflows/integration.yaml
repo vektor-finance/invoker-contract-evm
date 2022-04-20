@@ -9,7 +9,6 @@ on:
       - main
 
 env:
-
   # Node URLS
   NODE_ETHEREUM_MAINNET_URL: ${{ secrets.NODE_ETHEREUM_MAINNET_URL }}
   NODE_ETHEREUM_RINKEBY_URL: ${{ secrets.NODE_ETHEREUM_RINKEBY_URL }}
@@ -18,7 +17,7 @@ env:
   NODE_ARBITRUM_MAINNET_URL: ${{ secrets.NODE_ARBITRUM_MAINNET_URL }}
   NODE_ARBITRUM_RINKEBY_URL: ${{ secrets.NODE_ARBITRUM_RINKEBY_URL }}
   NODE_OPTIMISM_MAINNET_URL: ${{ secrets.NODE_OPTIMISM_MAINNET_URL }}
-  NODE_OPTIMISM_TESTNET_URL: ${{ secrets.NODE_OPTIMISM_TESTNET_URL }}
+  NODE_OPTIMISM_KOVAN_URL: ${{ secrets.NODE_OPTIMISM_KOVAN_URL }}
   NODE_FANTOM_MAINNET_URL: ${{ secrets.NODE_FANTOM_MAINNET_URL }}
   NODE_AVALANCHE_MAINNET_URL: ${{ secrets.NODE_AVALANCHE_MAINNET_URL }}
   NODE_BINANCE_MAINNET_URL: ${{ secrets.NODE_BINANCE_MAINNET_URL }}
@@ -37,7 +36,7 @@ jobs:
   test_network:
     name: Test ${{ matrix.network }} Integration
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 30
 
     strategy:
       fail-fast: false
@@ -53,6 +52,7 @@ jobs:
           - avalanche-hardhat-fork
           - bsc-hardhat-fork
           - optimism-hardhat-fork
+          - optimism-kovan-hardhat-fork
 
     steps:
       - uses: actions/checkout@v2
@@ -73,7 +73,7 @@ jobs:
             ~/.solcx
             ~/.vvm
           key: compiler-cache
-      
+
       - name: Setup Node.js
         if: env.GIT_DIFF
         id: setup_node
@@ -103,13 +103,13 @@ jobs:
       - name: Compile Contracts
         if: env.GIT_DIFF
         run: brownie compile
- 
+
       - name: Run Tests
         if: env.GIT_DIFF
         id: brownie_tests
-        run: brownie test --network ${{ matrix.network }} -n auto --failfast
+        run: brownie test --network ${{ matrix.network }} --failfast
 
       - name: Print no test
-      # checkyaml doesnt like the leading ! so this is a hack
+        # checkyaml doesnt like the leading ! so this is a hack
         if: true && !env.GIT_DIFF
         run: echo "No diffs found - test did not run"

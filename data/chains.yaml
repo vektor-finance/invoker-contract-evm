@@ -269,7 +269,7 @@ arbitrum:
     - venue: uniswap_v3
       interfaces: [uniswap_router_v3]
       address: "0xE592427A0AEce92De3Edee1F18E0157C05861564"
-      
+
 fantom:
   id: fantom
   name: Fantom
@@ -278,36 +278,36 @@ fantom:
     prod: fantom-prod
     fork: fantom-hardhat-fork
   assets:
-        - name: Fantom
-          symbol: FTM
-          decimals: 18
-          address: ~
-        - name: Wrapped Fantom
-          symbol: WFTM
-          decimals: 18
-          address: "0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83"
-          benefactor: "0x5aa53f03197e08c4851cad8c92c7922da5857e5d"
-          wrapped_native: true
-        - name: Dai Stablecoin
-          symbol: DAI
-          decimals: 18
-          address: "0x8d11ec38a3eb5e956b052f67da8bdc9bef8abf3e"
-          benefactor: "0x8d9aed9882b4953a0c9fa920168fa1fdfa0ebe75"
-        - name: USD Coin
-          symbol: USDC
-          decimals: 6
-          address: "0x04068da6c83afcfa0e13ba15a6696662335d5b75"
-          benefactor: "0xe45ac34e528907d0a0239ab5db507688070b20bf"
-        - name: Frapped USDT
-          symbol: fUSDT
-          decimals: 6
-          address: "0x049d68029688eabf473097a2fc38ef61633a3c7a"
-          benefactor: "0x02224765bc8d54c21bb51b0951c80315e1c263f9"
-        - name: Bitcoin
-          symbol: BTC
-          decimals: 8
-          address: "0x321162cd933e2be498cd2267a90534a804051b11"
-          benefactor: "0x38aca5484b8603373acc6961ecd57a6a594510a3"
+    - name: Fantom
+      symbol: FTM
+      decimals: 18
+      address: ~
+    - name: Wrapped Fantom
+      symbol: WFTM
+      decimals: 18
+      address: "0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83"
+      benefactor: "0x5aa53f03197e08c4851cad8c92c7922da5857e5d"
+      wrapped_native: true
+    - name: Dai Stablecoin
+      symbol: DAI
+      decimals: 18
+      address: "0x8d11ec38a3eb5e956b052f67da8bdc9bef8abf3e"
+      benefactor: "0x8d9aed9882b4953a0c9fa920168fa1fdfa0ebe75"
+    - name: USD Coin
+      symbol: USDC
+      decimals: 6
+      address: "0x04068da6c83afcfa0e13ba15a6696662335d5b75"
+      benefactor: "0xe45ac34e528907d0a0239ab5db507688070b20bf"
+    - name: Frapped USDT
+      symbol: fUSDT
+      decimals: 6
+      address: "0x049d68029688eabf473097a2fc38ef61633a3c7a"
+      benefactor: "0x02224765bc8d54c21bb51b0951c80315e1c263f9"
+    - name: Bitcoin
+      symbol: BTC
+      decimals: 8
+      address: "0x321162cd933e2be498cd2267a90534a804051b11"
+      benefactor: "0x38aca5484b8603373acc6961ecd57a6a594510a3"
   contracts:
     - venue: spookyswap
       interfaces: [uniswap_router_v2_02]
@@ -414,7 +414,6 @@ bsc:
       interfaces: [uniswap_router_v2_02]
       address: "0x10ed43c718714eb63d5aa57b78b54704e256024e"
 
-
 optimism:
   id: optimism
   name: Optimism Mainnet
@@ -457,6 +456,54 @@ optimism:
       decimals: 6
       address: "0x94b008aa00579c1307b0ef2c499ad98a8ce58e58"
       benefactor: "0x9d39fc627a6d9d9f8c831c16995b209548cc3401"
+      interfaces: [erc20]
+  contracts:
+    - venue: uniswap_v3
+      interfaces: [uniswap_router_v3]
+      address: "0xE592427A0AEce92De3Edee1F18E0157C05861564"
+
+optimism_kovan:
+  id: optimism-kovan
+  name: Optimism Kovan
+  chain_id: 69
+  network:
+    prod: optimism-kovan-test
+    fork: optimism-kovan-hardhat-fork
+  assets:
+    - name: Ethereum
+      symbol: ETH
+      decimals: 18
+      address: ~
+    - name: Wrapped Ethereum
+      symbol: WETH
+      decimals: 18
+      address: "0x4200000000000000000000000000000000000006"
+      benefactor: "0x03af20bdaaffb4cc0a521796a223f7d85e2aac31"
+      wrapped_native: true
+      interfaces: [weth9, erc20]
+    - name: USD Coin
+      symbol: USDC
+      decimals: 6
+      address: "0x4e62882864fB8CE54AFfcAf8D899A286762B011B"
+      benefactor: "0x5f1166fffd4cf20cdb04ee9ad367b597eb88c46a"
+      interfaces: [erc20]
+    - name: Dai Stablecoin
+      symbol: DAI
+      decimals: 18
+      address: "0xDA10009cBd5D07dd0CeCc66161FC93D7c9000da1"
+      benefactor: "0xe807c2a81366dc10a68cd8e95660477294b6019b"
+      interfaces: [erc20]
+    - name: Wrapped BTC
+      symbol: WBTC
+      decimals: 8
+      address: "0x2382a8f65b9120E554d1836a504808aC864E169d"
+      benefactor: "0x5f1166fffd4cf20cdb04ee9ad367b597eb88c46a"
+      interfaces: [erc20]
+    - name: Tether
+      symbol: USDT
+      decimals: 6
+      address: "0x7F5c764cBc14f9669B88837ca1490cCa17c31607"
+      benefactor: "0x5f1166fffd4cf20cdb04ee9ad367b597eb88c46a"
       interfaces: [erc20]
   contracts:
     - venue: uniswap_v3
