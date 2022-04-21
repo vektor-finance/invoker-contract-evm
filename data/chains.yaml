@@ -22,341 +22,419 @@ mainnet:
       symbol: ETH
       decimals: 18
       address: ~
-    - name: Wrapped Ethereum
+    - address: '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2'
+      balances_slot: 3
+      decimals: 18
+      name: Wrapped Ethereum
       symbol: WETH
-      decimals: 18
-      address: "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2"
-      benefactor: "0x030ba81f1c18d280636f32af80b9aad02cf0854e"
       wrapped_native: true
-    - name: DAI
-      symbol: DAI
+    - address: '0x6b175474e89094c44da98b954eedeac495271d0f'
+      balances_slot: 2
       decimals: 18
-      address: "0x6b175474e89094c44da98b954eedeac495271d0f"
-      benefactor: "0xbebc44782c7db0a1a60cb6fe97d0b483032ff1c7"
-    - name: Tether
+      name: DAI
+      symbol: DAI
+    - address: '0xdac17f958d2ee523a2206206994597c13d831ec7'
+      balances_slot: 2
+      decimals: 6
+      name: Tether
       symbol: USDT
+    - address: '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'
+      balances_slot: 9
       decimals: 6
-      address: "0xdac17f958d2ee523a2206206994597c13d831ec7"
-      benefactor: "0xbebc44782c7db0a1a60cb6fe97d0b483032ff1c7"
-    - name: USD Coin
+      name: USD Coin
       symbol: USDC
-      decimals: 6
-      address: "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"
-      benefactor: "0xbebc44782c7db0a1a60cb6fe97d0b483032ff1c7"
-    - name: Wrapped BTC
-      symbol: WBTC
+    - address: '0x2260fac5e5542a773aa44fbcfedf7c193bc2c599'
+      balances_slot: 0
       decimals: 8
-      address: "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599"
-      benefactor: "0xbf72da2bd84c5170618fbe5914b0eca9638d5eb5"
+      name: Wrapped BTC
+      symbol: WBTC
     - address: '0x6b3595068778dd592e39a122f4f5a5cf09c90fe2'
+      balances_slot: 0
       decimals: 18
       name: SushiToken
       symbol: SUSHI
     - address: '0x0f2d719407fdbeff09d87557abb7232601fd9f29'
+      balances_slot: 101
       decimals: 18
       name: Synapse
       symbol: SYN
     - address: '0xdbdb4d16eda451d0503b854cf79d55697f90c8df'
+      balances_slot: 1
       decimals: 18
       name: Alchemix
       symbol: ALCX
     - address: '0x7fc66500c84a76ad7e9c93437bfc5ac33e2ddae9'
+      balances_slot: 0
       decimals: 18
       name: Aave Token
       symbol: AAVE
     - address: '0x64aa3364f17a4d01c6f1751fd97c2bd3d7e7f1d5'
+      balances_slot: 0
       decimals: 9
       name: Olympus
       symbol: OHM
     - address: '0x853d955acef822db058eb8505911ed77f175b99e'
+      balances_slot: 0
       decimals: 18
       name: Frax
       symbol: FRAX
     - address: '0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e'
+      balances_slot: 0
       decimals: 18
       name: yearn.finance
       symbol: YFI
     - address: '0x2e9d63788249371f1dfc918a52f8d799f4a38c94'
+      balances_slot: 0
       decimals: 18
       name: Tokemak
       symbol: TOKE
     - address: '0xf4d2888d29d722226fafa5d9b24f9164c092421e'
+      balances_slot: 0
       decimals: 18
       name: LooksRare Token
       symbol: LOOKS
     - address: '0x090185f2135308bad17527004364ebcc2d37e5f6'
+      balances_slot: 0
       decimals: 18
       name: Spell Token
       symbol: SPELL
     - address: '0x5a98fcbea516cf06857215779fd812ca3bef1b32'
+      benefactor: '0x3e40d73eb977dc6a537af587d48316fee66e9c8c'
       decimals: 18
       name: Lido DAO Token
       symbol: LDO
     - address: '0xd291e7a03283640fdc51b121ac401383a46cc623'
+      balances_slot: 51
       decimals: 18
       name: Rari Governance Token
       symbol: RGT
     - address: '0x4e3fbd56cd56c3e72c1403e103b45db9da5b9d2b'
+      balances_slot: 0
       decimals: 18
       name: Convex Token
       symbol: CVX
     - address: '0xc00e94cb662c3520282e6f5717214004a7f26888'
+      balances_slot: 1
       decimals: 18
       name: Compound
       symbol: COMP
     - address: '0x7d1afa7b718fb893db30a3abc0cfc608aacfebb0'
+      balances_slot: 0
       decimals: 18
       name: Matic Token
       symbol: MATIC
     - address: '0x514910771af9ca656af840dff83e8264ecf986ca'
+      balances_slot: 1
       decimals: 18
       name: ChainLink Token
       symbol: LINK
     - address: '0x4d224452801aced8b2f0aebe155379bb5d594381'
+      balances_slot: 0
       decimals: 18
       name: ApeCoin
       symbol: APE
     - address: '0x95ad61b0a150d79219dcf64e1e6cc01f0b64c4ce'
+      balances_slot: 0
       decimals: 18
       name: SHIBA INU
       symbol: SHIB
     - address: '0x476c5e26a75bd202a9683ffd34359c0cc15be0ff'
+      balances_slot: 3
       decimals: 6
       name: Serum
       symbol: SRM
     - address: '0x3845badade8e6dff049820680d1f14bd3903a5d0'
+      balances_slot: 5
       decimals: 18
       name: SAND
       symbol: SAND
     - address: '0x956f47f50a910163d8bf957cf5846d573e7f87ca'
+      balances_slot: 0
       decimals: 18
       name: Fei USD
       symbol: FEI
     - address: '0xd533a949740bb3306d119cc777fa900ba034cd52'
+      benefactor: '0x5f3b5dfeb7b28cdbd7faba78963ee202a494e2a2'
       decimals: 18
       name: Curve DAO Token
       symbol: CRV
     - address: '0xe80c0cd204d654cebe8dd64a4857cab6be8345a3'
+      balances_slot: 0
       decimals: 18
       name: JPEG'd Governance Token
       symbol: JPEG
     - address: '0xf57e7e7c23978c3caec3c3548e3d615c346e79ff'
+      balances_slot: 0
       decimals: 18
       name: Immutable X
       symbol: IMX
     - address: '0x0391d2021f89dc339f60fff84546ea23e337750f'
+      balances_slot: 0
       decimals: 18
       name: BarnBridge Governance Token
       symbol: BOND
     - address: '0x1559fa1b8f28238fd5d76d9f434ad86fd20d1559'
+      balances_slot: 6
       decimals: 18
       name: Eden
       symbol: EDEN
     - address: '0x03ab458634910aad20ef5f1c8ee96f1d6ac54919'
+      balances_slot: 6
       decimals: 18
       name: Rai Reflex Index
       symbol: RAI
     - address: '0x4e15361fd6b4bb609fa63c81a2be19d873717870'
+      balances_slot: 4
       decimals: 18
       name: Fantom Token
       symbol: FTM
     - address: '0x1ceb5cb57c4d4e2b2433641b95dd330a33185a44'
+      balances_slot: 7
       decimals: 18
       name: Keep3rV1
       symbol: KP3R
     - address: '0x87d73e916d7057945c9bcd8cdd94e42a6f47f776'
+      benefactor: '0x40d73df4f99bae688ce3c23a01022224fe16c7b2'
       decimals: 18
       name: NFTX
       symbol: NFTX
     - address: '0x3472a5a71965499acd81997a54bba8d852c6e53d'
+      benefactor: '0xd0a7a8b98957b9cd3cfb9c0425abe44551158e9e'
       decimals: 18
       name: Badger
       symbol: BADGER
     - address: '0x9f8f72aa9304c8b593d555f12ef6589cc3a579a2'
+      balances_slot: 1
       decimals: 18
       name: Maker
       symbol: MKR
     - address: '0xd46ba6d942050d489dbd938a2c909a5d5039a161'
+      benefactor: '0xc3a947372191453dd9db02b0852d378dccbdf271'
       decimals: 9
       name: Ampleforth
       symbol: AMPL
     - address: '0x8e870d67f660d95d5be530380d0ec0bd388289e1'
+      balances_slot: 1
       decimals: 18
       name: Pax Dollar
       symbol: USDP
     - address: '0xc011a73ee8576fb46f5e1c5751ca3b9fe0af2a6f'
+      benefactor: '0x5fd79d46eba7f351fe49bff9e87cdea6c821ef9f'
       decimals: 18
       name: Synthetix Network Token
       symbol: SNX
     - address: '0x408e41876cccdc0f92210600ef50372656052a38'
+      balances_slot: 1
       decimals: 18
       name: Republic Token
       symbol: REN
     - address: '0x0f5d2fb29fb7d3cfee444a200298f468908cc942'
+      balances_slot: 1
       decimals: 18
       name: Decentraland MANA
       symbol: MANA
     - address: '0x3b484b82567a09e2588a13d54d032153f0c0aee0'
+      benefactor: '0xedd27c961ce6f79afc16fd287d934ee31a90d7d1'
       decimals: 18
       name: SOS
       symbol: SOS
     - address: '0xa47c8bf37f92abed4a126bda807a7b7498661acd'
+      balances_slot: 0
       decimals: 18
       name: Wrapped UST Token
       symbol: UST
     - address: '0x4691937a7508860f876c9c0a2a617e7d9e945d4b'
+      balances_slot: 1
       decimals: 18
       name: Wootrade Network
       symbol: WOO
     - address: '0x9e32b13ce7f2e80a01932b42553652e053d6ed8e'
+      balances_slot: 0
       decimals: 18
       name: Metis Token
       symbol: Metis
     - address: '0x83e6f1e41cdd28eaceb20cb649155049fac3d5aa'
+      balances_slot: 0
       decimals: 18
       name: PolkastarterToken
       symbol: POLS
     - address: '0x6123b0049f904d730db3c36a31167d9d4121fa6b'
+      balances_slot: 1
       decimals: 18
       name: Ribbon
       symbol: RBN
     - address: '0xbb0e17ef65f82ab018d8edd776e8dd940327b28b'
+      balances_slot: 1
       decimals: 18
       name: Axie Infinity Shard
       symbol: AXS
     - address: '0x798d1be841a82a273720ce31c822c61a67a601c3'
+      benefactor: '0x4a8651f2edd68850b944ad93f2c67af817f39f62'
       decimals: 9
       name: Digg
       symbol: DIGG
     - address: '0xf16e81dce15b08f326220742020379b855b87df9'
+      balances_slot: 0
       decimals: 18
       name: IceToken
       symbol: ICE
     - address: '0x6810e776880c02933d47db1b9fc05908e5386b96'
+      balances_slot: 0
       decimals: 18
       name: Gnosis Token
       symbol: GNO
     - address: '0xc18360217d8f7ab5e7c516566761ea12ce7f9d72'
+      balances_slot: 0
       decimals: 18
       name: Ethereum Name Service
       symbol: ENS
     - address: '0xb4efd85c19999d84251304bda99e90b92300bd93'
+      balances_slot: 1
       decimals: 18
       name: Rocket Pool
       symbol: RPL
     - address: '0x32353a6c91143bfd6c7d363b546e62a9a2489a20'
+      balances_slot: 1
       decimals: 18
       name: Adventure Gold
       symbol: AGLD
     - address: '0x3432b6a60d23ca0dfca7761b7ab56459d9c964d0'
+      balances_slot: 0
       decimals: 18
       name: Frax Share
       symbol: FXS
     - address: '0xdb25f211ab05b1c97d595516f45794528a807ad8'
+      balances_slot: 0
       decimals: 2
       name: STASIS EURS Token
       symbol: EURS
     - address: '0x6399c842dd2be3de30bf99bc7d1bbf6fa3650e70'
+      balances_slot: 0
       decimals: 18
       name: Premia
       symbol: PREMIA
     - address: '0xeb4c2781e4eba804ce9a9803c67d0893436bb27d'
+      balances_slot: 102
       decimals: 8
       name: renBTC
       symbol: renBTC
     - address: '0x18aaa7115705e8be94bffebde57af9bfc265b998'
+      balances_slot: 52
       decimals: 18
       name: Audius
       symbol: AUDIO
     - address: '0x1494ca1f11d487c2bbe4543e90080aeba4ba3c2b'
+      balances_slot: 0
       decimals: 18
       name: DefiPulse Index
       symbol: DPI
     - address: '0xbc396689893d065f41bc2c6ecbee5e0085233447'
+      balances_slot: 0
       decimals: 18
       name: Perpetual
       symbol: PERP
     - address: '0xd2877702675e6ceb975b4a1dff9fb7baf4c91ea9'
+      balances_slot: 0
       decimals: 18
       name: Wrapped LUNA Token
       symbol: LUNA
     - address: '0x92d6c1e31e14520e676a687f0a93788b716beff5'
+      balances_slot: 0
       decimals: 18
       name: dYdX
       symbol: DYDX
     - address: '0x3155ba85d5f96b2d030a4966af206230e46849cb'
+      balances_slot: 1
       decimals: 18
       name: THORChain ETH.RUNE
       symbol: RUNE
     - address: '0xb62132e35a6c13ee1ee0f84dc5d40bad8d815206'
+      balances_slot: 2
       decimals: 18
       name: Nexo
       symbol: NEXO
     - address: '0xc0d4ceb216b3ba9c3701b291766fdcba977cec3a'
+      balances_slot: 0
       decimals: 9
       name: BTRFLY
       symbol: BTRFLY
     - address: '0x69570f3e84f51ea70b7b68055c8d667e77735a25'
+      balances_slot: 0
       decimals: 18
       name: Betswap.gg
       symbol: BSGG
     - address: '0xa1faa113cbe53436df28ff0aee54275c13b40975'
+      balances_slot: 0
       decimals: 18
       name: AlphaToken
       symbol: ALPHA
     - address: '0xfa5047c9c78b8877af97bdcb85db743fd7313d4a'
+      balances_slot: 104
       decimals: 18
       name: ROOK
       symbol: ROOK
     - address: '0x618679df9efcd19694bb1daa8d00718eacfa2883'
+      balances_slot: 0
       decimals: 18
       name: XYZ Governance Token
       symbol: XYZ
     - address: '0xaaaebe6fe48e54f431b0c390cfaf0b017d09d42d'
+      balances_slot: 0
       decimals: 4
       name: Celsius
       symbol: CEL
     - address: '0x45804880de22913dafe09f4980848ece6ecbaf78'
+      balances_slot: 1
       decimals: 18
       name: Paxos Gold
       symbol: PAXG
     - address: '0x2ba592f78db6436527729929aaf6c908497cb200'
+      balances_slot: 1
       decimals: 18
       name: Cream
       symbol: CREAM
     - address: '0x50d1c9771902476076ecfc8b2a83ad6b9355a4c9'
+      balances_slot: 0
       decimals: 18
       name: FTT
       symbol: FTX Token
     - address: '0xba11d00c5f74255f56a5e366f4f77f5a186d7f55'
+      balances_slot: 0
       decimals: 18
       name: BandToken
       symbol: BAND
     - address: '0xd5d86fc8d5c0ea1ac1ac5dfab6e529c9967a45e9'
+      balances_slot: 0
       decimals: 18
       name: NFT Worlds
       symbol: WRLD
     - address: '0x85f17cf997934a597031b2e18a9ab6ebd4b9f6a4'
+      balances_slot: 0
       decimals: 24
       name: NEAR
       symbol: NEAR
     - address: '0x35a532d376ffd9a705d0bb319532837337a398e7'
+      balances_slot: 0
       decimals: 18
       name: Wrapped DogeCoin
       symbol: WDOGE
     - address: '0x65ef703f5594d2573eb71aaf55bc0cb548492df4'
+      balances_slot: 0
       decimals: 18
       name: Multichain
       symbol: MULTI
     - address: '0x111111111117dc0aa78b770fa6a738034120c302'
+      balances_slot: 0
       decimals: 18
       name: 1INCH Token
       symbol: 1INCH
     - address: '0x99d8a9c45b2eca8864373a26d1459e3dff1e17f3'
+      balances_slot: 0
       decimals: 18
       name: Magic Internet Money
       symbol: MIM
     - address: '0x57ab1ec28d129707052df4df418d58a2d46d5f51'
+      benefactor: '0xa5407eae9ba41422680e2e00537571bcc53efbfd'
       decimals: 18
       name: Synth sUSD
       symbol: sUSD
