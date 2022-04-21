@@ -298,11 +298,6 @@ mainnet:
       decimals: 18
       name: Adventure Gold
       symbol: AGLD
-    - address: '0x3432b6a60d23ca0dfca7761b7ab56459d9c964d0'
-      balances_slot: 0
-      decimals: 18
-      name: Frax Share
-      symbol: FXS
     - address: '0xdb25f211ab05b1c97d595516f45794528a807ad8'
       balances_slot: 0
       decimals: 2
