@@ -10,6 +10,7 @@ from brownie.project.main import get_loaded_projects
 
 from data.anyswap import get_anyswap_tokens_for_chain
 from data.chain import get_chain, get_chain_name, get_network, get_wnative_address
+from data.test_helpers import mint_tokens_for
 
 pytest_plugins = ["fixtures.accounts", "fixtures.vektor", "fixtures.chain"]
 
@@ -76,7 +77,7 @@ def mint_anyswap_token_v4(alice, request):
     underlying = Contract.from_abi(
         token["underlyingName"], token["underlyingAddress"], interface.IERC20.abi
     )
-    underlying.transfer(alice, 10 * (10 ** token["decimals"]), {"from": token["benefactor"]})
+    mint_tokens_for(underlying, alice)
     yield {
         "router": Contract.from_abi(
             "AnyswapRouter", token["router"], interface.AnyswapV4Router.abi
@@ -114,7 +115,7 @@ def any_native_token(request):
 def tokens_for_alice(request, alice):
     token = request.param
     contract = Contract.from_abi(token["name"], token["address"], interface.ERC20Detailed.abi)
-    contract.transfer(alice, 10 * (10 ** token["decimals"]), {"from": token["benefactor"]})
+    mint_tokens_for(contract, alice)
     yield contract
 
 
@@ -222,7 +223,8 @@ def pytest_generate_tests(metafunc):
         for token in any_tokens:
             for a in all_tokens:
                 if token["underlyingAddress"] in a["address"]:
-                    token["benefactor"] = a["benefactor"]
+                    if a.get("benefactor"):
+                        token["benefactor"] = a["benefactor"]
                     token["decimals"] = a["decimals"]
         token_names = [token["underlyingName"] for token in any_tokens]
         metafunc.parametrize("mint_anyswap_token_v4", any_tokens, ids=token_names, indirect=True)

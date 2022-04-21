@@ -1,8 +1,21 @@
+import binascii
 from contextlib import contextmanager
 
 import brownie
+from eth_abi import encode_single
+from eth_utils import keccak
 
 from data.chain import get_chain
+
+
+def bytes32(i):
+    return binascii.unhexlify("%064x" % i)
+
+
+def get_storage_key(address, storage_slot):
+    user = int(address, 16)
+    key = bytes32(user) + bytes32(storage_slot)
+    return "0x" + keccak(key).hex()
 
 
 def mint_tokens_for(minted_token, user) -> int:
@@ -10,9 +23,27 @@ def mint_tokens_for(minted_token, user) -> int:
     tokens = [asset for asset in chain["assets"] if asset.get("address")]
     for token in tokens:
         if minted_token.address.lower() == token["address"].lower():
-            balance = minted_token.balanceOf(token["benefactor"])
-            minted_token.transfer(user, balance, {"from": token["benefactor"]})
-            return balance
+            if token.get("benefactor"):
+                balance = minted_token.balanceOf(token["benefactor"])
+                minted_token.transfer(user, balance, {"from": token["benefactor"]})
+                return balance
+            elif "balances_slot" in token:
+                storage_key = get_storage_key(user.address, token["balances_slot"])
+                mint_value = 100_000000000000000000
+                brownie.web3.provider.make_request(
+                    "hardhat_setStorageAt",
+                    [
+                        minted_token.address,
+                        storage_key,
+                        "0x" + encode_single("uint256", mint_value).hex(),
+                    ],
+                )
+                return minted_token.balanceOf(user)
+            else:
+                print(token.get("benefactor"))
+                print(token.get("balances_slot"))
+                raise KeyError("token does not have benefactor/balances_slot")
+
     raise ValueError("could not find token")
 
 
