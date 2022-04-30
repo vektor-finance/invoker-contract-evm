@@ -55,5 +55,42 @@ contract CBridgeSynapse is CBridgeBase {
         SYNAPSE_BRIDGE.deposit(destinationAddress, destinationChainId, address(WNATIVE), amount);
     }
 
-    function bridgeERC20() external {}
+    struct SynapseBridgeParams {
+        uint8 tokenIndexFrom;
+        uint8 tokenIndexTo;
+        uint256 minDy;
+        uint256 swapDeadline;
+    }
+
+    // Assume that user has already provided the token to be bridged.
+    function bridgeERC20Swap(
+        IERC20 fromToken,
+        IERC20 toToken,
+        uint256 amount,
+        address destinationAddress,
+        uint256 destinationChainId,
+        SynapseBridgeParams calldata params
+    ) external {
+        _tokenApprove(fromToken, address(SYNAPSE_BRIDGE), amount);
+        SYNAPSE_BRIDGE.depositAndSwap(
+            destinationAddress,
+            destinationChainId,
+            toToken,
+            amount,
+            params.tokenIndexFrom,
+            params.tokenIndexTo,
+            params.minDy,
+            params.deadline
+        );
+    }
+
+    function bridgeERC20(
+        IERC20 fromToken,
+        uint256 amount,
+        address destinationAddress,
+        uint256 destinationChainId
+    ) external {
+        _tokenApprove(fromToken, address(SYNAPSE_BRIDGE), amount);
+        SYNAPSE_BRIDGE.deposit(destinationAddress, destinationChainId, fromToken, amount);
+    }
 }
