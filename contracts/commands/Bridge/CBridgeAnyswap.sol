@@ -7,7 +7,7 @@ import "../../../interfaces/Commands/Bridge/IAnyswapV3ERC20.sol";
 import "../../../interfaces/Commands/Wrap/IWeth.sol";
 import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 
-contract CBridge {
+contract CBridgeAnyswap {
     using SafeERC20 for IERC20;
 
     IWETH public immutable WNATIVE;

@@ -33,7 +33,7 @@ def cmove(deployer, invoker, CMove):
 
 
 @pytest.fixture(scope="module")
-def cbridge(deployer, invoker, CBridge, connected_chain):
+def cbridge_anyswap(deployer, invoker, CBridgeAnyswap, connected_chain):
     wnative = get_wnative_address(connected_chain)
     anyswap_tokens = get_anyswap_tokens_for_chain(connected_chain)
     any_native_tokens = [
@@ -43,6 +43,6 @@ def cbridge(deployer, invoker, CBridge, connected_chain):
         any_native_token = any_native_tokens[0]
     except IndexError:
         any_native_token = ZERO_ADDRESS
-    contract = deployer.deploy(CBridge, wnative, any_native_token)
+    contract = deployer.deploy(CBridgeAnyswap, wnative, any_native_token)
     invoker.grantRole(APPROVED_COMMAND, contract, {"from": deployer})
     yield contract
