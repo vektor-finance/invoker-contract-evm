@@ -24,18 +24,18 @@ development:
     timeout: 120
   - cmd: npx hardhat node
     cmd_settings:
-      fork: rinkeby-test
+      fork: ethereum-rinkeby-test
       port: 8545
     host: http://localhost
-    id: rinkeby-hardhat-fork
+    id: ethereum-rinkeby-hardhat-fork
     name: Hardhat (Rinkeby Fork)
     timeout: 120
   - cmd: npx hardhat node
     cmd_settings:
-      fork: mumbai-test
+      fork: polygon-mumbai-test
       port: 8545
     host: http://localhost
-    id: mumbai-hardhat-fork
+    id: polygon-mumbai-hardhat-fork
     name: Hardhat (Mumbai Fork)
     timeout: 120
   - cmd: npx hardhat node
@@ -99,7 +99,7 @@ live:
       - chainid: 4
         explorer: https://api-rinkeby.etherscan.io/api
         host: $NODE_ETHEREUM_RINKEBY_URL
-        id: rinkeby-test
+        id: ethereum-rinkeby-test
         multicall2: "0x5BA1e12693Dc8F9c48aAD8770482f4739bEeD696"
         name: Rinkeby
   - name: Polygon
@@ -113,7 +113,7 @@ live:
       - chainid: 80001
         explorer: https://api-testnet.polygonscan.com/api
         host: $NODE_POLYGON_MUMBAI_URL
-        id: mumbai-test
+        id: polygon-mumbai-test
         multicall2: "0x6842E0412AC1c00464dc48961330156a07268d14"
         name: Mumbai Testnet
   - name: Arbitrum
