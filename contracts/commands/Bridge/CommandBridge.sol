@@ -5,9 +5,9 @@ pragma solidity ^0.8.6;
 import "../../../interfaces/Commands/Bridge/IAnyswapV4Router.sol";
 import "../../../interfaces/Commands/Bridge/IAnyswapV3ERC20.sol";
 import "../../../interfaces/Commands/Wrap/IWeth.sol";
-import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
+import "./CBridgeBase.sol";
 
-contract CBridge {
+contract CBridge is CBridgeBase {
     using SafeERC20 for IERC20;
 
     IWETH public immutable WNATIVE;
