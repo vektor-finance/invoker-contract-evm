@@ -1,9 +1,9 @@
-def test_native_bridge(cbridge, alice, any_native_token, invoker, bob):
+def test_native_bridge(cbridge_anyswap, alice, any_native_token, invoker, bob):
     amount = 100
     router = any_native_token["router"]
-    calldata_bridge_native = cbridge.bridgeNative.encode_input(router, amount, bob, 4)
+    calldata_bridge_native = cbridge_anyswap.bridgeNative.encode_input(router, amount, bob, 4)
     tx = invoker.invoke(
-        [cbridge.address], [calldata_bridge_native], {"from": alice, "value": amount}
+        [cbridge_anyswap.address], [calldata_bridge_native], {"from": alice, "value": amount}
     )
     assert "LogAnySwapOut" in tx.events
     evt = tx.events["LogAnySwapOut"]
@@ -16,7 +16,7 @@ def test_native_bridge(cbridge, alice, any_native_token, invoker, bob):
 
 
 def test_erc20_bridge(
-    cbridge,
+    cbridge_anyswap,
     cmove,
     alice,
     invoker,
@@ -32,7 +32,7 @@ def test_erc20_bridge(
 
     calldata_move_in = cmove.moveERC20In.encode_input(token.address, amount)
 
-    calldata_bridge_native = cbridge.bridgeERC20.encode_input(
+    calldata_bridge_native = cbridge_anyswap.bridgeERC20.encode_input(
         router,
         token.address,
         anytoken.address,
@@ -43,7 +43,7 @@ def test_erc20_bridge(
 
     token.approve(invoker.address, amount, {"from": alice})
     tx = invoker.invoke(
-        [cmove.address, cbridge.address],
+        [cmove.address, cbridge_anyswap.address],
         [calldata_move_in, calldata_bridge_native],
         {"from": alice},
     )
