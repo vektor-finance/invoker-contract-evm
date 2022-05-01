@@ -70,7 +70,7 @@ contract CBridgeSynapse is CBridgeBase {
         address destinationAddress,
         uint256 destinationChainId,
         SynapseBridgeParams calldata params
-    ) external {
+    ) external payable {
         _tokenApprove(fromToken, address(SYNAPSE_BRIDGE), amount);
         SYNAPSE_BRIDGE.depositAndSwap(
             destinationAddress,
@@ -89,7 +89,7 @@ contract CBridgeSynapse is CBridgeBase {
         uint256 amount,
         address destinationAddress,
         uint256 destinationChainId
-    ) external {
+    ) external payable {
         _tokenApprove(fromToken, address(SYNAPSE_BRIDGE), amount);
         SYNAPSE_BRIDGE.deposit(destinationAddress, destinationChainId, address(fromToken), amount);
     }
