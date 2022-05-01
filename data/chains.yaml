@@ -511,3 +511,57 @@ optimism_kovan:
     - venue: uniswap_v3
       interfaces: [uniswap_router_v3]
       address: "0xE592427A0AEce92De3Edee1F18E0157C05861564"
+
+moonbeam:
+  id: moonbeam
+  name: Moonbeam
+  chain_id: 1284
+  network:
+    prod: moonbeam-mainnet-prod
+    fork: moonbeam-mainnet-hardhat-fork
+  assets:
+    - name: Glimmer
+      symbol: GLMR
+      decimals: 18
+      address: ~
+    - name: Wrapped Glimmer
+      symbol: WGLMR
+      decimals: 18
+      address: "0xAcc15dC74880C9944775448304B263D191c6077F"
+      benefactor: "TODO"
+      wrapped_native: true
+      interfaces: [weth9, erc20]
+    - name: Wrapped Ether
+      symbol: WETH
+      decimals: 18
+      address: "0xfA9343C3897324496A05fC75abeD6bAC29f8A40f"
+      benefactor: "TODO"
+      interfaces: [erc20]
+    - name: DAI
+      symbol: DAI
+      decimals: 18
+      address: "0x765277EebeCA2e31912C9946eAe1021199B39C61"
+      benefactor: "TODO"
+      interfaces: [erc20]
+    - name: USD Coin
+      symbol: USDC
+      decimals: 6
+      address: "0x818ec0A7Fe18Ff94269904fCED6AE3DaE6d6dC0b"
+      benefactor: "TODO"
+      interfaces: [erc20]
+    - name: Tether
+      symbol: USDT
+      decimals: 6
+      address: "0xeFAeeE334F0Fd1712f9a8cc375f427D9Cdd40d73"
+      benefactor: "TODO"
+      interfaces: [erc20]
+    - name: Wrapped Bitcoin
+      symbol: WBTC
+      decimals: 8
+      address: "0x922D641a426DcFFaeF11680e5358F34d97d112E1"
+      benefactor: "TODO"
+      interfaces: [erc20]
+  contracts:
+    - venue: beamswap
+      interfaces: [uniswap_router_v2_02]
+      address: "0x96b244391D98B62D19aE89b1A4dCcf0fc56970C7"
