@@ -516,6 +516,7 @@ moonbeam:
   id: moonbeam
   name: Moonbeam
   chain_id: 1284
+  eip1559: true
   network:
     prod: moonbeam-mainnet-prod
     fork: moonbeam-mainnet-hardhat-fork
