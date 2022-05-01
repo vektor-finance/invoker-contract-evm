@@ -7,7 +7,7 @@ import "../../../interfaces/Commands/Bridge/IAnyswapV3ERC20.sol";
 import "../../../interfaces/Commands/Wrap/IWeth.sol";
 import "./CBridgeBase.sol";
 
-contract CBridge is CBridgeBase {
+contract CBridgeAnyswap is CBridgeBase {
     using SafeERC20 for IERC20;
 
     IWETH public immutable WNATIVE;

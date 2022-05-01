@@ -63,6 +63,12 @@ mainnet:
       decimals: 8
       address: "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599"
       benefactor: "0xbf72da2bd84c5170618fbe5914b0eca9638d5eb5"
+    - name: nUSD
+      symbol: nUSD
+      decimals: 18
+      address: "0x1b84765de8b7566e4ceaf4d0fd3c5af52d3dde4f"
+      benefactor: "0x2796317b0ff8538f253012862c06787adfb8ceb6"
+      interfaces: [erc20]
   contracts:
     - venue: uniswap
       interfaces: [uniswap_router_v2_02]
