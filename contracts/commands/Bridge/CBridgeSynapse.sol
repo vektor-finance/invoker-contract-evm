@@ -59,7 +59,7 @@ contract CBridgeSynapse is CBridgeBase {
         uint8 tokenIndexFrom;
         uint8 tokenIndexTo;
         uint256 minDy;
-        uint256 swapDeadline;
+        uint256 deadline;
     }
 
     // Assume that user has already provided the token to be bridged.
@@ -75,7 +75,7 @@ contract CBridgeSynapse is CBridgeBase {
         SYNAPSE_BRIDGE.depositAndSwap(
             destinationAddress,
             destinationChainId,
-            toToken,
+            address(toToken),
             amount,
             params.tokenIndexFrom,
             params.tokenIndexTo,
@@ -91,6 +91,6 @@ contract CBridgeSynapse is CBridgeBase {
         uint256 destinationChainId
     ) external {
         _tokenApprove(fromToken, address(SYNAPSE_BRIDGE), amount);
-        SYNAPSE_BRIDGE.deposit(destinationAddress, destinationChainId, fromToken, amount);
+        SYNAPSE_BRIDGE.deposit(destinationAddress, destinationChainId, address(fromToken), amount);
     }
 }
