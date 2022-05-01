@@ -2,22 +2,36 @@ import pytest
 from brownie import Contract, interface
 
 from data.access_control import APPROVED_COMMAND
+from data.chain import get_chain, get_wnative_address
 from data.test_helpers import mint_tokens_for
-
-WETH_ADDRESS = "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2"
-SYNAPSE_BRIDGE = "0x31fe393815822edacbd81c2262467402199efd0d"
 
 
 @pytest.fixture(scope="module")
-def cbridge_synapse(invoker, deployer, CBridgeSynapse):
-    contract = deployer.deploy(CBridgeSynapse, WETH_ADDRESS, SYNAPSE_BRIDGE)
+def synapse_bridge():
+    chain = get_chain()
+    bridge = [
+        contract
+        for contract in chain["contracts"]
+        if "synapse_bridge" in contract.get("interfaces")
+    ]
+    if len(bridge) > 0:
+        return bridge[0]["address"]
+    else:
+        pytest.skip("Synapse not on this chain")
+
+
+@pytest.fixture(scope="module")
+def cbridge_synapse(invoker, deployer, CBridgeSynapse, connected_chain, synapse_bridge):
+    wnative = get_wnative_address(connected_chain)
+    contract = deployer.deploy(CBridgeSynapse, wnative, synapse_bridge)
     invoker.grantRole(APPROVED_COMMAND, contract, {"from": deployer})
     # to load abi
-    Contract.from_abi("SynapseBridge", SYNAPSE_BRIDGE, interface.SynapseBridge.abi)
+    Contract.from_abi("SynapseBridge", synapse_bridge, interface.SynapseBridge.abi)
     yield contract
 
 
-def test_bridge_native(cbridge_synapse, invoker, alice):
+def test_bridge_native(cbridge_synapse, invoker, alice, connected_chain):
+    wnative = get_wnative_address(connected_chain)
     AMOUNT = 100
     DEST_CHAIN_ID = 1
     calldata_bridge_native = cbridge_synapse.bridgeNative.encode_input(
@@ -30,7 +44,7 @@ def test_bridge_native(cbridge_synapse, invoker, alice):
     evt = tx.events["TokenDeposit"]
     assert evt["to"] == alice
     assert evt["chainId"] == DEST_CHAIN_ID
-    assert evt["token"] == WETH_ADDRESS
+    assert evt["token"] == wnative
     assert evt["amount"] == AMOUNT
 
 

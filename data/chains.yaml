@@ -82,6 +82,9 @@ mainnet:
     - venue: uniswap_v3
       interfaces: [uniswap_router_v3]
       address: "0xE592427A0AEce92De3Edee1F18E0157C05861564"
+    - venue: synapse
+      interfaces: [synapse_bridge]
+      address: "0x31fe393815822edacbd81c2262467402199efd0d"
 
 rinkeby:
   id: rinkeby
