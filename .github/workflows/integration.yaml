@@ -21,6 +21,7 @@ env:
   NODE_FANTOM_MAINNET_URL: ${{ secrets.NODE_FANTOM_MAINNET_URL }}
   NODE_AVALANCHE_MAINNET_URL: ${{ secrets.NODE_AVALANCHE_MAINNET_URL }}
   NODE_BINANCE_MAINNET_URL: ${{ secrets.NODE_BINANCE_MAINNET_URL }}
+  NODE_MOONBEAM_MAINNET_URL: ${{ secrets.NODE_MOONBEAM_MAINNET_URL }}
 
   NODE_OPTIONS: --max_old_space_size=4096
 
@@ -53,6 +54,7 @@ jobs:
           - bsc-hardhat-fork
           - optimism-hardhat-fork
           - optimism-kovan-hardhat-fork
+          - moonbeam-mainnet-hardhat-fork
 
     steps:
       - uses: actions/checkout@v2
