@@ -529,38 +529,38 @@ moonbeam:
       symbol: WGLMR
       decimals: 18
       address: "0xAcc15dC74880C9944775448304B263D191c6077F"
-      benefactor: "TODO"
+      benefactor: "0xd341d2191bb0f84e5c29cb301def5753dab1ac04"
       wrapped_native: true
       interfaces: [weth9, erc20]
     - name: Wrapped Ether
       symbol: WETH
       decimals: 18
       address: "0xfA9343C3897324496A05fC75abeD6bAC29f8A40f"
-      benefactor: "TODO"
+      benefactor: "0x0aa48bf937ee8f41f1a52d225ef5a6f6961e39fa"
       interfaces: [erc20]
     - name: DAI
       symbol: DAI
       decimals: 18
       address: "0x765277EebeCA2e31912C9946eAe1021199B39C61"
-      benefactor: "TODO"
+      benefactor: "0x93c08a3168fc469f3fc165cd3a471d19a37ca19e"
       interfaces: [erc20]
     - name: USD Coin
       symbol: USDC
       decimals: 6
       address: "0x818ec0A7Fe18Ff94269904fCED6AE3DaE6d6dC0b"
-      benefactor: "TODO"
+      benefactor: "0x93c08a3168fc469f3fc165cd3a471d19a37ca19e"
       interfaces: [erc20]
     - name: Tether
       symbol: USDT
       decimals: 6
       address: "0xeFAeeE334F0Fd1712f9a8cc375f427D9Cdd40d73"
-      benefactor: "TODO"
+      benefactor: "0x8bc3cceef43392b315ddd92ba30b435f79b66b9e"
       interfaces: [erc20]
     - name: Wrapped Bitcoin
       symbol: WBTC
       decimals: 8
       address: "0x922D641a426DcFFaeF11680e5358F34d97d112E1"
-      benefactor: "TODO"
+      benefactor: "0x0708dde2b7dff0713f25908c9d0e94e8b56e59a5"
       interfaces: [erc20]
   contracts:
     - venue: beamswap
