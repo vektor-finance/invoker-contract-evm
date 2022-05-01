@@ -16,7 +16,7 @@ def cbridge_synapse(invoker, deployer, CBridgeSynapse):
     yield contract
 
 
-def test_bridge(cbridge_synapse, invoker, alice):
+def test_bridge_native(cbridge_synapse, invoker, alice):
     AMOUNT = 100
     DEST_CHAIN_ID = 1
     calldata_bridge_native = cbridge_synapse.bridgeNative.encode_input(
