@@ -86,6 +86,14 @@ development:
     id: bsc-hardhat-fork
     name: Hardhat (BSC Fork)
     timeout: 120
+  - cmd: npx hardhat node
+    cmd_settings:
+      fork: moonbeam-mainnet-prod
+      port: 8545
+    host: http://localhost
+    id: moonbeam-mainnet-hardhat-fork
+    name: Hardhat (Moonbeam Mainnet Fork)
+    timeout: 120
 
 live:
   - name: Ethereum
@@ -161,4 +169,11 @@ live:
         explorer: https://bscscan.com
         host: $NODE_BINANCE_MAINNET_URL
         id: bsc-prod
+        name: Mainnet
+  - name: Moonbeam
+    networks:
+      - chainid: 1284
+        explorer: https://moonscan.io
+        host: $NODE_MOONBEAM_MAINNET_URL
+        id: moonbeam-mainnet-prod
         name: Mainnet
