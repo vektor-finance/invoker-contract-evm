@@ -221,7 +221,7 @@ def pytest_generate_tests(metafunc):
         all_tokens = [asset for asset in chain["assets"] if asset.get("address")]
         for token in any_tokens:
             for a in all_tokens:
-                if token["underlyingAddress"] in a["address"]:
+                if token["underlyingAddress"].lower() in a["address"].lower():
                     token["benefactor"] = a["benefactor"]
                     token["decimals"] = a["decimals"]
         token_names = [token["underlyingName"] for token in any_tokens]
