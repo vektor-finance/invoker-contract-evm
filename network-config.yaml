@@ -94,6 +94,14 @@ development:
     id: moonbeam-mainnet-hardhat-fork
     name: Hardhat (Moonbeam Mainnet Fork)
     timeout: 120
+  - cmd: npx hardhat node
+    cmd_settings:
+      fork: moonriver-mainnet-prod
+      port: 8545
+    host: http://localhost
+    id: moonriver-mainnet-hardhat-fork
+    name: Hardhat (Moonriver Mainnet Fork)
+    timeout: 120
 
 live:
   - name: Ethereum
@@ -176,4 +184,11 @@ live:
         explorer: https://moonscan.io
         host: $NODE_MOONBEAM_MAINNET_URL
         id: moonbeam-mainnet-prod
+        name: Mainnet
+  - name: Moonriver
+    networks:
+      - chainid: 1285
+        explorer: https://moonriver.moonscan.io
+        host: $NODE_MOONRIVER_MAINNET_URL
+        id: moonriver-mainnet-prod
         name: Mainnet
