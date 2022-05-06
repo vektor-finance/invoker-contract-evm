@@ -554,5 +554,55 @@
       "git_sha": "2a98dac",
       "git_sha_long": "2a98daca2e66f8c3e81fc9d8a5cda487c085f2c3"
     }
+  ],
+  "56": [
+    {
+      "contract": "Invoker",
+      "address": "0xab7ce6C76E985792f80339183327C3F7A0B78E57",
+      "block_number": 17553091,
+      "timestamp": 1651795339,
+      "git_sha": "3947c1e",
+      "git_sha_long": "3947c1edf4e8475de025a0dedc4ccbadb6e84f91"
+    },
+    {
+      "contract": "CMove",
+      "address": "0xdD7369085c5E36A9bbba3fde393c2876a5BC070c",
+      "block_number": 17553182,
+      "timestamp": 1651795339,
+      "git_sha": "3947c1e",
+      "git_sha_long": "3947c1edf4e8475de025a0dedc4ccbadb6e84f91"
+    },
+    {
+      "contract": "CWrap",
+      "address": "0x407D106E22115F71A4D5d7619109295c0eBcEbf2",
+      "block_number": 17553190,
+      "timestamp": 1651795364,
+      "git_sha": "3947c1e",
+      "git_sha_long": "3947c1edf4e8475de025a0dedc4ccbadb6e84f91"
+    },
+    {
+      "contract": "CSwapUniswapV2",
+      "address": "0xCD913CFFB331d508587Ad48708189c99D2942c05",
+      "block_number": 17553196,
+      "timestamp": 1651795380,
+      "git_sha": "3947c1e",
+      "git_sha_long": "3947c1edf4e8475de025a0dedc4ccbadb6e84f91"
+    },
+    {
+      "contract": "CSwapUniswapV3",
+      "address": "0xd4D08cf791ACC6c5f639f698677e395066A219FF",
+      "block_number": 17553201,
+      "timestamp": 1651795397,
+      "git_sha": "3947c1e",
+      "git_sha_long": "3947c1edf4e8475de025a0dedc4ccbadb6e84f91"
+    },
+    {
+      "contract": "CSwapCurve",
+      "block_number": 17553207,
+      "address": "0x96244654Fa112E90Ab107EaFb3E8231c996cfEe9",
+      "timestamp": 1651795414,
+      "git_sha": "3947c1e",
+      "git_sha_long": "3947c1edf4e8475de025a0dedc4ccbadb6e84f91"
+    }
   ]
 }
