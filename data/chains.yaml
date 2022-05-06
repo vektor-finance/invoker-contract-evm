@@ -639,13 +639,13 @@ moonriver:
       symbol: FTM
       decimals: 18
       address: "0xaD12daB5959f30b9fF3c2d6709f53C335dC39908"
-      benefactor: "0x1eebed8f28a6865a76d91189fd6fc45f4f774d67"
+      benefactor: "0x8e9fac4b4a618108dc5bb1e63747fa7d8d158aad"
       interfaces: [erc20]
     - name: Magic Internet Money
       symbol: MIM
       decimals: 18
       address: "0x0caE51e1032e8461f4806e26332c030E34De3aDb"
-      benefactor: "0x1eebed8f28a6865a76d91189fd6fc45f4f774d67"
+      benefactor: "0x914c4c2d50ebf786f16dcdafafe385b74a8d6f7b"
       interfaces: [erc20]
     - name: Frax
       symbol: FRAX
