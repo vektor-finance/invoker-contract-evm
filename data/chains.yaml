@@ -566,3 +566,92 @@ moonbeam:
     - venue: beamswap
       interfaces: [uniswap_router_v2_02]
       address: "0x96b244391D98B62D19aE89b1A4dCcf0fc56970C7"
+
+moonriver:
+  id: moonriver
+  name: Moonriver
+  chain_id: 1285
+  eip1559: true
+  network:
+    prod: moonriver-mainnet-prod
+    fork: moonriver-mainnet-hardhat-fork
+  assets:
+    - name: Moonriver
+      symbol: MOVR
+      decimals: 18
+      address: ~
+    - name: Wrapped Moonriver
+      symbol: WMOVR
+      decimals: 18
+      address: "0x98878b06940ae243284ca214f92bb71a2b032b8a"
+      benefactor: "0xea3d1e9e69addfa1ee5bbb89778decd862f1f7c5"
+      wrapped_native: true
+      interfaces: [weth9, erc20]
+    - name: Wrapped Ether
+      symbol: WETH
+      decimals: 18
+      address: "0x639A647fbe20b6c8ac19E48E2de44ea792c62c5C"
+      benefactor: ""
+      interfaces: [erc20]
+    - name: DAI
+      symbol: DAI
+      decimals: 18
+      address: "0x80A16016cC4A2E6a2CACA8a4a498b1699fF0f844"
+      benefactor: "0xd0a57f59a7ff9cb61e64fefc987245ffb1f963ea"
+      interfaces: [erc20]
+    - name: USD Coin
+      symbol: USDC
+      decimals: 6
+      address: "0xE3F5a90F9cb311505cd691a46596599aA1A0AD7D"
+      benefactor: "0x373ba9aa0f48b27a977f73423039e6de341a0c7c"
+      interfaces: [erc20]
+    - name: Tether
+      symbol: USDT
+      decimals: 6
+      address: "0xB44a9B6905aF7c801311e8F4E76932ee959c663C"
+      interfaces: [erc20]
+    - name: Wrapped Bitcoin
+      symbol: WBTC
+      decimals: 8
+      address: "0x6aB6d61428fde76768D7b45D8BFeec19c6eF91A8"
+      benefactor: "0x9785478135bafe3dcafe4bba4c8311674d4e826e"
+      interfaces: [erc20]
+    - name: Solarbeam
+      symbol: SOLAR
+      decimals: 18
+      address: "0x6bD193Ee6D2104F14F94E2cA6efefae561A4334B"
+      benefactor: "0x76906411d07815491a5e577022757ad941fb5066"
+      interfaces: [erc20]
+    - name: Avalanche
+      symbol: AVAX
+      decimals: 18
+      address: "0x14a0243C333A5b238143068dC3A7323Ba4C30ECB"
+      interfaces: [erc20]
+    - name: Matic
+      symbol: MATIC
+      decimals: 18
+      address: "0x682F81e57EAa716504090C3ECBa8595fB54561D8"
+      benefactor: "0xb9a61ac826196abc69a3c66ad77c563d6c5bdd7b"
+      interfaces: [erc20]
+    - name: Fantom
+      symbol: FTM
+      decimals: 18
+      address: "0xaD12daB5959f30b9fF3c2d6709f53C335dC39908"
+      benefactor: "0x1eebed8f28a6865a76d91189fd6fc45f4f774d67"
+      interfaces: [erc20]
+    - name: Magic Internet Money
+      symbol: MIM
+      decimals: 18
+      address: "0x0caE51e1032e8461f4806e26332c030E34De3aDb"
+      benefactor: "0xd4a7febd52efda82d6f8ace24908ae0aa5b4f956"
+      interfaces: [erc20]
+    - name: Frax
+      symbol: FRAX
+      decimals: 18
+      address: "0x1A93B23281CC1CDE4C4741353F3064709A16197d"
+      benefactor: "0x7be2d3fee573fe1a865799e746fe1ceb93301fe6"
+      interfaces: [erc20]
+  contracts:
+    - venue: solarbeam
+      interfaces: [uniswap_router_v2_02]
+      address: "0xAA30eF758139ae4a7f798112902Bf6d65612045f"
