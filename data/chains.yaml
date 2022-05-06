@@ -591,7 +591,7 @@ moonriver:
       symbol: WETH
       decimals: 18
       address: "0x639A647fbe20b6c8ac19E48E2de44ea792c62c5C"
-      benefactor: ""
+      benefactor: "0xd0a57f59a7ff9cb61e64fefc987245ffb1f963ea"
       interfaces: [erc20]
     - name: DAI
       symbol: DAI
