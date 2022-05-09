@@ -654,6 +654,6 @@ moonriver:
       benefactor: "0x7be2d3fee573fe1a865799e746fe1ceb93301fe6"
       interfaces: [erc20]
   contracts:
-    - venue: solarbeam
+    - venue: sushiswap
       interfaces: [uniswap_router_v2_02]
-      address: "0xAA30eF758139ae4a7f798112902Bf6d65612045f"
+      address: "0x1b02dA8Cb0d097eB8D57A175b88c7D8b47997506"
