@@ -25,6 +25,7 @@ def test_move_erc20_in(data, invoker, cmove):
     invoker.invoke([cmove.address], [calldata_move_in], {"from": alice})
     assert token.balanceOf(invoker.address) == amount
     assert token.balanceOf(alice) == start_balance - amount
+    hypothesis.event(token._name)
 
 
 @given(data=hypothesis.strategies.data())
@@ -36,6 +37,7 @@ def test_move_erc20_out(data, invoker, cmove):
     invoker.invoke([cmove.address], [calldata_move_out], {"from": alice})
     assert token.balanceOf(invoker.address) == start_balance - amount
     assert token.balanceOf(alice) == amount
+    hypothesis.event(token._name)
 
 
 @given(data=hypothesis.strategies.data())
@@ -47,12 +49,13 @@ def test_move_all_erc20_out(data, invoker, cmove):
     invoker.invoke([cmove.address], [calldata_move_all_out], {"from": alice})
     assert token.balanceOf(invoker.address) == 0
     assert token.balanceOf(alice) == start_balance
+    hypothesis.event(token._name)
 
 
 @given(data=hypothesis.strategies.data())
 def test_fail_insufficient_balance_move_erc20_in(data, invoker, cmove):
     (token, alice, amount) = generate_move_data(data)
-    large_amount = data.draw(strategy("uint256", min_value=amount + 1))
+    large_amount = amount + 1
     token.approve(invoker.address, amount, {"from": alice})
     calldata_move_in = cmove.moveERC20In.encode_input(token.address, large_amount)
     with brownie.reverts():
@@ -62,7 +65,7 @@ def test_fail_insufficient_balance_move_erc20_in(data, invoker, cmove):
 @given(data=hypothesis.strategies.data())
 def test_fail_insufficient_allowance_move_erc20_in(data, invoker, cmove):
     (token, alice, amount) = generate_move_data(data)
-    insufficient_amount = data.draw(strategy("uint256", max_value=amount - 1))
+    insufficient_amount = max(0, amount - 1)
     token.approve(invoker.address, insufficient_amount, {"from": alice})
     calldata_move_in = cmove.moveERC20In.encode_input(token.address, amount)
     with brownie.reverts():
@@ -72,7 +75,7 @@ def test_fail_insufficient_allowance_move_erc20_in(data, invoker, cmove):
 @given(data=hypothesis.strategies.data())
 def test_fail_insufficient_balance_move_erc20_out(data, invoker, cmove):
     (token, alice, amount) = generate_move_data(data)
-    insufficient_amount = data.draw(strategy("uint256", max_value=amount - 1))
+    insufficient_amount = max(0, amount - 1)
     token.transfer(invoker.address, insufficient_amount, {"from": alice})
     calldata_move_out = cmove.moveERC20Out.encode_input(token.address, alice, amount)
     with brownie.reverts():
