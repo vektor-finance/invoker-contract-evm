@@ -213,6 +213,13 @@ polygon:
       decimals: 8
       address: "0x1bfd67037b42cf73acf2047067bd4f2c47d9bfd6"
       benefactor: "0x5c2ed810328349100a66b82b78a1791b101c9d61"
+    - address: '0xa55870278d6389ec5b524553d03c04f5677c061e'
+      balances_slot: 0
+      decimals: 18
+      interfaces:
+      - erc20
+      name: XCAD Token (PoS)
+      symbol: XCAD
   contracts:
     - venue: quickswap
       interfaces: [uniswap_router_v2_02]
