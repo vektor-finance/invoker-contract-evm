@@ -452,7 +452,7 @@ bsc:
       symbol: BUSD
       decimals: 18
       address: '0xe9e7cea3dedca5984780bafc599bd69add087d56'
-      balances_slot: 1
+      benefactor: "0x41772edd47d9ddf9ef848cdb34fe76143908c7ad"
       interfaces: [erc20]
     - name: Binance-Peg USD Coin
       symbol: USDC
@@ -529,7 +529,7 @@ bsc:
       name: VENT [via ChainPort.io]
       symbol: VENT
     - address: '0xf07dfc2ad28ab5b09e8602418d2873fcb95e1744'
-      balances_slot: 1
+      benefactor: "0xcf5180580c3c300cd9714d28813d4907123b0490"
       decimals: 18
       interfaces:
       - erc20
@@ -543,7 +543,7 @@ bsc:
       name: BaconDAO
       symbol: BACON
     - address: '0x3c1748d647e6a56b37b66fcd2b5626d0461d3aa0'
-      balances_slot: 2
+      benefactor: "0x38dea99cbae327e2710eb4c05587ca9355fc1ed2"
       decimals: 18
       interfaces:
       - erc20
