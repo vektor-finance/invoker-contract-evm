@@ -3,6 +3,7 @@ import pytest
 from brownie import ZERO_ADDRESS, Contract, interface
 from brownie.exceptions import VirtualMachineError
 from brownie.test import given, strategy
+from hypothesis import HealthCheck
 from hypothesis.errors import UnsatisfiedAssumption
 
 from data.access_control import APPROVED_COMMAND
@@ -34,6 +35,7 @@ def generate_univ2_swap(data):
     return (input_token, output_token, user, amount, receiver)
 
 
+@hypothesis.settings(suppress_health_check=[HealthCheck.filter_too_much])
 @given(data=hypothesis.strategies.data())
 def test_sell_invoker(data, uni_router, invoker, cmove, cswap_uniswapv2):
     with isolate_fixture():
@@ -43,6 +45,7 @@ def test_sell_invoker(data, uni_router, invoker, cmove, cswap_uniswapv2):
         try:
             (_, amount_out) = uni_router.getAmountsOut(amount_in, path)
         except VirtualMachineError:
+            hypothesis.event("uni_router.getAmountsOut")
             raise UnsatisfiedAssumption
 
         hypothesis.assume(amount_out > 0)
@@ -68,8 +71,11 @@ def test_sell_invoker(data, uni_router, invoker, cmove, cswap_uniswapv2):
         )
 
         assert output_token.balanceOf(user if receiver is ZERO_ADDRESS else receiver) >= amount_out
+        hypothesis.event(input_token._name)
+        hypothesis.event(output_token._name)
 
 
+@hypothesis.settings(suppress_health_check=[HealthCheck.filter_too_much])
 @given(data=hypothesis.strategies.data())
 def test_buy_invoker(data, uni_router, invoker, cmove, cswap_uniswapv2):
     with isolate_fixture():
@@ -80,6 +86,7 @@ def test_buy_invoker(data, uni_router, invoker, cmove, cswap_uniswapv2):
         try:
             (_, amount_out) = uni_router.getAmountsOut(amount_in, path)
         except VirtualMachineError:
+            hypothesis.event("uni_router.getAmountsOut")
             raise UnsatisfiedAssumption
 
         hypothesis.assume(amount_out > 0)
@@ -89,6 +96,7 @@ def test_buy_invoker(data, uni_router, invoker, cmove, cswap_uniswapv2):
         try:
             (amount_in, _) = uni_router.getAmountsIn(amount_out, path)
         except VirtualMachineError:
+            hypothesis.event("uni_router.getAmountsIn")
             raise UnsatisfiedAssumption
 
         hypothesis.assume(amount_in > 0)
@@ -120,3 +128,5 @@ def test_buy_invoker(data, uni_router, invoker, cmove, cswap_uniswapv2):
         )
         assert starting_balance - input_token.balanceOf(user) <= amount_in
         assert output_token.balanceOf(user if receiver is ZERO_ADDRESS else receiver) >= amount_out
+        hypothesis.event(input_token._name)
+        hypothesis.event(output_token._name)
