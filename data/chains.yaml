@@ -521,13 +521,6 @@ bsc:
       - erc20
       name: NUM Token [via ChainPort.io]
       symbol: NUM
-    - address: '0xb9d8592e16a9c1a3ae6021cddb324eac1cbc70d6'
-      benefactor: '0x21fb7199e14f52328e7f69cdddb73702c595b1c6'
-      decimals: 18
-      interfaces:
-      - erc20
-      name: PERA
-      symbol: PERA
     - address: '0x872d068c25511be88c1f5990c53eeffcdf46c9b4'
       balances_slot: 0
       decimals: 18
