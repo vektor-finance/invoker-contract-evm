@@ -448,6 +448,12 @@ bsc:
       address: "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c"
       benefactor: "0x48d807e5cb92617953a88cce78dcf31012f4d6b6"
       wrapped_native: True
+    - name: BUSD
+      symbol: BUSD
+      decimals: 18
+      address: '0xe9e7cea3dedca5984780bafc599bd69add087d56'
+      balances_slot: 1
+      interfaces: [erc20]
     - name: Binance-Peg USD Coin
       symbol: USDC
       decimals: 18 # yes, really, 18
