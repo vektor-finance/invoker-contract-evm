@@ -32,7 +32,7 @@ def mint_tokens_for(minted_token, user) -> int:
                 return balance
             elif "balances_slot" in token:
                 storage_key = get_storage_key(user, token["balances_slot"])
-                mint_value = 100_000000000000000000
+                mint_value = 10 * 10 ** token["decimals"]
                 brownie.web3.provider.make_request(
                     "hardhat_setStorageAt",
                     [
