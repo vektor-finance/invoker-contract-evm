@@ -363,6 +363,13 @@ avalanche:
       decimals: 8
       address: "0x50b7545627a5162f82a992c33b87adc75187b218"
       benefactor: "0x686bef2417b6dc32c50a3cbfbcc3bb60e1e9a15d"
+    - address: '0x9e3ca00f2d4a9e5d4f0add0900de5f15050812cf'
+      balances_slot: 0
+      decimals: 18
+      interfaces:
+      - erc20
+      name: NFTrade Token [via ChainPort.io]
+      symbol: NFTD
   contracts:
     - venue: trader_joe
       interfaces: [uniswap_router_v2_02]
@@ -411,6 +418,97 @@ bsc:
       decimals: 18
       address: "0x1af3f329e8be154074d8769d1ffa4ee058b1dbc3"
       benefactor: "0x41772edd47d9ddf9ef848cdb34fe76143908c7ad"
+    - address: '0x22f3997a5df5a80e29871fed24fe3e85741f5e82'
+      balances_slot: 0
+      decimals: 18
+      interfaces:
+      - erc20
+      name: DAO Maker [via ChainPort.io]
+      symbol: DAO
+    - address: '0x431e0cd023a32532bf3969cddfc002c00e98429d'
+      balances_slot: 0
+      decimals: 18
+      interfaces:
+      - erc20
+      name: Chainport.io-Peg XCAD Token
+      symbol: XCAD
+    - address: '0xac83271abb4ec95386f08ad2b904a46c61777cef'
+      balances_slot: 0
+      decimals: 18
+      interfaces:
+      - erc20
+      name: NFTrade Token [via ChainPort.io]
+      symbol: NFTD
+    - address: '0x9ba6a67a6f3b21705a46b380a1b97373a33da311'
+      balances_slot: 0
+      decimals: 18
+      interfaces:
+      - erc20
+      name: Chainport.io-Peg Fear NFTs
+      symbol: FEAR
+    - address: '0x66cafcf6c32315623c7ffd3f2ff690aa36ebed38'
+      balances_slot: 0
+      decimals: 18
+      interfaces:
+      - erc20
+      name: Brokoli Token [via ChainPort.io]
+      symbol: BRKL
+    - address: '0xeceb87cf00dcbf2d4e2880223743ff087a995ad9'
+      balances_slot: 0
+      decimals: 18
+      interfaces:
+      - erc20
+      name: NUM Token [via ChainPort.io]
+      symbol: NUM
+    - address: '0xb9d8592e16a9c1a3ae6021cddb324eac1cbc70d6'
+      benefactor: '0x21fb7199e14f52328e7f69cdddb73702c595b1c6'
+      decimals: 18
+      interfaces:
+      - erc20
+      name: PERA
+      symbol: PERA
+    - address: '0x872d068c25511be88c1f5990c53eeffcdf46c9b4'
+      balances_slot: 0
+      decimals: 18
+      interfaces:
+      - erc20
+      name: VENT [via ChainPort.io]
+      symbol: VENT
+    - address: '0xf07dfc2ad28ab5b09e8602418d2873fcb95e1744'
+      balances_slot: 1
+      decimals: 18
+      interfaces:
+      - erc20
+      name: Infinity Pad Token
+      symbol: IPAD
+    - address: '0x0615dbba33fe61a31c7ed131bda6655ed76748b1'
+      balances_slot: 2
+      decimals: 18
+      interfaces:
+      - erc20
+      name: BaconDAO
+      symbol: BACON
+    - address: '0x3c1748d647e6a56b37b66fcd2b5626d0461d3aa0'
+      balances_slot: 2
+      decimals: 18
+      interfaces:
+      - erc20
+      name: DinoX Coin
+      symbol: DNXC
+    - address: '0x12fc07081fab7de60987cad8e8dc407b606fb2f8'
+      balances_slot: 0
+      decimals: 8
+      interfaces:
+      - erc20
+      name: Dark Token
+      symbol: DARK
+    - address: '0x19b99162adaab85134e781ac0048c275c31b205a'
+      balances_slot: 0
+      decimals: 18
+      interfaces:
+      - erc20
+      name: Marnotaur
+      symbol: TAUR
   contracts:
     - venue: pancakeswap
       interfaces: [uniswap_router_v2_02]
