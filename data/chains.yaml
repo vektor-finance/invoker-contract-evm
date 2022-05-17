@@ -605,11 +605,6 @@ moonriver:
       address: "0xE3F5a90F9cb311505cd691a46596599aA1A0AD7D"
       benefactor: "0x373ba9aa0f48b27a977f73423039e6de341a0c7c"
       interfaces: [erc20]
-    - name: USDC.e (Bridged USDC)
-      symbol: USDC_E
-      decimals: 6
-      address: "0xd8b99eae34afdf1a9bfa5770066404ee4468d0f2"
-      interfaces: [erc20]
     - name: Tether
       symbol: USDT
       decimals: 6
