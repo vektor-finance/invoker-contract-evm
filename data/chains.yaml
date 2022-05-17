@@ -724,6 +724,6 @@ gnosis:
       benefactor: "0x4ba7362F9189572CbB1216819a45aba0d0B2D1CB"
       interfaces: [erc20]
   contracts:
-    - venue: sushiswap
+    - venue: honeyswap
       interfaces: [uniswap_router_v2_02]
-      address: "0x1b02dA8Cb0d097eB8D57A175b88c7D8b47997506"
+      address: "0x1C232F01118CB8B424793ae03F870aa7D0ac7f77"
