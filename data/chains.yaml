@@ -639,7 +639,7 @@ moonriver:
       symbol: FTM
       decimals: 18
       address: "0xaD12daB5959f30b9fF3c2d6709f53C335dC39908"
-      benefactor: "0x8e9fac4b4a618108dc5bb1e63747fa7d8d158aad"
+      benefactor: "0x979f135cfEb0F167784AdFcB5510014cca9C1709"
       interfaces: [erc20]
     - name: Magic Internet Money
       symbol: MIM
