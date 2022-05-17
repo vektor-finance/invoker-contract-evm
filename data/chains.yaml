@@ -99,8 +99,8 @@ rinkeby:
     - name: DAI
       symbol: DAI
       decimals: 18
-      address: "0xc7ad46e0b8a400bb3c915120d284aafba8fc4735"
-      benefactor: "0x0f04024bda15f6e5d48ed92938654a6449f483ed"
+      address: "0x6A9865aDE2B6207dAAC49f8bCba9705dEB0B0e6D"
+      benefactor: "0x91169Dbb45e6804743F94609De50D511C437572E"
     - name: Tether
       symbol: USDT
       decimals: 18 # yes, this is 18 not 6 on rinkeby
@@ -294,17 +294,17 @@ fantom:
       symbol: DAI
       decimals: 18
       address: "0x8d11ec38a3eb5e956b052f67da8bdc9bef8abf3e"
-      benefactor: "0x8d9aed9882b4953a0c9fa920168fa1fdfa0ebe75"
+      benefactor: "0x20dd72ed959b6147912c2e529f0a0c651c33c9ce"
     - name: USD Coin
       symbol: USDC
       decimals: 6
       address: "0x04068da6c83afcfa0e13ba15a6696662335d5b75"
-      benefactor: "0xe45ac34e528907d0a0239ab5db507688070b20bf"
+      benefactor: "0x12edea9cd262006cc3c4e77c90d2cd2dd4b1eb97"
     - name: Frapped USDT
       symbol: fUSDT
       decimals: 6
       address: "0x049d68029688eabf473097a2fc38ef61633a3c7a"
-      benefactor: "0x02224765bc8d54c21bb51b0951c80315e1c263f9"
+      benefactor: "0x374b8a9f3ec5eb2d97eca84ea27aca45aa1c57ef"
     - name: Bitcoin
       symbol: BTC
       decimals: 8
@@ -639,7 +639,7 @@ moonriver:
       symbol: FTM
       decimals: 18
       address: "0xaD12daB5959f30b9fF3c2d6709f53C335dC39908"
-      benefactor: "0x8e9fac4b4a618108dc5bb1e63747fa7d8d158aad"
+      benefactor: "0x979f135cfEb0F167784AdFcB5510014cca9C1709"
       interfaces: [erc20]
     - name: Magic Internet Money
       symbol: MIM
