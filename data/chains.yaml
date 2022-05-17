@@ -99,8 +99,8 @@ rinkeby:
     - name: DAI
       symbol: DAI
       decimals: 18
-      address: "0xc7ad46e0b8a400bb3c915120d284aafba8fc4735"
-      benefactor: "0x0f04024bda15f6e5d48ed92938654a6449f483ed"
+      address: "0x6A9865aDE2B6207dAAC49f8bCba9705dEB0B0e6D"
+      benefactor: "0x91169Dbb45e6804743F94609De50D511C437572E"
     - name: Tether
       symbol: USDT
       decimals: 18 # yes, this is 18 not 6 on rinkeby
