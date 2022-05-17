@@ -34,6 +34,7 @@ def generate_univ2_swap(data):
     return (input_token, output_token, user, amount, receiver)
 
 
+@hypothesis.settings(suppress_health_check=[hypothesis.HealthCheck.filter_too_much])
 @given(data=hypothesis.strategies.data())
 def test_sell_invoker(data, uni_router, invoker, cmove, cswap_uniswapv2):
     with isolate_fixture():
@@ -70,6 +71,7 @@ def test_sell_invoker(data, uni_router, invoker, cmove, cswap_uniswapv2):
         assert output_token.balanceOf(user if receiver is ZERO_ADDRESS else receiver) >= amount_out
 
 
+@hypothesis.settings(suppress_health_check=[hypothesis.HealthCheck.filter_too_much])
 @given(data=hypothesis.strategies.data())
 def test_buy_invoker(data, uni_router, invoker, cmove, cswap_uniswapv2):
     with isolate_fixture():
