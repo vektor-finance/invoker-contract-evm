@@ -294,7 +294,7 @@ fantom:
       symbol: DAI
       decimals: 18
       address: "0x8d11ec38a3eb5e956b052f67da8bdc9bef8abf3e"
-      benefactor: "0x8d9aed9882b4953a0c9fa920168fa1fdfa0ebe75"
+      benefactor: "0x20dd72ed959b6147912c2e529f0a0c651c33c9ce"
     - name: USD Coin
       symbol: USDC
       decimals: 6
