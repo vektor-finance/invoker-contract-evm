@@ -578,5 +578,17 @@
         "0x94b008aa00579c1307b0ef2c499ad98a8ce58e58"
       ]
     }
+  ],
+  "100": [
+    {
+      "name": "3pool",
+      "swap_address": "0x7f90122BF0700F9E7e1F688fe926940E8839F353",
+      "asset_type": 0,
+      "coins": [
+        "0xe91d153e0b41518a2ce8dd3d7944fa863463a97d",
+        "0xddafbb505ad214d7b80b1f830fccc89b60fb7a83",
+        "0x4ecaba5870353805a9f068101a40e0f32ed605c6"
+      ]
+    }
   ]
 }
