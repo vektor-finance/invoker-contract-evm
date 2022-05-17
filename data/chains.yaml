@@ -717,6 +717,12 @@ gnosis:
       address: "0x2995d1317dcd4f0ab89f4ae60f3f020a4f17c7ce"
       benefactor: "0xF38c5b39F29600765849cA38712F302b1522C9B8"
       interfaces: [erc20]
+    - name: Honey
+      symbol: HNY
+      decimals: 18
+      address: "0x71850b7e9ee3f13ab46d67167341e4bdc905eef9"
+      benefactor: "0x4ba7362F9189572CbB1216819a45aba0d0B2D1CB"
+      interfaces: [erc20]
   contracts:
     - venue: sushiswap
       interfaces: [uniswap_router_v2_02]
