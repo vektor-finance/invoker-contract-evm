@@ -299,12 +299,12 @@ fantom:
       symbol: USDC
       decimals: 6
       address: "0x04068da6c83afcfa0e13ba15a6696662335d5b75"
-      benefactor: "0xe45ac34e528907d0a0239ab5db507688070b20bf"
+      benefactor: "0x12edea9cd262006cc3c4e77c90d2cd2dd4b1eb97"
     - name: Frapped USDT
       symbol: fUSDT
       decimals: 6
       address: "0x049d68029688eabf473097a2fc38ef61633a3c7a"
-      benefactor: "0x02224765bc8d54c21bb51b0951c80315e1c263f9"
+      benefactor: "0x374b8a9f3ec5eb2d97eca84ea27aca45aa1c57ef"
     - name: Bitcoin
       symbol: BTC
       decimals: 8
