@@ -10,7 +10,7 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 ///     Any contract which uses msg.sender within constructor will be pointing to
 ///     this factory contract, not the deployer! Be careful with access control.
 contract MasterDeployer is Ownable {
-    event ContractDeployed(address _address);
+    event ContractDeployed(address deployedAddress);
 
     /// @notice Deploy a contract with a specified salt
     /// @dev The deployed address is only dependent on salt, not on creation code.
@@ -24,5 +24,9 @@ contract MasterDeployer is Ownable {
     {
         _contract = Create3.create3(_salt, _code);
         emit ContractDeployed(_contract);
+    }
+
+    function addressOf(bytes32 _salt) external view returns (address) {
+        return Create3.addressOf(_salt);
     }
 }
