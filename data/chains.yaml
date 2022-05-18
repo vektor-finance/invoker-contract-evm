@@ -654,3 +654,70 @@ moonriver:
     # - venue: solarbeam
     #   interfaces: [uniswap_router_v2_02]
     #   address: "0x1b02dA8Cb0d097eB8D57A175b88c7D8b47997506"
+
+gnosis:
+  id: gnosis
+  name: Gnosis
+  chain_id: 100
+  eip1559: true
+  network:
+    prod: gnosis-mainnet-prod
+    fork: gnosis-mainnet-hardhat-fork
+  assets:
+    - name: xDAI
+      symbol: XDAI
+      decimals: 18
+      address: ~
+    - name: Wrapped xDAI
+      symbol: WXDAI
+      decimals: 18
+      address: "0xe91d153e0b41518a2ce8dd3d7944fa863463a97d"
+      benefactor: "0x7f90122BF0700F9E7e1F688fe926940E8839F353"
+      wrapped_native: true
+      interfaces: [weth9, erc20]
+    - name: Wrapped Ether
+      symbol: WETH
+      decimals: 18
+      address: "0x6a023ccd1ff6f2045c3309768ead9e68f978f6e1"
+      benefactor: "0x1865d5445010E0baf8Be2eB410d3Eae4A68683c2"
+      interfaces: [erc20]
+    - name: Tether
+      symbol: USDT
+      decimals: 6
+      address: "0x4ecaba5870353805a9f068101a40e0f32ed605c6"
+      benefactor: "0x7f90122BF0700F9E7e1F688fe926940E8839F353"
+      interfaces: [erc20]
+    - name: USD Coin
+      symbol: USDC
+      decimals: 6
+      address: "0xddafbb505ad214d7b80b1f830fccc89b60fb7a83"
+      benefactor: "0x7f90122BF0700F9E7e1F688fe926940E8839F353"
+      interfaces: [erc20]
+    - name: Wrapped BTC
+      symbol: WBTC
+      decimals: 8
+      address: "0x8e5bbbb09ed1ebde8674cda39a0c169401db4252"
+      benefactor: "0xe21F631f47bFB2bC53ED134E83B8cff00e0EC054"
+      interfaces: [erc20]
+    - name: Gnosis
+      symbol: GNO
+      decimals: 18
+      address: "0x9c58bacc331c9aa871afd802db6379a98e80cedb"
+      benefactor: "0x647507A70Ff598F386CB96ae5046486389368C66"
+      interfaces: [erc20]
+    - name: Sushi
+      symbol: SUSHI
+      decimals: 18
+      address: "0x2995d1317dcd4f0ab89f4ae60f3f020a4f17c7ce"
+      benefactor: "0xF38c5b39F29600765849cA38712F302b1522C9B8"
+      interfaces: [erc20]
+    - name: Honey
+      symbol: HNY
+      decimals: 18
+      address: "0x71850b7e9ee3f13ab46d67167341e4bdc905eef9"
+      benefactor: "0x4ba7362F9189572CbB1216819a45aba0d0B2D1CB"
+      interfaces: [erc20]
+  contracts:
+    - venue: honeyswap
+      interfaces: [uniswap_router_v2_02]
+      address: "0x1C232F01118CB8B424793ae03F870aa7D0ac7f77"

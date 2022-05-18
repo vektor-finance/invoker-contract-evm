@@ -8,7 +8,10 @@ arbitrum-hardhat-fork \
 avalanche-hardhat-fork \
 bsc-hardhat-fork \
 optimism-hardhat-fork \ 
-optimism-kovan-hardhat
+optimism-kovan-hardhat-fork \
+gnosis-mainnet-hardhat-fork \
+moonbeam-mainnet-hardhat-fork \
+moonriver-mainnet-hardhat-fork
 
 test-all:
 	for network in ${NETWORKS}; do \

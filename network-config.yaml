@@ -102,6 +102,14 @@ development:
     id: moonriver-mainnet-hardhat-fork
     name: Hardhat (Moonriver Mainnet Fork)
     timeout: 120
+  - cmd: npx hardhat node
+    cmd_settings:
+      fork: gnosis-mainnet-prod
+      port: 8545
+    host: http://localhost
+    id: gnosis-mainnet-hardhat-fork
+    name: Hardhat (Gnosis Mainnet Fork)
+    timeout: 120
 
 live:
   - name: Ethereum
@@ -191,4 +199,11 @@ live:
         explorer: https://moonriver.moonscan.io
         host: $NODE_MOONRIVER_MAINNET_URL
         id: moonriver-mainnet-prod
+        name: Mainnet
+  - name: Gnosis
+    networks:
+      - chainid: 100
+        explorer: https://blockscout.com/xdai/mainnet
+        host: $NODE_GNOSIS_MAINNET_URL
+        id: gnosis-mainnet-prod
         name: Mainnet
