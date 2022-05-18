@@ -5,6 +5,7 @@ pragma solidity ^0.8.6;
 import "./CLPBase.sol";
 import "../../../interfaces/Commands/Swap/UniswapV2/IUniswapV2Router02.sol"; // There is a Namespace collision if we duplicate this into LP folder
 import "../../../interfaces/Commands/LP/UniswapV2/IUniswapV2Factory.sol";
+import "../../../interfaces/Commands/LP/UniswapV2/IUniswapV2Pair.sol";
 
 interface ICLPUniswapV2 {
     struct UniswapV2LPParams {
@@ -83,5 +84,38 @@ contract CLPUniswapV2 is CLPBase, ICLPUniswapV2 {
         */
     }
 
-    function withdraw() external payable {}
+    function withdraw(
+        IUniswapV2Pair pool,
+        uint256 liquidity,
+        UniswapV2LPParams calldata params
+    ) external payable {
+        // router is not actually used
+        address receiver = params.receiver == address(0) ? address(this) : params.receiver;
+        if (params.deadline > 0) {
+            //solhint-disable-next-line not-rely-on-time
+            require(params.deadline >= block.timestamp, "CLPUniswapV2: EXPIRED");
+        }
+
+        address token0 = pool.token0();
+        address token1 = pool.token1();
+
+        uint256 balanceBefore0 = IERC20(token0).balanceOf(receiver);
+        uint256 balanceBefore1 = IERC20(token1).balanceOf(receiver);
+
+        pool.transfer(address(pool), liquidity);
+        pool.burn(receiver);
+
+        uint256 balanceAfter0 = IERC20(token0).balanceOf(receiver);
+        uint256 balanceAfter1 = IERC20(token1).balanceOf(receiver);
+
+        // It is vitally important that token0 corresponds to tokenA
+        require(
+            balanceAfter0 >= balanceBefore0 + params.amountAMin,
+            "CLPUniswapV2: insufficient A received"
+        );
+        require(
+            balanceAfter1 >= balanceBefore1 + params.amountBMin,
+            "CLPUniswapV2: insufficient B received"
+        );
+    }
 }
