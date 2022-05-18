@@ -3,7 +3,7 @@
 pragma solidity ^0.8.6;
 
 import "./CLPBase.sol";
-import "../../../interfaces/Commands/LP/UniswapV2/IUniswapV2Router02.sol";
+import "../../../interfaces/Commands/Swap/UniswapV2/IUniswapV2Router02.sol"; // There is a Namespace collision if we duplicate this into LP folder
 import "../../../interfaces/Commands/LP/UniswapV2/IUniswapV2Factory.sol";
 
 interface ICLPUniswapV2 {
@@ -85,24 +85,3 @@ contract CLPUniswapV2 is CLPBase, ICLPUniswapV2 {
 
     function withdraw() external payable {}
 }
-
-function addLiquidity(
-    address tokenA,
-    address tokenB,
-    uint256 amountADesired,
-    uint256 amountBDesired,
-    uint256 amountAMin,
-    uint256 amountBMin,
-    address to,
-    uint256 deadline
-) {}
-
-function removeLiquidity(
-    address tokenA,
-    address tokenB,
-    uint256 liquidity,
-    uint256 amountAMin,
-    uint256 amountBMin,
-    address to,
-    uint256 deadline
-) {}
