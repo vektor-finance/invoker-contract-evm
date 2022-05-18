@@ -52,7 +52,7 @@ contract CLPUniswapV2 is CLPBase, ICLPUniswapV2 {
         // Potential security risks: what if somebody passes invalid router?
         // Should we 'check'/enforce receipt of LP token?
         uint256 balanceAfter = IERC20(desiredLP).balanceOf(receiver);
-        require(balanceAfter < balanceBefore, "CLPUniswapV2: error receiving LP token");
+        require(balanceAfter > balanceBefore, "CLPUniswapV2: error receiving LP token");
         // This is perhaps a redundant check, given that the following attack vector exists:
         // Create "exploit" contract and pass this as the router parameter
         // exploit contract looks like this: (vyper)
