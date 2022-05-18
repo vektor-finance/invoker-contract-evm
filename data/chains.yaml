@@ -583,8 +583,8 @@ moonriver:
     - name: Wrapped Moonriver
       symbol: WMOVR
       decimals: 18
-      address: "0x98878b06940ae243284ca214f92bb71a2b032b8a"
-      benefactor: "0xea3d1e9e69addfa1ee5bbb89778decd862f1f7c5"
+      address: "0xf50225a84382c74cbdea10b0c176f71fc3de0c4d"
+      benefactor: "0x756057872d1ad41c703b68e12701d27874fbe533"
       wrapped_native: true
       interfaces: [weth9, erc20]
     - name: Wrapped Ether
@@ -610,12 +610,6 @@ moonriver:
       decimals: 6
       address: "0xB44a9B6905aF7c801311e8F4E76932ee959c663C"
       benefactor: "0x9785478135bafe3dcafe4bba4c8311674d4e826e"
-      interfaces: [erc20]
-    - name: Wrapped Bitcoin
-      symbol: WBTC
-      decimals: 8
-      address: "0x6aB6d61428fde76768D7b45D8BFeec19c6eF91A8"
-      benefactor: "0xc5d0c8e241b59f989e37b5c35925c58f8c7f66a8"
       interfaces: [erc20]
     - name: Solarbeam
       symbol: SOLAR
