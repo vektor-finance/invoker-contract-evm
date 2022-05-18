@@ -727,3 +727,70 @@ gnosis:
     - venue: honeyswap
       interfaces: [uniswap_router_v2_02]
       address: "0x1C232F01118CB8B424793ae03F870aa7D0ac7f77"
+
+celo:
+  id: celo
+  name: Celo
+  chain_id: 42220
+  eip1559: true
+  network:
+    prod: celo-mainnet-prod
+    fork: celo-mainnet-hardhat-fork
+  assets:
+    - name: Celo
+      symbol: CELO
+      decimals: 18
+      address: ~
+    - name: Wrapped Celo
+      symbol: WCELO
+      decimals: 18
+      address: "0x471ece3750da237f93b8e339c536989b8978a438"
+      benefactor: "0x6cC083Aed9e3ebe302A6336dBC7c921C9f03349E"
+      wrapped_native: true
+      interfaces: [weth9, erc20]
+    - name: Wrapped Ether
+      symbol: WETH
+      decimals: 18
+      address: "0x122013fd7df1c6f636a5bb8f03108e876548b455"
+      benefactor: "0x517f717f0AE11efc2AF8943071B66d77DfaFc9fC"
+      interfaces: [erc20]
+    - name: DAI
+      symbol: DAI
+      decimals: 18
+      address: "0xe4fe50cdd716522a56204352f00aa110f731932d"
+      benefactor: "0x850197dd5A4865324291d7B5745622A8cd732BCb"
+      interfaces: [erc20]
+    - name: Tether
+      symbol: USDT
+      decimals: 6
+      address: "0x88eeC49252c8cbc039DCdB394c0c2BA2f1637EA0"
+      benefactor: "0xC77398cfb7B0F7ab42baFC02ABc20A69CE8cEf7f"
+      interfaces: [erc20]
+    - name: USD Coin
+      symbol: USDC
+      decimals: 6
+      address: "0xef4229c8c3250c675f21bcefa42f58efbff6002a"
+      benefactor: "0x9906589Ea8fd27504974b7e8201DF5bBdE986b03"
+      interfaces: [erc20]
+    - name: Celo Dollar
+      symbol: CUSD
+      decimals: 18
+      address: "0x765DE816845861e75A25fCA122bb6898B8B1282a"
+      benefactor: "0xC32cBaf3D44dA6fbC761289b871af1A30cc7f993"
+      interfaces: [erc20]
+    - name: Celo Euro
+      symbol: CEUR
+      decimals: 18
+      address: "0xD8763CBa276a3738E6DE85b4b3bF5FDed6D6cA73"
+      benefactor: "0x612A7c4E40EAcb63dADaD4939dFedb9d3397E6fd"
+      interfaces: [erc20]
+    - name: ReSource Protocol
+      symbol: SOURCE
+      decimals: 18
+      address: "0x74c0C58B99b68cF16A717279AC2d056A34ba2bFe"
+      benefactor: "0x3DC674FAB7eB6e6B3925d02A3D3F566CdAe3354f"
+      interfaces: [erc20]
+  contracts:
+    - venue: ubeswap
+      interfaces: [uniswap_router_v2_02]
+      address: "0xe3d8bd6aed4f159bc8000a9cd47cffdb95f96121"

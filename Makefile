@@ -1,17 +1,20 @@
 .PHONY: test-all
 
 NETWORKS = hardhat \
-mainnet-hardhat-fork ethereum-rinkeby-hardhat-fork \
-polygon-hardhat-fork polygon-mumbai-hardhat-fork \
+mainnet-hardhat-fork \
+ethereum-rinkeby-hardhat-fork \
+polygon-hardhat-fork \
+polygon-mumbai-hardhat-fork \
 fantom-hardhat-fork \
 arbitrum-hardhat-fork \
 avalanche-hardhat-fork \
 bsc-hardhat-fork \
-optimism-hardhat-fork \ 
+optimism-hardhat-fork \
 optimism-kovan-hardhat-fork \
-gnosis-mainnet-hardhat-fork \
 moonbeam-mainnet-hardhat-fork \
-moonriver-mainnet-hardhat-fork
+moonriver-mainnet-hardhat-fork \
+gnosis-mainnet-hardhat-fork \
+celo-mainnet-hardhat-fork
 
 test-all:
 	for network in ${NETWORKS}; do \

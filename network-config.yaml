@@ -110,6 +110,14 @@ development:
     id: gnosis-mainnet-hardhat-fork
     name: Hardhat (Gnosis Mainnet Fork)
     timeout: 120
+  - cmd: npx hardhat node
+    cmd_settings:
+      fork: celo-mainnet-prod
+      port: 8545
+    host: http://localhost
+    id: celo-mainnet-hardhat-fork
+    name: Hardhat (Celo Mainnet Fork)
+    timeout: 120
 
 live:
   - name: Ethereum
@@ -206,4 +214,11 @@ live:
         explorer: https://blockscout.com/xdai/mainnet
         host: $NODE_GNOSIS_MAINNET_URL
         id: gnosis-mainnet-prod
+        name: Mainnet
+  - name: Celo
+    networks:
+      - chainid: 42220
+        explorer: https://explorer.celo.org
+        host: $NODE_CELO_MAINNET_URL
+        id: celo-mainnet-prod
         name: Mainnet
