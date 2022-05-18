@@ -1,5 +1,5 @@
 import pytest
-from brownie import ZERO_ADDRESS, Contract, interface
+from brownie import Contract, interface
 
 from data.access_control import APPROVED_COMMAND
 from data.chain import get_chain
@@ -44,8 +44,20 @@ def test_deposit(invoker, cmove, alice, clp, uni_router):
         weth,
         usdc_amount,
         usdc,
-        (uni_router, min_weth_amount, min_usdc_amount, ZERO_ADDRESS, 0),
+        (uni_router, min_weth_amount, min_usdc_amount, alice, 0),
     )
+
+    if uni_router._name == "uniswap router":
+        lp_address = "0xB4e16d0168e52d35CaCD2c6185b44281Ec28C9Dc"
+    elif uni_router._name == "sushiswap router":
+        lp_address = "0x397ff1542f962076d0bfe58ea045ffa2d347aca0"
+    lp_token = Contract.from_abi(
+        "WETH-USDC LP Token",
+        lp_address,
+        interface.ERC20Detailed.abi,
+    )
+
+    assert lp_token.balanceOf(alice) == 0
 
     invoker.invoke(
         [cmove, cmove, clp],
@@ -53,4 +65,4 @@ def test_deposit(invoker, cmove, alice, clp, uni_router):
         {"from": alice},
     )
 
-    assert False
+    assert lp_token.balanceOf(alice) >= 1
