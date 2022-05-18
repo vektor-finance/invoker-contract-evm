@@ -17,6 +17,18 @@ interface ICLPUniswapV2 {
     }
 }
 
+interface IERC2612 {
+    function permit(
+        address owner,
+        address spender,
+        uint256 value,
+        uint256 deadline,
+        uint8 v,
+        bytes32 r,
+        bytes32 s
+    ) external;
+}
+
 contract CLPUniswapV2 is CLPBase, ICLPUniswapV2 {
     function _getContractName() internal pure override returns (string memory) {
         return "CLPUniswapV2";
@@ -117,5 +129,20 @@ contract CLPUniswapV2 is CLPBase, ICLPUniswapV2 {
             balanceAfter1 >= balanceBefore1 + params.amountBMin,
             "CLPUniswapV2: insufficient B received"
         );
+    }
+
+    // https://github.com/Uniswap/v2-core/blob/master/contracts/UniswapV2ERC20.sol#L81
+    // Should refactor this into base contract
+    function eip2612Permit(
+        IERC2612 token,
+        address owner,
+        address spender,
+        uint256 value,
+        uint256 deadline,
+        uint8 v,
+        bytes32 r,
+        bytes32 s
+    ) external payable {
+        token.permit(owner, spender, value, deadline, v, r, s);
     }
 }
