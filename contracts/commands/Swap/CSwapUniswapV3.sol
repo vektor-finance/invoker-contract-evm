@@ -1,5 +1,4 @@
 //SPDX-License-Identifier: Unlicensed
-// Vektor SWAP Command (Uniswap V3)
 
 pragma solidity ^0.8.6;
 
