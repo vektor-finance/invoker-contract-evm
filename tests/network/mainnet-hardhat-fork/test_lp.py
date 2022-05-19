@@ -1,7 +1,5 @@
-import time
-
 import pytest
-from brownie import Contract, interface
+from brownie import ZERO_ADDRESS, Contract, interface
 from eth_account import Account
 from web3 import Web3
 
@@ -72,23 +70,62 @@ def test_deposit(invoker, cmove, alice, clp, uni_router):
     assert lp_token.balanceOf(alice) >= 1
 
 
-def test_permit(invoker, clp, sign_eip2612_permit):
+def test_permit(invoker, clp, sign_eip2612_permit, chain):
     lp_token = Contract.from_abi(
         "WETH-USDC LP Token",
         "0xB4e16d0168e52d35CaCD2c6185b44281Ec28C9Dc",
         interface.IUniswapV2Pair.abi,
     )
     owner = Account.create()
-    deadline = int(time.time()) + 1000
+    deadline = chain.time() + 1000
     sig = sign_eip2612_permit(lp_token, owner, invoker.address, deadline=deadline)
     v, hex_r, hex_s = Web3.toInt(sig[-1]), Web3.toHex(sig[:32]), Web3.toHex(sig[32:64])
 
     clp.eip2612Permit(lp_token, owner.address, invoker, 2**256 - 1, deadline, v, hex_r, hex_s)
 
-    assert False
 
+def test_withdraw(chain, sign_eip2612_permit, invoker, clp, cmove):
+    # setup assets
+    assets = get_chain()["assets"]
+    WETH = [asset for asset in assets if asset["symbol"] == "WETH"][0]
+    USDC = [asset for asset in assets if asset["symbol"] == "USDC"][0]
+    weth = Contract.from_abi(WETH["name"], WETH["address"], interface.ERC20Detailed.abi)
+    usdc = Contract.from_abi(USDC["name"], USDC["address"], interface.ERC20Detailed.abi)
 
-# ßdef test_withdraw():
-# mint for alice
-# approx ~100 usd liquidity
-# lp_token.transfer(alice, 1e12, {"from": "0x03ae53b33feeac1222c3f372f32d37ba95f0f099"})
+    alice = Account.create()
+    # mint for alice
+    # approx ~100 usd liquidity
+    lp_token = Contract.from_abi(
+        "WETH-USDC LP Token",
+        "0xB4e16d0168e52d35CaCD2c6185b44281Ec28C9Dc",
+        interface.IUniswapV2Pair.abi,
+    )
+    amount_in = int(1e12)
+    lp_token.transfer(
+        alice.address, amount_in, {"from": "0x03ae53b33feeac1222c3f372f32d37ba95f0f099"}
+    )
+
+    # prepare signature for permit
+    deadline = chain.time() + 1000
+    sig = sign_eip2612_permit(
+        lp_token, alice, invoker.address, deadline=deadline, allowance=amount_in
+    )
+    v, hex_r, hex_s = Web3.toInt(sig[-1]), Web3.toHex(sig[:32]), Web3.toHex(sig[32:64])
+
+    # compose invoker transaction
+    calldata_permit = clp.eip2612Permit.encode_input(
+        lp_token, alice.address, invoker, amount_in, deadline, v, hex_r, hex_s
+    )
+    calldata_move_in = cmove.moveERC20In.encode_input(lp_token, amount_in)
+    calldata_withdraw = clp.withdraw.encode_input(
+        lp_token, amount_in, (ZERO_ADDRESS, 0, 0, alice.address, 0)
+    )
+
+    invoker.invoke(
+        [clp, cmove, clp],
+        [calldata_permit, calldata_move_in, calldata_withdraw],
+        {"from": alice.address},
+    )
+
+    assert weth.balanceOf(alice.address) > 0
+    assert usdc.balanceOf(alice.address) > 0
