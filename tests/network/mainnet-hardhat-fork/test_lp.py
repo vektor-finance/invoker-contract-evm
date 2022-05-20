@@ -178,3 +178,41 @@ def test_expired_withdraw(chain, sign_eip2612_permit, invoker, clp, cmove):
             [calldata_permit, calldata_move_in, calldata_withdraw],
             {"from": alice.address},
         )
+
+
+def test_withdraw_via_approve(alice, invoker, clp, cmove):
+    # setup assets
+    assets = get_chain()["assets"]
+    WETH = [asset for asset in assets if asset["symbol"] == "WETH"][0]
+    USDC = [asset for asset in assets if asset["symbol"] == "USDC"][0]
+    weth = Contract.from_abi(WETH["name"], WETH["address"], interface.ERC20Detailed.abi)
+    usdc = Contract.from_abi(USDC["name"], USDC["address"], interface.ERC20Detailed.abi)
+
+    # mint for alice
+    # approx ~100 usd liquidity
+    lp_token = Contract.from_abi(
+        "WETH-USDC LP Token",
+        "0xB4e16d0168e52d35CaCD2c6185b44281Ec28C9Dc",
+        interface.IUniswapV2Pair.abi,
+    )
+    amount_in = int(1e12)
+    lp_token.transfer(
+        alice.address, amount_in, {"from": "0x03ae53b33feeac1222c3f372f32d37ba95f0f099"}
+    )
+
+    # approve the LP token rather than using permit
+    lp_token.approve(invoker, amount_in, {"from": alice})
+
+    calldata_move_in = cmove.moveERC20In.encode_input(lp_token, amount_in)
+    calldata_withdraw = clp.withdraw.encode_input(
+        lp_token, amount_in, (ZERO_ADDRESS, 0, 0, alice, 0)
+    )
+
+    invoker.invoke(
+        [cmove, clp],
+        [calldata_move_in, calldata_withdraw],
+        {"from": alice.address},
+    )
+
+    assert weth.balanceOf(alice) > 0
+    assert usdc.balanceOf(alice) > 0
