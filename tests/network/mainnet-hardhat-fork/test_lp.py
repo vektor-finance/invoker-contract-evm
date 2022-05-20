@@ -23,10 +23,21 @@ def test_deposit(invoker, cmove, alice, clp, uni_router):
     weth = Contract.from_abi(WETH["name"], WETH["address"], interface.ERC20Detailed.abi)
     usdc = Contract.from_abi(USDC["name"], USDC["address"], interface.ERC20Detailed.abi)
 
-    weth_amount = 1e18
-    usdc_amount = 2041e6
+    if uni_router._name == "uniswap router":
+        lp_address = "0xB4e16d0168e52d35CaCD2c6185b44281Ec28C9Dc"
+    elif uni_router._name == "sushiswap router":
+        lp_address = "0x397ff1542f962076d0bfe58ea045ffa2d347aca0"
+    lp_token = Contract.from_abi(
+        "WETH-USDC LP Token",
+        lp_address,
+        interface.IUniswapV2Pair.abi,
+    )
 
-    slippage = 0.50  # 50%
+    weth_amount = 1e18
+    reserves = lp_token.getReserves()  # (usdc, weth)
+    usdc_amount = int(reserves[0] / reserves[1] * weth_amount)
+
+    slippage = 0.01  # 1%
 
     min_weth_amount = weth_amount * (1 - slippage)
     min_usdc_amount = usdc_amount * (1 - slippage)
@@ -48,16 +59,6 @@ def test_deposit(invoker, cmove, alice, clp, uni_router):
         usdc_amount,
         usdc,
         (uni_router, min_weth_amount, min_usdc_amount, alice, 0),
-    )
-
-    if uni_router._name == "uniswap router":
-        lp_address = "0xB4e16d0168e52d35CaCD2c6185b44281Ec28C9Dc"
-    elif uni_router._name == "sushiswap router":
-        lp_address = "0x397ff1542f962076d0bfe58ea045ffa2d347aca0"
-    lp_token = Contract.from_abi(
-        "WETH-USDC LP Token",
-        lp_address,
-        interface.ERC20Detailed.abi,
     )
 
     assert lp_token.balanceOf(alice) == 0
@@ -140,7 +141,6 @@ def test_withdraw(chain, sign_eip2612_permit, invoker, clp, cmove, receiver):
 
 
 def test_expired_withdraw(chain, sign_eip2612_permit, invoker, clp, cmove):
-
     alice = Account.create()
     # mint for alice
     # approx ~100 usd liquidity
