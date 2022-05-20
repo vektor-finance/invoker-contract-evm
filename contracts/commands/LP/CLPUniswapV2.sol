@@ -6,28 +6,8 @@ import "./CLPBase.sol";
 import "../../../interfaces/Commands/Swap/UniswapV2/IUniswapV2Router02.sol"; // There is a Namespace collision if we duplicate this into LP folder
 import "../../../interfaces/Commands/LP/UniswapV2/IUniswapV2Factory.sol";
 import "../../../interfaces/Commands/LP/UniswapV2/IUniswapV2Pair.sol";
-
-interface ICLPUniswapV2 {
-    struct UniswapV2LPParams {
-        address router;
-        uint256 amountAMin;
-        uint256 amountBMin;
-        address receiver;
-        uint256 deadline;
-    }
-}
-
-interface IERC2612 {
-    function permit(
-        address owner,
-        address spender,
-        uint256 value,
-        uint256 deadline,
-        uint8 v,
-        bytes32 r,
-        bytes32 s
-    ) external;
-}
+import "../../../interfaces/Commands/LP/UniswapV2/ICLPUniswapV2.sol";
+import "../../../interfaces/Tokens/IERC2612.sol";
 
 contract CLPUniswapV2 is CLPBase, ICLPUniswapV2 {
     function _getContractName() internal pure override returns (string memory) {
