@@ -49,8 +49,8 @@ contract CLPUniswapV2 is CLPBase, ICLPUniswapV2 {
         address desiredLP = IUniswapV2Factory(factory).getPair(address(tokenA), address(tokenB));
         uint256 balanceBefore = IERC20(desiredLP).balanceOf(receiver);
 
-        _tokenApprove(tokenA, address(params.router), amountA);
-        _tokenApprove(tokenB, address(params.router), amountB);
+        _approveToken(tokenA, address(params.router), amountA);
+        _approveToken(tokenB, address(params.router), amountB);
         IUniswapV2Router02(params.router).addLiquidity(
             address(tokenA),
             address(tokenB),

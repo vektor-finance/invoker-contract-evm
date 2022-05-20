@@ -18,7 +18,7 @@ abstract contract CLPBase {
         }
     }
 
-    function _tokenApprove(
+    function _approveToken(
         IERC20 token,
         address spender,
         uint256 amount
