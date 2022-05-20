@@ -2,9 +2,7 @@
 
 pragma solidity >=0.8.1;
 
-interface IERC2612 {
-    function nonces(address owner) external view returns (uint256);
-}
+import "../../../interfaces/Tokens/IERC2612.sol";
 
 interface IAnyswapV3ERC20 is IERC2612 {
     function totalSupply() external view returns (uint256);

@@ -584,7 +584,7 @@ moonriver:
       symbol: WMOVR
       decimals: 18
       address: "0xf50225a84382c74cbdea10b0c176f71fc3de0c4d"
-      benefactor: "0x756057872d1ad41c703b68e12701d27874fbe533"
+      benefactor: "0x939f7E76cc515cc296dD3ce362D9a52e148A7D5f"
       wrapped_native: true
       interfaces: [weth9, erc20]
     - name: Wrapped Ether

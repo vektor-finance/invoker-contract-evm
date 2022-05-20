@@ -7,6 +7,8 @@ from pathlib import Path
 import pytest
 from brownie import Contract, interface
 from brownie.project.main import get_loaded_projects
+from eth_account import Account
+from eth_account.messages import encode_structured_data
 
 from data.anyswap import get_anyswap_tokens_for_chain
 from data.chain import get_chain, get_chain_name, get_network, get_wnative_address
@@ -250,3 +252,58 @@ def pytest_generate_tests(metafunc):
         if any_native is []:
             pytest.skip("Cannot bridge native token using anyswap")
         metafunc.parametrize("any_native_token", any_native, ids=native_names, indirect=True)
+
+
+@pytest.fixture
+def sign_eip2612_permit():
+    def sign_eip2612_permit(
+        token: Contract,
+        owner: Account,  # NOTE: Must be a eth_key account, not Brownie
+        spender: str,
+        allowance: int = 2**256 - 1,  # Allowance to set with `permit`
+        deadline: int = 0,  # 0 means no time limit
+        override_nonce: int = None,
+    ):
+        name = "Uniswap V2"
+        version = "1"
+        chain_id = 1
+
+        if override_nonce:
+            nonce = override_nonce
+        else:
+            nonce = token.nonces(owner.address)
+        data = {
+            "types": {
+                "EIP712Domain": [
+                    {"name": "name", "type": "string"},
+                    {"name": "version", "type": "string"},
+                    {"name": "chainId", "type": "uint256"},
+                    {"name": "verifyingContract", "type": "address"},
+                ],
+                "Permit": [
+                    {"name": "owner", "type": "address"},
+                    {"name": "spender", "type": "address"},
+                    {"name": "value", "type": "uint256"},
+                    {"name": "nonce", "type": "uint256"},
+                    {"name": "deadline", "type": "uint256"},
+                ],
+            },
+            "domain": {
+                "name": name,
+                "version": version,
+                "chainId": chain_id,
+                "verifyingContract": str(token),
+            },
+            "primaryType": "Permit",
+            "message": {
+                "owner": owner.address,
+                "spender": spender,
+                "value": allowance,
+                "nonce": nonce,
+                "deadline": deadline,
+            },
+        }
+        permit = encode_structured_data(data)
+        return owner.sign_message(permit).signature
+
+    return sign_eip2612_permit
