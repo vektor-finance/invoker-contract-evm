@@ -34,6 +34,16 @@ contract CLPUniswapV2 is CLPBase, ICLPUniswapV2 {
         return "CLPUniswapV2";
     }
 
+    /**
+        @notice Deposits tokens into an LP pool
+        @dev The user calling this function must take necessary precautions to ensure that
+            the address of the router is a valid and trusted implementation of UniswapV2Router
+        @param amountA The desired amount of `tokenA` to deposit
+        @param tokenA The first token to be supplied
+        @param amountB The desired amount of `tokenB` to deposit
+        @param tokenB The second token to be supplied
+        @param params Additional parameters to pass to this function
+     */
     function deposit(
         uint256 amountA,
         IERC20 tokenA,
@@ -61,39 +71,8 @@ contract CLPUniswapV2 is CLPBase, ICLPUniswapV2 {
             receiver,
             deadline
         );
-        // How do we enforce that this was a valid outcome?
-        // Potential security risks: what if somebody passes invalid router?
-        // Should we 'check'/enforce receipt of LP token?
         uint256 balanceAfter = IERC20(desiredLP).balanceOf(receiver);
         require(balanceAfter > balanceBefore, "CLPUniswapV2: error receiving LP token");
-        // This is perhaps a redundant check, given that the following attack vector exists:
-        // Create "exploit" contract and pass this as the router parameter
-        // exploit contract looks like this: (vyper)
-        /*
-            * exploit_contract.vy
-
-            def factory() -> address:
-                return self
-            def getPair(a: address, b: address) -> address:
-                return self.exploit_contract2
-            
-            * exploit_contract2.vy
-
-            def addLiquidity(tokenA: address, 
-                tokenB: address,
-                amountADesired: uint256,
-                amountBDesired: uint256,
-                amountAMin: uint256,
-                amountBMin: uint256,
-                to: address,
-                deadline: uint256
-            ) -> (uint256, uint256):
-                AAmount: uint256 = ERC20(tokenA).allowance(msg.sender, self)
-                ERC20(tokenA).transferFrom(msg.sender, self, AAmount)
-                BAmount: uint256 = ERC20(tokenB).allowance(msg.sender, self)
-                ERC20(tokenB).transferFrom(msg.sender, self, AAmount)
-                self.mint(msg.sender,1)
-        */
     }
 
     function withdraw(
