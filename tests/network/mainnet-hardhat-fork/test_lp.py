@@ -110,6 +110,13 @@ def test_withdraw(chain, sign_eip2612_permit, invoker, clp, cmove, receiver):
         alice.address, amount_in, {"from": "0x03ae53b33feeac1222c3f372f32d37ba95f0f099"}
     )
 
+    # calculate minimum received
+    pool_share = amount_in / lp_token.totalSupply()
+    reserves = lp_token.getReserves()  # (usdc, weth)
+    slippage = 0.01  # 1% slippage
+    min_usdc = int((1 - slippage) * reserves[0] * pool_share)
+    min_weth = int((1 - slippage) * reserves[1] * pool_share)
+
     # prepare signature for permit
     deadline = chain.time() + 1000
     sig = sign_eip2612_permit(
@@ -123,7 +130,7 @@ def test_withdraw(chain, sign_eip2612_permit, invoker, clp, cmove, receiver):
     )
     calldata_move_in = cmove.moveERC20In.encode_input(lp_token, amount_in)
     calldata_withdraw = clp.withdraw.encode_input(
-        lp_token, amount_in, (ZERO_ADDRESS, 0, 0, receiver, 0)
+        lp_token, amount_in, (ZERO_ADDRESS, min_usdc, min_weth, receiver, 0)
     )
 
     invoker.invoke(
@@ -136,8 +143,9 @@ def test_withdraw(chain, sign_eip2612_permit, invoker, clp, cmove, receiver):
         output_user = invoker.address
     else:
         output_user = alice.address
-    assert weth.balanceOf(output_user) > 0
-    assert usdc.balanceOf(output_user) > 0
+
+    assert weth.balanceOf(output_user) > min_weth
+    assert usdc.balanceOf(output_user) > min_usdc
 
 
 def test_expired_withdraw(chain, sign_eip2612_permit, invoker, clp, cmove):
