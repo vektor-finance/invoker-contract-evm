@@ -57,11 +57,11 @@ contract CLPCurve is CLPBase, ICLPCurve {
             }
         }
         if (amounts.length == 2) {
-            uint256[2] memory coin_amounts = [amounts[0], amounts[1]];
-            ICurvePool(pool).add_liquidity(coin_amounts, params.minReceivedLiquidity);
+            uint256[2] memory coinAmounts = [amounts[0], amounts[1]];
+            ICurvePool(pool).add_liquidity(coinAmounts, params.minReceivedLiquidity);
         } else if (amounts.length == 3) {
-            uint256[3] memory coin_amounts = [amounts[0], amounts[1], amounts[2]];
-            ICurvePool(pool).add_liquidity(coin_amounts, params.minReceivedLiquidity);
+            uint256[3] memory coinAmounts = [amounts[0], amounts[1], amounts[2]];
+            ICurvePool(pool).add_liquidity(coinAmounts, params.minReceivedLiquidity);
         }
     }
 
@@ -77,11 +77,11 @@ contract CLPCurve is CLPBase, ICLPCurve {
             }
         }
         if (amounts.length == 2) {
-            uint256[2] memory coin_amounts = [amounts[0], amounts[1]];
-            ICurveZap(zap).add_liquidity(coin_amounts, params.minReceivedLiquidity);
+            uint256[2] memory coinAmounts = [amounts[0], amounts[1]];
+            ICurveZap(zap).add_liquidity(coinAmounts, params.minReceivedLiquidity);
         } else if (amounts.length == 3) {
-            uint256[3] memory coin_amounts = [amounts[0], amounts[1], amounts[2]];
-            ICurveZap(zap).add_liquidity(coin_amounts, params.minReceivedLiquidity);
+            uint256[3] memory coinAmounts = [amounts[0], amounts[1], amounts[2]];
+            ICurveZap(zap).add_liquidity(coinAmounts, params.minReceivedLiquidity);
         }
     }
 }

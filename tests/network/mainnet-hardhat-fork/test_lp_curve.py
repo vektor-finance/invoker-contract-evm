@@ -65,3 +65,52 @@ def test_deposit(invoker, cmove, alice, clp_curve):
     token_3pool = interface.ERC20Detailed("0x6c3f90f043a72fa612cbac8115ee7e52bde6e490")
 
     assert token_3pool.balanceOf(invoker) >= min_amount
+
+
+def test_deposit_zap(invoker, cmove, clp_curve, alice):
+    assets = get_chain()["assets"]
+    USDC = [asset for asset in assets if asset["symbol"] == "USDC"][0]
+    USDT = [asset for asset in assets if asset["symbol"] == "USDT"][0]
+
+    usdc = Contract.from_abi(USDC["name"], USDC["address"], interface.ERC20Detailed.abi)
+    usdt = Contract.from_abi(USDT["name"], USDT["address"], interface.ERC20Detailed.abi)
+
+    curve_compound = "0xA2B47E3D5c44877cca798226B7B8118F9BFb7A56"
+    curve_pool = Contract.from_abi("Compound pool", curve_compound, interface.ICurvePool.abi)
+    curve_zap = "0xeB21209ae4C2c9FF2a86ACA31E123764A3B6Bc06"
+
+    usdc_amount = 100e6
+    usdt_amount = 100e6
+
+    usdc.approve(invoker.address, usdc_amount, {"from": alice})
+    usdt.approve(invoker.address, usdt_amount, {"from": alice})
+
+    mint_tokens_for(usdc, alice.address)
+    mint_tokens_for(usdt, alice.address)
+
+    calldata_move_usdc = cmove.moveERC20In.encode_input(usdc.address, usdc_amount)
+    calldata_move_usdt = cmove.moveERC20In.encode_input(usdt.address, usdt_amount)
+
+    # need to specify which function due to function overloading
+    expected_amount = curve_pool.calc_token_amount["uint256[2],bool"](
+        [usdc_amount, usdt_amount], True
+    )
+    min_amount = expected_amount // 1.01
+
+    # dai, usdc, usdt
+    calldata_deposit = clp_curve.depositZap.encode_input(
+        [usdc_amount, usdt_amount],
+        [usdc, usdt],
+        curve_zap,
+        [min_amount],
+    )
+
+    invoker.invoke(
+        [cmove, cmove, cmove, clp_curve],
+        [calldata_move_usdc, calldata_move_usdt, calldata_deposit],
+        {"from": alice},
+    )
+
+    token_compound = interface.ERC20Detailed("0x845838DF265Dcd2c412A1Dc9e959c7d08537f8a2")
+
+    assert token_compound.balanceOf(invoker) >= min_amount
