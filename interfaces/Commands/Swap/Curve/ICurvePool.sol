@@ -28,4 +28,39 @@ interface ICurvePool {
     function add_liquidity(uint256[7] calldata amounts, uint256 min_mint_amount) external;
 
     function add_liquidity(uint256[8] calldata amounts, uint256 min_mint_amount) external;
+
+    function calc_token_amount(uint256[2] calldata amounts, bool deposit)
+        external
+        view
+        returns (uint256 liquidity);
+
+    function calc_token_amount(uint256[3] calldata amounts, bool deposit)
+        external
+        view
+        returns (uint256 liquidity);
+
+    function calc_token_amount(uint256[4] calldata amounts, bool deposit)
+        external
+        view
+        returns (uint256 liquidity);
+
+    function calc_token_amount(uint256[5] calldata amounts, bool deposit)
+        external
+        view
+        returns (uint256 liquidity);
+
+    function calc_token_amount(uint256[6] calldata amounts, bool deposit)
+        external
+        view
+        returns (uint256 liquidity);
+
+    function calc_token_amount(uint256[7] calldata amounts, bool deposit)
+        external
+        view
+        returns (uint256 liquidity);
+
+    function calc_token_amount(uint256[8] calldata amounts, bool deposit)
+        external
+        view
+        returns (uint256 liquidity);
 }
