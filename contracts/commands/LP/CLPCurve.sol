@@ -14,7 +14,6 @@ interface ICLPCurve {
         V2_ABI_UNDERLYING
     }
     struct CurveLPDepositParams {
-        CurveLPType lpType;
         uint256 minReceivedLiquidity;
     }
     struct CurveLPWithdrawParams {
@@ -33,8 +32,20 @@ contract CLPCurve is CLPBase, ICLPCurve {
         address pool,
         CurveLPDepositParams calldata params
     ) external payable {
-        if (params.lpType == CurveLPType.V1_ABI_LIQUIDITY) {
-            ICurvePool(pool).add_liquidity(amounts, params.minReceivedLiquidity);
+        // for loop cannot overflow
+        unchecked {
+            for (uint256 i; i < tokens.length; ++i) {
+                if (amounts[i] > 0) {
+                    _approveToken(tokens[i], pool, amounts[i]);
+                }
+            }
+        }
+        if (amounts.length == 2) {
+            uint256[2] memory coin_amounts = [amounts[0], amounts[1]];
+            ICurvePool(pool).add_liquidity(coin_amounts, params.minReceivedLiquidity);
+        } else if (amounts.length == 3) {
+            uint256[3] memory coin_amounts = [amounts[0], amounts[1], amounts[2]];
+            ICurvePool(pool).add_liquidity(coin_amounts, params.minReceivedLiquidity);
         }
     }
 
