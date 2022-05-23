@@ -17,8 +17,24 @@ interface ICLPCurve {
         uint256 minReceivedLiquidity;
     }
     struct CurveLPWithdrawParams {
-        CurveLPType lpType;
+        uint256 minReceivedLiquidity;
     }
+}
+
+interface ICurveZap {
+    function add_liquidity(uint256[2] calldata amounts, uint256 min_mint_amount) external;
+
+    function add_liquidity(uint256[3] calldata amounts, uint256 min_mint_amount) external;
+
+    function add_liquidity(uint256[4] calldata amounts, uint256 min_mint_amount) external;
+
+    function add_liquidity(uint256[5] calldata amounts, uint256 min_mint_amount) external;
+
+    function add_liquidity(uint256[6] calldata amounts, uint256 min_mint_amount) external;
+
+    function add_liquidity(uint256[7] calldata amounts, uint256 min_mint_amount) external;
+
+    function add_liquidity(uint256[8] calldata amounts, uint256 min_mint_amount) external;
 }
 
 contract CLPCurve is CLPBase, ICLPCurve {
@@ -54,5 +70,18 @@ contract CLPCurve is CLPBase, ICLPCurve {
         IERC20[] calldata tokens,
         address zap,
         CurveLPWithdrawParams calldata params
-    ) external payable {}
+    ) external payable {
+        unchecked {
+            for (uint256 i; i < tokens.length; ++i) {
+                _approveToken(tokens[i], zap, amounts[i]);
+            }
+        }
+        if (amounts.length == 2) {
+            uint256[2] memory coin_amounts = [amounts[0], amounts[1]];
+            ICurveZap(zap).add_liquidity(coin_amounts, params.minReceivedLiquidity);
+        } else if (amounts.length == 3) {
+            uint256[3] memory coin_amounts = [amounts[0], amounts[1], amounts[2]];
+            ICurveZap(zap).add_liquidity(coin_amounts, params.minReceivedLiquidity);
+        }
+    }
 }
