@@ -16,9 +16,6 @@ interface ICLPCurve {
     struct CurveLPDepositParams {
         uint256 minReceivedLiquidity;
     }
-    struct CurveLPWithdrawParams {
-        uint256 minReceivedLiquidity;
-    }
 }
 
 interface ICurveZap {
@@ -69,7 +66,7 @@ contract CLPCurve is CLPBase, ICLPCurve {
         uint256[] calldata amounts,
         IERC20[] calldata tokens,
         address zap,
-        CurveLPWithdrawParams calldata params
+        CurveLPDepositParams calldata params
     ) external payable {
         unchecked {
             for (uint256 i; i < tokens.length; ++i) {
@@ -82,6 +79,26 @@ contract CLPCurve is CLPBase, ICLPCurve {
         } else if (amounts.length == 3) {
             uint256[3] memory coinAmounts = [amounts[0], amounts[1], amounts[2]];
             ICurveZap(zap).add_liquidity(coinAmounts, params.minReceivedLiquidity);
+        }
+        // need to continue for further permutations
+        // need to calculate % likelihood of each size
+    }
+
+    function withdraw(
+        ICurvePool pool,
+        uint256 liquidity,
+        uint256[] calldata minimumReceived
+    ) external payable {
+        if (minimumReceived.length == 2) {
+            uint256[2] memory coinAmounts = [minimumReceived[0], minimumReceived[1]];
+            pool.remove_liquidity(liquidity, coinAmounts);
+        } else if (minimumReceived.length == 3) {
+            uint256[3] memory coinAmounts = [
+                minimumReceived[0],
+                minimumReceived[1],
+                minimumReceived[2]
+            ];
+            pool.remove_liquidity(liquidity, coinAmounts);
         }
     }
 }
