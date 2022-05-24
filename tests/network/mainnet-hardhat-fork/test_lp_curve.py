@@ -118,24 +118,41 @@ def test_deposit_zap(invoker, cmove, clp_curve, alice):
 
 def test_withdraw(invoker, cmove, alice, clp_curve):
     whale_3pool = "0xd632f22692fac7611d2aa1c0d552930d43caed3b"
-    # assets = get_chain()["assets"]
-    # USDC = [asset for asset in assets if asset["symbol"] == "USDC"][0]
-    # DAI = [asset for asset in assets if asset["symbol"] == "DAI"][0]
-    # USDT = [asset for asset in assets if asset["symbol"] == "USDT"][0]
+    assets = get_chain()["assets"]
+    DAI = [asset for asset in assets if asset["symbol"] == "DAI"][0]
+    USDC = [asset for asset in assets if asset["symbol"] == "USDC"][0]
+    USDT = [asset for asset in assets if asset["symbol"] == "USDT"][0]
 
-    # usdc = Contract.from_abi(USDC["name"], USDC["address"], interface.ERC20Detailed.abi)
-    # dai = Contract.from_abi(DAI["name"], DAI["address"], interface.ERC20Detailed.abi)
-    # usdt = Contract.from_abi(USDT["name"], USDT["address"], interface.ERC20Detailed.abi)
+    dai = Contract.from_abi(DAI["name"], DAI["address"], interface.ERC20Detailed.abi)
+    usdc = Contract.from_abi(USDC["name"], USDC["address"], interface.ERC20Detailed.abi)
+    usdt = Contract.from_abi(USDT["name"], USDT["address"], interface.ERC20Detailed.abi)
 
     curve_3pool = "0xbebc44782c7db0a1a60cb6fe97d0b483032ff1c7"
-    curve_pool = Contract.from_abi("Curve 3pool", curve_3pool, interface.ICurvePool.abi)
+    curve_pool = Contract.from_abi("Curve 3pool", curve_3pool, interface.CurvePool.abi)
     token_3pool = interface.ERC20Detailed("0x6c3f90f043a72fa612cbac8115ee7e52bde6e490")
 
+    dai_total_balance = curve_pool.balances(0)
+    usdc_total_balance = curve_pool.balances(1)
+    usdt_total_balance = curve_pool.balances(2)
+
     lp_amount = 100e18
+    lp_ratio = lp_amount / token_3pool.totalSupply()
+
+    min_dai_received = int(lp_ratio * dai_total_balance * 0.99)
+    min_usdc_received = int(lp_ratio * usdc_total_balance * 0.99)
+    min_usdt_received = int(lp_ratio * usdt_total_balance * 0.99)
+
     token_3pool.transfer(alice, lp_amount, {"from": whale_3pool})
 
     token_3pool.approve(invoker, lp_amount, {"from": alice})
     calldata_move = cmove.moveERC20In.encode_input(token_3pool, lp_amount)
-    calldata_withdraw = clp_curve.withdraw.encode_input(curve_pool, lp_amount, [0, 0, 0])
+    calldata_withdraw = clp_curve.withdraw.encode_input(
+        curve_pool,
+        lp_amount,
+        [min_dai_received, min_usdc_received, min_usdt_received],
+    )
 
     invoker.invoke([cmove, clp_curve], [calldata_move, calldata_withdraw], {"from": alice})
+    assert dai.balanceOf(invoker) >= min_dai_received
+    assert usdc.balanceOf(invoker) >= min_usdc_received
+    assert usdt.balanceOf(invoker) >= min_usdt_received
