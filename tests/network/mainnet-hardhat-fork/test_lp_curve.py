@@ -156,3 +156,32 @@ def test_withdraw(invoker, cmove, alice, clp_curve):
     assert dai.balanceOf(invoker) >= min_dai_received
     assert usdc.balanceOf(invoker) >= min_usdc_received
     assert usdt.balanceOf(invoker) >= min_usdt_received
+
+
+def test_withdraw_zap(invoker, cmove, alice, clp_curve):
+    # assets = get_chain()["assets"]
+    # DAI = [asset for asset in assets if asset["symbol"] == "DAI"][0]
+    # USDC = [asset for asset in assets if asset["symbol"] == "USDC"][0]
+
+    # dai = Contract.from_abi(DAI["name"], DAI["address"], interface.ERC20Detailed.abi)
+    # usdc = Contract.from_abi(USDC["name"], USDC["address"], interface.ERC20Detailed.abi)
+
+    # curve_compound = "0xA2B47E3D5c44877cca798226B7B8118F9BFb7A56"
+    # curve_pool = Contract.from_abi("Compound pool", curve_compound, interface.ICurvePool.abi)
+    curve_zap = "0xeB21209ae4C2c9FF2a86ACA31E123764A3B6Bc06"
+    token_compound = interface.ERC20Detailed("0x845838DF265Dcd2c412A1Dc9e959c7d08537f8a2")
+    whale_compound = "0x7ca5b0a2910b33e9759dc7ddb0413949071d7575"
+
+    lp_amount = 100e18
+
+    # mint LP tokens for alice
+    token_compound.transfer(alice, lp_amount, {"from": whale_compound})
+
+    token_compound.approve(invoker, lp_amount, {"from": alice})
+
+    calldata_move_in = cmove.moveERC20In.encode_input(token_compound, lp_amount)
+    calldata_withdraw_zap = clp_curve.withdrawZap.encode_input(
+        token_compound, curve_zap, lp_amount, [0, 0]
+    )
+
+    invoker.invoke([cmove, clp_curve], [calldata_move_in, calldata_withdraw_zap], {"from": alice})
