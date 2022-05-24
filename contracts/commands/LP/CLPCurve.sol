@@ -32,6 +32,20 @@ interface ICurveZap {
     function add_liquidity(uint256[7] calldata amounts, uint256 min_mint_amount) external;
 
     function add_liquidity(uint256[8] calldata amounts, uint256 min_mint_amount) external;
+
+    function remove_liquidity(uint256 amount, uint256[2] calldata min_amounts) external;
+
+    function remove_liquidity(uint256 amount, uint256[3] calldata min_amounts) external;
+
+    function remove_liquidity(uint256 amount, uint256[4] calldata min_amounts) external;
+
+    function remove_liquidity(uint256 amount, uint256[5] calldata min_amounts) external;
+
+    function remove_liquidity(uint256 amount, uint256[6] calldata min_amounts) external;
+
+    function remove_liquidity(uint256 amount, uint256[7] calldata min_amounts) external;
+
+    function remove_liquidity(uint256 amount, uint256[8] calldata min_amounts) external;
 }
 
 contract CLPCurve is CLPBase, ICLPCurve {
@@ -99,6 +113,26 @@ contract CLPCurve is CLPBase, ICLPCurve {
                 minimumReceived[2]
             ];
             pool.remove_liquidity(liquidity, coinAmounts);
+        }
+    }
+
+    function withdrawZap(
+        IERC20 LPToken,
+        ICurveZap zap,
+        uint256 liquidity,
+        uint256[] calldata minimumReceived
+    ) external payable {
+        _approveToken(LPToken, address(zap), liquidity);
+        if (minimumReceived.length == 2) {
+            uint256[2] memory coinAmounts = [minimumReceived[0], minimumReceived[1]];
+            zap.remove_liquidity(liquidity, coinAmounts);
+        } else if (minimumReceived.length == 3) {
+            uint256[3] memory coinAmounts = [
+                minimumReceived[0],
+                minimumReceived[1],
+                minimumReceived[2]
+            ];
+            zap.remove_liquidity(liquidity, coinAmounts);
         }
     }
 }
