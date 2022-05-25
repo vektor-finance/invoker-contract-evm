@@ -91,9 +91,17 @@ def test_deposit_zap(invoker, cmove, clp_curve, alice):
     calldata_move_dai = cmove.moveERC20In.encode_input(dai.address, dai_amount)
     calldata_move_usdc = cmove.moveERC20In.encode_input(usdc.address, usdc_amount)
 
+    cdai = interface.CToken("0x5d3a536E4D6DbD6114cc1Ead35777bAB948E3643")
+    cusdc = interface.CToken("0x39AA39c021dfbaE8faC545936693aC917d5E7563")
+
+    # To calculate your balance in the underlying asset,
+    # multiply your cToken balance by exchangeRateStored, and divide by 1e18.
+    cdai_amount = int(dai_amount * 1e18 / cdai.exchangeRateStored())
+    cusdc_amount = int(usdc_amount * 1e18 / cusdc.exchangeRateStored())
+
     # need to specify which function due to function overloading
     expected_amount = curve_pool.calc_token_amount["uint256[2],bool"](
-        [dai_amount, usdc_amount], True
+        [cdai_amount, cusdc_amount], True
     )
     min_amount = expected_amount // 1.01
 
