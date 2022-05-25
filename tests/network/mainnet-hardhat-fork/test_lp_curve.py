@@ -13,30 +13,24 @@ def clp_curve(invoker, deployer, CLPCurve):
     yield contract
 
 
-params_3pool = (
+plain_3pool = (
     ["DAI", "USDC", "USDT"],
     "0xbebc44782c7db0a1a60cb6fe97d0b483032ff1c7",
     "0x6c3f90f043a72fa612cbac8115ee7e52bde6e490",
     "0xd632f22692fac7611d2aa1c0d552930d43caed3b",
 )
 
-# Don't test stETH until we fix deflationary token
-# params_steth = (
-#     ["WETH", "stETH"],
-#     "0xDC24316b9AE028F1497c275EB9192a3Ea0f67022",
-#     "0x06325440D014e39736583c165C2963BA99fAf14E",
-#     "0x99ac10631f69c753ddb595d074422a0922d9056b",
-# )
-
-params_slink = (
+plain_2pool = (
     ["LINK", "sLINK"],
     "0xF178C0b5Bb7e7aBF4e12A4838C7b7c5bA2C623c0",
     "0xcee60cfa923170e4f8204ae08b4fa6a3f5656f3a",
     "0xfd4d8a17df4c27c1dd245d153ccf4499e806c87d",
 )
 
+# plain_4pool does not exist
 
-@pytest.mark.parametrize("tokens,curve_pool,lp_token,lp_benefactor", [params_3pool, params_slink])
+
+@pytest.mark.parametrize("tokens,curve_pool,lp_token,lp_benefactor", [plain_3pool, plain_2pool])
 class TestBasePool:
     def test_deposit(
         self, tokens, curve_pool, lp_token, alice, invoker, cmove, clp_curve, lp_benefactor
@@ -121,12 +115,20 @@ class TestBasePool:
             assert token.balanceOf(invoker) >= min_received
 
 
-params_compound = (
+lending_compound_2pool = (
     ["DAI", "USDC"],
     "0xA2B47E3D5c44877cca798226B7B8118F9BFb7A56",  # pool
     "0xeB21209ae4C2c9FF2a86ACA31E123764A3B6Bc06",  # zap
     "0x845838df265dcd2c412a1dc9e959c7d08537f8a2",  # lp token
     "0x7ca5b0a2910b33e9759dc7ddb0413949071d7575",  # lp benefactor
+)
+
+lending_aave_pool = (
+    ["DAI", "USDC", "USDT"],
+    "0xDeBF20617708857ebe4F679508E7b7863a8A8EeE",
+    None,
+    "0xFd2a8fA60Abd58Efe3EeE34dd494cD491dC14900",
+    "0xd662908ada2ea1916b3318327a97eb18ad588b5d",
 )
 
 
@@ -234,7 +236,10 @@ class UnderlyingPool:
             assert token.balanceOf(invoker) >= min_received
 
 
-@pytest.mark.parametrize("tokens,curve_pool,curve_zap,lp_token,lp_benefactor", [params_compound])
+@pytest.mark.parametrize(
+    "tokens,curve_pool,curve_zap,lp_token,lp_benefactor",
+    [lending_compound_2pool, lending_aave_pool],
+)
 class TestCompoundPool(UnderlyingPool):
     def calc_deposit(self, curve_pool, token_contracts, token_amounts):
         cdai = interface.CToken("0x5d3a536E4D6DbD6114cc1Ead35777bAB948E3643")
