@@ -20,8 +20,23 @@ params_3pool = (
     "0xd632f22692fac7611d2aa1c0d552930d43caed3b",
 )
 
+# Don't test stETH until we fix deflationary token
+# params_steth = (
+#     ["WETH", "stETH"],
+#     "0xDC24316b9AE028F1497c275EB9192a3Ea0f67022",
+#     "0x06325440D014e39736583c165C2963BA99fAf14E",
+#     "0x99ac10631f69c753ddb595d074422a0922d9056b",
+# )
 
-@pytest.mark.parametrize("tokens,curve_pool,lp_token,lp_benefactor", [params_3pool])
+params_slink = (
+    ["LINK", "sLINK"],
+    "0xF178C0b5Bb7e7aBF4e12A4838C7b7c5bA2C623c0",
+    "0xcee60cfa923170e4f8204ae08b4fa6a3f5656f3a",
+    "0xfd4d8a17df4c27c1dd245d153ccf4499e806c87d",
+)
+
+
+@pytest.mark.parametrize("tokens,curve_pool,lp_token,lp_benefactor", [params_3pool, params_slink])
 class TestBasePool:
     def test_deposit(
         self, tokens, curve_pool, lp_token, alice, invoker, cmove, clp_curve, lp_benefactor
@@ -32,7 +47,8 @@ class TestBasePool:
         calldatas = []
         for token in tokens:
             _token = [asset for asset in assets if asset["symbol"] == token][0]
-            _contract = interface.ERC20Detailed(_token["address"])
+            _address = _token["address"] or "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE"
+            _contract = interface.ERC20Detailed(_address)
             _amount = 100 * 10 ** _token["decimals"]
             token_contracts.append(_contract)
             token_amounts.append(_amount)
@@ -82,7 +98,8 @@ class TestBasePool:
         min_tokens_received = []
         for key, token in enumerate(tokens):
             _token = [asset for asset in assets if asset["symbol"] == token][0]
-            _contract = interface.ERC20Detailed(_token["address"])
+            _address = _token["address"] or "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE"
+            _contract = interface.ERC20Detailed(_address)
             token_contracts.append(_contract)
             _balance = curve_pool.balances(key)
             pool_balances.append(_balance)
