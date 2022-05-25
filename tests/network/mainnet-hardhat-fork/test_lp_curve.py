@@ -121,65 +121,73 @@ class TestBasePool:
             assert token.balanceOf(invoker) >= min_received
 
 
-class TestUnderlyingPool:
-    pass
+params_compound = (
+    ["DAI", "USDC"],
+    "0xA2B47E3D5c44877cca798226B7B8118F9BFb7A56",  # pool
+    "0xeB21209ae4C2c9FF2a86ACA31E123764A3B6Bc06",  # zap
+    "0x845838df265dcd2c412a1dc9e959c7d08537f8a2",  # lp token
+    "0x7ca5b0a2910b33e9759dc7ddb0413949071d7575",  # lp benefactor
+)
 
 
-def test_deposit_zap(invoker, cmove, clp_curve, alice):
-    assets = get_chain()["assets"]
-    DAI = [asset for asset in assets if asset["symbol"] == "DAI"][0]
-    USDC = [asset for asset in assets if asset["symbol"] == "USDC"][0]
-
-    dai = Contract.from_abi(DAI["name"], DAI["address"], interface.ERC20Detailed.abi)
-    usdc = Contract.from_abi(USDC["name"], USDC["address"], interface.ERC20Detailed.abi)
-
-    curve_compound = "0xA2B47E3D5c44877cca798226B7B8118F9BFb7A56"
-    curve_pool = Contract.from_abi("Compound pool", curve_compound, interface.ICurvePool.abi)
-    curve_zap = "0xeB21209ae4C2c9FF2a86ACA31E123764A3B6Bc06"
-
-    dai_amount = 100e18
-    usdc_amount = 100e6
-
-    dai.approve(invoker.address, dai_amount, {"from": alice})
-    usdc.approve(invoker.address, usdc_amount, {"from": alice})
-
-    mint_tokens_for(usdc, alice.address)
-    mint_tokens_for(dai, alice.address)
-
-    calldata_move_dai = cmove.moveERC20In.encode_input(dai.address, dai_amount)
-    calldata_move_usdc = cmove.moveERC20In.encode_input(usdc.address, usdc_amount)
-
-    cdai = interface.CToken("0x5d3a536E4D6DbD6114cc1Ead35777bAB948E3643")
-    cusdc = interface.CToken("0x39AA39c021dfbaE8faC545936693aC917d5E7563")
-
-    # To calculate your balance in the underlying asset,
-    # multiply your cToken balance by exchangeRateStored, and divide by 1e18.
-    cdai_amount = int(dai_amount * 1e18 / cdai.exchangeRateStored())
-    cusdc_amount = int(usdc_amount * 1e18 / cusdc.exchangeRateStored())
-
-    # need to specify which function due to function overloading
-    expected_amount = curve_pool.calc_token_amount["uint256[2],bool"](
-        [cdai_amount, cusdc_amount], True
-    )
-    min_amount = expected_amount // 1.01
-
-    # dai, usdc, usdt
-    calldata_deposit = clp_curve.depositZap.encode_input(
-        [dai_amount, usdc_amount],
-        [dai, usdc],
+class UnderlyingPool:
+    def test_deposit_zap(
+        self,
+        tokens,
+        curve_pool,
         curve_zap,
-        [min_amount],
-    )
+        invoker,
+        alice,
+        cmove,
+        clp_curve,
+        lp_token,
+        lp_benefactor,
+    ):
+        assets = get_chain()["assets"]
+        token_contracts = []
+        token_amounts = []
+        calldatas = []
+        for token in tokens:
+            _token = [asset for asset in assets if asset["symbol"] == token][0]
+            _address = _token["address"] or "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE"
+            _contract = interface.ERC20Detailed(_address)
+            _amount = 100 * 10 ** _token["decimals"]
+            token_contracts.append(_contract)
+            token_amounts.append(_amount)
+            _contract.approve(invoker.address, _amount, {"from": alice})
+            mint_tokens_for(_contract, alice.address)
+            calldatas.append(cmove.moveERC20In.encode_input(_contract, _amount))
 
-    invoker.invoke(
-        [cmove, cmove, clp_curve],
-        [calldata_move_usdc, calldata_move_dai, calldata_deposit],
-        {"from": alice},
-    )
+        curve_pool = interface.ICurvePool(curve_pool)
+        expected_amount = self.calc_deposit(curve_pool, token_contracts, token_amounts)
+        min_amount = expected_amount // 1.01
 
-    token_compound = interface.ERC20Detailed("0x845838DF265Dcd2c412A1Dc9e959c7d08537f8a2")
+        calldata_deposit = clp_curve.depositZap.encode_input(
+            token_amounts, token_contracts, curve_zap, [min_amount]
+        )
 
-    assert token_compound.balanceOf(invoker) >= min_amount
+        invoker.invoke(
+            [*[cmove] * len(tokens), clp_curve],
+            [*calldatas, calldata_deposit],
+            {"from": alice},
+        )
+
+        lp_token = interface.ERC20Detailed(lp_token)
+        assert lp_token.balanceOf(invoker) >= min_amount
+
+
+@pytest.mark.parametrize("tokens,curve_pool,curve_zap,lp_token,lp_benefactor", [params_compound])
+class TestCompoundPool(UnderlyingPool):
+    def calc_deposit(self, curve_pool, token_contracts, token_amounts):
+        # todo: do this
+        cdai = interface.CToken("0x5d3a536E4D6DbD6114cc1Ead35777bAB948E3643")
+        cusdc = interface.CToken("0x39AA39c021dfbaE8faC545936693aC917d5E7563")
+        cdai_amount = int(token_amounts[0] * 1e18 / cdai.exchangeRateStored())
+        cusdc_amount = int(token_amounts[1] * 1e18 / cusdc.exchangeRateStored())
+        expected_amount = curve_pool.calc_token_amount["uint256[2],bool"](
+            [cdai_amount, cusdc_amount], True
+        )
+        return expected_amount
 
 
 def test_withdraw_zap(invoker, cmove, alice, clp_curve):
