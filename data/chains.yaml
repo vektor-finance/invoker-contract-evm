@@ -63,11 +63,11 @@ mainnet:
       decimals: 8
       address: "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599"
       benefactor: "0xbf72da2bd84c5170618fbe5914b0eca9638d5eb5"
-    - name: Liquid staked Ether 2.0
-      symbol: stETH
-      decimals: 18
-      address: "0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84"
-      benefactor: "0x1982b2f5814301d4e9a8b0201555376e62f82428"
+    # - name: Liquid staked Ether 2.0
+    #   symbol: stETH
+    #   decimals: 18
+    #   address: "0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84"
+    #   benefactor: "0x1982b2f5814301d4e9a8b0201555376e62f82428"
     - name: Chainlink
       symbol: LINK
       decimals: 18
