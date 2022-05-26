@@ -165,6 +165,8 @@ contract CLPCurve is CLPBase, ICLPCurve {
         } else if (amounts.length == 4) {
             uint256[4] memory coinAmounts = [amounts[0], amounts[1], amounts[2], amounts[3]];
             ICurvePool(pool).add_liquidity(coinAmounts, params.minReceivedLiquidity);
+        } else {
+            _revertMsg("unsupported length");
         }
     }
 
@@ -200,6 +202,8 @@ contract CLPCurve is CLPBase, ICLPCurve {
             } else {
                 ICurveZap(zapOrPool).add_liquidity(coinAmounts, params.minReceivedLiquidity, true);
             }
+        } else {
+            _revertMsg("unsupported length");
         }
         // need to continue for further permutations
         // need to calculate % likelihood of each size
@@ -228,6 +232,8 @@ contract CLPCurve is CLPBase, ICLPCurve {
                 minimumReceived[3]
             ];
             pool.remove_liquidity(liquidity, coinAmounts);
+        } else {
+            _revertMsg("unsupported length");
         }
     }
 
@@ -268,6 +274,8 @@ contract CLPCurve is CLPBase, ICLPCurve {
             } else {
                 ICurveZap(poolOrZap).remove_liquidity(liquidity, coinAmounts, true);
             }
+        } else {
+            _revertMsg("unsupported length");
         }
     }
 }
