@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import List, Optional
+from typing import Dict, List, Optional
 
 import pytest
 from brownie import ZERO_ADDRESS, Contract, interface
@@ -218,7 +218,7 @@ class UnderlyingPool:
             calldatas.append(cmove.moveERC20In.encode_input(_contract, _amount))
 
         curve_pool = interface.ICurvePool(curve_pool)
-        expected_amount = self.calc_deposit(curve_pool, token_contracts, token_amounts)
+        expected_amount = self.calc_deposit(curve_pool, tokens, token_contracts, token_amounts)
         min_amount = expected_amount // 1.01
 
         calldata_deposit = clp_curve.depositZap.encode_input(
@@ -277,7 +277,7 @@ class UnderlyingPool:
         lp_token.transfer(alice, lp_amount, {"from": lp_benefactor})
         lp_token.approve(invoker, lp_amount, {"from": alice})
 
-        min_tokens_received = self.calc_withdraw(curve_pool, lp_amount, lp_token)
+        min_tokens_received = self.calc_withdraw(curve_pool, tokens, lp_amount, lp_token)
 
         calldata_move = cmove.moveERC20In.encode_input(lp_token, lp_amount)
         calldata_withdraw = clp_curve.withdrawZap.encode_input(
@@ -299,31 +299,34 @@ class UnderlyingPool:
     ids=[lending_compound.name],
 )
 class TestCompoundPool(UnderlyingPool):
-    def calc_deposit(self, curve_pool, token_contracts, token_amounts):
-        cdai = interface.CToken("0x5d3a536E4D6DbD6114cc1Ead35777bAB948E3643")
-        cusdc = interface.CToken("0x39AA39c021dfbaE8faC545936693aC917d5E7563")
-        cdai_amount = int(token_amounts[0] * 1e18 / cdai.exchangeRateStored())
-        cusdc_amount = int(token_amounts[1] * 1e18 / cusdc.exchangeRateStored())
-        expected_amount = curve_pool.calc_token_amount["uint256[2],bool"](
-            [cdai_amount, cusdc_amount], True
+    c_tokens: Dict[str, str] = {
+        "DAI": "0x5d3a536E4D6DbD6114cc1Ead35777bAB948E3643",
+        "USDC": "0x39AA39c021dfbaE8faC545936693aC917d5E7563",
+    }
+
+    def calc_deposit(self, tokens, curve_pool, token_contracts, token_amounts):
+        ctoken_amounts = []
+        for i, token in enumerate(tokens):
+            c_token = interface.CToken(self.c_tokens[token])
+            ctoken_amounts.append(int(token_amounts[i] * 1e18 / c_token.exchangeRateStored()))
+
+        expected_amount = curve_pool.calc_token_amount[f"uint256[{len(tokens)}],bool"](
+            ctoken_amounts, True
         )
         return int(0.99 * expected_amount)
 
-    def calc_withdraw(self, curve_pool, lp_amount, lp_token):
-        cdai = interface.CToken("0x5d3a536E4D6DbD6114cc1Ead35777bAB948E3643")
-        cusdc = interface.CToken("0x39AA39c021dfbaE8faC545936693aC917d5E7563")
-
-        # To calculate your balance in the underlying asset,
-        # multiply your cToken balance by exchangeRateStored, and divide by 1e18.
-        dai_total_balance = curve_pool.balances(0) * cdai.exchangeRateStored() / 1e18
-        usdc_total_balance = curve_pool.balances(1) * cusdc.exchangeRateStored() / 1e18
-
+    def calc_withdraw(self, tokens, curve_pool, lp_amount, lp_token):
         lp_ratio = lp_amount / lp_token.totalSupply()
 
-        min_dai_received = int(lp_ratio * dai_total_balance * 0.99)
-        min_usdc_received = int(lp_ratio * usdc_total_balance * 0.99)
+        min_ctokens_received = []
+        for i, token in enumerate(tokens):
+            c_token = interface.CTokoen(self.c_tokens[token])
+            # To calculate your balance in the underlying asset,
+            # multiply your cToken balance by exchangeRateStored, and divide by 1e18.
+            ctoken_total_balance = curve_pool.balances(i) * c_token.exchangeRateStored() / 1e18
+            min_ctokens_received.append(int(lp_ratio * ctoken_total_balance * 0.99))
 
-        return [min_dai_received, min_usdc_received]
+        return min_ctokens_received
 
 
 @pytest.mark.parametrize(
@@ -332,12 +335,21 @@ class TestCompoundPool(UnderlyingPool):
     ids=[lending_aave_pool.name],
 )
 class TestAavePool(UnderlyingPool):
-    def calc_deposit(self, curve_pool, token_contracts, token_amounts):
-        # expected_amount = curve_pool.calc_token_amount
-        return 0
+    def calc_deposit(self, tokens, curve_pool, token_contracts, token_amounts):
+        # todo: how to convert tokens to aTokens
+        atoken_amounts = token_amounts
+        expected_amount = curve_pool.calc_token_amount[f"uint256[{len(token_contracts)}],bool"](
+            atoken_amounts, True
+        )
+        min_amount = int(expected_amount * 0.99)
+        return min_amount
 
-    def calc_withdraw(self, curve_pool, lp_amount, lp_token):
-        return [0, 0, 0]
+    def calc_withdraw(self, tokens, curve_pool, lp_amount, lp_token):
+        min_received = []
+        lp_ratio = lp_amount / lp_token.totalSupply()
+        for i, _ in enumerate(tokens):
+            min_received.append(int(curve_pool.balances(i) * lp_ratio * 0.99))
+        return min_received
 
 
 @pytest.mark.parametrize(
@@ -346,24 +358,29 @@ class TestAavePool(UnderlyingPool):
     ids=[meta_busd_pool.name],
 )
 class TestMetaPool(UnderlyingPool):
-    def calc_deposit(self, curve_pool, token_contracts, token_amounts):
+    def calc_deposit(self, tokens, curve_pool, token_contracts, token_amounts):
         # need to specify which function due to function overloading
         expected_amount = curve_pool.calc_token_amount[f"uint256[{len(token_contracts)}],bool"](
             token_amounts, True
         )
         return int(0.99 * expected_amount)
 
-    def calc_withdraw(self, curve_pool, lp_amount, lp_token):
-        dai_total_balance = curve_pool.balances(0)
-        usdc_total_balance = curve_pool.balances(1)
-        usdt_total_balance = curve_pool.balances(2)
-        busd_total_balance = curve_pool.balances(3)
+    def calc_withdraw(self, tokens, curve_pool, lp_amount, lp_token):
+        # dai_total_balance = curve_pool.balances(0)
+        # usdc_total_balance = curve_pool.balances(1)
+        # usdt_total_balance = curve_pool.balances(2)
+        # busd_total_balance = curve_pool.balances(3)
 
+        # lp_ratio = lp_amount / lp_token.totalSupply()
+
+        # min_dai_received = int(dai_total_balance * lp_ratio * 0.99)
+        # min_usdc_received = int(usdc_total_balance * lp_ratio * 0.99)
+        # min_usdt_received = int(usdt_total_balance * lp_ratio * 0.99)
+        # min_busd_received = int(busd_total_balance * lp_ratio * 0.99)
+
+        # return [min_dai_received, min_usdc_received, min_usdt_received, min_busd_received]
+        min_received = []
         lp_ratio = lp_amount / lp_token.totalSupply()
-
-        min_dai_received = int(dai_total_balance * lp_ratio * 0.99)
-        min_usdc_received = int(usdc_total_balance * lp_ratio * 0.99)
-        min_usdt_received = int(usdt_total_balance * lp_ratio * 0.99)
-        min_busd_received = int(busd_total_balance * lp_ratio * 0.99)
-
-        return [min_dai_received, min_usdc_received, min_usdt_received, min_busd_received]
+        for i, _ in enumerate(tokens):
+            min_received.append(int(curve_pool.balances(i) * lp_ratio * 0.99))
+        return min_received
