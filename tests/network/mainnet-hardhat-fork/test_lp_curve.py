@@ -1,3 +1,6 @@
+from dataclasses import astuple, dataclass
+from typing import List, Optional
+
 import pytest
 from brownie import ZERO_ADDRESS, Contract, interface
 
@@ -13,27 +16,68 @@ def clp_curve(invoker, deployer, CLPCurve):
     yield contract
 
 
-plain_3pool = (
-    ["DAI", "USDC", "USDT"],
-    "0xbebc44782c7db0a1a60cb6fe97d0b483032ff1c7",
-    "0x6c3f90f043a72fa612cbac8115ee7e52bde6e490",
-    "0xd632f22692fac7611d2aa1c0d552930d43caed3b",
+@dataclass
+class CurveTestCase:
+    tokens: List[str]
+    pool: str
+    lp_token: str
+    lp_benefactor: str
+    zap: Optional[str] = None
+
+
+# plain pool tests
+
+plain_3pool = CurveTestCase(
+    tokens=["DAI", "USDC", "USDT"],
+    pool="0xbebc44782c7db0a1a60cb6fe97d0b483032ff1c7",
+    lp_token="0x6c3f90f043a72fa612cbac8115ee7e52bde6e490",
+    lp_benefactor="0xd632f22692fac7611d2aa1c0d552930d43caed3b",
 )
 
-plain_2pool = (
-    ["LINK", "sLINK"],
-    "0xF178C0b5Bb7e7aBF4e12A4838C7b7c5bA2C623c0",
-    "0xcee60cfa923170e4f8204ae08b4fa6a3f5656f3a",
-    "0xfd4d8a17df4c27c1dd245d153ccf4499e806c87d",
+plain_slink = CurveTestCase(
+    tokens=["LINK", "sLINK"],
+    pool="0xF178C0b5Bb7e7aBF4e12A4838C7b7c5bA2C623c0",
+    lp_token="0xcee60cfa923170e4f8204ae08b4fa6a3f5656f3a",
+    lp_benefactor="0xfd4d8a17df4c27c1dd245d153ccf4499e806c87d",
 )
+
+plain_pool_tests = [astuple(pool) for pool in [plain_3pool, plain_slink]]
 
 # plain_4pool does not exist
 
 
-@pytest.mark.parametrize("tokens,curve_pool,lp_token,lp_benefactor", [plain_3pool, plain_2pool])
+# meta/underlying pool tests
+
+lending_compound = CurveTestCase(
+    tokens=["DAI", "USDC"],
+    pool="0xA2B47E3D5c44877cca798226B7B8118F9BFb7A56",
+    zap="0xeB21209ae4C2c9FF2a86ACA31E123764A3B6Bc06",
+    lp_token="0x845838df265dcd2c412a1dc9e959c7d08537f8a2",
+    lp_benefactor="0x7ca5b0a2910b33e9759dc7ddb0413949071d7575",
+)
+
+lending_aave_pool = CurveTestCase(
+    tokens=["DAI", "USDC", "USDT"],
+    pool="0xDeBF20617708857ebe4F679508E7b7863a8A8EeE",
+    zap=None,
+    lp_token="0xFd2a8fA60Abd58Efe3EeE34dd494cD491dC14900",
+    lp_benefactor="0xd662908ada2ea1916b3318327a97eb18ad588b5d",
+)
+
+
+@pytest.mark.parametrize("tokens,curve_pool,lp_token,lp_benefactor,curve_zap", plain_pool_tests)
 class TestBasePool:
     def test_deposit(
-        self, tokens, curve_pool, lp_token, alice, invoker, cmove, clp_curve, lp_benefactor
+        self,
+        tokens,
+        curve_pool,
+        lp_token,
+        alice,
+        invoker,
+        cmove,
+        clp_curve,
+        lp_benefactor,
+        curve_zap,
     ):
         assets = get_chain()["assets"]
         token_contracts = []
@@ -77,7 +121,16 @@ class TestBasePool:
         assert lp_token.balanceOf(invoker) >= min_amount
 
     def test_withdraw(
-        self, invoker, cmove, alice, clp_curve, tokens, curve_pool, lp_token, lp_benefactor
+        self,
+        invoker,
+        cmove,
+        alice,
+        clp_curve,
+        tokens,
+        curve_pool,
+        lp_token,
+        lp_benefactor,
+        curve_zap,
     ):
         assets = get_chain()["assets"]
 
@@ -113,23 +166,6 @@ class TestBasePool:
 
         for token, min_received in zip(token_contracts, min_tokens_received):
             assert token.balanceOf(invoker) >= min_received
-
-
-lending_compound_2pool = (
-    ["DAI", "USDC"],
-    "0xA2B47E3D5c44877cca798226B7B8118F9BFb7A56",  # pool
-    "0xeB21209ae4C2c9FF2a86ACA31E123764A3B6Bc06",  # zap
-    "0x845838df265dcd2c412a1dc9e959c7d08537f8a2",  # lp token
-    "0x7ca5b0a2910b33e9759dc7ddb0413949071d7575",  # lp benefactor
-)
-
-lending_aave_pool = (
-    ["DAI", "USDC", "USDT"],
-    "0xDeBF20617708857ebe4F679508E7b7863a8A8EeE",
-    None,
-    "0xFd2a8fA60Abd58Efe3EeE34dd494cD491dC14900",
-    "0xd662908ada2ea1916b3318327a97eb18ad588b5d",
-)
 
 
 class UnderlyingPool:
@@ -237,8 +273,8 @@ class UnderlyingPool:
 
 
 @pytest.mark.parametrize(
-    "tokens,curve_pool,curve_zap,lp_token,lp_benefactor",
-    [lending_compound_2pool],
+    "tokens,curve_pool,lp_token,lp_benefactor,curve_zap",
+    [astuple(lending_compound)],
 )
 class TestCompoundPool(UnderlyingPool):
     def calc_deposit(self, curve_pool, token_contracts, token_amounts):
@@ -269,8 +305,8 @@ class TestCompoundPool(UnderlyingPool):
 
 
 @pytest.mark.parametrize(
-    "tokens,curve_pool,curve_zap,lp_token,lp_benefactor",
-    [lending_aave_pool],
+    "tokens,curve_pool,lp_token,lp_benefactor,curve_zap",
+    [astuple(lending_aave_pool)],
 )
 class TestAavePool(UnderlyingPool):
     def calc_deposit(self, curve_pool, token_contracts, token_amounts):
