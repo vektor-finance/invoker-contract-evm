@@ -15,6 +15,7 @@ interface ICLPCurve {
     }
     struct CurveLPDepositParams {
         uint256 minReceivedLiquidity;
+        bool isZap;
     }
 }
 
@@ -32,6 +33,48 @@ interface ICurveZap {
     function add_liquidity(uint256[7] calldata amounts, uint256 min_mint_amount) external;
 
     function add_liquidity(uint256[8] calldata amounts, uint256 min_mint_amount) external;
+
+    function add_liquidity(
+        uint256[2] calldata amounts,
+        uint256 min_mint_amount,
+        bool use_underlying
+    ) external;
+
+    function add_liquidity(
+        uint256[3] calldata amounts,
+        uint256 min_mint_amount,
+        bool use_underlying
+    ) external;
+
+    function add_liquidity(
+        uint256[4] calldata amounts,
+        uint256 min_mint_amount,
+        bool use_underlying
+    ) external;
+
+    function add_liquidity(
+        uint256[5] calldata amounts,
+        uint256 min_mint_amount,
+        bool use_underlying
+    ) external;
+
+    function add_liquidity(
+        uint256[6] calldata amounts,
+        uint256 min_mint_amount,
+        bool use_underlying
+    ) external;
+
+    function add_liquidity(
+        uint256[7] calldata amounts,
+        uint256 min_mint_amount,
+        bool use_underlying
+    ) external;
+
+    function add_liquidity(
+        uint256[8] calldata amounts,
+        uint256 min_mint_amount,
+        bool use_underlying
+    ) external;
 
     function remove_liquidity(uint256 amount, uint256[2] calldata min_amounts) external;
 
@@ -79,20 +122,28 @@ contract CLPCurve is CLPBase, ICLPCurve {
     function depositZap(
         uint256[] calldata amounts,
         IERC20[] calldata tokens,
-        address zap,
+        address zapOrPool,
         CurveLPDepositParams calldata params
     ) external payable {
         unchecked {
             for (uint256 i; i < tokens.length; ++i) {
-                _approveToken(tokens[i], zap, amounts[i]);
+                _approveToken(tokens[i], zapOrPool, amounts[i]);
             }
         }
         if (amounts.length == 2) {
             uint256[2] memory coinAmounts = [amounts[0], amounts[1]];
-            ICurveZap(zap).add_liquidity(coinAmounts, params.minReceivedLiquidity);
+            if (params.isZap) {
+                ICurveZap(zapOrPool).add_liquidity(coinAmounts, params.minReceivedLiquidity);
+            } else {
+                ICurveZap(zapOrPool).add_liquidity(coinAmounts, params.minReceivedLiquidity, true);
+            }
         } else if (amounts.length == 3) {
             uint256[3] memory coinAmounts = [amounts[0], amounts[1], amounts[2]];
-            ICurveZap(zap).add_liquidity(coinAmounts, params.minReceivedLiquidity);
+            if (params.isZap) {
+                ICurveZap(zapOrPool).add_liquidity(coinAmounts, params.minReceivedLiquidity);
+            } else {
+                ICurveZap(zapOrPool).add_liquidity(coinAmounts, params.minReceivedLiquidity, true);
+            }
         }
         // need to continue for further permutations
         // need to calculate % likelihood of each size

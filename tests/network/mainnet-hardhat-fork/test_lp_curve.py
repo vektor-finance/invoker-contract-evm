@@ -1,5 +1,5 @@
 import pytest
-from brownie import Contract, interface
+from brownie import ZERO_ADDRESS, Contract, interface
 
 from data.access_control import APPROVED_COMMAND
 from data.chain import get_chain
@@ -63,7 +63,7 @@ class TestBasePool:
             token_amounts,
             token_contracts,
             curve_pool,
-            [min_amount],
+            [min_amount, ZERO_ADDRESS],
         )
 
         invoker.invoke(
@@ -165,7 +165,7 @@ class UnderlyingPool:
         min_amount = expected_amount // 1.01
 
         calldata_deposit = clp_curve.depositZap.encode_input(
-            token_amounts, token_contracts, curve_zap, [min_amount]
+            token_amounts, token_contracts, curve_zap or curve_pool, [min_amount, bool(curve_zap)]
         )
 
         invoker.invoke(
@@ -238,7 +238,7 @@ class UnderlyingPool:
 
 @pytest.mark.parametrize(
     "tokens,curve_pool,curve_zap,lp_token,lp_benefactor",
-    [lending_compound_2pool, lending_aave_pool],
+    [lending_compound_2pool],
 )
 class TestCompoundPool(UnderlyingPool):
     def calc_deposit(self, curve_pool, token_contracts, token_amounts):
@@ -266,3 +266,16 @@ class TestCompoundPool(UnderlyingPool):
         min_usdc_received = int(lp_ratio * usdc_total_balance * 0.99)
 
         return [min_dai_received, min_usdc_received]
+
+
+@pytest.mark.parametrize(
+    "tokens,curve_pool,curve_zap,lp_token,lp_benefactor",
+    [lending_aave_pool],
+)
+class TestAavePool(UnderlyingPool):
+    def calc_deposit(self, curve_pool, token_contracts, token_amounts):
+        # expected_amount = curve_pool.calc_token_amount
+        return 0
+
+    def calc_withdraw(self, curve_pool, lp_amount, lp_token):
+        return 0
