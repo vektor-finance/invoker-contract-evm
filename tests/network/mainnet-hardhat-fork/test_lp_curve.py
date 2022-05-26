@@ -1,4 +1,4 @@
-from dataclasses import astuple, dataclass
+from dataclasses import dataclass
 from typing import List, Optional
 
 import pytest
@@ -18,16 +18,21 @@ def clp_curve(invoker, deployer, CLPCurve):
 
 @dataclass
 class CurveTestCase:
+    name: str
     tokens: List[str]
     pool: str
     lp_token: str
     lp_benefactor: str
     zap: Optional[str] = None
 
+    def params(self):
+        return (self.tokens, self.pool, self.lp_token, self.lp_benefactor, self.zap)
+
 
 # plain pool tests
 
 plain_3pool = CurveTestCase(
+    name="3pool",
     tokens=["DAI", "USDC", "USDT"],
     pool="0xbebc44782c7db0a1a60cb6fe97d0b483032ff1c7",
     lp_token="0x6c3f90f043a72fa612cbac8115ee7e52bde6e490",
@@ -35,13 +40,18 @@ plain_3pool = CurveTestCase(
 )
 
 plain_slink = CurveTestCase(
+    name="slink",
     tokens=["LINK", "sLINK"],
     pool="0xF178C0b5Bb7e7aBF4e12A4838C7b7c5bA2C623c0",
     lp_token="0xcee60cfa923170e4f8204ae08b4fa6a3f5656f3a",
     lp_benefactor="0xfd4d8a17df4c27c1dd245d153ccf4499e806c87d",
 )
 
-plain_pool_tests = [astuple(pool) for pool in [plain_3pool, plain_slink]]
+plain_pool_tests = []
+plain_pool_names = []
+for pool in [plain_3pool, plain_slink]:
+    plain_pool_tests.append(pool.params())
+    plain_pool_names.append(pool.name)
 
 # plain_4pool does not exist
 
@@ -49,6 +59,7 @@ plain_pool_tests = [astuple(pool) for pool in [plain_3pool, plain_slink]]
 # meta/underlying pool tests
 
 lending_compound = CurveTestCase(
+    name="compound",
     tokens=["DAI", "USDC"],
     pool="0xA2B47E3D5c44877cca798226B7B8118F9BFb7A56",
     zap="0xeB21209ae4C2c9FF2a86ACA31E123764A3B6Bc06",
@@ -57,6 +68,7 @@ lending_compound = CurveTestCase(
 )
 
 lending_aave_pool = CurveTestCase(
+    name="aave",
     tokens=["DAI", "USDC", "USDT"],
     pool="0xDeBF20617708857ebe4F679508E7b7863a8A8EeE",
     zap=None,
@@ -65,7 +77,9 @@ lending_aave_pool = CurveTestCase(
 )
 
 
-@pytest.mark.parametrize("tokens,curve_pool,lp_token,lp_benefactor,curve_zap", plain_pool_tests)
+@pytest.mark.parametrize(
+    "tokens,curve_pool,lp_token,lp_benefactor,curve_zap", plain_pool_tests, ids=plain_pool_names
+)
 class TestBasePool:
     def test_deposit(
         self,
@@ -274,7 +288,8 @@ class UnderlyingPool:
 
 @pytest.mark.parametrize(
     "tokens,curve_pool,lp_token,lp_benefactor,curve_zap",
-    [astuple(lending_compound)],
+    [lending_compound.params()],
+    ids=[lending_compound.name],
 )
 class TestCompoundPool(UnderlyingPool):
     def calc_deposit(self, curve_pool, token_contracts, token_amounts):
@@ -306,7 +321,8 @@ class TestCompoundPool(UnderlyingPool):
 
 @pytest.mark.parametrize(
     "tokens,curve_pool,lp_token,lp_benefactor,curve_zap",
-    [astuple(lending_aave_pool)],
+    [lending_aave_pool.params()],
+    ids=[lending_aave_pool.name],
 )
 class TestAavePool(UnderlyingPool):
     def calc_deposit(self, curve_pool, token_contracts, token_amounts):
