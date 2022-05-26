@@ -78,6 +78,11 @@ mainnet:
       decimals: 18
       address: "0xbBC455cb4F1B9e4bFC4B73970d360c8f032EfEE6"
       benefactor: "0x2c095f9a475b47d4a60a4102b224441796dbf1c1"
+    - name: Binance USD
+      symbol: BUSD
+      decimals: 18
+      address: "0x4Fabb145d64652a948d72533023f6E7A623C7C53"
+      benefactor: "0xf977814e90da44bfa03b6295a0616a897441acec"
   contracts:
     - venue: uniswap
       interfaces: [uniswap_router_v2_02]

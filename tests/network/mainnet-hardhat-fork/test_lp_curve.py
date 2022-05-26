@@ -53,9 +53,6 @@ for pool in [plain_3pool, plain_slink]:
     plain_pool_tests.append(pool.params())
     plain_pool_names.append(pool.name)
 
-# plain_4pool does not exist
-
-
 # meta/underlying pool tests
 
 lending_compound = CurveTestCase(
@@ -74,6 +71,15 @@ lending_aave_pool = CurveTestCase(
     zap=None,
     lp_token="0xFd2a8fA60Abd58Efe3EeE34dd494cD491dC14900",
     lp_benefactor="0xd662908ada2ea1916b3318327a97eb18ad588b5d",
+)
+
+meta_busd_pool = CurveTestCase(
+    name="busd",
+    tokens=["DAI", "USDC", "USDT", "BUSD"],
+    pool="0x79a8C46DeA5aDa233ABaFFD40F3A0A2B1e5A4F27",
+    lp_token="0x3B3Ac5386837Dc563660FB6a0937DFAa5924333B",
+    lp_benefactor="0x69fb7c45726cfe2badee8317005d3f94be838840",
+    zap="0xb6c057591E073249F2D9D88Ba59a46CFC9B59EdB",
 )
 
 
@@ -300,7 +306,7 @@ class TestCompoundPool(UnderlyingPool):
         expected_amount = curve_pool.calc_token_amount["uint256[2],bool"](
             [cdai_amount, cusdc_amount], True
         )
-        return expected_amount
+        return int(0.99 * expected_amount)
 
     def calc_withdraw(self, curve_pool, lp_amount, lp_token):
         cdai = interface.CToken("0x5d3a536E4D6DbD6114cc1Ead35777bAB948E3643")
@@ -331,3 +337,20 @@ class TestAavePool(UnderlyingPool):
 
     def calc_withdraw(self, curve_pool, lp_amount, lp_token):
         return [0, 0, 0]
+
+
+@pytest.mark.parametrize(
+    "tokens,curve_pool,lp_token,lp_benefactor,curve_zap",
+    [meta_busd_pool.params()],
+    ids=[meta_busd_pool.name],
+)
+class TestMetaPool(UnderlyingPool):
+    def calc_deposit(self, curve_pool, token_contracts, token_amounts):
+        # need to specify which function due to function overloading
+        expected_amount = curve_pool.calc_token_amount[f"uint256[{len(token_contracts)}],bool"](
+            token_amounts, True
+        )
+        return int(0.99 * expected_amount)
+
+    def calc_withdraw(self, curve_pool, lp_amount, lp_token):
+        return [0, 0, 0, 0]
