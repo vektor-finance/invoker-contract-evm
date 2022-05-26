@@ -17,6 +17,10 @@ interface ICLPCurve {
         uint256 minReceivedLiquidity;
         bool isZap;
     }
+    struct CurveLPWithdrawParams {
+        uint256[] minimumReceived;
+        bool isZap;
+    }
 }
 
 interface ICurveZap {
@@ -89,6 +93,48 @@ interface ICurveZap {
     function remove_liquidity(uint256 amount, uint256[7] calldata min_amounts) external;
 
     function remove_liquidity(uint256 amount, uint256[8] calldata min_amounts) external;
+
+    function remove_liquidity(
+        uint256 amount,
+        uint256[2] calldata min_amounts,
+        bool use_underlying
+    ) external;
+
+    function remove_liquidity(
+        uint256 amount,
+        uint256[3] calldata min_amounts,
+        bool use_underlying
+    ) external;
+
+    function remove_liquidity(
+        uint256 amount,
+        uint256[4] calldata min_amounts,
+        bool use_underlying
+    ) external;
+
+    function remove_liquidity(
+        uint256 amount,
+        uint256[5] calldata min_amounts,
+        bool use_underlying
+    ) external;
+
+    function remove_liquidity(
+        uint256 amount,
+        uint256[6] calldata min_amounts,
+        bool use_underlying
+    ) external;
+
+    function remove_liquidity(
+        uint256 amount,
+        uint256[7] calldata min_amounts,
+        bool use_underlying
+    ) external;
+
+    function remove_liquidity(
+        uint256 amount,
+        uint256[8] calldata min_amounts,
+        bool use_underlying
+    ) external;
 }
 
 contract CLPCurve is CLPBase, ICLPCurve {
@@ -169,21 +215,29 @@ contract CLPCurve is CLPBase, ICLPCurve {
 
     function withdrawZap(
         IERC20 LPToken,
-        ICurveZap zap,
+        address poolOrZap,
         uint256 liquidity,
-        uint256[] calldata minimumReceived
+        CurveLPWithdrawParams calldata params
     ) external payable {
-        _approveToken(LPToken, address(zap), liquidity);
-        if (minimumReceived.length == 2) {
-            uint256[2] memory coinAmounts = [minimumReceived[0], minimumReceived[1]];
-            zap.remove_liquidity(liquidity, coinAmounts);
-        } else if (minimumReceived.length == 3) {
+        _approveToken(LPToken, poolOrZap, liquidity);
+        if (params.minimumReceived.length == 2) {
+            uint256[2] memory coinAmounts = [params.minimumReceived[0], params.minimumReceived[1]];
+            if (params.isZap) {
+                ICurveZap(poolOrZap).remove_liquidity(liquidity, coinAmounts);
+            } else {
+                ICurveZap(poolOrZap).remove_liquidity(liquidity, coinAmounts, true);
+            }
+        } else if (params.minimumReceived.length == 3) {
             uint256[3] memory coinAmounts = [
-                minimumReceived[0],
-                minimumReceived[1],
-                minimumReceived[2]
+                params.minimumReceived[0],
+                params.minimumReceived[1],
+                params.minimumReceived[2]
             ];
-            zap.remove_liquidity(liquidity, coinAmounts);
+            if (params.isZap) {
+                ICurveZap(poolOrZap).remove_liquidity(liquidity, coinAmounts);
+            } else {
+                ICurveZap(poolOrZap).remove_liquidity(liquidity, coinAmounts, true);
+            }
         }
     }
 }

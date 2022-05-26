@@ -225,9 +225,9 @@ class UnderlyingPool:
         calldata_move = cmove.moveERC20In.encode_input(lp_token, lp_amount)
         calldata_withdraw = clp_curve.withdrawZap.encode_input(
             lp_token,
-            curve_zap,
+            curve_zap or curve_pool,
             lp_amount,
-            min_tokens_received,
+            [min_tokens_received, bool(curve_zap)],
         )
 
         invoker.invoke([cmove, clp_curve], [calldata_move, calldata_withdraw], {"from": alice})
@@ -278,4 +278,4 @@ class TestAavePool(UnderlyingPool):
         return 0
 
     def calc_withdraw(self, curve_pool, lp_amount, lp_token):
-        return 0
+        return [0, 0, 0]
