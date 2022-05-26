@@ -162,6 +162,9 @@ contract CLPCurve is CLPBase, ICLPCurve {
         } else if (amounts.length == 3) {
             uint256[3] memory coinAmounts = [amounts[0], amounts[1], amounts[2]];
             ICurvePool(pool).add_liquidity(coinAmounts, params.minReceivedLiquidity);
+        } else if (amounts.length == 4) {
+            uint256[4] memory coinAmounts = [amounts[0], amounts[1], amounts[2], amounts[3]];
+            ICurvePool(pool).add_liquidity(coinAmounts, params.minReceivedLiquidity);
         }
     }
 
@@ -190,6 +193,13 @@ contract CLPCurve is CLPBase, ICLPCurve {
             } else {
                 ICurveZap(zapOrPool).add_liquidity(coinAmounts, params.minReceivedLiquidity, true);
             }
+        } else if (amounts.length == 4) {
+            uint256[4] memory coinAmounts = [amounts[0], amounts[1], amounts[2], amounts[3]];
+            if (params.isZap) {
+                ICurveZap(zapOrPool).add_liquidity(coinAmounts, params.minReceivedLiquidity);
+            } else {
+                ICurveZap(zapOrPool).add_liquidity(coinAmounts, params.minReceivedLiquidity, true);
+            }
         }
         // need to continue for further permutations
         // need to calculate % likelihood of each size
@@ -208,6 +218,14 @@ contract CLPCurve is CLPBase, ICLPCurve {
                 minimumReceived[0],
                 minimumReceived[1],
                 minimumReceived[2]
+            ];
+            pool.remove_liquidity(liquidity, coinAmounts);
+        } else if (minimumReceived.length == 4) {
+            uint256[4] memory coinAmounts = [
+                minimumReceived[0],
+                minimumReceived[1],
+                minimumReceived[2],
+                minimumReceived[3]
             ];
             pool.remove_liquidity(liquidity, coinAmounts);
         }
@@ -232,6 +250,18 @@ contract CLPCurve is CLPBase, ICLPCurve {
                 params.minimumReceived[0],
                 params.minimumReceived[1],
                 params.minimumReceived[2]
+            ];
+            if (params.isZap) {
+                ICurveZap(poolOrZap).remove_liquidity(liquidity, coinAmounts);
+            } else {
+                ICurveZap(poolOrZap).remove_liquidity(liquidity, coinAmounts, true);
+            }
+        } else if (params.minimumReceived.length == 4) {
+            uint256[4] memory coinAmounts = [
+                params.minimumReceived[0],
+                params.minimumReceived[1],
+                params.minimumReceived[2],
+                params.minimumReceived[3]
             ];
             if (params.isZap) {
                 ICurveZap(poolOrZap).remove_liquidity(liquidity, coinAmounts);
