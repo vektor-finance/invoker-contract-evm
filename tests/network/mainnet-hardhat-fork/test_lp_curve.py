@@ -354,4 +354,16 @@ class TestMetaPool(UnderlyingPool):
         return int(0.99 * expected_amount)
 
     def calc_withdraw(self, curve_pool, lp_amount, lp_token):
-        return [0, 0, 0, 0]
+        dai_total_balance = curve_pool.balances(0)
+        usdc_total_balance = curve_pool.balances(1)
+        usdt_total_balance = curve_pool.balances(2)
+        busd_total_balance = curve_pool.balances(3)
+
+        lp_ratio = lp_amount / lp_token.totalSupply()
+
+        min_dai_received = int(dai_total_balance * lp_ratio * 0.99)
+        min_usdc_received = int(usdc_total_balance * lp_ratio * 0.99)
+        min_usdt_received = int(usdt_total_balance * lp_ratio * 0.99)
+        min_busd_received = int(busd_total_balance * lp_ratio * 0.99)
+
+        return [min_dai_received, min_usdc_received, min_usdt_received, min_busd_received]
