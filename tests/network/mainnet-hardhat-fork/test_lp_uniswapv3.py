@@ -1,3 +1,4 @@
+import brownie
 import pytest
 from brownie import interface
 
@@ -125,3 +126,27 @@ def test_remove_some_liquidity(position, alice, invoker, clp_uniswapv3, chain):
         initial_position["liquidity"]
         == after_position["liquidity"] + tx.events["DecreaseLiquidity"]["liquidity"]
     )
+
+
+def test_remove_all_liquidity(position, alice, invoker, clp_uniswapv3, chain):
+    nftm = interface.NonfungiblePositionManager("0xc36442b4a4522e871399cd717abdd847ab11fe88")
+    nftm.setApprovalForAll(invoker, True, {"from": alice})
+
+    usdc = interface.ERC20Detailed("0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48")
+    weth = interface.ERC20Detailed("0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2")
+
+    usdc_start_balance = usdc.balanceOf(alice)
+    weth_start_balance = weth.balanceOf(alice)
+
+    calldata_remove_all = clp_uniswapv3.withdrawAll.encode_input(
+        position, (nftm, 0, 0, alice, chain.time() + 100)
+    )
+    tx = invoker.invoke([clp_uniswapv3], [calldata_remove_all], {"from": alice})
+
+    with brownie.reverts():
+        nftm.positions(position)
+
+    assert "DecreaseLiquidity" in tx.events
+    assert "Burn" in tx.events
+
+    assert usdc.balanceOf(alice) > usdc_start_balance or weth.balanceOf(alice) > weth_start_balance
