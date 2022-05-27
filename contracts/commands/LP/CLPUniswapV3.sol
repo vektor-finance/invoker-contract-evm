@@ -222,5 +222,29 @@ contract CLPUniswapV3 is CLPBase, ICLPUniswapV3 {
     function withdrawAll(uint256 tokenId, UniswapV3LPWithdrawParams calldata params)
         external
         payable
-    {}
+    {
+        (, , , , , , , uint128 liquidity, , , , ) = INonfungiblePositionManager(params.router)
+            .positions(tokenId);
+
+        INonfungiblePositionManager(params.router).decreaseLiquidity(
+            INonfungiblePositionManager.DecreaseLiquidityParams({
+                tokenId: tokenId,
+                liquidity: liquidity,
+                amount0Min: params.amountAMin,
+                amount1Min: params.amountBMin,
+                deadline: params.deadline
+            })
+        );
+
+        INonfungiblePositionManager(params.router).collect(
+            INonfungiblePositionManager.CollectParams({
+                tokenId: tokenId,
+                recipient: params.receiver,
+                amount0Max: type(uint128).max,
+                amount1Max: type(uint128).max
+            })
+        );
+
+        INonfungiblePositionManager(params.router).burn(tokenId);
+    }
 }
