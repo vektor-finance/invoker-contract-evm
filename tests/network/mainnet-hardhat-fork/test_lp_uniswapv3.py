@@ -113,6 +113,7 @@ def test_remove_some_liquidity(position, alice, invoker, clp_uniswapv3, chain):
     liquidity_to_remove = initial_position["liquidity"] // 3
     nftm.setApprovalForAll(invoker, True, {"from": alice})
 
+    # todo: calculate slippage
     calldata_remove = clp_uniswapv3.withdraw.encode_input(
         position, liquidity_to_remove, (nftm, 0, 0, alice, chain.time() + 100)
     )
@@ -128,6 +129,20 @@ def test_remove_some_liquidity(position, alice, invoker, clp_uniswapv3, chain):
     )
 
 
+def test_fail_other_remove_some_liquidity(position, alice, bob, invoker, clp_uniswapv3, chain):
+    nftm = interface.NonfungiblePositionManager("0xc36442b4a4522e871399cd717abdd847ab11fe88")
+    initial_position = nftm.positions(position).dict()
+    liquidity_to_remove = initial_position["liquidity"] // 3
+    nftm.setApprovalForAll(invoker, True, {"from": alice})
+
+    calldata_remove = clp_uniswapv3.withdraw.encode_input(
+        position, liquidity_to_remove, (nftm, 0, 0, alice, chain.time() + 100)
+    )
+
+    with brownie.reverts():
+        invoker.invoke([clp_uniswapv3], [calldata_remove], {"from": bob})
+
+
 def test_remove_all_liquidity(position, alice, invoker, clp_uniswapv3, chain):
     nftm = interface.NonfungiblePositionManager("0xc36442b4a4522e871399cd717abdd847ab11fe88")
     nftm.setApprovalForAll(invoker, True, {"from": alice})
@@ -138,15 +153,29 @@ def test_remove_all_liquidity(position, alice, invoker, clp_uniswapv3, chain):
     usdc_start_balance = usdc.balanceOf(alice)
     weth_start_balance = weth.balanceOf(alice)
 
+    # todo: calculate slippage
     calldata_remove_all = clp_uniswapv3.withdrawAll.encode_input(
-        position, (nftm, 0, 0, alice, chain.time() + 100)
+        position,
+        (nftm, 0, 0, alice, chain.time() + 100),
     )
     tx = invoker.invoke([clp_uniswapv3], [calldata_remove_all], {"from": alice})
 
-    with brownie.reverts():
+    # reverts after token is burnt
+    with brownie.reverts("Invalid token ID"):
         nftm.positions(position)
 
     assert "DecreaseLiquidity" in tx.events
     assert "Burn" in tx.events
 
     assert usdc.balanceOf(alice) > usdc_start_balance or weth.balanceOf(alice) > weth_start_balance
+
+
+def test_fail_remove_all_liquidity(position, alice, bob, invoker, chain, clp_uniswapv3):
+    nftm = interface.NonfungiblePositionManager("0xc36442b4a4522e871399cd717abdd847ab11fe88")
+    nftm.setApprovalForAll(invoker, True, {"from": alice})
+
+    calldata_remove_all = clp_uniswapv3.withdrawAll.encode_input(
+        position, (nftm, 0, 0, alice, chain.time() + 100)
+    )
+    with brownie.reverts():
+        invoker.invoke([clp_uniswapv3], [calldata_remove_all], {"from": bob})

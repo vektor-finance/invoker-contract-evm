@@ -204,6 +204,10 @@ contract CLPUniswapV3 is CLPBase, ICLPUniswapV3 {
         uint128 liquidity,
         UniswapV3LPWithdrawParams calldata params
     ) external payable {
+        _requireMsg(
+            INonfungiblePositionManager(params.router).ownerOf(tokenId) == msg.sender,
+            "not your position"
+        );
         INonfungiblePositionManager(params.router).decreaseLiquidity(
             INonfungiblePositionManager.DecreaseLiquidityParams({
                 tokenId: tokenId,
@@ -227,6 +231,10 @@ contract CLPUniswapV3 is CLPBase, ICLPUniswapV3 {
         external
         payable
     {
+        _requireMsg(
+            INonfungiblePositionManager(params.router).ownerOf(tokenId) == msg.sender,
+            "not your position"
+        );
         (, , , , , , , uint128 liquidity, , , , ) = INonfungiblePositionManager(params.router)
             .positions(tokenId);
 
