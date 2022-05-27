@@ -45,6 +45,33 @@ interface INonfungiblePositionManager {
             uint256 amount0,
             uint256 amount1
         );
+
+    function positions(uint256 tokenId)
+        external
+        view
+        returns (
+            uint96 nonce,
+            address operator,
+            address token0,
+            address token1,
+            uint24 fee,
+            int24 tickLower,
+            int24 tickUpper,
+            uint128 liquidity,
+            uint256 feeGrowthInside0LastX128,
+            uint256 feeGrowthInside1LastX128,
+            uint128 tokensOwed0,
+            uint128 tokensOwed1
+        );
+
+    function increaseLiquidity(IncreaseLiquidityParams calldata params)
+        external
+        payable
+        returns (
+            uint128 liquidity,
+            uint256 amount0,
+            uint256 amount1
+        );
 }
 
 interface ICLPUniswapV3 {
@@ -67,7 +94,36 @@ contract CLPUniswapV3 is CLPBase, ICLPUniswapV3 {
         uint256 amountA,
         uint256 amountB,
         UniswapV3LPDepositParams calldata params
-    ) external payable {}
+    ) external payable {
+        (
+            ,
+            ,
+            address token0,
+            address token1,
+            uint24 fee,
+            ,
+            ,
+            ,
+            ,
+            ,
+            ,
+
+        ) = INonfungiblePositionManager(params.router).positions(tokenId);
+
+        _approveToken(IERC20(token0), params.router, amountA);
+        _approveToken(IERC20(token1), params.router, amountB);
+
+        INonfungiblePositionManager(params.router).increaseLiquidity(
+            INonfungiblePositionManager.IncreaseLiquidityParams(
+                tokenId,
+                amountA,
+                amountB,
+                params.amountAMin,
+                params.amountBMin,
+                params.deadline
+            )
+        );
+    }
 
     function depositNew(
         IUniswapV3Pool pool,

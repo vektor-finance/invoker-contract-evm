@@ -12,7 +12,8 @@ def clp_uniswapv3(invoker, deployer, CLPUniswapV3):
     yield contract
 
 
-def test_mint(invoker, clp_uniswapv3, alice, cmove, chain):
+@pytest.fixture(scope="module")
+def position(invoker, clp_uniswapv3, alice, cmove, chain):
     nftm = interface.NonfungiblePositionManager("0xc36442b4a4522e871399cd717abdd847ab11fe88")
 
     tick_lower = 0
@@ -42,6 +43,7 @@ def test_mint(invoker, clp_uniswapv3, alice, cmove, chain):
         tick_upper,
         usdc_amount,
         weth_amount,
+        # todo: add slippage
         (nftm, 0, 0, alice, chain.time() + 100),
     )
 
@@ -51,6 +53,7 @@ def test_mint(invoker, clp_uniswapv3, alice, cmove, chain):
         {"from": alice},
     )
 
+    assert "Mint" in tx.events
     assert "IncreaseLiquidity" in tx.events
     token_id = tx.events["IncreaseLiquidity"]["tokenId"]
 
@@ -62,3 +65,42 @@ def test_mint(invoker, clp_uniswapv3, alice, cmove, chain):
     assert position["tickUpper"] == tick_upper
 
     assert nftm.ownerOf(token_id) == alice
+
+    yield token_id
+
+
+def test_mint(position):
+    pass
+
+
+def test_add_liquidity(position, alice, clp_uniswapv3, cmove, chain, invoker):
+    nftm = interface.NonfungiblePositionManager("0xc36442b4a4522e871399cd717abdd847ab11fe88")
+
+    initial_position = nftm.positions(position).dict()
+
+    usdc = interface.ERC20Detailed("0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48")
+    weth = interface.ERC20Detailed("0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2")
+
+    usdc_amount = 100e6
+    weth_amount = 0.05e18
+
+    usdc.approve(invoker, usdc_amount, {"from": alice})
+    weth.approve(invoker, weth_amount, {"from": alice})
+
+    calldata_move_usdc = cmove.moveERC20In.encode_input(usdc, usdc_amount)
+    calldata_move_weth = cmove.moveERC20In.encode_input(weth, weth_amount)
+
+    calldata_add = clp_uniswapv3.deposit.encode_input(
+        position, usdc_amount, weth_amount, (nftm, 0, 0, alice, chain.time() + 100)
+    )
+
+    invoker.invoke(
+        [cmove, cmove, clp_uniswapv3],
+        [calldata_move_usdc, calldata_move_weth, calldata_add],
+        {"from": alice},
+    )
+
+    after_position = nftm.positions(position).dict()
+
+    # todo: calculate slippage
+    assert after_position["liquidity"] > initial_position["liquidity"]
