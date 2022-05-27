@@ -8,6 +8,7 @@ from data.test_helpers import mint_tokens_for
 
 @pytest.fixture(scope="module")
 def clp_uniswapv3(invoker, deployer, CLPUniswapV3):
+    interface.NonfungiblePositionManager("0xc36442b4a4522e871399cd717abdd847ab11fe88")
     contract = deployer.deploy(CLPUniswapV3)
     invoker.grantRole(APPROVED_COMMAND, contract, {"from": deployer})  # approve command
     yield contract
