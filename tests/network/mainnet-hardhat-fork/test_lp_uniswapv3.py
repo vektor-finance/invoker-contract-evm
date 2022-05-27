@@ -104,3 +104,24 @@ def test_add_liquidity(position, alice, clp_uniswapv3, cmove, chain, invoker):
 
     # todo: calculate slippage
     assert after_position["liquidity"] > initial_position["liquidity"]
+
+
+def test_remove_some_liquidity(position, alice, invoker, clp_uniswapv3, chain):
+    nftm = interface.NonfungiblePositionManager("0xc36442b4a4522e871399cd717abdd847ab11fe88")
+    initial_position = nftm.positions(position).dict()
+    liquidity_to_remove = initial_position["liquidity"] // 3
+    nftm.setApprovalForAll(invoker, True, {"from": alice})
+
+    calldata_remove = clp_uniswapv3.withdraw.encode_input(
+        position, liquidity_to_remove, (nftm, 0, 0, alice, chain.time() + 100)
+    )
+
+    tx = invoker.invoke([clp_uniswapv3], [calldata_remove], {"from": alice})
+
+    after_position = nftm.positions(position).dict()
+
+    assert "DecreaseLiquidity" in tx.events
+    assert (
+        initial_position["liquidity"]
+        == after_position["liquidity"] + tx.events["DecreaseLiquidity"]["liquidity"]
+    )

@@ -14,6 +14,10 @@ interface IUniswapV3Pool {
 }
 
 interface INonfungiblePositionManager {
+    function approve(address to, uint256 tokenId) external;
+
+    function ownerOf(uint256 tokenId) external returns (address);
+
     struct IncreaseLiquidityParams {
         uint256 tokenId;
         uint256 amount0Desired;
@@ -200,6 +204,12 @@ contract CLPUniswapV3 is CLPBase, ICLPUniswapV3 {
         uint128 liquidity,
         UniswapV3LPWithdrawParams calldata params
     ) external payable {
+        _requireMsg(
+            INonfungiblePositionManager(params.router).ownerOf(tokenId) == msg.sender,
+            "not your position"
+        );
+        INonfungiblePositionManager(params.router).approve(params.router, tokenId);
+
         INonfungiblePositionManager(params.router).decreaseLiquidity(
             INonfungiblePositionManager.DecreaseLiquidityParams({
                 tokenId: tokenId,
