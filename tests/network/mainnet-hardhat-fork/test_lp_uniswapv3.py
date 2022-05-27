@@ -139,7 +139,7 @@ def test_fail_other_remove_some_liquidity(position, alice, bob, invoker, clp_uni
         position, liquidity_to_remove, (nftm, 0, 0, alice, chain.time() + 100)
     )
 
-    with brownie.reverts():
+    with brownie.reverts("CLPUniswapV3:not your position"):
         invoker.invoke([clp_uniswapv3], [calldata_remove], {"from": bob})
 
 
@@ -177,5 +177,5 @@ def test_fail_remove_all_liquidity(position, alice, bob, invoker, chain, clp_uni
     calldata_remove_all = clp_uniswapv3.withdrawAll.encode_input(
         position, (nftm, 0, 0, alice, chain.time() + 100)
     )
-    with brownie.reverts():
+    with brownie.reverts("CLPUniswapV3:not your position"):
         invoker.invoke([clp_uniswapv3], [calldata_remove_all], {"from": bob})
