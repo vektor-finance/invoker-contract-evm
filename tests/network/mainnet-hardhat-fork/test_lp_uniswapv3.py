@@ -22,7 +22,7 @@ def position(invoker, clp_uniswapv3, alice, cmove, chain):
     tick_upper = 6000
 
     # WETH-USDC 0.3%
-    uniswap_pool = interface.IUniswapV3Pool("0x8ad599c3A0ff1De082011EFDDc58f1908eb6e6D8")
+    uniswap_pool = interface.UniswapV3Pool("0x8ad599c3A0ff1De082011EFDDc58f1908eb6e6D8")
 
     usdc = interface.ERC20Detailed("0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48")
     weth = interface.ERC20Detailed("0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2")
@@ -55,6 +55,7 @@ def position(invoker, clp_uniswapv3, alice, cmove, chain):
         {"from": alice},
     )
 
+    assert "Mint" in tx.events
     assert "IncreaseLiquidity" in tx.events
     token_id = tx.events["IncreaseLiquidity"]["tokenId"]
 
