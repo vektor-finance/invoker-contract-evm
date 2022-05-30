@@ -78,6 +78,7 @@ def test_mint(position):
 
 
 Q96 = 0x1000000000000000000000000
+RESOLUTION = 96
 
 
 def get_sqrt_ratio_at_tick(tick):
@@ -113,6 +114,35 @@ def get_liquidity_for_amounts(sqrt_ratio, sqrt_ratioA, sqrt_ratioB, amount0, amo
     return liquidity
 
 
+def get_amount0_for_liquidity(sqrt_ratioA, sqrt_ratioB, liquidity):
+    if sqrt_ratioA > sqrt_ratioB:
+        sqrt_ratioA, sqrt_ratioB = (sqrt_ratioB, sqrt_ratioA)
+    return ((liquidity << RESOLUTION) * (sqrt_ratioB - sqrt_ratioA) / sqrt_ratioB) / sqrt_ratioA
+
+
+def get_amount1_for_liquidity(sqrt_ratioA, sqrt_ratioB, liquidity):
+    if sqrt_ratioA > sqrt_ratioB:
+        sqrt_ratioA, sqrt_ratioB = (sqrt_ratioB, sqrt_ratioA)
+    return liquidity * (sqrt_ratioB - sqrt_ratioA) / Q96
+
+
+def get_amounts_for_liquidity(sqrt_ratio, sqrt_ratioA, sqrt_ratioB, liquidity):
+    if sqrt_ratioA > sqrt_ratioB:
+        sqrt_ratioA, sqrt_ratioB = (sqrt_ratioB, sqrt_ratioA)
+
+    amount0, amount1 = (0, 0)
+
+    if sqrt_ratio <= sqrt_ratioA:
+        amount0 = get_amount0_for_liquidity(sqrt_ratioA, sqrt_ratioB, liquidity)
+    elif sqrt_ratio < sqrt_ratioB:
+        amount0 = get_amount0_for_liquidity(sqrt_ratio, sqrt_ratioB, liquidity)
+        amount1 = get_amount1_for_liquidity(sqrt_ratioA, sqrt_ratio, liquidity)
+    else:
+        amount1 = get_amount1_for_liquidity(sqrt_ratioA, sqrt_ratioB, liquidity)
+
+    return (amount0, amount1)
+
+
 def test_add_liquidity(position, alice, clp_uniswapv3, cmove, chain, invoker):
     nftm = interface.NonfungiblePositionManager("0xc36442b4a4522e871399cd717abdd847ab11fe88")
 
@@ -130,8 +160,27 @@ def test_add_liquidity(position, alice, clp_uniswapv3, cmove, chain, invoker):
     calldata_move_usdc = cmove.moveERC20In.encode_input(usdc, usdc_amount)
     calldata_move_weth = cmove.moveERC20In.encode_input(weth, weth_amount)
 
+    uniswap_pool = interface.UniswapV3Pool("0x8ad599c3A0ff1De082011EFDDc58f1908eb6e6D8")
+    sqrt_price = uniswap_pool.slot0().dict()["sqrtPriceX96"]
+    expected_liquidity = get_liquidity_for_amounts(
+        sqrt_price,
+        get_sqrt_ratio_at_tick(0),
+        get_sqrt_ratio_at_tick(6000),
+        usdc_amount,
+        weth_amount,
+    )
+    min_usdc_used, min_weth_used = get_amounts_for_liquidity(
+        sqrt_price,
+        get_sqrt_ratio_at_tick(0),
+        get_sqrt_ratio_at_tick(6000),
+        expected_liquidity * 0.99,
+    )
+
     calldata_add = clp_uniswapv3.deposit.encode_input(
-        position, usdc_amount, weth_amount, (nftm, 0, 0, alice, chain.time() + 100)
+        position,
+        usdc_amount,
+        weth_amount,
+        (nftm, min_usdc_used, min_weth_used, alice, chain.time() + 100),
     )
 
     invoker.invoke(
@@ -142,9 +191,7 @@ def test_add_liquidity(position, alice, clp_uniswapv3, cmove, chain, invoker):
 
     after_position = nftm.positions(position).dict()
 
-    # todo: calculate slippage
-    assert after_position["liquidity"] > initial_position["liquidity"]
-    assert False
+    assert after_position["liquidity"] >= initial_position["liquidity"] + 0.99 * expected_liquidity
 
 
 def test_remove_some_liquidity(position, alice, invoker, clp_uniswapv3, chain):
