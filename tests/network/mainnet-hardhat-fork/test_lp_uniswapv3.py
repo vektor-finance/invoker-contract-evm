@@ -55,6 +55,7 @@ def position(invoker, clp_uniswapv3, alice, cmove, chain):
         {"from": alice},
     )
 
+    print(tx.events.keys())
     assert "Mint" in tx.events
     assert "IncreaseLiquidity" in tx.events
     token_id = tx.events["IncreaseLiquidity"]["tokenId"]
