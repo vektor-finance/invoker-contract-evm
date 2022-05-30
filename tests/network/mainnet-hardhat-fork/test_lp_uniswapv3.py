@@ -200,9 +200,25 @@ def test_remove_some_liquidity(position, alice, invoker, clp_uniswapv3, chain):
     liquidity_to_remove = initial_position["liquidity"] // 3
     nftm.setApprovalForAll(invoker, True, {"from": alice})
 
-    # todo: calculate slippage
+    uniswap_pool = interface.UniswapV3Pool("0x8ad599c3A0ff1De082011EFDDc58f1908eb6e6D8")
+    sqrt_price = uniswap_pool.slot0().dict()["sqrtPriceX96"]
+    expected_usdc_received, expected_weth_received = get_amounts_for_liquidity(
+        sqrt_price,
+        get_sqrt_ratio_at_tick(0),
+        get_sqrt_ratio_at_tick(6000),
+        liquidity_to_remove,
+    )
+
     calldata_remove = clp_uniswapv3.withdraw.encode_input(
-        position, liquidity_to_remove, (nftm, 0, 0, alice, chain.time() + 100)
+        position,
+        liquidity_to_remove,
+        (
+            nftm,
+            0.99 * expected_usdc_received,
+            0.99 * expected_weth_received,
+            alice,
+            chain.time() + 100,
+        ),
     )
 
     tx = invoker.invoke([clp_uniswapv3], [calldata_remove], {"from": alice})
@@ -233,6 +249,8 @@ def test_fail_other_remove_some_liquidity(position, alice, bob, invoker, clp_uni
 def test_remove_all_liquidity(position, alice, invoker, clp_uniswapv3, chain):
     nftm = interface.NonfungiblePositionManager("0xc36442b4a4522e871399cd717abdd847ab11fe88")
     nftm.setApprovalForAll(invoker, True, {"from": alice})
+    initial_position = nftm.positions(position).dict()
+    liquidity_to_remove = initial_position["liquidity"]
 
     usdc = interface.ERC20Detailed("0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48")
     weth = interface.ERC20Detailed("0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2")
@@ -240,10 +258,23 @@ def test_remove_all_liquidity(position, alice, invoker, clp_uniswapv3, chain):
     usdc_start_balance = usdc.balanceOf(alice)
     weth_start_balance = weth.balanceOf(alice)
 
-    # todo: calculate slippage
+    uniswap_pool = interface.UniswapV3Pool("0x8ad599c3A0ff1De082011EFDDc58f1908eb6e6D8")
+    sqrt_price = uniswap_pool.slot0().dict()["sqrtPriceX96"]
+    expected_usdc_received, expected_weth_received = get_amounts_for_liquidity(
+        sqrt_price,
+        get_sqrt_ratio_at_tick(0),
+        get_sqrt_ratio_at_tick(6000),
+        liquidity_to_remove,
+    )
     calldata_remove_all = clp_uniswapv3.withdrawAll.encode_input(
         position,
-        (nftm, 0, 0, alice, chain.time() + 100),
+        (
+            nftm,
+            0.99 * expected_usdc_received,
+            0.99 * expected_weth_received,
+            alice,
+            chain.time() + 100,
+        ),
     )
     tx = invoker.invoke([clp_uniswapv3], [calldata_remove_all], {"from": alice})
 
