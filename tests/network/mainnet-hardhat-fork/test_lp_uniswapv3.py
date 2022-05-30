@@ -1,3 +1,5 @@
+import math
+
 import brownie
 import pytest
 from brownie import interface
@@ -75,6 +77,42 @@ def test_mint(position):
     pass
 
 
+Q96 = 0x1000000000000000000000000
+
+
+def get_sqrt_ratio_at_tick(tick):
+    return math.sqrt(1.0001**tick) * Q96
+
+
+def get_liquidity_for_amount0(sqrt_ratioA, sqrt_ratioB, amount0):
+    if sqrt_ratioA > sqrt_ratioB:
+        sqrt_ratioA, sqrt_ratioB = (sqrt_ratioB, sqrt_ratioA)
+    intermediate = sqrt_ratioA * sqrt_ratioB / Q96
+    return amount0 * intermediate / (sqrt_ratioB - sqrt_ratioA)
+
+
+def get_liquidity_for_amount1(sqrt_ratioA, sqrt_ratioB, amount1):
+    if sqrt_ratioA > sqrt_ratioB:
+        sqrt_ratioA, sqrt_ratioB = (sqrt_ratioB, sqrt_ratioA)
+    return amount1 * Q96 / (sqrt_ratioB - sqrt_ratioA)
+
+
+def get_liquidity_for_amounts(sqrt_ratio, sqrt_ratioA, sqrt_ratioB, amount0, amount1):
+    if sqrt_ratioA > sqrt_ratioB:
+        sqrt_ratioA, sqrt_ratioB = (sqrt_ratioB, sqrt_ratioA)
+
+    if sqrt_ratio <= sqrt_ratioA:
+        liquidity = get_liquidity_for_amount0(sqrt_ratioA, sqrt_ratioB, amount0)
+    elif sqrt_ratio < sqrt_ratioB:
+        liquidity0 = get_liquidity_for_amount0(sqrt_ratio, sqrt_ratioB, amount0)
+        liquidity1 = get_liquidity_for_amount1(sqrt_ratioA, sqrt_ratio, amount1)
+        liquidity = liquidity0 if liquidity0 < liquidity1 else liquidity1
+    else:
+        liquidity = get_liquidity_for_amount1(sqrt_ratioA, sqrt_ratioB, amount1)
+
+    return liquidity
+
+
 def test_add_liquidity(position, alice, clp_uniswapv3, cmove, chain, invoker):
     nftm = interface.NonfungiblePositionManager("0xc36442b4a4522e871399cd717abdd847ab11fe88")
 
@@ -106,6 +144,7 @@ def test_add_liquidity(position, alice, clp_uniswapv3, cmove, chain, invoker):
 
     # todo: calculate slippage
     assert after_position["liquidity"] > initial_position["liquidity"]
+    assert False
 
 
 def test_remove_some_liquidity(position, alice, invoker, clp_uniswapv3, chain):
