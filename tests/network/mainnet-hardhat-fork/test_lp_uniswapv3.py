@@ -44,14 +44,28 @@ def position(invoker, clp_uniswapv3, alice, cmove, chain):
     calldata_move_usdc = cmove.moveERC20In.encode_input(usdc, usdc_amount)
     calldata_move_weth = cmove.moveERC20In.encode_input(weth, weth_amount)
 
+    sqrt_price = uniswap_pool.slot0().dict()["sqrtPriceX96"]
+    expected_liquidity = get_liquidity_for_amounts(
+        sqrt_price,
+        get_sqrt_ratio_at_tick(0),
+        get_sqrt_ratio_at_tick(6000),
+        usdc_amount,
+        weth_amount,
+    )
+    min_usdc_used, min_weth_used = get_amounts_for_liquidity(
+        sqrt_price,
+        get_sqrt_ratio_at_tick(0),
+        get_sqrt_ratio_at_tick(6000),
+        expected_liquidity * 0.99,
+    )
+
     calldata_deposit = clp_uniswapv3.depositNew.encode_input(
         uniswap_pool,
         tick_lower,
         tick_upper,
         usdc_amount,
         weth_amount,
-        # todo: add slippage
-        (nftm, 0, 0, alice, chain.time() + 100),
+        (nftm, min_usdc_used, min_weth_used, alice, chain.time() + 100),
     )
 
     tx = invoker.invoke(
