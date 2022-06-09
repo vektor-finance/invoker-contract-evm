@@ -15,15 +15,15 @@ interface ICLPCurve {
     }
     struct CurveLPDepositParams {
         uint256 minReceivedLiquidity;
-        bool isZap;
+        bool useHelperContract;
     }
     struct CurveLPWithdrawParams {
         uint256[] minimumReceived;
-        bool isZap;
+        bool useHelperContract;
     }
 }
 
-interface ICurveZap {
+interface ICurveHelper {
     function add_liquidity(uint256[2] calldata amounts, uint256 min_mint_amount) external;
 
     function add_liquidity(uint256[3] calldata amounts, uint256 min_mint_amount) external;
@@ -170,37 +170,58 @@ contract CLPCurve is CLPBase, ICLPCurve {
         }
     }
 
-    function depositZap(
+    function depositHelper(
         uint256[] calldata amounts,
         IERC20[] calldata tokens,
-        address zapOrPool,
+        address depositAddress,
         CurveLPDepositParams calldata params
     ) external payable {
         unchecked {
             for (uint256 i; i < tokens.length; ++i) {
-                _approveToken(tokens[i], zapOrPool, amounts[i]);
+                _approveToken(tokens[i], depositAddress, amounts[i]);
             }
         }
         if (amounts.length == 2) {
             uint256[2] memory coinAmounts = [amounts[0], amounts[1]];
-            if (params.isZap) {
-                ICurveZap(zapOrPool).add_liquidity(coinAmounts, params.minReceivedLiquidity);
+            if (params.useHelperContract) {
+                ICurveHelper(depositAddress).add_liquidity(
+                    coinAmounts,
+                    params.minReceivedLiquidity
+                );
             } else {
-                ICurveZap(zapOrPool).add_liquidity(coinAmounts, params.minReceivedLiquidity, true);
+                ICurveHelper(depositAddress).add_liquidity(
+                    coinAmounts,
+                    params.minReceivedLiquidity,
+                    true
+                );
             }
         } else if (amounts.length == 3) {
             uint256[3] memory coinAmounts = [amounts[0], amounts[1], amounts[2]];
-            if (params.isZap) {
-                ICurveZap(zapOrPool).add_liquidity(coinAmounts, params.minReceivedLiquidity);
+            if (params.useHelperContract) {
+                ICurveHelper(depositAddress).add_liquidity(
+                    coinAmounts,
+                    params.minReceivedLiquidity
+                );
             } else {
-                ICurveZap(zapOrPool).add_liquidity(coinAmounts, params.minReceivedLiquidity, true);
+                ICurveHelper(depositAddress).add_liquidity(
+                    coinAmounts,
+                    params.minReceivedLiquidity,
+                    true
+                );
             }
         } else if (amounts.length == 4) {
             uint256[4] memory coinAmounts = [amounts[0], amounts[1], amounts[2], amounts[3]];
-            if (params.isZap) {
-                ICurveZap(zapOrPool).add_liquidity(coinAmounts, params.minReceivedLiquidity);
+            if (params.useHelperContract) {
+                ICurveHelper(depositAddress).add_liquidity(
+                    coinAmounts,
+                    params.minReceivedLiquidity
+                );
             } else {
-                ICurveZap(zapOrPool).add_liquidity(coinAmounts, params.minReceivedLiquidity, true);
+                ICurveHelper(depositAddress).add_liquidity(
+                    coinAmounts,
+                    params.minReceivedLiquidity,
+                    true
+                );
             }
         } else {
             _revertMsg("unsupported length");
@@ -237,19 +258,19 @@ contract CLPCurve is CLPBase, ICLPCurve {
         }
     }
 
-    function withdrawZap(
+    function withdrawHelper(
         IERC20 LPToken,
-        address poolOrZap,
+        address withdrawAddress,
         uint256 liquidity,
         CurveLPWithdrawParams calldata params
     ) external payable {
-        _approveToken(LPToken, poolOrZap, liquidity);
+        _approveToken(LPToken, withdrawAddress, liquidity);
         if (params.minimumReceived.length == 2) {
             uint256[2] memory coinAmounts = [params.minimumReceived[0], params.minimumReceived[1]];
-            if (params.isZap) {
-                ICurveZap(poolOrZap).remove_liquidity(liquidity, coinAmounts);
+            if (params.useHelperContract) {
+                ICurveHelper(withdrawAddress).remove_liquidity(liquidity, coinAmounts);
             } else {
-                ICurveZap(poolOrZap).remove_liquidity(liquidity, coinAmounts, true);
+                ICurveHelper(withdrawAddress).remove_liquidity(liquidity, coinAmounts, true);
             }
         } else if (params.minimumReceived.length == 3) {
             uint256[3] memory coinAmounts = [
@@ -257,10 +278,10 @@ contract CLPCurve is CLPBase, ICLPCurve {
                 params.minimumReceived[1],
                 params.minimumReceived[2]
             ];
-            if (params.isZap) {
-                ICurveZap(poolOrZap).remove_liquidity(liquidity, coinAmounts);
+            if (params.useHelperContract) {
+                ICurveHelper(withdrawAddress).remove_liquidity(liquidity, coinAmounts);
             } else {
-                ICurveZap(poolOrZap).remove_liquidity(liquidity, coinAmounts, true);
+                ICurveHelper(withdrawAddress).remove_liquidity(liquidity, coinAmounts, true);
             }
         } else if (params.minimumReceived.length == 4) {
             uint256[4] memory coinAmounts = [
@@ -269,10 +290,10 @@ contract CLPCurve is CLPBase, ICLPCurve {
                 params.minimumReceived[2],
                 params.minimumReceived[3]
             ];
-            if (params.isZap) {
-                ICurveZap(poolOrZap).remove_liquidity(liquidity, coinAmounts);
+            if (params.useHelperContract) {
+                ICurveHelper(withdrawAddress).remove_liquidity(liquidity, coinAmounts);
             } else {
-                ICurveZap(poolOrZap).remove_liquidity(liquidity, coinAmounts, true);
+                ICurveHelper(withdrawAddress).remove_liquidity(liquidity, coinAmounts, true);
             }
         } else {
             _revertMsg("unsupported length");

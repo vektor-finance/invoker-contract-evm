@@ -222,7 +222,7 @@ class UnderlyingPool:
         expected_amount = self.calc_deposit(tokens, curve_pool, token_contracts, token_amounts)
         min_amount = expected_amount // 1.01
 
-        calldata_deposit = clp_curve.depositZap.encode_input(
+        calldata_deposit = clp_curve.depositHelper.encode_input(
             token_amounts, token_contracts, curve_zap or curve_pool, [min_amount, bool(curve_zap)]
         )
 
@@ -290,7 +290,7 @@ class UnderlyingPool:
         min_tokens_received = self.calc_withdraw(tokens, curve_pool, lp_amount, lp_token)
 
         calldata_move = cmove.moveERC20In.encode_input(lp_token, lp_amount)
-        calldata_withdraw = clp_curve.withdrawZap.encode_input(
+        calldata_withdraw = clp_curve.withdrawHelper.encode_input(
             lp_token,
             curve_zap or curve_pool,
             lp_amount,
