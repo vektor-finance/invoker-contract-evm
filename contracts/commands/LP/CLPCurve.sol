@@ -23,7 +23,7 @@ interface ICLPCurve {
     }
 }
 
-interface ICurveHelper {
+interface ICurveDepositZap {
     function add_liquidity(uint256[2] calldata amounts, uint256 min_mint_amount) external;
 
     function add_liquidity(uint256[3] calldata amounts, uint256 min_mint_amount) external;
@@ -184,12 +184,12 @@ contract CLPCurve is CLPBase, ICLPCurve {
         if (amounts.length == 2) {
             uint256[2] memory coinAmounts = [amounts[0], amounts[1]];
             if (params.useHelperContract) {
-                ICurveHelper(depositAddress).add_liquidity(
+                ICurveDepositZap(depositAddress).add_liquidity(
                     coinAmounts,
                     params.minReceivedLiquidity
                 );
             } else {
-                ICurveHelper(depositAddress).add_liquidity(
+                ICurveDepositZap(depositAddress).add_liquidity(
                     coinAmounts,
                     params.minReceivedLiquidity,
                     true
@@ -198,12 +198,12 @@ contract CLPCurve is CLPBase, ICLPCurve {
         } else if (amounts.length == 3) {
             uint256[3] memory coinAmounts = [amounts[0], amounts[1], amounts[2]];
             if (params.useHelperContract) {
-                ICurveHelper(depositAddress).add_liquidity(
+                ICurveDepositZap(depositAddress).add_liquidity(
                     coinAmounts,
                     params.minReceivedLiquidity
                 );
             } else {
-                ICurveHelper(depositAddress).add_liquidity(
+                ICurveDepositZap(depositAddress).add_liquidity(
                     coinAmounts,
                     params.minReceivedLiquidity,
                     true
@@ -212,12 +212,12 @@ contract CLPCurve is CLPBase, ICLPCurve {
         } else if (amounts.length == 4) {
             uint256[4] memory coinAmounts = [amounts[0], amounts[1], amounts[2], amounts[3]];
             if (params.useHelperContract) {
-                ICurveHelper(depositAddress).add_liquidity(
+                ICurveDepositZap(depositAddress).add_liquidity(
                     coinAmounts,
                     params.minReceivedLiquidity
                 );
             } else {
-                ICurveHelper(depositAddress).add_liquidity(
+                ICurveDepositZap(depositAddress).add_liquidity(
                     coinAmounts,
                     params.minReceivedLiquidity,
                     true
@@ -268,9 +268,9 @@ contract CLPCurve is CLPBase, ICLPCurve {
         if (params.minimumReceived.length == 2) {
             uint256[2] memory coinAmounts = [params.minimumReceived[0], params.minimumReceived[1]];
             if (params.useHelperContract) {
-                ICurveHelper(withdrawAddress).remove_liquidity(liquidity, coinAmounts);
+                ICurveDepositZap(withdrawAddress).remove_liquidity(liquidity, coinAmounts);
             } else {
-                ICurveHelper(withdrawAddress).remove_liquidity(liquidity, coinAmounts, true);
+                ICurveDepositZap(withdrawAddress).remove_liquidity(liquidity, coinAmounts, true);
             }
         } else if (params.minimumReceived.length == 3) {
             uint256[3] memory coinAmounts = [
@@ -279,9 +279,9 @@ contract CLPCurve is CLPBase, ICLPCurve {
                 params.minimumReceived[2]
             ];
             if (params.useHelperContract) {
-                ICurveHelper(withdrawAddress).remove_liquidity(liquidity, coinAmounts);
+                ICurveDepositZap(withdrawAddress).remove_liquidity(liquidity, coinAmounts);
             } else {
-                ICurveHelper(withdrawAddress).remove_liquidity(liquidity, coinAmounts, true);
+                ICurveDepositZap(withdrawAddress).remove_liquidity(liquidity, coinAmounts, true);
             }
         } else if (params.minimumReceived.length == 4) {
             uint256[4] memory coinAmounts = [
@@ -291,9 +291,9 @@ contract CLPCurve is CLPBase, ICLPCurve {
                 params.minimumReceived[3]
             ];
             if (params.useHelperContract) {
-                ICurveHelper(withdrawAddress).remove_liquidity(liquidity, coinAmounts);
+                ICurveDepositZap(withdrawAddress).remove_liquidity(liquidity, coinAmounts);
             } else {
-                ICurveHelper(withdrawAddress).remove_liquidity(liquidity, coinAmounts, true);
+                ICurveDepositZap(withdrawAddress).remove_liquidity(liquidity, coinAmounts, true);
             }
         } else {
             _revertMsg("unsupported length");
