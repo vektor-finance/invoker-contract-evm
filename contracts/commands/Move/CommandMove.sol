@@ -98,8 +98,8 @@ contract CMove {
         @param _token The contract address for the ERC721 token
         @param _tokenId The NFT identifier
     **/
-    function moveERC721In(IECR721 _token, uint256 _tokenId) external payable {
-        IERC721.transferFrom(msg.sender, address(this), _tokenId);
+    function moveERC721In(IERC721 _token, uint256 _tokenId) external payable {
+        _token.transferFrom(msg.sender, address(this), _tokenId);
     }
 
     /**
@@ -115,6 +115,6 @@ contract CMove {
         uint256 _tokenId,
         address _to
     ) external payable {
-        IERC721.safeTransferFrom(address(this), _to, _tokenId);
+        _token.safeTransferFrom(address(this), _to, _tokenId);
     }
 }
