@@ -50,6 +50,10 @@ contract CLPUniswapV3 is CLPBase, ICLPUniswapV3 {
         );
     }
 
+    function _getReceiver(address _inputRecipient) internal view returns (address receiver) {
+        receiver = _inputRecipient == address(0) ? address(this) : _inputRecipient;
+    }
+
     /**
         @dev PositionManager ensures NFT not minted to zero address
      **/
@@ -64,7 +68,8 @@ contract CLPUniswapV3 is CLPBase, ICLPUniswapV3 {
         _approveToken(IERC20(pool.token0()), params.router, amountA);
         _approveToken(IERC20(pool.token1()), params.router, amountB);
 
-        // receiver needs to be able to receive NFT
+        address receiver = _getReceiver(params.receiver);
+
         INonfungiblePositionManager(params.router).mint(
             INonfungiblePositionManager.MintParams({
                 token0: pool.token0(), //todo: check if these use SLOAD
@@ -76,7 +81,7 @@ contract CLPUniswapV3 is CLPBase, ICLPUniswapV3 {
                 amount1Desired: amountB,
                 amount0Min: params.amountAMin,
                 amount1Min: params.amountBMin,
-                recipient: params.receiver,
+                recipient: receiver,
                 deadline: params.deadline
             })
         );
@@ -87,10 +92,8 @@ contract CLPUniswapV3 is CLPBase, ICLPUniswapV3 {
         uint128 liquidity,
         UniswapV3LPWithdrawParams calldata params
     ) external payable {
-        _requireMsg(
-            INonfungiblePositionManager(params.router).ownerOf(tokenId) == msg.sender,
-            "not your position"
-        );
+        address receiver = _getReceiver(params.receiver);
+
         INonfungiblePositionManager(params.router).decreaseLiquidity(
             INonfungiblePositionManager.DecreaseLiquidityParams({
                 tokenId: tokenId,
@@ -103,7 +106,7 @@ contract CLPUniswapV3 is CLPBase, ICLPUniswapV3 {
         INonfungiblePositionManager(params.router).collect(
             INonfungiblePositionManager.CollectParams({
                 tokenId: tokenId,
-                recipient: params.receiver,
+                recipient: receiver,
                 amount0Max: type(uint128).max,
                 amount1Max: type(uint128).max
             })
@@ -114,10 +117,8 @@ contract CLPUniswapV3 is CLPBase, ICLPUniswapV3 {
         external
         payable
     {
-        _requireMsg(
-            INonfungiblePositionManager(params.router).ownerOf(tokenId) == msg.sender,
-            "not your position"
-        );
+        address receiver = _getReceiver(params.receiver);
+
         (, , , , , , , uint128 liquidity, , , , ) = INonfungiblePositionManager(params.router)
             .positions(tokenId);
 
@@ -134,12 +135,28 @@ contract CLPUniswapV3 is CLPBase, ICLPUniswapV3 {
         INonfungiblePositionManager(params.router).collect(
             INonfungiblePositionManager.CollectParams({
                 tokenId: tokenId,
-                recipient: params.receiver,
+                recipient: receiver,
                 amount0Max: type(uint128).max,
                 amount1Max: type(uint128).max
             })
         );
 
         INonfungiblePositionManager(params.router).burn(tokenId);
+    }
+
+    function collectAll(
+        address router,
+        uint256 tokenId,
+        address recipient
+    ) external payable {
+        address receiver = _getReceiver(recipient);
+        INonfungiblePositionManager(router).collect(
+            INonfungiblePositionManager.CollectParams({
+                tokenId: tokenId,
+                recipient: receiver,
+                amount0Max: type(uint128).max,
+                amount1Max: type(uint128).max
+            })
+        );
     }
 }
