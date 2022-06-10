@@ -13,6 +13,5 @@ def mock_deflationary_erc20(deployer, MockERC20Deflationary):
 
 
 @pytest.fixture(scope="module")
-def mock_erc721(deployer, pm):
-    oz = pm("OpenZeppelin/openzeppelin-contracts@4.2.0")
-    yield deployer.deploy(oz.ERC721, "Mock ERC721", "NFT TEST")
+def mock_erc721(deployer, MockERC721):
+    yield deployer.deploy(MockERC721, "Mock ERC721", "NFT TEST")
