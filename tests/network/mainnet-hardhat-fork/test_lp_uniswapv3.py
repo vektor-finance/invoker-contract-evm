@@ -143,13 +143,13 @@ def test_add_liquidity(position, alice, clp_uniswapv3, cmove, chain, invoker):
     after_position = nftm.positions(position).dict()
 
     assert after_position["liquidity"] >= initial_position["liquidity"] + 0.99 * expected_liquidity
+    assert nftm.ownerOf(position) == alice
 
 
-def test_remove_some_liquidity(position, alice, invoker, clp_uniswapv3, chain):
+def test_remove_some_liquidity(position, alice, invoker, clp_uniswapv3, chain, cmove):
     nftm = interface.NonfungiblePositionManager("0xc36442b4a4522e871399cd717abdd847ab11fe88")
     initial_position = nftm.positions(position).dict()
     liquidity_to_remove = initial_position["liquidity"] // 3
-    nftm.setApprovalForAll(invoker, True, {"from": alice})
 
     uniswap_pool = interface.UniswapV3Pool("0x8ad599c3A0ff1De082011EFDDc58f1908eb6e6D8")
     sqrt_price = uniswap_pool.slot0().dict()["sqrtPriceX96"]
@@ -171,8 +171,15 @@ def test_remove_some_liquidity(position, alice, invoker, clp_uniswapv3, chain):
             chain.time() + 100,
         ),
     )
+    nftm.approve(invoker, position, {"from": alice})
+    calldata_move_in = cmove.moveERC721In.encode_input(nftm, position)
+    calldata_move_out = cmove.moveERC721Out.encode_input(nftm, position, alice)
 
-    tx = invoker.invoke([clp_uniswapv3], [calldata_remove], {"from": alice})
+    tx = invoker.invoke(
+        [cmove, clp_uniswapv3, cmove],
+        [calldata_move_in, calldata_remove, calldata_move_out],
+        {"from": alice},
+    )
 
     after_position = nftm.positions(position).dict()
 
@@ -181,25 +188,12 @@ def test_remove_some_liquidity(position, alice, invoker, clp_uniswapv3, chain):
         initial_position["liquidity"]
         == after_position["liquidity"] + tx.events["DecreaseLiquidity"]["liquidity"]
     )
+    assert nftm.ownerOf(position) == alice
 
 
-def test_fail_other_remove_some_liquidity(position, alice, bob, invoker, clp_uniswapv3, chain):
+def test_remove_all_liquidity(position, alice, invoker, clp_uniswapv3, chain, cmove):
     nftm = interface.NonfungiblePositionManager("0xc36442b4a4522e871399cd717abdd847ab11fe88")
-    initial_position = nftm.positions(position).dict()
-    liquidity_to_remove = initial_position["liquidity"] // 3
-    nftm.setApprovalForAll(invoker, True, {"from": alice})
 
-    calldata_remove = clp_uniswapv3.withdraw.encode_input(
-        position, liquidity_to_remove, (nftm, 0, 0, alice, chain.time() + 100)
-    )
-
-    with brownie.reverts("CLPUniswapV3:not your position"):
-        invoker.invoke([clp_uniswapv3], [calldata_remove], {"from": bob})
-
-
-def test_remove_all_liquidity(position, alice, invoker, clp_uniswapv3, chain):
-    nftm = interface.NonfungiblePositionManager("0xc36442b4a4522e871399cd717abdd847ab11fe88")
-    nftm.setApprovalForAll(invoker, True, {"from": alice})
     initial_position = nftm.positions(position).dict()
     liquidity_to_remove = initial_position["liquidity"]
 
@@ -227,7 +221,18 @@ def test_remove_all_liquidity(position, alice, invoker, clp_uniswapv3, chain):
             chain.time() + 100,
         ),
     )
-    tx = invoker.invoke([clp_uniswapv3], [calldata_remove_all], {"from": alice})
+
+    nftm.approve(invoker, position, {"from": alice})
+    calldata_move_in = cmove.moveERC721In.encode_input(nftm, position)
+
+    tx = invoker.invoke(
+        [cmove, clp_uniswapv3],
+        [
+            calldata_move_in,
+            calldata_remove_all,
+        ],
+        {"from": alice},
+    )
 
     # reverts after token is burnt
     with brownie.reverts("Invalid token ID"):
@@ -237,14 +242,3 @@ def test_remove_all_liquidity(position, alice, invoker, clp_uniswapv3, chain):
     assert "Burn" in tx.events
 
     assert usdc.balanceOf(alice) > usdc_start_balance or weth.balanceOf(alice) > weth_start_balance
-
-
-def test_fail_remove_all_liquidity(position, alice, bob, invoker, chain, clp_uniswapv3):
-    nftm = interface.NonfungiblePositionManager("0xc36442b4a4522e871399cd717abdd847ab11fe88")
-    nftm.setApprovalForAll(invoker, True, {"from": alice})
-
-    calldata_remove_all = clp_uniswapv3.withdrawAll.encode_input(
-        position, (nftm, 0, 0, alice, chain.time() + 100)
-    )
-    with brownie.reverts("CLPUniswapV3:not your position"):
-        invoker.invoke([clp_uniswapv3], [calldata_remove_all], {"from": bob})
