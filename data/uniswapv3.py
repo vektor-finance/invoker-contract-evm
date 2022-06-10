@@ -34,13 +34,13 @@ def get_liquidity_for_amount0(sqrt_ratioA, sqrt_ratioB, amount0):
     if sqrt_ratioA > sqrt_ratioB:
         sqrt_ratioA, sqrt_ratioB = (sqrt_ratioB, sqrt_ratioA)
     intermediate = sqrt_ratioA * sqrt_ratioB / Q96
-    return amount0 * intermediate / (sqrt_ratioB - sqrt_ratioA)
+    return int(amount0 * intermediate / (sqrt_ratioB - sqrt_ratioA))
 
 
 def get_liquidity_for_amount1(sqrt_ratioA, sqrt_ratioB, amount1):
     if sqrt_ratioA > sqrt_ratioB:
         sqrt_ratioA, sqrt_ratioB = (sqrt_ratioB, sqrt_ratioA)
-    return amount1 * Q96 / (sqrt_ratioB - sqrt_ratioA)
+    return int(amount1 * Q96 / (sqrt_ratioB - sqrt_ratioA))
 
 
 def get_liquidity_for_amounts(sqrt_ratio, sqrt_ratioA, sqrt_ratioB, amount0, amount1):
@@ -62,13 +62,15 @@ def get_liquidity_for_amounts(sqrt_ratio, sqrt_ratioA, sqrt_ratioB, amount0, amo
 def get_amount0_for_liquidity(sqrt_ratioA, sqrt_ratioB, liquidity):
     if sqrt_ratioA > sqrt_ratioB:
         sqrt_ratioA, sqrt_ratioB = (sqrt_ratioB, sqrt_ratioA)
-    return ((liquidity << RESOLUTION) * (sqrt_ratioB - sqrt_ratioA) / sqrt_ratioB) / sqrt_ratioA
+    return int(
+        ((liquidity << RESOLUTION) * (sqrt_ratioB - sqrt_ratioA) / sqrt_ratioB) / sqrt_ratioA
+    )
 
 
 def get_amount1_for_liquidity(sqrt_ratioA, sqrt_ratioB, liquidity):
     if sqrt_ratioA > sqrt_ratioB:
         sqrt_ratioA, sqrt_ratioB = (sqrt_ratioB, sqrt_ratioA)
-    return liquidity * (sqrt_ratioB - sqrt_ratioA) / Q96
+    return int(liquidity * (sqrt_ratioB - sqrt_ratioA) / Q96)
 
 
 def get_amounts_for_liquidity(sqrt_ratio, sqrt_ratioA, sqrt_ratioB, liquidity):

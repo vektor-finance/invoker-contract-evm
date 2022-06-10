@@ -87,6 +87,10 @@ contract CLPUniswapV3 is CLPBase, ICLPUniswapV3 {
         );
     }
 
+    /**
+        @notice Withdraw some liquidity from a UniswapV3 NFT
+        @dev This function does not return the NFT position to the user.
+     **/
     function withdraw(
         uint256 tokenId,
         uint128 liquidity,
