@@ -3,6 +3,7 @@
 pragma solidity ^0.8.6;
 
 import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
+import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
 
 contract CMove {
     using SafeERC20 for IERC20;
@@ -88,7 +89,32 @@ contract CMove {
             require(success, "CMove: Native transfer failed");
         }
     }
-}
 
-// Need to consider moving non-erc20 tokens eg erc721 / 1155
-// Also need to add supporting interfaces to invoker contract
+    /**
+        @notice Allows a user to move an ERC721 token into the invoker
+        @dev ERC721 ensures that transferred tokenId is vaild. Here we make an unsafe transfer
+        which does not call `onERC721Received` on the invoker. ERC721 tokens will not be stuck
+        on the invoker as we also provide a `moveERC721Out` function
+        @param _token The contract address for the ERC721 token
+        @param _tokenId The NFT identifier
+    **/
+    function moveERC721In(IERC721 _token, uint256 _tokenId) external payable {
+        _token.transferFrom(msg.sender, address(this), _tokenId);
+    }
+
+    /**
+        @notice Allows a user to move an ERC721 token from the invoker
+        @dev We enforce that the receiving `_to` is able to receive the ERC721 token by performing
+        a `safeTransferFrom`
+        @param _token The contract address for the ERC721 token
+        @param _tokenId The NFT identifier
+        @param _to The address to receive the ERC721 token.
+    **/
+    function moveERC721Out(
+        IERC721 _token,
+        uint256 _tokenId,
+        address _to
+    ) external payable {
+        _token.safeTransferFrom(address(this), _to, _tokenId);
+    }
+}
