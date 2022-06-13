@@ -27,7 +27,7 @@ Different protocols allow for different methods for providing/withdrawing liquid
 
 ## Uniswap V2
 
-Note: "uniswap v2" refers to the venue type, rather than the venue itself.
+Note: "Uniswap V2" refers to the venue type, rather than the venue itself.
 
 Uniswap V2 pools consist of two ERC20 tokens. In order to add liquidity, these two tokens must be provided at a 50:50 ratio. The ratio is determined by the current ratio of the reserves of these assets (number of tokens within the pool). Users receive an `LP token` which represents their share of the liquidity pools. When removing liquidity, these LP tokens are burned, and the underlying assets sent to the user in the same ratio. Trading fees result in the number of underlying assets per lp token increasing, and are therefore handled automatically.
 
@@ -45,7 +45,7 @@ Curve pools consist of up to eight ERC20 tokens. Assets within a pool are often 
 
 ### Supported Pools
 
-Each Curve Pool has a custom implementation. Although they broadly follow the same interface, We would want each pool to be tested extensively before we can say a pool is supported. In order to avoid spending time testing all pools individually, we should instead prioritise specific pools. The following table represents the pools which have been tested:
+Each Curve Pool has a custom implementation. Although they broadly follow the same interface, we would want each pool to be tested extensively before we can say a pool is supported. In order to avoid spending time testing all pools individually, we should instead prioritise specific pools. The following table represents the pools which have been tested:
 
 | pool | assets | TVL | status |
 | --- | --- | --- | --- |
