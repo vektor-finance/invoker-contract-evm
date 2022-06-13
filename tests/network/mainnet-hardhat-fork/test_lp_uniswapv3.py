@@ -10,6 +10,9 @@ from data.uniswapv3 import (
     get_sqrt_ratio_at_tick,
 )
 
+FULL_RANGE_LOWER_TICK = -887220
+FULL_RANGE_UPPER_TICK = -FULL_RANGE_LOWER_TICK
+
 
 @pytest.fixture(scope="module")
 def clp_uniswapv3(invoker, deployer, CLPUniswapV3):
@@ -23,8 +26,8 @@ def clp_uniswapv3(invoker, deployer, CLPUniswapV3):
 def position(invoker, clp_uniswapv3, alice, cmove, chain):
     nftm = interface.NonfungiblePositionManager("0xc36442b4a4522e871399cd717abdd847ab11fe88")
 
-    tick_lower = 0
-    tick_upper = 6000
+    tick_lower = FULL_RANGE_LOWER_TICK
+    tick_upper = FULL_RANGE_UPPER_TICK
 
     # WETH-USDC 0.3%
     uniswap_pool = interface.UniswapV3Pool("0x8ad599c3A0ff1De082011EFDDc58f1908eb6e6D8")
@@ -47,16 +50,16 @@ def position(invoker, clp_uniswapv3, alice, cmove, chain):
     sqrt_price = uniswap_pool.slot0().dict()["sqrtPriceX96"]
     expected_liquidity = get_liquidity_for_amounts(
         sqrt_price,
-        get_sqrt_ratio_at_tick(0),
-        get_sqrt_ratio_at_tick(6000),
+        get_sqrt_ratio_at_tick(tick_lower),
+        get_sqrt_ratio_at_tick(tick_upper),
         usdc_amount,
         weth_amount,
     )
     min_usdc_used, min_weth_used = get_amounts_for_liquidity(
         sqrt_price,
-        get_sqrt_ratio_at_tick(0),
-        get_sqrt_ratio_at_tick(6000),
-        expected_liquidity * 0.99,
+        get_sqrt_ratio_at_tick(tick_lower),
+        get_sqrt_ratio_at_tick(tick_upper),
+        int(expected_liquidity * 0.99),
     )
 
     calldata_deposit = clp_uniswapv3.depositNew.encode_input(
@@ -102,6 +105,8 @@ def test_add_liquidity(position, alice, clp_uniswapv3, cmove, chain, invoker):
     usdc = interface.ERC20Detailed("0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48")
     weth = interface.ERC20Detailed("0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2")
 
+    tick_lower, tick_upper = FULL_RANGE_LOWER_TICK, FULL_RANGE_UPPER_TICK
+
     usdc_amount = 100e6
     weth_amount = 0.05e18
 
@@ -115,16 +120,16 @@ def test_add_liquidity(position, alice, clp_uniswapv3, cmove, chain, invoker):
     sqrt_price = uniswap_pool.slot0().dict()["sqrtPriceX96"]
     expected_liquidity = get_liquidity_for_amounts(
         sqrt_price,
-        get_sqrt_ratio_at_tick(0),
-        get_sqrt_ratio_at_tick(6000),
+        get_sqrt_ratio_at_tick(tick_lower),
+        get_sqrt_ratio_at_tick(tick_upper),
         usdc_amount,
         weth_amount,
     )
     min_usdc_used, min_weth_used = get_amounts_for_liquidity(
         sqrt_price,
-        get_sqrt_ratio_at_tick(0),
-        get_sqrt_ratio_at_tick(6000),
-        expected_liquidity * 0.99,
+        get_sqrt_ratio_at_tick(tick_lower),
+        get_sqrt_ratio_at_tick(tick_upper),
+        int(expected_liquidity * 0.99),
     )
 
     calldata_add = clp_uniswapv3.deposit.encode_input(
@@ -151,12 +156,14 @@ def test_remove_some_liquidity(position, alice, invoker, clp_uniswapv3, chain):
     liquidity_to_remove = initial_position["liquidity"] // 3
     nftm.setApprovalForAll(invoker, True, {"from": alice})
 
+    tick_lower, tick_upper = FULL_RANGE_LOWER_TICK, FULL_RANGE_UPPER_TICK
+
     uniswap_pool = interface.UniswapV3Pool("0x8ad599c3A0ff1De082011EFDDc58f1908eb6e6D8")
     sqrt_price = uniswap_pool.slot0().dict()["sqrtPriceX96"]
     expected_usdc_received, expected_weth_received = get_amounts_for_liquidity(
         sqrt_price,
-        get_sqrt_ratio_at_tick(0),
-        get_sqrt_ratio_at_tick(6000),
+        get_sqrt_ratio_at_tick(tick_lower),
+        get_sqrt_ratio_at_tick(tick_upper),
         liquidity_to_remove,
     )
 
@@ -203,6 +210,8 @@ def test_remove_all_liquidity(position, alice, invoker, clp_uniswapv3, chain):
     initial_position = nftm.positions(position).dict()
     liquidity_to_remove = initial_position["liquidity"]
 
+    tick_lower, tick_upper = FULL_RANGE_LOWER_TICK, FULL_RANGE_UPPER_TICK
+
     usdc = interface.ERC20Detailed("0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48")
     weth = interface.ERC20Detailed("0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2")
 
@@ -213,8 +222,8 @@ def test_remove_all_liquidity(position, alice, invoker, clp_uniswapv3, chain):
     sqrt_price = uniswap_pool.slot0().dict()["sqrtPriceX96"]
     expected_usdc_received, expected_weth_received = get_amounts_for_liquidity(
         sqrt_price,
-        get_sqrt_ratio_at_tick(0),
-        get_sqrt_ratio_at_tick(6000),
+        get_sqrt_ratio_at_tick(tick_lower),
+        get_sqrt_ratio_at_tick(tick_upper),
         liquidity_to_remove,
     )
     calldata_remove_all = clp_uniswapv3.withdrawAll.encode_input(
