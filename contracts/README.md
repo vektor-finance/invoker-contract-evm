@@ -41,7 +41,7 @@ All Uniswap V2 pools are supported. Pools with Fee-on-Transfer tokens are not su
 
 ## Curve
 
-Curve pools consist of up to eight ERC20 tokens. Assets within a pool are often stable priced, with minimal deviation in price. The price of an individual asset is determined by the StableSwap invariant, rather than the ratio of assets within the pool. Users also receive an `LP token` when adding liquidity which represents their share of the liquidity pool. Trading fees result in the number of underlying assets per lp token increasing, and are therefore handled automatically. 
+Curve pools consist of up to eight ERC20 tokens. Assets within a pool are often stable priced, with minimal deviation in price. The price of an individual asset is determined by the StableSwap invariant, rather than the ratio of assets within the pool. Users also receive an `LP token` when adding liquidity which represents their share of the liquidity pool. Trading fees result in the number of underlying assets per LP token increasing, and are therefore handled automatically. 
 
 ### Supported Pools
 
