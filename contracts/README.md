@@ -47,12 +47,12 @@ Curve pools consist of up to eight ERC20 tokens. Assets within a pool are often 
 
 Each Curve Pool has a custom implementation. Although they broadly follow the same interface, we would want each pool to be tested extensively before we can say a pool is supported. In order to avoid spending time testing all pools individually, we should instead prioritise specific pools. The following table represents the pools which have been tested:
 
-| pool | assets | TVL | status |
-| --- | --- | --- | --- |
-| 3pool | DAI, USDC, USDT | $1.6b | Able to add/withdraw liquidity |
-| slink | LINK, SLINK | $3.3m | Able to add/withdraw liquidity |
-| compound | cDAI, cUSDC | $91.6m | Able to add/withdraw liquidity directly (via cToken) <br> Able to add/withdraw liquidity indirectly (via DAI/USDC) 
-| aave | aDAI, aUSDC, aUSDT | $38.1m | Able to add/withdraw liquidity directly (via aToken) <br> Able to add/withdraw liquidity indirectly (via DAI, USDC, USDT)
+| pool | assets | status |
+| --- | --- | --- |
+| 3pool | DAI, USDC, USDT | Able to add/withdraw liquidity |
+| slink | LINK, SLINK | Able to add/withdraw liquidity |
+| compound | cDAI, cUSDC | Able to add/withdraw liquidity directly (via cToken) <br> Able to add/withdraw liquidity indirectly (via DAI/USDC) 
+| aave | aDAI, aUSDC, aUSDT | Able to add/withdraw liquidity directly (via aToken) <br> Able to add/withdraw liquidity indirectly (via DAI, USDC, USDT)
 
 
 ### Known Compatability Issues
@@ -169,12 +169,12 @@ Curve pools that have been deployed by curve team are supported (ie. excluding f
 There are a few pools which utilise native ether and these are not currently supported.
 These pools include:
 
-| pool | assets | TVL
-| --- | --- | --- |
-| steth | ETH - stETH | $293.4m |
-| seth | ETH - sETH | $18.6m |
-| ankreth | ETH - ankrETH | $41,163 |
-| reth | ETH - rETH | $3727 |
+| pool | assets |
+| --- | --- |
+| steth | ETH - stETH |
+| seth | ETH - sETH |
+| ankreth | ETH - ankrETH |
+| reth | ETH - rETH |
 
 #### Factory Pools
 
