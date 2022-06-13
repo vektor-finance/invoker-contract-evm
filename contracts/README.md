@@ -54,7 +54,8 @@ Each Curve Pool has a custom implementation. Although they broadly follow the sa
 | compound | cDAI, cUSDC | $91.6m | Able to add/withdraw liquidity directly (via cToken) <br> Able to add/withdraw liquidity indirectly (via DAI/USDC) 
 | aave | aDAI, aUSDC, aUSDT | $38.1m | Able to add/withdraw liquidity directly (via aToken) <br> Able to add/withdraw liquidity indirectly (via DAI, USDC, USDT)
 
-### Known Compatability Issues
+
+### Known Compatability Issues
 
 Any pool not mentioned in the above table 'Supported Pools' must be considered to be unsupported.
 
