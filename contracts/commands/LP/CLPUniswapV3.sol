@@ -11,6 +11,20 @@ contract CLPUniswapV3 is CLPBase, ICLPUniswapV3 {
         return "CLPUniswapV3";
     }
 
+    function _getReceiver(address _inputRecipient) internal view returns (address receiver) {
+        receiver = _inputRecipient == address(0) ? address(this) : _inputRecipient;
+    }
+
+    function _isValidUser(uint256 tokenId, address router) internal view returns (bool) {
+        address owner = INonfungiblePositionManager(router).ownerOf(tokenId);
+        return owner == msg.sender;
+    }
+
+    modifier isValidUser(uint256 tokenId, address router) {
+        _requireMsg(_isValidUser(tokenId, router), "not your position");
+        _;
+    }
+
     /**
         @dev PositionManager ensures NFT not minted to zero address
      **/
@@ -19,21 +33,10 @@ contract CLPUniswapV3 is CLPBase, ICLPUniswapV3 {
         uint256 amountA,
         uint256 amountB,
         UniswapV3LPDepositParams calldata params
-    ) external payable {
-        (
-            ,
-            ,
-            address token0,
-            address token1,
-            uint24 fee,
-            ,
-            ,
-            ,
-            ,
-            ,
-            ,
-
-        ) = INonfungiblePositionManager(params.router).positions(tokenId);
+    ) external payable isValidUser(tokenId, params.router) {
+        (, , address token0, address token1, , , , , , , , ) = INonfungiblePositionManager(
+            params.router
+        ).positions(tokenId);
 
         _approveToken(IERC20(token0), params.router, amountA);
         _approveToken(IERC20(token1), params.router, amountB);
@@ -86,11 +89,7 @@ contract CLPUniswapV3 is CLPBase, ICLPUniswapV3 {
         uint256 tokenId,
         uint128 liquidity,
         UniswapV3LPWithdrawParams calldata params
-    ) external payable {
-        _requireMsg(
-            INonfungiblePositionManager(params.router).ownerOf(tokenId) == msg.sender,
-            "not your position"
-        );
+    ) external payable isValidUser(tokenId, params.router) {
         INonfungiblePositionManager(params.router).decreaseLiquidity(
             INonfungiblePositionManager.DecreaseLiquidityParams({
                 tokenId: tokenId,
@@ -113,6 +112,7 @@ contract CLPUniswapV3 is CLPBase, ICLPUniswapV3 {
     function withdrawAll(uint256 tokenId, UniswapV3LPWithdrawParams calldata params)
         external
         payable
+        isValidUser(tokenId, params.router)
     {
         _requireMsg(
             INonfungiblePositionManager(params.router).ownerOf(tokenId) == msg.sender,
@@ -141,5 +141,21 @@ contract CLPUniswapV3 is CLPBase, ICLPUniswapV3 {
         );
 
         INonfungiblePositionManager(params.router).burn(tokenId);
+    }
+
+    function collectAll(
+        address router,
+        uint256 tokenId,
+        address recipient
+    ) external payable isValidUser(tokenId, router) {
+        address receiver = _getReceiver(recipient);
+        INonfungiblePositionManager(router).collect(
+            INonfungiblePositionManager.CollectParams({
+                tokenId: tokenId,
+                recipient: receiver,
+                amount0Max: type(uint128).max,
+                amount1Max: type(uint128).max
+            })
+        );
     }
 }

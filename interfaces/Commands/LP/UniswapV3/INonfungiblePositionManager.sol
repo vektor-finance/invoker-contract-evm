@@ -1,7 +1,7 @@
 pragma solidity >=0.7.5;
 
 interface INonfungiblePositionManager {
-    function ownerOf(uint256 tokenId) external returns (address);
+    function ownerOf(uint256 tokenId) external view returns (address);
 
     struct IncreaseLiquidityParams {
         uint256 tokenId;
