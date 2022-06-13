@@ -29,7 +29,7 @@ Different protocols allow for different methods for providing/withdrawing liquid
 
 Note: "Uniswap V2" refers to the venue type, rather than the venue itself.
 
-Uniswap V2 pools consist of two ERC20 tokens. In order to add liquidity, these two tokens must be provided at a 50:50 ratio. The ratio is determined by the current ratio of the reserves of these assets (number of tokens within the pool). Users receive an `LP token` which represents their share of the liquidity pools. When removing liquidity, these LP tokens are burned, and the underlying assets sent to the user in the same ratio. Trading fees result in the number of underlying assets per lp token increasing, and are therefore handled automatically.
+Uniswap V2 pools consist of two ERC20 tokens. In order to add liquidity, these two tokens must be provided at a 50:50 ratio. The ratio is determined by the current ratio of the reserves of these assets (number of tokens within the pool). Users receive an `LP token` which represents their share of the liquidity pools. When removing liquidity, these LP tokens are burned, and the underlying assets sent to the user in the same ratio. Trading fees result in the number of underlying assets per LP token increasing, and are therefore handled automatically.
 
 ### Supported Pools
 
