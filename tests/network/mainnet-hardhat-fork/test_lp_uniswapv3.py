@@ -404,3 +404,12 @@ def test_collect(position, alice, bob, clp_uniswapv3, invoker, chain, nftm, rece
     collect_event = tx.events["Collect"]
 
     assert collect_event["amount0"] == usdc.balanceOf(target_receiver) - starting_balance
+
+
+def test_fail_collect_invalid_user(position, nftm, alice, bob, invoker, clp_uniswapv3, chain):
+    nftm.approve(invoker, position, {"from": alice})
+
+    calldata_collect = clp_uniswapv3.collectAll.encode_input(nftm, position, bob)
+
+    with brownie.reverts("CLPUniswapV3:not your position"):
+        invoker.invoke([clp_uniswapv3], [calldata_collect], {"from": bob})
