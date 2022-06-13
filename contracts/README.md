@@ -61,7 +61,7 @@ Any pool not mentioned in the above table 'Supported Pools' must be considered t
 
 #### Metapools
 
-These pools expand on the curve 3pool. One example is the frax pool, which contains two tokens: the 3pool token, and FRAX token. Although the underlying assets for this pool are DAI, USDC, USDT and FRAX the actual pool itself has two tokens (3pool, FRAX). At present, these pools are untested and therefore unsupported.
+These pools expand on the curve 3pool. One example is the FRAX pool, which contains two tokens: the 3pool token, and FRAX token. Although the underlying assets for this pool are DAI, USDC, USDT and FRAX the actual pool itself has two tokens (3pool, FRAX). At present, these pools are untested and therefore unsupported.
 
 #### No support for Curve LP Gauge
 
