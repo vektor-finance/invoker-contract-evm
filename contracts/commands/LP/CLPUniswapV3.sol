@@ -64,6 +64,7 @@ contract CLPUniswapV3 is CLPBase, ICLPUniswapV3 {
         uint256 amountB,
         UniswapV3LPDepositParams calldata params
     ) external payable {
+        address receiver = _getReceiver(params.receiver);
         _approveToken(IERC20(pool.token0()), params.router, amountA);
         _approveToken(IERC20(pool.token1()), params.router, amountB);
 
@@ -79,7 +80,7 @@ contract CLPUniswapV3 is CLPBase, ICLPUniswapV3 {
                 amount1Desired: amountB,
                 amount0Min: params.amountAMin,
                 amount1Min: params.amountBMin,
-                recipient: params.receiver,
+                recipient: receiver,
                 deadline: params.deadline
             })
         );
@@ -90,6 +91,7 @@ contract CLPUniswapV3 is CLPBase, ICLPUniswapV3 {
         uint128 liquidity,
         UniswapV3LPWithdrawParams calldata params
     ) external payable isValidUser(tokenId, params.router) {
+        address receiver = _getReceiver(params.receiver);
         INonfungiblePositionManager(params.router).decreaseLiquidity(
             INonfungiblePositionManager.DecreaseLiquidityParams({
                 tokenId: tokenId,
@@ -102,7 +104,7 @@ contract CLPUniswapV3 is CLPBase, ICLPUniswapV3 {
         INonfungiblePositionManager(params.router).collect(
             INonfungiblePositionManager.CollectParams({
                 tokenId: tokenId,
-                recipient: params.receiver,
+                recipient: receiver,
                 amount0Max: type(uint128).max,
                 amount1Max: type(uint128).max
             })
@@ -114,10 +116,8 @@ contract CLPUniswapV3 is CLPBase, ICLPUniswapV3 {
         payable
         isValidUser(tokenId, params.router)
     {
-        _requireMsg(
-            INonfungiblePositionManager(params.router).ownerOf(tokenId) == msg.sender,
-            "not your position"
-        );
+        address receiver = _getReceiver(params.receiver);
+
         (, , , , , , , uint128 liquidity, , , , ) = INonfungiblePositionManager(params.router)
             .positions(tokenId);
 
@@ -134,7 +134,7 @@ contract CLPUniswapV3 is CLPBase, ICLPUniswapV3 {
         INonfungiblePositionManager(params.router).collect(
             INonfungiblePositionManager.CollectParams({
                 tokenId: tokenId,
-                recipient: params.receiver,
+                recipient: receiver,
                 amount0Max: type(uint128).max,
                 amount1Max: type(uint128).max
             })

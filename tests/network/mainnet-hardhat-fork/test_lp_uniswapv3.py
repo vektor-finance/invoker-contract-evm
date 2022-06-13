@@ -71,9 +71,18 @@ def position(invoker, clp_uniswapv3, alice, cmove, chain):
         (nftm, min_usdc_used, min_weth_used, alice, chain.time() + 100),
     )
 
+    calldata_sweep_usdc = cmove.moveAllERC20Out.encode_input(usdc, alice)
+    calldata_sweep_weth = cmove.moveAllERC20Out.encode_input(weth, alice)
+
     tx = invoker.invoke(
-        [cmove, cmove, clp_uniswapv3],
-        [calldata_move_usdc, calldata_move_weth, calldata_deposit],
+        [cmove, cmove, clp_uniswapv3, cmove, cmove],
+        [
+            calldata_move_usdc,
+            calldata_move_weth,
+            calldata_deposit,
+            calldata_sweep_usdc,
+            calldata_sweep_weth,
+        ],
         {"from": alice},
     )
 
@@ -98,12 +107,75 @@ def nftm():
     yield interface.NonfungiblePositionManager("0xc36442b4a4522e871399cd717abdd847ab11fe88")
 
 
-def test_mint(position):
-    pass
+@pytest.mark.parametrize("receiver", ["user", ZERO_ADDRESS], ids=["alice", "zero address"])
+def test_mint(nftm, receiver, cmove, chain, invoker, alice, clp_uniswapv3):
+    if receiver == "user":
+        receiver = alice
+        target_receiver = alice
+    else:
+        target_receiver = invoker
+
+    tick_lower = FULL_RANGE_LOWER_TICK
+    tick_upper = FULL_RANGE_UPPER_TICK
+
+    # WETH-USDC 0.3%
+    uniswap_pool = interface.UniswapV3Pool("0x8ad599c3A0ff1De082011EFDDc58f1908eb6e6D8")
+
+    usdc = interface.ERC20Detailed("0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48")
+    weth = interface.ERC20Detailed("0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2")
+
+    mint_tokens_for(usdc, alice)
+    mint_tokens_for(weth, alice)
+
+    usdc_amount = 100e6
+    weth_amount = 0.05e18
+
+    usdc.approve(invoker, usdc_amount, {"from": alice})
+    weth.approve(invoker, weth_amount, {"from": alice})
+
+    calldata_move_usdc = cmove.moveERC20In.encode_input(usdc, usdc_amount)
+    calldata_move_weth = cmove.moveERC20In.encode_input(weth, weth_amount)
+
+    sqrt_price = uniswap_pool.slot0().dict()["sqrtPriceX96"]
+    expected_liquidity = get_liquidity_for_amounts(
+        sqrt_price,
+        get_sqrt_ratio_at_tick(tick_lower),
+        get_sqrt_ratio_at_tick(tick_upper),
+        usdc_amount,
+        weth_amount,
+    )
+    min_usdc_used, min_weth_used = get_amounts_for_liquidity(
+        sqrt_price,
+        get_sqrt_ratio_at_tick(tick_lower),
+        get_sqrt_ratio_at_tick(tick_upper),
+        int(expected_liquidity * 0.99),
+    )
+
+    calldata_deposit = clp_uniswapv3.depositNew.encode_input(
+        uniswap_pool,
+        tick_lower,
+        tick_upper,
+        usdc_amount,
+        weth_amount,
+        (nftm, min_usdc_used, min_weth_used, receiver, chain.time() + 100),
+    )
+
+    tx = invoker.invoke(
+        [cmove, cmove, clp_uniswapv3],
+        [
+            calldata_move_usdc,
+            calldata_move_weth,
+            calldata_deposit,
+        ],
+        {"from": alice},
+    )
+
+    token_id = tx.events["IncreaseLiquidity"]["tokenId"]
+
+    assert nftm.ownerOf(token_id) == target_receiver
 
 
-def test_add_liquidity(position, alice, clp_uniswapv3, cmove, chain, invoker):
-    nftm = interface.NonfungiblePositionManager("0xc36442b4a4522e871399cd717abdd847ab11fe88")
+def test_add_liquidity(position, nftm, alice, clp_uniswapv3, cmove, chain, invoker):
 
     initial_position = nftm.positions(position).dict()
 
@@ -155,8 +227,14 @@ def test_add_liquidity(position, alice, clp_uniswapv3, cmove, chain, invoker):
     assert after_position["liquidity"] >= initial_position["liquidity"] + 0.99 * expected_liquidity
 
 
-def test_remove_some_liquidity(position, alice, invoker, clp_uniswapv3, chain):
-    nftm = interface.NonfungiblePositionManager("0xc36442b4a4522e871399cd717abdd847ab11fe88")
+@pytest.mark.parametrize("receiver", ["user", ZERO_ADDRESS], ids=["alice", "zero address"])
+def test_remove_some_liquidity(position, nftm, alice, invoker, clp_uniswapv3, chain, receiver):
+    if receiver == "user":
+        receiver = alice
+        target_receiver = alice
+    else:
+        target_receiver = invoker
+
     initial_position = nftm.positions(position).dict()
     liquidity_to_remove = initial_position["liquidity"] // 3
     nftm.approve(invoker, position, {"from": alice})
@@ -179,10 +257,15 @@ def test_remove_some_liquidity(position, alice, invoker, clp_uniswapv3, chain):
             nftm,
             0.99 * expected_usdc_received,
             0.99 * expected_weth_received,
-            alice,
+            receiver,
             chain.time() + 100,
         ),
     )
+
+    usdc = interface.ERC20Detailed("0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48")
+    weth = interface.ERC20Detailed("0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2")
+    usdc_start_balance = usdc.balanceOf(target_receiver)
+    weth_start_balance = weth.balanceOf(target_receiver)
 
     tx = invoker.invoke([clp_uniswapv3], [calldata_remove], {"from": alice})
 
@@ -193,10 +276,13 @@ def test_remove_some_liquidity(position, alice, invoker, clp_uniswapv3, chain):
         initial_position["liquidity"]
         == after_position["liquidity"] + tx.events["DecreaseLiquidity"]["liquidity"]
     )
+    assert usdc.balanceOf(target_receiver) == usdc_start_balance + tx.events["Transfer"][0]["value"]
+    assert weth.balanceOf(target_receiver) == weth_start_balance + tx.events["Transfer"][1]["value"]
 
 
-def test_fail_other_remove_some_liquidity(position, alice, bob, invoker, clp_uniswapv3, chain):
-    nftm = interface.NonfungiblePositionManager("0xc36442b4a4522e871399cd717abdd847ab11fe88")
+def test_fail_remove_some_liquidity_invalid_user(
+    position, nftm, alice, bob, invoker, clp_uniswapv3, chain
+):
     initial_position = nftm.positions(position).dict()
     liquidity_to_remove = initial_position["liquidity"] // 3
     nftm.approve(invoker, position, {"from": alice})
@@ -209,8 +295,14 @@ def test_fail_other_remove_some_liquidity(position, alice, bob, invoker, clp_uni
         invoker.invoke([clp_uniswapv3], [calldata_remove], {"from": bob})
 
 
-def test_remove_all_liquidity(position, alice, invoker, clp_uniswapv3, chain):
-    nftm = interface.NonfungiblePositionManager("0xc36442b4a4522e871399cd717abdd847ab11fe88")
+@pytest.mark.parametrize("receiver", ["user", ZERO_ADDRESS], ids=["alice", "zero address"])
+def test_remove_all_liquidity(position, nftm, alice, invoker, clp_uniswapv3, chain, receiver):
+    if receiver == "user":
+        receiver = alice
+        target_receiver = alice
+    else:
+        target_receiver = invoker
+
     nftm.approve(invoker, position, {"from": alice})
     initial_position = nftm.positions(position).dict()
     liquidity_to_remove = initial_position["liquidity"]
@@ -220,8 +312,8 @@ def test_remove_all_liquidity(position, alice, invoker, clp_uniswapv3, chain):
     usdc = interface.ERC20Detailed("0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48")
     weth = interface.ERC20Detailed("0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2")
 
-    usdc_start_balance = usdc.balanceOf(alice)
-    weth_start_balance = weth.balanceOf(alice)
+    usdc_start_balance = usdc.balanceOf(target_receiver)
+    weth_start_balance = weth.balanceOf(target_receiver)
 
     uniswap_pool = interface.UniswapV3Pool("0x8ad599c3A0ff1De082011EFDDc58f1908eb6e6D8")
     sqrt_price = uniswap_pool.slot0().dict()["sqrtPriceX96"]
@@ -237,7 +329,7 @@ def test_remove_all_liquidity(position, alice, invoker, clp_uniswapv3, chain):
             nftm,
             0.99 * expected_usdc_received,
             0.99 * expected_weth_received,
-            alice,
+            receiver,
             chain.time() + 100,
         ),
     )
@@ -250,11 +342,16 @@ def test_remove_all_liquidity(position, alice, invoker, clp_uniswapv3, chain):
     assert "DecreaseLiquidity" in tx.events
     assert "Burn" in tx.events
 
-    assert usdc.balanceOf(alice) > usdc_start_balance or weth.balanceOf(alice) > weth_start_balance
+    assert (
+        usdc.balanceOf(target_receiver) == usdc_start_balance + tx.events["Transfer"][0]["value"]
+        and weth.balanceOf(target_receiver)
+        == weth_start_balance + tx.events["Transfer"][1]["value"]
+    )
 
 
-def test_fail_remove_all_liquidity(position, alice, bob, invoker, chain, clp_uniswapv3):
-    nftm = interface.NonfungiblePositionManager("0xc36442b4a4522e871399cd717abdd847ab11fe88")
+def test_fail_remove_all_liquidity_invalid_user(
+    position, nftm, alice, bob, invoker, chain, clp_uniswapv3
+):
     nftm.approve(invoker, position, {"from": alice})
 
     calldata_remove_all = clp_uniswapv3.withdrawAll.encode_input(
