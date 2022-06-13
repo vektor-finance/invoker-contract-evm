@@ -154,7 +154,7 @@ def test_remove_some_liquidity(position, alice, invoker, clp_uniswapv3, chain):
     nftm = interface.NonfungiblePositionManager("0xc36442b4a4522e871399cd717abdd847ab11fe88")
     initial_position = nftm.positions(position).dict()
     liquidity_to_remove = initial_position["liquidity"] // 3
-    nftm.setApprovalForAll(invoker, True, {"from": alice})
+    nftm.approve(invoker, position, {"from": alice})
 
     tick_lower, tick_upper = FULL_RANGE_LOWER_TICK, FULL_RANGE_UPPER_TICK
 
@@ -194,7 +194,7 @@ def test_fail_other_remove_some_liquidity(position, alice, bob, invoker, clp_uni
     nftm = interface.NonfungiblePositionManager("0xc36442b4a4522e871399cd717abdd847ab11fe88")
     initial_position = nftm.positions(position).dict()
     liquidity_to_remove = initial_position["liquidity"] // 3
-    nftm.setApprovalForAll(invoker, True, {"from": alice})
+    nftm.approve(invoker, position, {"from": alice})
 
     calldata_remove = clp_uniswapv3.withdraw.encode_input(
         position, liquidity_to_remove, (nftm, 0, 0, alice, chain.time() + 100)
@@ -206,7 +206,7 @@ def test_fail_other_remove_some_liquidity(position, alice, bob, invoker, clp_uni
 
 def test_remove_all_liquidity(position, alice, invoker, clp_uniswapv3, chain):
     nftm = interface.NonfungiblePositionManager("0xc36442b4a4522e871399cd717abdd847ab11fe88")
-    nftm.setApprovalForAll(invoker, True, {"from": alice})
+    nftm.approve(invoker, position, {"from": alice})
     initial_position = nftm.positions(position).dict()
     liquidity_to_remove = initial_position["liquidity"]
 
@@ -250,7 +250,7 @@ def test_remove_all_liquidity(position, alice, invoker, clp_uniswapv3, chain):
 
 def test_fail_remove_all_liquidity(position, alice, bob, invoker, chain, clp_uniswapv3):
     nftm = interface.NonfungiblePositionManager("0xc36442b4a4522e871399cd717abdd847ab11fe88")
-    nftm.setApprovalForAll(invoker, True, {"from": alice})
+    nftm.approve(invoker, position, {"from": alice})
 
     calldata_remove_all = clp_uniswapv3.withdrawAll.encode_input(
         position, (nftm, 0, 0, alice, chain.time() + 100)
