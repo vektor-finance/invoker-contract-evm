@@ -1,6 +1,6 @@
 import brownie
 import pytest
-from brownie import interface
+from brownie import ZERO_ADDRESS, interface
 
 from data.access_control import APPROVED_COMMAND
 from data.test_helpers import mint_tokens_for
@@ -91,6 +91,11 @@ def position(invoker, clp_uniswapv3, alice, cmove, chain):
     assert nftm.ownerOf(token_id) == alice
 
     yield token_id
+
+
+@pytest.fixture(scope="module")
+def nftm():
+    yield interface.NonfungiblePositionManager("0xc36442b4a4522e871399cd717abdd847ab11fe88")
 
 
 def test_mint(position):
@@ -257,3 +262,48 @@ def test_fail_remove_all_liquidity(position, alice, bob, invoker, chain, clp_uni
     )
     with brownie.reverts("CLPUniswapV3:not your position"):
         invoker.invoke([clp_uniswapv3], [calldata_remove_all], {"from": bob})
+
+
+@pytest.mark.parametrize("receiver", ["user", ZERO_ADDRESS], ids=["alice", "zero address"])
+def test_collect(position, alice, bob, clp_uniswapv3, invoker, chain, nftm, receiver):
+    if receiver == "user":
+        receiver = alice
+    usdc = interface.ERC20Detailed("0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48")
+    weth = interface.ERC20Detailed("0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2")
+
+    bob_usdc_amount = usdc.balanceOf(alice)
+    bob_weth_amount = weth.balanceOf(alice)
+    usdc.transfer(bob, bob_usdc_amount, {"from": alice})
+    weth.transfer(bob, bob_weth_amount, {"from": alice})
+
+    router = interface.UniswapV3SwapRouter("0xE592427A0AEce92De3Edee1F18E0157C05861564")
+    uniswap_pool = interface.UniswapV3Pool("0x8ad599c3A0ff1De082011EFDDc58f1908eb6e6D8")
+
+    # Execute a trade on the pool, generating fees for alice (in USDC)
+    initial_price = uniswap_pool.slot0().dict()["sqrtPriceX96"]
+    usdc.approve(router, bob_usdc_amount, {"from": bob})
+    deadline = chain.time() + 100
+    router.exactInputSingle((usdc, weth, 3000, bob, deadline, bob_usdc_amount, 0, 0), {"from": bob})
+    final_price = uniswap_pool.slot0().dict()["sqrtPriceX96"]
+    assert final_price < initial_price
+
+    calldata_collect = clp_uniswapv3.collectAll.encode_input(nftm, position, receiver)
+
+    nftm.approve(invoker, position, {"from": alice})
+
+    if receiver == ZERO_ADDRESS:
+        target_receiver = invoker
+    else:
+        target_receiver = alice
+
+    starting_balance = usdc.balanceOf(target_receiver)
+
+    tx = invoker.invoke(
+        [clp_uniswapv3],
+        [calldata_collect],
+        {"from": alice},
+    )
+
+    collect_event = tx.events["Collect"]
+
+    assert collect_event["amount0"] == usdc.balanceOf(target_receiver) - starting_balance
