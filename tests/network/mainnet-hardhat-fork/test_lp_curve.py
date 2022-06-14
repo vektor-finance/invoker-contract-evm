@@ -1,9 +1,10 @@
 from dataclasses import dataclass
+from enum import IntEnum
 from typing import Dict, List, Optional
 
 import brownie
 import pytest
-from brownie import ZERO_ADDRESS, Contract, interface
+from brownie import Contract, interface
 
 from data.access_control import APPROVED_COMMAND
 from data.chain import get_chain
@@ -11,6 +12,12 @@ from data.test_helpers import mint_tokens_for
 
 CURVE_ETH = "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE"
 DEFAULT_SLIPPAGE = 0.99
+
+
+class CurveLPType(IntEnum):
+    PLAIN_POOL = 0
+    UNDERLYING_NO_FLAG = 1
+    USE_UNDERLYING = 2
 
 
 @pytest.fixture(scope="module")
@@ -132,7 +139,7 @@ class TestBasePool:
             token_contracts,
             token_amounts,
             curve_pool,
-            [min_amount, ZERO_ADDRESS],
+            [min_amount, CurveLPType.PLAIN_POOL],
         )
 
         invoker.invoke(
@@ -225,13 +232,16 @@ class UnderlyingPool:
             calldatas.append(cmove.moveERC20In.encode_input(_contract, _amount))
 
         curve_pool = interface.ICurvePool(curve_pool)
-        expected_amount = self.calc_deposit(
+        expected_amount, flag = self.calc_deposit(
             tokens, curve_pool, token_contracts, token_amounts, slippage
         )
         min_amount = slippage * expected_amount
 
-        calldata_deposit = clp_curve.depositHelper.encode_input(
-            token_contracts, token_amounts, curve_zap or curve_pool, [min_amount, bool(curve_zap)]
+        calldata_deposit = clp_curve.deposit.encode_input(
+            token_contracts,
+            token_amounts,
+            curve_zap or curve_pool,
+            [min_amount, flag],
         )
 
         invoker.invoke(
@@ -343,7 +353,7 @@ class TestCompoundPool(UnderlyingPool):
         expected_amount = curve_pool.calc_token_amount[f"uint256[{len(tokens)}],bool"](
             ctoken_amounts, True
         )
-        return int(slippage * expected_amount)
+        return int(slippage * expected_amount), CurveLPType.UNDERLYING_NO_FLAG
 
     def calc_withdraw(self, tokens, curve_pool, lp_amount, lp_token, slippage):
         lp_ratio = lp_amount / lp_token.totalSupply()
@@ -374,7 +384,7 @@ class TestAavePool(UnderlyingPool):
             atoken_amounts, True
         )
         min_amount = int(expected_amount * slippage)
-        return min_amount
+        return min_amount, CurveLPType.USE_UNDERLYING
 
     def calc_withdraw(self, tokens, curve_pool, lp_amount, lp_token, slippage):
         min_received = []

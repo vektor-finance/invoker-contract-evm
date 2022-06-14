@@ -16,7 +16,7 @@ contract CLPCurve is CLPBase, ICLPCurve {
     function deposit(
         IERC20[] calldata tokens,
         uint256[] calldata amounts,
-        address pool,
+        address depositAddress,
         CurveLPDepositParams calldata params
     ) external payable {
         _requireMsg(amounts.length == tokens.length, "amounts+tokens length not equal");
@@ -24,24 +24,49 @@ contract CLPCurve is CLPBase, ICLPCurve {
         unchecked {
             for (uint256 i; i < tokens.length; ++i) {
                 if (amounts[i] > 0) {
-                    _approveToken(tokens[i], pool, amounts[i]);
+                    _approveToken(tokens[i], depositAddress, amounts[i]);
                 }
             }
         }
         if (amounts.length == 2) {
             uint256[2] memory _tokenAmounts = [amounts[0], amounts[1]];
-            ICurvePool(pool).add_liquidity(_tokenAmounts, params.minReceivedLiquidity);
+            if (
+                params.lpType == CurveLPType.PLAIN_POOL ||
+                params.lpType == CurveLPType.UNDERLYING_NO_FLAG
+            ) {
+                ICurveDepositZap(depositAddress).add_liquidity(
+                    _tokenAmounts,
+                    params.minReceivedLiquidity
+                );
+            } else if (params.lpType == CurveLPType.USE_UNDERLYING) {
+                ICurveDepositZap(depositAddress).add_liquidity(
+                    _tokenAmounts,
+                    params.minReceivedLiquidity,
+                    true
+                );
+            }
         } else if (amounts.length == 3) {
             uint256[3] memory _tokenAmounts = [amounts[0], amounts[1], amounts[2]];
-            ICurvePool(pool).add_liquidity(_tokenAmounts, params.minReceivedLiquidity);
-        } else if (amounts.length == 4) {
-            uint256[4] memory _tokenAmounts = [amounts[0], amounts[1], amounts[2], amounts[3]];
-            ICurvePool(pool).add_liquidity(_tokenAmounts, params.minReceivedLiquidity);
+            if (
+                params.lpType == CurveLPType.PLAIN_POOL ||
+                params.lpType == CurveLPType.UNDERLYING_NO_FLAG
+            ) {
+                ICurveDepositZap(depositAddress).add_liquidity(
+                    _tokenAmounts,
+                    params.minReceivedLiquidity
+                );
+            } else if (params.lpType == CurveLPType.USE_UNDERLYING) {
+                ICurveDepositZap(depositAddress).add_liquidity(
+                    _tokenAmounts,
+                    params.minReceivedLiquidity,
+                    true
+                );
+            }
         } else {
             _revertMsg("unsupported length");
         }
     }
-
+} /*
     function depositHelper(
         IERC20[] calldata tokens,
         uint256[] calldata amounts,
@@ -177,3 +202,4 @@ contract CLPCurve is CLPBase, ICLPCurve {
         }
     }
 }
+*/
