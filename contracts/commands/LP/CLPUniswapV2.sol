@@ -29,7 +29,7 @@ contract CLPUniswapV2 is CLPBase, ICLPUniswapV2 {
         IERC20 tokenA,
         uint256 amountB,
         IERC20 tokenB,
-        UniswapV2LPParams calldata params
+        UniswapV2LPDepositParams calldata params
     ) external payable {
         address receiver = params.receiver == address(0) ? address(this) : params.receiver;
         //solhint-disable-next-line not-rely-on-time
@@ -58,9 +58,8 @@ contract CLPUniswapV2 is CLPBase, ICLPUniswapV2 {
     function withdraw(
         IUniswapV2Pair pool,
         uint256 liquidity,
-        UniswapV2LPParams calldata params
+        UniswapV2LPWithdrawParams calldata params
     ) external payable {
-        // router is not actually used
         address receiver = params.receiver == address(0) ? address(this) : params.receiver;
         if (params.deadline > 0) {
             //solhint-disable-next-line not-rely-on-time
