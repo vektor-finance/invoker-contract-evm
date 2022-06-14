@@ -68,6 +68,26 @@ contract CLPCurve is CLPBase, ICLPCurve {
                     true
                 );
             }
+        } else if (amounts.length == 4) {
+            uint256[4] memory _tokenAmounts = [amounts[0], amounts[1], amounts[2], amounts[3]];
+            if (
+                params.lpType == CurveLPType.PLAIN_POOL ||
+                params.lpType == CurveLPType.HELPER_CONTRACT_NO_FLAG
+            ) {
+                ICurveDepositZap(depositAddress).add_liquidity(
+                    _tokenAmounts,
+                    params.minReceivedLiquidity
+                );
+            } else if (
+                params.lpType == CurveLPType.HELPER_CONTRACT_UNDERLYING_FLAG ||
+                params.lpType == CurveLPType.PLAIN_POOL_UNDERLYING_FLAG
+            ) {
+                ICurveDepositZap(depositAddress).add_liquidity(
+                    _tokenAmounts,
+                    params.minReceivedLiquidity,
+                    true
+                );
+            }
         } else {
             _revertMsg("unsupported length");
         }
@@ -112,6 +132,31 @@ contract CLPCurve is CLPBase, ICLPCurve {
                 params.minimumReceived[0],
                 params.minimumReceived[1],
                 params.minimumReceived[2]
+            ];
+            if (
+                params.lpType == CurveLPType.PLAIN_POOL ||
+                params.lpType == CurveLPType.HELPER_CONTRACT_NO_FLAG
+            ) {
+                ICurveDepositZap(params.curveWithdrawAddress).remove_liquidity(
+                    liquidity,
+                    _tokenAmounts
+                );
+            } else if (
+                params.lpType == CurveLPType.HELPER_CONTRACT_UNDERLYING_FLAG ||
+                params.lpType == CurveLPType.PLAIN_POOL_UNDERLYING_FLAG
+            ) {
+                ICurveDepositZap(params.curveWithdrawAddress).remove_liquidity(
+                    liquidity,
+                    _tokenAmounts,
+                    true
+                );
+            }
+        } else if (params.minimumReceived.length == 4) {
+            uint256[4] memory _tokenAmounts = [
+                params.minimumReceived[0],
+                params.minimumReceived[1],
+                params.minimumReceived[2],
+                params.minimumReceived[3]
             ];
             if (
                 params.lpType == CurveLPType.PLAIN_POOL ||
