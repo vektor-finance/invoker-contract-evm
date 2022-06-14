@@ -16,8 +16,9 @@ DEFAULT_SLIPPAGE = 0.99
 
 class CurveLPType(IntEnum):
     PLAIN_POOL = 0
-    UNDERLYING_NO_FLAG = 1
-    USE_UNDERLYING = 2
+    PLAIN_POOL_UNDERLYING_FLAG = 1
+    HELPER_CONTRACT_NO_FLAG = 2
+    HELPER_CONTRACT_UNDERLYING_FLAG = 3
 
 
 @pytest.fixture(scope="module")
@@ -190,9 +191,9 @@ class TestBasePool:
 
         calldata_move = cmove.moveERC20In.encode_input(lp_token, lp_amount)
         calldata_withdraw = clp_curve.withdraw.encode_input(
-            curve_pool,
+            lp_token,
             lp_amount,
-            min_tokens_received,
+            (min_tokens_received, CurveLPType.PLAIN_POOL, curve_pool),
         )
 
         invoker.invoke([cmove, clp_curve], [calldata_move, calldata_withdraw], {"from": alice})
@@ -306,14 +307,15 @@ class UnderlyingPool:
         lp_token.transfer(alice, lp_amount, {"from": lp_benefactor})
         lp_token.approve(invoker, lp_amount, {"from": alice})
 
-        min_tokens_received = self.calc_withdraw(tokens, curve_pool, lp_amount, lp_token, slippage)
+        min_tokens_received, flag = self.calc_withdraw(
+            tokens, curve_pool, lp_amount, lp_token, slippage
+        )
 
         calldata_move = cmove.moveERC20In.encode_input(lp_token, lp_amount)
-        calldata_withdraw = clp_curve.withdrawHelper.encode_input(
+        calldata_withdraw = clp_curve.withdraw.encode_input(
             lp_token,
-            curve_zap or curve_pool,
             lp_amount,
-            [min_tokens_received, bool(curve_zap)],
+            [min_tokens_received, flag, curve_zap or curve_pool],
         )
 
         invoker.invoke([cmove, clp_curve], [calldata_move, calldata_withdraw], {"from": alice})
@@ -353,7 +355,7 @@ class TestCompoundPool(UnderlyingPool):
         expected_amount = curve_pool.calc_token_amount[f"uint256[{len(tokens)}],bool"](
             ctoken_amounts, True
         )
-        return int(slippage * expected_amount), CurveLPType.UNDERLYING_NO_FLAG
+        return int(slippage * expected_amount), CurveLPType.HELPER_CONTRACT_NO_FLAG
 
     def calc_withdraw(self, tokens, curve_pool, lp_amount, lp_token, slippage):
         lp_ratio = lp_amount / lp_token.totalSupply()
@@ -368,7 +370,7 @@ class TestCompoundPool(UnderlyingPool):
             )
             min_ctokens_received.append(int(lp_ratio * ctoken_total_balance * slippage))
 
-        return min_ctokens_received
+        return min_ctokens_received, CurveLPType.HELPER_CONTRACT_NO_FLAG
 
 
 @pytest.mark.parametrize(
@@ -384,17 +386,14 @@ class TestAavePool(UnderlyingPool):
             atoken_amounts, True
         )
         min_amount = int(expected_amount * slippage)
-        return min_amount, CurveLPType.USE_UNDERLYING
+        return min_amount, CurveLPType.PLAIN_POOL_UNDERLYING_FLAG
 
     def calc_withdraw(self, tokens, curve_pool, lp_amount, lp_token, slippage):
         min_received = []
         lp_ratio = lp_amount / lp_token.totalSupply()
         for i, _ in enumerate(tokens):
-            try:
-                min_received.append(int(curve_pool.balances["int128"](i) * lp_ratio * slippage))
-            except brownie.exceptions.VirtualMachineError:
-                min_received.append(int(curve_pool.balances["uint256"](i) * lp_ratio * slippage))
-        return min_received
+            min_received.append(int(get_curve_balance(curve_pool, i) * lp_ratio * slippage))
+        return min_received, CurveLPType.PLAIN_POOL_UNDERLYING_FLAG
 
 
 """

@@ -5,8 +5,9 @@ pragma solidity ^0.8.6;
 interface ICLPCurve {
     enum CurveLPType {
         PLAIN_POOL,
-        UNDERLYING_NO_FLAG,
-        USE_UNDERLYING
+        PLAIN_POOL_UNDERLYING_FLAG,
+        HELPER_CONTRACT_NO_FLAG,
+        HELPER_CONTRACT_UNDERLYING_FLAG
     }
 
     struct CurveLPDepositParams {
@@ -16,5 +17,6 @@ interface ICLPCurve {
     struct CurveLPWithdrawParams {
         uint256[] minimumReceived;
         CurveLPType lpType;
+        address curveWithdrawAddress;
     }
 }
