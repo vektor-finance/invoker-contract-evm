@@ -125,8 +125,8 @@ class TestBasePool:
 
         # dai, usdc, usdt
         calldata_deposit = clp_curve.deposit.encode_input(
-            token_amounts,
             token_contracts,
+            token_amounts,
             curve_pool,
             [min_amount, ZERO_ADDRESS],
         )
@@ -223,7 +223,7 @@ class UnderlyingPool:
         min_amount = expected_amount // 1.01
 
         calldata_deposit = clp_curve.depositHelper.encode_input(
-            token_amounts, token_contracts, curve_zap or curve_pool, [min_amount, bool(curve_zap)]
+            token_contracts, token_amounts, curve_zap or curve_pool, [min_amount, bool(curve_zap)]
         )
 
         invoker.invoke(

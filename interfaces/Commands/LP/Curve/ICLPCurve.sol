@@ -9,6 +9,7 @@ interface ICLPCurve {
         V2_ABI_LIQUIDITY,
         V2_ABI_UNDERLYING
     }
+
     struct CurveLPDepositParams {
         uint256 minReceivedLiquidity;
         bool useHelperContract;

@@ -14,8 +14,8 @@ contract CLPCurve is CLPBase, ICLPCurve {
     }
 
     function deposit(
-        uint256[] calldata amounts,
         IERC20[] calldata tokens,
+        uint256[] calldata amounts,
         address pool,
         CurveLPDepositParams calldata params
     ) external payable {
@@ -43,8 +43,8 @@ contract CLPCurve is CLPBase, ICLPCurve {
     }
 
     function depositHelper(
-        uint256[] calldata amounts,
         IERC20[] calldata tokens,
+        uint256[] calldata amounts,
         address depositAddress,
         CurveLPDepositParams calldata params
     ) external payable {
