@@ -9,6 +9,9 @@ from data.access_control import APPROVED_COMMAND
 from data.chain import get_chain
 from data.test_helpers import mint_tokens_for
 
+CURVE_ETH = "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE"
+DEFAULT_SLIPPAGE = 0.99
+
 
 @pytest.fixture(scope="module")
 def clp_curve(invoker, deployer, CLPCurve):
@@ -101,12 +104,13 @@ class TestBasePool:
         curve_zap,
     ):
         assets = get_chain()["assets"]
+        slippage = DEFAULT_SLIPPAGE
         token_contracts = []
         token_amounts = []
         calldatas = []
         for token in tokens:
             _token = [asset for asset in assets if asset["symbol"] == token][0]
-            _address = _token["address"] or "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE"
+            _address = _token["address"] or CURVE_ETH
             _contract = interface.ERC20Detailed(_address)
             _amount = 100 * 10 ** _token["decimals"]
             token_contracts.append(_contract)
@@ -121,7 +125,7 @@ class TestBasePool:
         expected_amount = curve_pool.calc_token_amount[f"uint256[{len(tokens)}],bool"](
             token_amounts, True
         )
-        min_amount = expected_amount // 1.01
+        min_amount = expected_amount * slippage
 
         # dai, usdc, usdt
         calldata_deposit = clp_curve.deposit.encode_input(
@@ -154,6 +158,7 @@ class TestBasePool:
         curve_zap,
     ):
         assets = get_chain()["assets"]
+        slippage = DEFAULT_SLIPPAGE
 
         curve_pool = interface.CurvePool(curve_pool)
         lp_token = interface.ERC20Detailed(lp_token)
@@ -171,7 +176,7 @@ class TestBasePool:
             token_contracts.append(_contract)
             _balance = curve_pool.balances(key)
             pool_balances.append(_balance)
-            min_tokens_received.append(lp_ratio * _balance * 0.99)
+            min_tokens_received.append(lp_ratio * _balance * slippage)
 
         lp_token.transfer(alice, lp_amount, {"from": lp_benefactor})
         lp_token.approve(invoker, lp_amount, {"from": alice})
@@ -203,6 +208,7 @@ class UnderlyingPool:
         lp_benefactor,
     ):
         assets = get_chain()["assets"]
+        slippage = DEFAULT_SLIPPAGE
         token_contracts = []
         token_amounts = []
         calldatas = []
@@ -219,8 +225,10 @@ class UnderlyingPool:
             calldatas.append(cmove.moveERC20In.encode_input(_contract, _amount))
 
         curve_pool = interface.ICurvePool(curve_pool)
-        expected_amount = self.calc_deposit(tokens, curve_pool, token_contracts, token_amounts)
-        min_amount = expected_amount // 1.01
+        expected_amount = self.calc_deposit(
+            tokens, curve_pool, token_contracts, token_amounts, slippage
+        )
+        min_amount = slippage * expected_amount
 
         calldata_deposit = clp_curve.depositHelper.encode_input(
             token_contracts, token_amounts, curve_zap or curve_pool, [min_amount, bool(curve_zap)]
@@ -248,6 +256,7 @@ class UnderlyingPool:
         lp_benefactor,
     ):
         assets = get_chain()["assets"]
+        slippage = DEFAULT_SLIPPAGE
 
         curve_pool = Contract.from_abi(
             "Curve Pool",
@@ -287,7 +296,7 @@ class UnderlyingPool:
         lp_token.transfer(alice, lp_amount, {"from": lp_benefactor})
         lp_token.approve(invoker, lp_amount, {"from": alice})
 
-        min_tokens_received = self.calc_withdraw(tokens, curve_pool, lp_amount, lp_token)
+        min_tokens_received = self.calc_withdraw(tokens, curve_pool, lp_amount, lp_token, slippage)
 
         calldata_move = cmove.moveERC20In.encode_input(lp_token, lp_amount)
         calldata_withdraw = clp_curve.withdrawHelper.encode_input(
@@ -314,7 +323,7 @@ class TestCompoundPool(UnderlyingPool):
         "USDC": "0x39AA39c021dfbaE8faC545936693aC917d5E7563",
     }
 
-    def calc_deposit(self, tokens, curve_pool, token_contracts, token_amounts):
+    def calc_deposit(self, tokens, curve_pool, token_contracts, token_amounts, slippage):
         ctoken_amounts = []
         for i, token in enumerate(tokens):
             c_token = interface.CToken(self.c_tokens[token])
@@ -323,9 +332,9 @@ class TestCompoundPool(UnderlyingPool):
         expected_amount = curve_pool.calc_token_amount[f"uint256[{len(tokens)}],bool"](
             ctoken_amounts, True
         )
-        return int(0.99 * expected_amount)
+        return int(slippage * expected_amount)
 
-    def calc_withdraw(self, tokens, curve_pool, lp_amount, lp_token):
+    def calc_withdraw(self, tokens, curve_pool, lp_amount, lp_token, slippage):
         lp_ratio = lp_amount / lp_token.totalSupply()
 
         min_ctokens_received = []
@@ -341,7 +350,7 @@ class TestCompoundPool(UnderlyingPool):
                 ctoken_total_balance = (
                     curve_pool.balances["uint256"](i) * c_token.exchangeRateStored() / 1e18
                 )
-            min_ctokens_received.append(int(lp_ratio * ctoken_total_balance * 0.99))
+            min_ctokens_received.append(int(lp_ratio * ctoken_total_balance * slippage))
 
         return min_ctokens_received
 
@@ -352,23 +361,23 @@ class TestCompoundPool(UnderlyingPool):
     ids=[lending_aave_pool.name],
 )
 class TestAavePool(UnderlyingPool):
-    def calc_deposit(self, tokens, curve_pool, token_contracts, token_amounts):
+    def calc_deposit(self, tokens, curve_pool, token_contracts, token_amounts, slippage):
         # todo: how to convert tokens to aTokens
         atoken_amounts = token_amounts
         expected_amount = curve_pool.calc_token_amount[f"uint256[{len(token_contracts)}],bool"](
             atoken_amounts, True
         )
-        min_amount = int(expected_amount * 0.99)
+        min_amount = int(expected_amount * slippage)
         return min_amount
 
-    def calc_withdraw(self, tokens, curve_pool, lp_amount, lp_token):
+    def calc_withdraw(self, tokens, curve_pool, lp_amount, lp_token, slippage):
         min_received = []
         lp_ratio = lp_amount / lp_token.totalSupply()
         for i, _ in enumerate(tokens):
             try:
-                min_received.append(int(curve_pool.balances["int128"](i) * lp_ratio * 0.99))
+                min_received.append(int(curve_pool.balances["int128"](i) * lp_ratio * slippage))
             except brownie.exceptions.VirtualMachineError:
-                min_received.append(int(curve_pool.balances["uint256"](i) * lp_ratio * 0.99))
+                min_received.append(int(curve_pool.balances["uint256"](i) * lp_ratio * slippage))
         return min_received
 
 
