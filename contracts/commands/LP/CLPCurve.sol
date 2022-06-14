@@ -4,138 +4,9 @@ pragma solidity ^0.8.6;
 
 import "../../../interfaces/Commands/Swap/Curve/ICryptoPool.sol";
 import "../../../interfaces/Commands/Swap/Curve/ICurvePool.sol";
+import "../../../interfaces/Commands/LP/Curve/ICLPCurve.sol";
+import "../../../interfaces/Commands/LP/Curve/ICurveDepositZap.sol";
 import "./CLPBase.sol";
-
-interface ICLPCurve {
-    enum CurveLPType {
-        V1_ABI_LIQUIDITY,
-        V1_ABI_UNDERLYING,
-        V2_ABI_LIQUIDITY,
-        V2_ABI_UNDERLYING
-    }
-    struct CurveLPDepositParams {
-        uint256 minReceivedLiquidity;
-        bool useHelperContract;
-    }
-    struct CurveLPWithdrawParams {
-        uint256[] minimumReceived;
-        bool useHelperContract;
-    }
-}
-
-interface ICurveDepositZap {
-    function add_liquidity(uint256[2] calldata amounts, uint256 min_mint_amount) external;
-
-    function add_liquidity(uint256[3] calldata amounts, uint256 min_mint_amount) external;
-
-    function add_liquidity(uint256[4] calldata amounts, uint256 min_mint_amount) external;
-
-    function add_liquidity(uint256[5] calldata amounts, uint256 min_mint_amount) external;
-
-    function add_liquidity(uint256[6] calldata amounts, uint256 min_mint_amount) external;
-
-    function add_liquidity(uint256[7] calldata amounts, uint256 min_mint_amount) external;
-
-    function add_liquidity(uint256[8] calldata amounts, uint256 min_mint_amount) external;
-
-    function add_liquidity(
-        uint256[2] calldata amounts,
-        uint256 min_mint_amount,
-        bool use_underlying
-    ) external;
-
-    function add_liquidity(
-        uint256[3] calldata amounts,
-        uint256 min_mint_amount,
-        bool use_underlying
-    ) external;
-
-    function add_liquidity(
-        uint256[4] calldata amounts,
-        uint256 min_mint_amount,
-        bool use_underlying
-    ) external;
-
-    function add_liquidity(
-        uint256[5] calldata amounts,
-        uint256 min_mint_amount,
-        bool use_underlying
-    ) external;
-
-    function add_liquidity(
-        uint256[6] calldata amounts,
-        uint256 min_mint_amount,
-        bool use_underlying
-    ) external;
-
-    function add_liquidity(
-        uint256[7] calldata amounts,
-        uint256 min_mint_amount,
-        bool use_underlying
-    ) external;
-
-    function add_liquidity(
-        uint256[8] calldata amounts,
-        uint256 min_mint_amount,
-        bool use_underlying
-    ) external;
-
-    function remove_liquidity(uint256 amount, uint256[2] calldata min_amounts) external;
-
-    function remove_liquidity(uint256 amount, uint256[3] calldata min_amounts) external;
-
-    function remove_liquidity(uint256 amount, uint256[4] calldata min_amounts) external;
-
-    function remove_liquidity(uint256 amount, uint256[5] calldata min_amounts) external;
-
-    function remove_liquidity(uint256 amount, uint256[6] calldata min_amounts) external;
-
-    function remove_liquidity(uint256 amount, uint256[7] calldata min_amounts) external;
-
-    function remove_liquidity(uint256 amount, uint256[8] calldata min_amounts) external;
-
-    function remove_liquidity(
-        uint256 amount,
-        uint256[2] calldata min_amounts,
-        bool use_underlying
-    ) external;
-
-    function remove_liquidity(
-        uint256 amount,
-        uint256[3] calldata min_amounts,
-        bool use_underlying
-    ) external;
-
-    function remove_liquidity(
-        uint256 amount,
-        uint256[4] calldata min_amounts,
-        bool use_underlying
-    ) external;
-
-    function remove_liquidity(
-        uint256 amount,
-        uint256[5] calldata min_amounts,
-        bool use_underlying
-    ) external;
-
-    function remove_liquidity(
-        uint256 amount,
-        uint256[6] calldata min_amounts,
-        bool use_underlying
-    ) external;
-
-    function remove_liquidity(
-        uint256 amount,
-        uint256[7] calldata min_amounts,
-        bool use_underlying
-    ) external;
-
-    function remove_liquidity(
-        uint256 amount,
-        uint256[8] calldata min_amounts,
-        bool use_underlying
-    ) external;
-}
 
 contract CLPCurve is CLPBase, ICLPCurve {
     function _getContractName() internal pure override returns (string memory) {
@@ -148,7 +19,8 @@ contract CLPCurve is CLPBase, ICLPCurve {
         address pool,
         CurveLPDepositParams calldata params
     ) external payable {
-        // for loop cannot overflow
+        _requireMsg(amounts.length == tokens.length, "amounts+tokens length not equal");
+        // for loop `i` cannot overflow, so we use unchecked block to save gas
         unchecked {
             for (uint256 i; i < tokens.length; ++i) {
                 if (amounts[i] > 0) {
@@ -157,14 +29,14 @@ contract CLPCurve is CLPBase, ICLPCurve {
             }
         }
         if (amounts.length == 2) {
-            uint256[2] memory coinAmounts = [amounts[0], amounts[1]];
-            ICurvePool(pool).add_liquidity(coinAmounts, params.minReceivedLiquidity);
+            uint256[2] memory _tokenAmounts = [amounts[0], amounts[1]];
+            ICurvePool(pool).add_liquidity(_tokenAmounts, params.minReceivedLiquidity);
         } else if (amounts.length == 3) {
-            uint256[3] memory coinAmounts = [amounts[0], amounts[1], amounts[2]];
-            ICurvePool(pool).add_liquidity(coinAmounts, params.minReceivedLiquidity);
+            uint256[3] memory _tokenAmounts = [amounts[0], amounts[1], amounts[2]];
+            ICurvePool(pool).add_liquidity(_tokenAmounts, params.minReceivedLiquidity);
         } else if (amounts.length == 4) {
-            uint256[4] memory coinAmounts = [amounts[0], amounts[1], amounts[2], amounts[3]];
-            ICurvePool(pool).add_liquidity(coinAmounts, params.minReceivedLiquidity);
+            uint256[4] memory _tokenAmounts = [amounts[0], amounts[1], amounts[2], amounts[3]];
+            ICurvePool(pool).add_liquidity(_tokenAmounts, params.minReceivedLiquidity);
         } else {
             _revertMsg("unsupported length");
         }
@@ -176,49 +48,51 @@ contract CLPCurve is CLPBase, ICLPCurve {
         address depositAddress,
         CurveLPDepositParams calldata params
     ) external payable {
+        _requireMsg(amounts.length == tokens.length, "amounts+tokens length not equal");
+        // for loop `i` cannot overflow, so we use unchecked block to save gas
         unchecked {
             for (uint256 i; i < tokens.length; ++i) {
                 _approveToken(tokens[i], depositAddress, amounts[i]);
             }
         }
         if (amounts.length == 2) {
-            uint256[2] memory coinAmounts = [amounts[0], amounts[1]];
+            uint256[2] memory _tokenAmounts = [amounts[0], amounts[1]];
             if (params.useHelperContract) {
                 ICurveDepositZap(depositAddress).add_liquidity(
-                    coinAmounts,
+                    _tokenAmounts,
                     params.minReceivedLiquidity
                 );
             } else {
                 ICurveDepositZap(depositAddress).add_liquidity(
-                    coinAmounts,
+                    _tokenAmounts,
                     params.minReceivedLiquidity,
                     true
                 );
             }
         } else if (amounts.length == 3) {
-            uint256[3] memory coinAmounts = [amounts[0], amounts[1], amounts[2]];
+            uint256[3] memory _tokenAmounts = [amounts[0], amounts[1], amounts[2]];
             if (params.useHelperContract) {
                 ICurveDepositZap(depositAddress).add_liquidity(
-                    coinAmounts,
+                    _tokenAmounts,
                     params.minReceivedLiquidity
                 );
             } else {
                 ICurveDepositZap(depositAddress).add_liquidity(
-                    coinAmounts,
+                    _tokenAmounts,
                     params.minReceivedLiquidity,
                     true
                 );
             }
         } else if (amounts.length == 4) {
-            uint256[4] memory coinAmounts = [amounts[0], amounts[1], amounts[2], amounts[3]];
+            uint256[4] memory _tokenAmounts = [amounts[0], amounts[1], amounts[2], amounts[3]];
             if (params.useHelperContract) {
                 ICurveDepositZap(depositAddress).add_liquidity(
-                    coinAmounts,
+                    _tokenAmounts,
                     params.minReceivedLiquidity
                 );
             } else {
                 ICurveDepositZap(depositAddress).add_liquidity(
-                    coinAmounts,
+                    _tokenAmounts,
                     params.minReceivedLiquidity,
                     true
                 );
@@ -236,23 +110,23 @@ contract CLPCurve is CLPBase, ICLPCurve {
         uint256[] calldata minimumReceived
     ) external payable {
         if (minimumReceived.length == 2) {
-            uint256[2] memory coinAmounts = [minimumReceived[0], minimumReceived[1]];
-            pool.remove_liquidity(liquidity, coinAmounts);
+            uint256[2] memory _tokenAmounts = [minimumReceived[0], minimumReceived[1]];
+            pool.remove_liquidity(liquidity, _tokenAmounts);
         } else if (minimumReceived.length == 3) {
-            uint256[3] memory coinAmounts = [
+            uint256[3] memory _tokenAmounts = [
                 minimumReceived[0],
                 minimumReceived[1],
                 minimumReceived[2]
             ];
-            pool.remove_liquidity(liquidity, coinAmounts);
+            pool.remove_liquidity(liquidity, _tokenAmounts);
         } else if (minimumReceived.length == 4) {
-            uint256[4] memory coinAmounts = [
+            uint256[4] memory _tokenAmounts = [
                 minimumReceived[0],
                 minimumReceived[1],
                 minimumReceived[2],
                 minimumReceived[3]
             ];
-            pool.remove_liquidity(liquidity, coinAmounts);
+            pool.remove_liquidity(liquidity, _tokenAmounts);
         } else {
             _revertMsg("unsupported length");
         }
@@ -266,34 +140,37 @@ contract CLPCurve is CLPBase, ICLPCurve {
     ) external payable {
         _approveToken(LPToken, withdrawAddress, liquidity);
         if (params.minimumReceived.length == 2) {
-            uint256[2] memory coinAmounts = [params.minimumReceived[0], params.minimumReceived[1]];
+            uint256[2] memory _tokenAmounts = [
+                params.minimumReceived[0],
+                params.minimumReceived[1]
+            ];
             if (params.useHelperContract) {
-                ICurveDepositZap(withdrawAddress).remove_liquidity(liquidity, coinAmounts);
+                ICurveDepositZap(withdrawAddress).remove_liquidity(liquidity, _tokenAmounts);
             } else {
-                ICurveDepositZap(withdrawAddress).remove_liquidity(liquidity, coinAmounts, true);
+                ICurveDepositZap(withdrawAddress).remove_liquidity(liquidity, _tokenAmounts, true);
             }
         } else if (params.minimumReceived.length == 3) {
-            uint256[3] memory coinAmounts = [
+            uint256[3] memory _tokenAmounts = [
                 params.minimumReceived[0],
                 params.minimumReceived[1],
                 params.minimumReceived[2]
             ];
             if (params.useHelperContract) {
-                ICurveDepositZap(withdrawAddress).remove_liquidity(liquidity, coinAmounts);
+                ICurveDepositZap(withdrawAddress).remove_liquidity(liquidity, _tokenAmounts);
             } else {
-                ICurveDepositZap(withdrawAddress).remove_liquidity(liquidity, coinAmounts, true);
+                ICurveDepositZap(withdrawAddress).remove_liquidity(liquidity, _tokenAmounts, true);
             }
         } else if (params.minimumReceived.length == 4) {
-            uint256[4] memory coinAmounts = [
+            uint256[4] memory _tokenAmounts = [
                 params.minimumReceived[0],
                 params.minimumReceived[1],
                 params.minimumReceived[2],
                 params.minimumReceived[3]
             ];
             if (params.useHelperContract) {
-                ICurveDepositZap(withdrawAddress).remove_liquidity(liquidity, coinAmounts);
+                ICurveDepositZap(withdrawAddress).remove_liquidity(liquidity, _tokenAmounts);
             } else {
-                ICurveDepositZap(withdrawAddress).remove_liquidity(liquidity, coinAmounts, true);
+                ICurveDepositZap(withdrawAddress).remove_liquidity(liquidity, _tokenAmounts, true);
             }
         } else {
             _revertMsg("unsupported length");
