@@ -312,6 +312,17 @@ class UnderlyingPool:
             assert token.balanceOf(invoker) >= min_received
 
 
+def get_curve_balance(curve_pool, index):
+    """Get the balance of token `index` in a curve pool.
+
+    Necessary as we don't know whether the pool uses int128 or uint256
+    """
+    try:
+        return curve_pool.balances["int128"](index)
+    except brownie.exceptions.VirtualMachineError:
+        return curve_pool.balances["uint256"](index)
+
+
 @pytest.mark.parametrize(
     "tokens,curve_pool,lp_token,lp_benefactor,curve_zap",
     [lending_compound.params()],
@@ -342,14 +353,9 @@ class TestCompoundPool(UnderlyingPool):
             c_token = interface.CToken(self.c_tokens[token])
             # To calculate your balance in the underlying asset,
             # multiply your cToken balance by exchangeRateStored, and divide by 1e18.
-            try:
-                ctoken_total_balance = (
-                    curve_pool.balances["int128"](i) * c_token.exchangeRateStored() / 1e18
-                )
-            except brownie.exceptions.VirtualMachineError:
-                ctoken_total_balance = (
-                    curve_pool.balances["uint256"](i) * c_token.exchangeRateStored() / 1e18
-                )
+            ctoken_total_balance = (
+                get_curve_balance(curve_pool, i) * c_token.exchangeRateStored() / 1e18
+            )
             min_ctokens_received.append(int(lp_ratio * ctoken_total_balance * slippage))
 
         return min_ctokens_received
