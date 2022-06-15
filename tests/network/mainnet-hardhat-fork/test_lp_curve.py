@@ -8,7 +8,7 @@ from brownie import Contract, interface
 
 from data.access_control import APPROVED_COMMAND
 from data.chain import get_chain
-from data.test_helpers import mint_tokens_for
+from data.test_helpers import DisableTrace, mint_tokens_for
 
 CURVE_ETH = "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE"
 DEFAULT_SLIPPAGE = 0.99
@@ -219,18 +219,6 @@ class TestBasePool:
 
         for token, min_received in zip(token_contracts, min_tokens_received):
             assert token.balanceOf(invoker) >= min_received
-
-
-class DisableTrace(object):
-    def __init__(self, web3) -> None:
-        self.web3 = web3
-        self.initial_traces = web3._supports_traces
-
-    def __enter__(self):
-        self.web3._supports_traces = False
-
-    def __exit__(self, type, value, traceback):
-        self.web3._supports_traces = self.initial_traces
 
 
 class UnderlyingPool:
