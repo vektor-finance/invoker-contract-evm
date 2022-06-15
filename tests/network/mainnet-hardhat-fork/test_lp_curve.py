@@ -58,11 +58,11 @@ plain_slink = CurveTestCase(
     lp_benefactor="0xfd4d8a17df4c27c1dd245d153ccf4499e806c87d",
 )
 
-CURVE_POOL_tests = []
-CURVE_POOL_names = []
+curve_pool_tests = []
+curve_pool_names = []
 for pool in [plain_3pool, plain_slink]:
-    CURVE_POOL_tests.append(pool.params())
-    CURVE_POOL_names.append(pool.name)
+    curve_pool_tests.append(pool.params())
+    curve_pool_names.append(pool.name)
 
 # meta/underlying pool tests
 
@@ -115,7 +115,7 @@ def get_curve_balance(curve_pool, index):
 
 
 @pytest.mark.parametrize(
-    "tokens,curve_pool,lp_token,lp_benefactor,curve_zap", CURVE_POOL_tests, ids=CURVE_POOL_names
+    "tokens,curve_pool,lp_token,lp_benefactor,curve_zap", curve_pool_tests, ids=curve_pool_names
 )
 class TestBasePool:
     def test_deposit(
