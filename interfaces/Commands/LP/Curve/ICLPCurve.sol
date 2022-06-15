@@ -4,9 +4,9 @@ pragma solidity ^0.8.6;
 
 interface ICLPCurve {
     enum CurveLPType {
-        PLAIN_POOL,
-        PLAIN_POOL_UNDERLYING_FLAG,
-        HELPER_CONTRACT_NO_FLAG
+        CURVE_POOL,
+        CURVE_POOL_UNDERLYING,
+        HELPER_CONTRACT
     }
 
     struct CurveLPDepositParams {
