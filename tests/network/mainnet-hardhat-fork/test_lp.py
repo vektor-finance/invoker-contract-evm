@@ -130,7 +130,7 @@ def test_withdraw(chain, sign_eip2612_permit, invoker, clp, cmove, receiver):
     )
     calldata_move_in = cmove.moveERC20In.encode_input(lp_token, amount_in)
     calldata_withdraw = clp.withdraw.encode_input(
-        lp_token, amount_in, (ZERO_ADDRESS, min_usdc, min_weth, receiver, 0)
+        lp_token, amount_in, (min_usdc, min_weth, receiver, 0)
     )
 
     invoker.invoke(
@@ -177,7 +177,7 @@ def test_expired_withdraw(chain, sign_eip2612_permit, invoker, clp, cmove):
     expired_deadline = chain.time() - 100
     calldata_move_in = cmove.moveERC20In.encode_input(lp_token, amount_in)
     calldata_withdraw = clp.withdraw.encode_input(
-        lp_token, amount_in, (ZERO_ADDRESS, 0, 0, alice.address, expired_deadline)
+        lp_token, amount_in, (0, 0, alice.address, expired_deadline)
     )
 
     with brownie.reverts("CLPUniswapV2: EXPIRED"):
@@ -212,9 +212,7 @@ def test_withdraw_via_approve(alice, invoker, clp, cmove):
     lp_token.approve(invoker, amount_in, {"from": alice})
 
     calldata_move_in = cmove.moveERC20In.encode_input(lp_token, amount_in)
-    calldata_withdraw = clp.withdraw.encode_input(
-        lp_token, amount_in, (ZERO_ADDRESS, 0, 0, alice, 0)
-    )
+    calldata_withdraw = clp.withdraw.encode_input(lp_token, amount_in, (0, 0, alice, 0))
 
     invoker.invoke(
         [cmove, clp],
