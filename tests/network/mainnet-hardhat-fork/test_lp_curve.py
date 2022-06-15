@@ -18,7 +18,6 @@ class CurveLPType(IntEnum):
     PLAIN_POOL = 0
     PLAIN_POOL_UNDERLYING_FLAG = 1
     HELPER_CONTRACT_NO_FLAG = 2
-    HELPER_CONTRACT_UNDERLYING_FLAG = 3
 
 
 @pytest.fixture(scope="module")

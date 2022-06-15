@@ -6,8 +6,7 @@ interface ICLPCurve {
     enum CurveLPType {
         PLAIN_POOL,
         PLAIN_POOL_UNDERLYING_FLAG,
-        HELPER_CONTRACT_NO_FLAG,
-        HELPER_CONTRACT_UNDERLYING_FLAG
+        HELPER_CONTRACT_NO_FLAG
     }
 
     struct CurveLPDepositParams {
