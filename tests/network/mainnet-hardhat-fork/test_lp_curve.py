@@ -85,7 +85,7 @@ lending_aave_pool = CurveTestCase(
     lp_benefactor="0xd662908ada2ea1916b3318327a97eb18ad588b5d",
 )
 
-meta_busd_pool = CurveTestCase(
+lending_busd_pool = CurveTestCase(
     name="busd",
     tokens=["DAI", "USDC", "USDT", "BUSD"],
     pool="0x79a8C46DeA5aDa233ABaFFD40F3A0A2B1e5A4F27",
@@ -93,6 +93,26 @@ meta_busd_pool = CurveTestCase(
     lp_benefactor="0x69fb7c45726cfe2badee8317005d3f94be838840",
     zap="0xb6c057591E073249F2D9D88Ba59a46CFC9B59EdB",
 )
+
+meta_gusd_pool = CurveTestCase(
+    name="gusd",
+    tokens=["GUSD", "DAI", "USDC", "USDT"],
+    pool="0x4f062658EaAF2C1ccf8C8e36D6824CDf41167956",
+    lp_token="0xD2967f45c4f384DEEa880F807Be904762a3DeA07",
+    lp_benefactor="0xc5cfada84e902ad92dd40194f0883ad49639b023",
+    zap="0x64448B78561690B70E17CBE8029a3e5c1bB7136e",
+)
+
+
+def get_curve_balance(curve_pool, index):
+    """Get the balance of token `index` in a curve pool.
+
+    Necessary as we don't know whether the pool uses int128 or uint256
+    """
+    try:
+        return curve_pool.balances["int128"](index)
+    except brownie.exceptions.VirtualMachineError:
+        return curve_pool.balances["uint256"](index)
 
 
 @pytest.mark.parametrize(
@@ -182,7 +202,7 @@ class TestBasePool:
             _address = _token["address"] or "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE"
             _contract = interface.ERC20Detailed(_address)
             token_contracts.append(_contract)
-            _balance = curve_pool.balances(key)
+            _balance = get_curve_balance(curve_pool, key)
             pool_balances.append(_balance)
             min_tokens_received.append(lp_ratio * _balance * slippage)
 
@@ -247,7 +267,7 @@ class UnderlyingPool:
 
         curve_pool = interface.ICurvePool(curve_pool)
         expected_amount, flag = self.calc_deposit(
-            tokens, curve_pool, token_contracts, token_amounts, slippage
+            tokens, curve_pool, curve_zap, token_contracts, token_amounts, slippage
         )
         min_amount = slippage * expected_amount
 
@@ -283,30 +303,7 @@ class UnderlyingPool:
         assets = get_chain()["assets"]
         slippage = DEFAULT_SLIPPAGE
 
-        curve_pool = Contract.from_abi(
-            "Curve Pool",
-            curve_pool,
-            [
-                {
-                    "constant": True,
-                    "gas": 2250,
-                    "inputs": [{"name": "arg0", "type": "int128"}],
-                    "name": "balances",
-                    "outputs": [{"name": "out", "type": "uint256"}],
-                    "payable": False,
-                    "type": "function",
-                },
-                {
-                    "constant": True,
-                    "gas": 2250,
-                    "inputs": [{"name": "arg0", "type": "uint256"}],
-                    "name": "balances",
-                    "outputs": [{"name": "out", "type": "uint256"}],
-                    "payable": False,
-                    "type": "function",
-                },
-            ],
-        )
+        curve_pool = interface.CurvePool(curve_pool)
         lp_token = interface.ERC20Detailed(lp_token)
 
         lp_amount = 100e18
@@ -338,17 +335,6 @@ class UnderlyingPool:
             assert token.balanceOf(invoker) >= min_received
 
 
-def get_curve_balance(curve_pool, index):
-    """Get the balance of token `index` in a curve pool.
-
-    Necessary as we don't know whether the pool uses int128 or uint256
-    """
-    try:
-        return curve_pool.balances["int128"](index)
-    except brownie.exceptions.VirtualMachineError:
-        return curve_pool.balances["uint256"](index)
-
-
 @pytest.mark.parametrize(
     "tokens,curve_pool,lp_token,lp_benefactor,curve_zap",
     [lending_compound.params()],
@@ -360,7 +346,7 @@ class TestCompoundPool(UnderlyingPool):
         "USDC": "0x39AA39c021dfbaE8faC545936693aC917d5E7563",
     }
 
-    def calc_deposit(self, tokens, curve_pool, token_contracts, token_amounts, slippage):
+    def calc_deposit(self, tokens, curve_pool, curve_zap, token_contracts, token_amounts, slippage):
         ctoken_amounts = []
         for i, token in enumerate(tokens):
             c_token = interface.CToken(self.c_tokens[token])
@@ -393,7 +379,7 @@ class TestCompoundPool(UnderlyingPool):
     ids=[lending_aave_pool.name],
 )
 class TestAavePool(UnderlyingPool):
-    def calc_deposit(self, tokens, curve_pool, token_contracts, token_amounts, slippage):
+    def calc_deposit(self, tokens, curve_pool, curve_zap, token_contracts, token_amounts, slippage):
         # todo: how to convert tokens to aTokens
         atoken_amounts = token_amounts
         expected_amount = curve_pool.calc_token_amount[f"uint256[{len(token_contracts)}],bool"](
@@ -412,8 +398,8 @@ class TestAavePool(UnderlyingPool):
 
 @pytest.mark.parametrize(
     "tokens,curve_pool,lp_token,lp_benefactor,curve_zap",
-    [meta_busd_pool.params()],
-    ids=[meta_busd_pool.name],
+    [lending_busd_pool.params()],
+    ids=[lending_busd_pool.name],
 )
 class TestYearnPool(UnderlyingPool):
     def get_coin_contract(self, curve_pool):
@@ -430,7 +416,7 @@ class TestYearnPool(UnderlyingPool):
         ]
         return Contract.from_abi("Curve Pool", curve_pool, _abi)
 
-    def calc_deposit(self, tokens, curve_pool, token_contracts, token_amounts, slippage):
+    def calc_deposit(self, tokens, curve_pool, curve_zap, token_contracts, token_amounts, slippage):
         coin_contract = self.get_coin_contract(curve_pool)
         y_token_amounts = []
         for i, amount in enumerate(token_amounts):
@@ -454,3 +440,41 @@ class TestYearnPool(UnderlyingPool):
                 int(get_curve_balance(curve_pool, i) * lp_ratio * y_value * slippage)
             )
         return min_received, CurveLPType.HELPER_CONTRACT_NO_FLAG
+
+
+@pytest.mark.parametrize(
+    "tokens,curve_pool,lp_token,lp_benefactor,curve_zap",
+    [meta_gusd_pool.params()],
+    ids=[meta_gusd_pool.name],
+)
+class TestMetaPool(UnderlyingPool):
+    def calc_deposit(self, tokens, curve_pool, curve_zap, token_contracts, token_amounts, slippage):
+        zap = interface.ICurvePool(curve_zap)
+        expected_amount = zap.calc_token_amount[f"uint256[{len(token_contracts)}],bool"](
+            token_amounts, True
+        )
+        min_amount = int(expected_amount * slippage)
+        return min_amount, CurveLPType.HELPER_CONTRACT_NO_FLAG
+
+    def calc_withdraw(self, tokens, curve_pool, lp_amount, lp_token, slippage):
+        expected_wrapped_received = []
+        lp_ratio = lp_amount / lp_token.totalSupply()
+
+        for i in range(len(tokens) - 2):
+            expected_wrapped_received.append(int(get_curve_balance(curve_pool, i) * lp_ratio))
+
+        contract_3pool = interface.CurvePool(plain_3pool.pool)
+        base_pool_ratio = (
+            expected_wrapped_received[1] / interface.ERC20(plain_3pool.lp_token).totalSupply()
+        )
+
+        expected_base_received = []
+        for i in range(3):
+            expected_base_received.append(
+                int(get_curve_balance(contract_3pool, i) * base_pool_ratio * slippage)
+            )
+
+        return [
+            expected_wrapped_received[0],
+            *expected_base_received,
+        ], CurveLPType.HELPER_CONTRACT_NO_FLAG

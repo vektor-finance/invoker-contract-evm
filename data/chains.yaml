@@ -83,6 +83,16 @@ mainnet:
       decimals: 18
       address: "0x4Fabb145d64652a948d72533023f6E7A623C7C53"
       benefactor: "0xf977814e90da44bfa03b6295a0616a897441acec"
+    - name: Synth USD
+      symbol: sUSD
+      decimals: 18
+      address: "0x57Ab1ec28D129707052df4dF418D58a2D46d5f51"
+      benefactor: "0x99f4176ee457afedffcb1839c7ab7a030a5e4a92"
+    - name: Gemini dollar
+      symbol: GUSD
+      decimals: 2
+      address: "0x056Fd409E1d7A124BD7017459dFEa2F387b6d5Cd"
+      benefactor: "0x5f65f7b609678448494de4c87521cdf6cef1e932"
   contracts:
     - venue: uniswap
       interfaces: [uniswap_router_v2_02]
