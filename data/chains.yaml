@@ -83,6 +83,11 @@ mainnet:
       decimals: 18
       address: "0x4Fabb145d64652a948d72533023f6E7A623C7C53"
       benefactor: "0xf977814e90da44bfa03b6295a0616a897441acec"
+    - name: Gemini dollar
+      symbol: GUSD
+      decimals: 2
+      address: "0x056Fd409E1d7A124BD7017459dFEa2F387b6d5Cd"
+      benefactor: "0x5f65f7b609678448494de4c87521cdf6cef1e932"
   contracts:
     - venue: uniswap
       interfaces: [uniswap_router_v2_02]
