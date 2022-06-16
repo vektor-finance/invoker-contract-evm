@@ -54,7 +54,7 @@ Each Curve Pool has a custom implementation. Although they broadly follow the sa
 | compound | cDAI, cUSDC | Able to add/withdraw liquidity indirectly (via DAI/USDC) 
 | aave | aDAI, aUSDC, aUSDT | Able to add/withdraw liquidity indirectly (via DAI, USDC, USDT)
 | busd | yvDAI, yvUSDC, yvUSDT, yvBUSD | Able to add/withdraw liquidity indirectly (Via DAI, USDC, USDT, BUSD)
-| gusd | GUSD, 3CRV | Able to add/withdraw liquidity indirectly indirectoyl (via GUSD, DAI, USDC, USDT)
+| gusd | GUSD, 3CRV | Able to add/withdraw liquidity indirectly indirectly (via GUSD, DAI, USDC, USDT)
 
 
 ### Known Compatability Issues
