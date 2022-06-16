@@ -51,8 +51,10 @@ Each Curve Pool has a custom implementation. Although they broadly follow the sa
 | --- | --- | --- |
 | 3pool | DAI, USDC, USDT | Able to add/withdraw liquidity |
 | slink | LINK, SLINK | Able to add/withdraw liquidity |
-| compound | cDAI, cUSDC | Able to add/withdraw liquidity directly (via cToken) <br> Able to add/withdraw liquidity indirectly (via DAI/USDC) 
-| aave | aDAI, aUSDC, aUSDT | Able to add/withdraw liquidity directly (via aToken) <br> Able to add/withdraw liquidity indirectly (via DAI, USDC, USDT)
+| compound | cDAI, cUSDC | Able to add/withdraw liquidity indirectly (via DAI/USDC) 
+| aave | aDAI, aUSDC, aUSDT | Able to add/withdraw liquidity indirectly (via DAI, USDC, USDT)
+| busd | yvDAI, yvUSDC, yvUSDT, yvBUSD | Able to add/withdraw liquidity indirectly (Via DAI, USDC, USDT, BUSD)
+| gusd | GUSD, 3CRV | Able to add/withdraw liquidity indirectly indirectoyl (via GUSD, DAI, USDC, USDT)
 
 
 ### Known Compatability Issues
