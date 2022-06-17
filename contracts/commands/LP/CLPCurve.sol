@@ -16,7 +16,6 @@ contract CLPCurve is CLPBase, ICLPCurve {
     function deposit(
         IERC20[] calldata tokens,
         uint256[] calldata amounts,
-        address depositAddress,
         CurveLPDepositParams calldata params
     ) external payable {
         _requireMsg(amounts.length == tokens.length, "amounts+tokens length not equal");
@@ -24,7 +23,7 @@ contract CLPCurve is CLPBase, ICLPCurve {
         unchecked {
             for (uint256 i; i < tokens.length; ++i) {
                 if (amounts[i] > 0) {
-                    _approveToken(tokens[i], depositAddress, amounts[i]);
+                    _approveToken(tokens[i], params.curveDepositAddress, amounts[i]);
                 }
             }
         }
@@ -34,12 +33,12 @@ contract CLPCurve is CLPBase, ICLPCurve {
                 params.lpType == CurveLPType.CURVE_POOL ||
                 params.lpType == CurveLPType.HELPER_CONTRACT
             ) {
-                ICurveDepositZap(depositAddress).add_liquidity(
+                ICurveDepositZap(params.curveDepositAddress).add_liquidity(
                     _tokenAmounts,
                     params.minReceivedLiquidity
                 );
             } else if (params.lpType == CurveLPType.CURVE_POOL_UNDERLYING) {
-                ICurveDepositZap(depositAddress).add_liquidity(
+                ICurveDepositZap(params.curveDepositAddress).add_liquidity(
                     _tokenAmounts,
                     params.minReceivedLiquidity,
                     true
@@ -51,12 +50,12 @@ contract CLPCurve is CLPBase, ICLPCurve {
                 params.lpType == CurveLPType.CURVE_POOL ||
                 params.lpType == CurveLPType.HELPER_CONTRACT
             ) {
-                ICurveDepositZap(depositAddress).add_liquidity(
+                ICurveDepositZap(params.curveDepositAddress).add_liquidity(
                     _tokenAmounts,
                     params.minReceivedLiquidity
                 );
             } else if (params.lpType == CurveLPType.CURVE_POOL_UNDERLYING) {
-                ICurveDepositZap(depositAddress).add_liquidity(
+                ICurveDepositZap(params.curveDepositAddress).add_liquidity(
                     _tokenAmounts,
                     params.minReceivedLiquidity,
                     true
@@ -68,12 +67,12 @@ contract CLPCurve is CLPBase, ICLPCurve {
                 params.lpType == CurveLPType.CURVE_POOL ||
                 params.lpType == CurveLPType.HELPER_CONTRACT
             ) {
-                ICurveDepositZap(depositAddress).add_liquidity(
+                ICurveDepositZap(params.curveDepositAddress).add_liquidity(
                     _tokenAmounts,
                     params.minReceivedLiquidity
                 );
             } else if (params.lpType == CurveLPType.CURVE_POOL_UNDERLYING) {
-                ICurveDepositZap(depositAddress).add_liquidity(
+                ICurveDepositZap(params.curveDepositAddress).add_liquidity(
                     _tokenAmounts,
                     params.minReceivedLiquidity,
                     true

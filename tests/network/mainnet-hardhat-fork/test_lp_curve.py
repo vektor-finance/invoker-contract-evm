@@ -158,8 +158,7 @@ class TestBasePool:
         calldata_deposit = clp_curve.deposit.encode_input(
             token_contracts,
             token_amounts,
-            curve_pool,
-            [min_amount, CurveLPType.CURVE_POOL],
+            [min_amount, CurveLPType.CURVE_POOL, curve_pool],
         )
 
         invoker.invoke(
@@ -261,8 +260,11 @@ class UnderlyingPool:
         calldata_deposit = clp_curve.deposit.encode_input(
             token_contracts,
             token_amounts,
-            curve_zap or curve_pool,
-            [min_amount, flag],
+            [
+                min_amount,
+                flag,
+                curve_zap or curve_pool,
+            ],
         )
 
         with DisableTrace(web3):
