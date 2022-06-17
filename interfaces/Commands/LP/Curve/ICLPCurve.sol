@@ -11,20 +11,20 @@ interface ICLPCurve {
             In order to accomodate different behaviour between different curve pools, the caller of this contract
             must explicitly state the desired behaviour:
 
-            If depositing/withdrawing 'base' assets, this parameter MUST be CURVE_POOL and the `curveDepositAddress`/`curveWithdrawAddress` parameter MUST be the address of the curve contract
+            If depositing/withdrawing 'base' assets, this parameter MUST be BASE and the `curveDepositAddress`/`curveWithdrawAddress` parameter MUST be the address of the curve contract
 
             If depositing/withdrawing 'underlying assets', check whether the curve contract supports underlying assets:
-                If underlying assets are supported, this parameter MUST be CURVE_POOL_UNDERLYING and the `curveDepositAddress`/`curveWithdrawAddress` parameter MUST be the address of the curve contract
-                If underlying assets are not supported, this parameter MUST be HELPER_CONTRACT and the `curveDepositAddress`/`curveWithdrawAddress` parameter MUST be the address of the helper 'Deposit.vy' contract.
+                If underlying assets are supported, this parameter MUST be UNDERLYING and the `curveDepositAddress`/`curveWithdrawAddress` parameter MUST be the address of the curve contract
+                If underlying assets are not supported, this parameter MUST be CONTRACT and the `curveDepositAddress`/`curveWithdrawAddress` parameter MUST be the address of the helper 'Deposit.vy' contract.
 
-        @param CURVE_POOL The user is interacting directly with the curve contract and depositing base assets.
-        @param CURVE_POOL_UNDERLYING The user is interacting directly with the curve contract and depositing underlying assets.
-        @param HELPER_CONTRACT The user is interacting with a curve `Deposit.vy` contract, and depositing underlying assets.
+        @param BASE The user is interacting directly with the curve contract and depositing base assets.
+        @param UNDERLYING The user is interacting directly with the curve contract and depositing underlying assets.
+        @param HELPER The user is interacting with a curve `Deposit.vy` contract, and depositing underlying assets.
     */
     enum CurveLPType {
-        CURVE_POOL,
-        CURVE_POOL_UNDERLYING,
-        HELPER_CONTRACT
+        BASE,
+        UNDERLYING,
+        HELPER
     }
 
     struct CurveLPDepositParams {

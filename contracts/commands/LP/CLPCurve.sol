@@ -29,15 +29,12 @@ contract CLPCurve is CLPBase, ICLPCurve {
         }
         if (amounts.length == 2) {
             uint256[2] memory _tokenAmounts = [amounts[0], amounts[1]];
-            if (
-                params.lpType == CurveLPType.CURVE_POOL ||
-                params.lpType == CurveLPType.HELPER_CONTRACT
-            ) {
+            if (params.lpType == CurveLPType.BASE || params.lpType == CurveLPType.HELPER) {
                 ICurveDepositZap(params.curveDepositAddress).add_liquidity(
                     _tokenAmounts,
                     params.minReceivedLiquidity
                 );
-            } else if (params.lpType == CurveLPType.CURVE_POOL_UNDERLYING) {
+            } else if (params.lpType == CurveLPType.UNDERLYING) {
                 ICurveDepositZap(params.curveDepositAddress).add_liquidity(
                     _tokenAmounts,
                     params.minReceivedLiquidity,
@@ -46,15 +43,12 @@ contract CLPCurve is CLPBase, ICLPCurve {
             }
         } else if (amounts.length == 3) {
             uint256[3] memory _tokenAmounts = [amounts[0], amounts[1], amounts[2]];
-            if (
-                params.lpType == CurveLPType.CURVE_POOL ||
-                params.lpType == CurveLPType.HELPER_CONTRACT
-            ) {
+            if (params.lpType == CurveLPType.BASE || params.lpType == CurveLPType.HELPER) {
                 ICurveDepositZap(params.curveDepositAddress).add_liquidity(
                     _tokenAmounts,
                     params.minReceivedLiquidity
                 );
-            } else if (params.lpType == CurveLPType.CURVE_POOL_UNDERLYING) {
+            } else if (params.lpType == CurveLPType.UNDERLYING) {
                 ICurveDepositZap(params.curveDepositAddress).add_liquidity(
                     _tokenAmounts,
                     params.minReceivedLiquidity,
@@ -63,15 +57,12 @@ contract CLPCurve is CLPBase, ICLPCurve {
             }
         } else if (amounts.length == 4) {
             uint256[4] memory _tokenAmounts = [amounts[0], amounts[1], amounts[2], amounts[3]];
-            if (
-                params.lpType == CurveLPType.CURVE_POOL ||
-                params.lpType == CurveLPType.HELPER_CONTRACT
-            ) {
+            if (params.lpType == CurveLPType.BASE || params.lpType == CurveLPType.HELPER) {
                 ICurveDepositZap(params.curveDepositAddress).add_liquidity(
                     _tokenAmounts,
                     params.minReceivedLiquidity
                 );
-            } else if (params.lpType == CurveLPType.CURVE_POOL_UNDERLYING) {
+            } else if (params.lpType == CurveLPType.UNDERLYING) {
                 ICurveDepositZap(params.curveDepositAddress).add_liquidity(
                     _tokenAmounts,
                     params.minReceivedLiquidity,
@@ -88,7 +79,7 @@ contract CLPCurve is CLPBase, ICLPCurve {
         uint256 liquidity,
         CurveLPWithdrawParams calldata params
     ) external payable {
-        if (params.lpType == CurveLPType.HELPER_CONTRACT) {
+        if (params.lpType == CurveLPType.HELPER) {
             _approveToken(LPToken, params.curveWithdrawAddress, liquidity);
         }
         if (params.minimumReceived.length == 2) {
@@ -96,15 +87,12 @@ contract CLPCurve is CLPBase, ICLPCurve {
                 params.minimumReceived[0],
                 params.minimumReceived[1]
             ];
-            if (
-                params.lpType == CurveLPType.CURVE_POOL ||
-                params.lpType == CurveLPType.HELPER_CONTRACT
-            ) {
+            if (params.lpType == CurveLPType.BASE || params.lpType == CurveLPType.HELPER) {
                 ICurveDepositZap(params.curveWithdrawAddress).remove_liquidity(
                     liquidity,
                     _tokenAmounts
                 );
-            } else if (params.lpType == CurveLPType.CURVE_POOL_UNDERLYING) {
+            } else if (params.lpType == CurveLPType.UNDERLYING) {
                 ICurveDepositZap(params.curveWithdrawAddress).remove_liquidity(
                     liquidity,
                     _tokenAmounts,
@@ -117,15 +105,12 @@ contract CLPCurve is CLPBase, ICLPCurve {
                 params.minimumReceived[1],
                 params.minimumReceived[2]
             ];
-            if (
-                params.lpType == CurveLPType.CURVE_POOL ||
-                params.lpType == CurveLPType.HELPER_CONTRACT
-            ) {
+            if (params.lpType == CurveLPType.BASE || params.lpType == CurveLPType.HELPER) {
                 ICurveDepositZap(params.curveWithdrawAddress).remove_liquidity(
                     liquidity,
                     _tokenAmounts
                 );
-            } else if (params.lpType == CurveLPType.CURVE_POOL_UNDERLYING) {
+            } else if (params.lpType == CurveLPType.UNDERLYING) {
                 ICurveDepositZap(params.curveWithdrawAddress).remove_liquidity(
                     liquidity,
                     _tokenAmounts,
@@ -139,15 +124,12 @@ contract CLPCurve is CLPBase, ICLPCurve {
                 params.minimumReceived[2],
                 params.minimumReceived[3]
             ];
-            if (
-                params.lpType == CurveLPType.CURVE_POOL ||
-                params.lpType == CurveLPType.HELPER_CONTRACT
-            ) {
+            if (params.lpType == CurveLPType.BASE || params.lpType == CurveLPType.HELPER) {
                 ICurveDepositZap(params.curveWithdrawAddress).remove_liquidity(
                     liquidity,
                     _tokenAmounts
                 );
-            } else if (params.lpType == CurveLPType.CURVE_POOL_UNDERLYING) {
+            } else if (params.lpType == CurveLPType.UNDERLYING) {
                 ICurveDepositZap(params.curveWithdrawAddress).remove_liquidity(
                     liquidity,
                     _tokenAmounts,

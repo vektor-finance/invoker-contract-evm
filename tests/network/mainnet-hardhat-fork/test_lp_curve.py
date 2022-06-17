@@ -15,9 +15,9 @@ DEFAULT_SLIPPAGE = 0.99
 
 
 class CurveLPType(IntEnum):
-    CURVE_POOL = 0
-    CURVE_POOL_UNDERLYING = 1
-    HELPER_CONTRACT = 2
+    BASE = 0
+    UNDERLYING = 1
+    HELPER = 2
 
 
 @pytest.fixture(scope="module")
@@ -158,7 +158,7 @@ class TestBasePool:
         calldata_deposit = clp_curve.deposit.encode_input(
             token_contracts,
             token_amounts,
-            [min_amount, CurveLPType.CURVE_POOL, curve_pool],
+            [min_amount, CurveLPType.BASE, curve_pool],
         )
 
         invoker.invoke(
@@ -211,7 +211,7 @@ class TestBasePool:
         calldata_withdraw = clp_curve.withdraw.encode_input(
             lp_token,
             lp_amount,
-            (min_tokens_received, CurveLPType.CURVE_POOL, curve_pool),
+            (min_tokens_received, CurveLPType.BASE, curve_pool),
         )
 
         invoker.invoke([cmove, clp_curve], [calldata_move, calldata_withdraw], {"from": alice})
@@ -344,7 +344,7 @@ class TestCompoundPool(UnderlyingPool):
         expected_amount = curve_pool.calc_token_amount[f"uint256[{len(tokens)}],bool"](
             ctoken_amounts, True
         )
-        return int(slippage * expected_amount), CurveLPType.HELPER_CONTRACT
+        return int(slippage * expected_amount), CurveLPType.HELPER
 
     def calc_withdraw(self, tokens, curve_pool, lp_amount, lp_token, slippage):
         lp_ratio = lp_amount / lp_token.totalSupply()
@@ -359,7 +359,7 @@ class TestCompoundPool(UnderlyingPool):
             )
             min_ctokens_received.append(int(lp_ratio * ctoken_total_balance * slippage))
 
-        return min_ctokens_received, CurveLPType.HELPER_CONTRACT
+        return min_ctokens_received, CurveLPType.HELPER
 
 
 @pytest.mark.parametrize(
@@ -375,14 +375,14 @@ class TestAavePool(UnderlyingPool):
             atoken_amounts, True
         )
         min_amount = int(expected_amount * slippage)
-        return min_amount, CurveLPType.CURVE_POOL_UNDERLYING
+        return min_amount, CurveLPType.UNDERLYING
 
     def calc_withdraw(self, tokens, curve_pool, lp_amount, lp_token, slippage):
         min_received = []
         lp_ratio = lp_amount / lp_token.totalSupply()
         for i, _ in enumerate(tokens):
             min_received.append(int(get_curve_balance(curve_pool, i) * lp_ratio * slippage))
-        return min_received, CurveLPType.CURVE_POOL_UNDERLYING
+        return min_received, CurveLPType.UNDERLYING
 
 
 @pytest.mark.parametrize(
@@ -416,7 +416,7 @@ class TestYearnPool(UnderlyingPool):
         expected_amount = curve_pool.calc_token_amount[f"uint256[{len(token_contracts)}],bool"](
             y_token_amounts, True
         )
-        return int(slippage * expected_amount), CurveLPType.HELPER_CONTRACT
+        return int(slippage * expected_amount), CurveLPType.HELPER
 
     def calc_withdraw(self, tokens, curve_pool, lp_amount, lp_token, slippage):
         coin_contract = self.get_coin_contract(curve_pool)
@@ -428,7 +428,7 @@ class TestYearnPool(UnderlyingPool):
             min_received.append(
                 int(get_curve_balance(curve_pool, i) * lp_ratio * y_value * slippage)
             )
-        return min_received, CurveLPType.HELPER_CONTRACT
+        return min_received, CurveLPType.HELPER
 
 
 @pytest.mark.parametrize(
@@ -443,7 +443,7 @@ class TestMetaPool(UnderlyingPool):
             token_amounts, True
         )
         min_amount = int(expected_amount * slippage)
-        return min_amount, CurveLPType.HELPER_CONTRACT
+        return min_amount, CurveLPType.HELPER
 
     def calc_withdraw(self, tokens, curve_pool, lp_amount, lp_token, slippage):
         expected_wrapped_received = []
@@ -466,4 +466,4 @@ class TestMetaPool(UnderlyingPool):
         return [
             expected_wrapped_received[0],
             *expected_base_received,
-        ], CurveLPType.HELPER_CONTRACT
+        ], CurveLPType.HELPER
