@@ -18,6 +18,7 @@ class CurveLPType(IntEnum):
     BASE = 0
     UNDERLYING = 1
     HELPER = 2
+    DEBUG_FAIL_CASE = 3  # this is only used to ensure failure
 
 
 @pytest.fixture(scope="module")
@@ -467,3 +468,17 @@ class TestMetaPool(UnderlyingPool):
             expected_wrapped_received[0],
             *expected_base_received,
         ], CurveLPType.HELPER
+
+
+@pytest.mark.xfail(strict=True)
+@pytest.mark.parametrize(
+    "tokens,curve_pool,lp_token,lp_benefactor,curve_zap",
+    [meta_gusd_pool.params(), lending_aave_pool.params(), lending_compound.params()],
+    ids=[meta_gusd_pool.name, lending_aave_pool.name, lending_compound.name],
+)
+class TestFailEnum(UnderlyingPool):
+    def calc_deposit(self, tokens, curve_pool, curve_zap, token_contracts, token_amounts, slippage):
+        return 0, CurveLPType.DEBUG_FAIL_CASE
+
+    def calc_withdraw(self, tokens, curve_pool, lp_amount, lp_token, slippage):
+        return [0] * len(tokens), CurveLPType.DEBUG_FAIL_CASE

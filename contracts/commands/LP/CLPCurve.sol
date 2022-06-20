@@ -40,6 +40,8 @@ contract CLPCurve is CLPBase, ICLPCurve {
                     params.minReceivedLiquidity,
                     true
                 );
+            } else {
+                _revertMsg("invalid lpType");
             }
         } else if (amounts.length == 3) {
             uint256[3] memory _tokenAmounts = [amounts[0], amounts[1], amounts[2]];
@@ -54,6 +56,8 @@ contract CLPCurve is CLPBase, ICLPCurve {
                     params.minReceivedLiquidity,
                     true
                 );
+            } else {
+                _revertMsg("invalid lpType");
             }
         } else if (amounts.length == 4) {
             uint256[4] memory _tokenAmounts = [amounts[0], amounts[1], amounts[2], amounts[3]];
@@ -68,6 +72,8 @@ contract CLPCurve is CLPBase, ICLPCurve {
                     params.minReceivedLiquidity,
                     true
                 );
+            } else {
+                _revertMsg("invalid lpType");
             }
         } else {
             _revertMsg("unsupported length");
@@ -98,6 +104,8 @@ contract CLPCurve is CLPBase, ICLPCurve {
                     _tokenAmounts,
                     true
                 );
+            } else {
+                _revertMsg("invalid lpType");
             }
         } else if (params.minimumReceived.length == 3) {
             uint256[3] memory _tokenAmounts = [
@@ -116,6 +124,8 @@ contract CLPCurve is CLPBase, ICLPCurve {
                     _tokenAmounts,
                     true
                 );
+            } else {
+                _revertMsg("invalid lpType");
             }
         } else if (params.minimumReceived.length == 4) {
             uint256[4] memory _tokenAmounts = [
@@ -135,6 +145,8 @@ contract CLPCurve is CLPBase, ICLPCurve {
                     _tokenAmounts,
                     true
                 );
+            } else {
+                _revertMsg("invalid lpType");
             }
         } else {
             _revertMsg("unsupported length");
