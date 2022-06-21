@@ -370,6 +370,14 @@
     "gas": 2250
   },
   {
+    "name": "balances",
+    "outputs": [{ "type": "uint256", "name": "" }],
+    "inputs": [{ "type": "int128", "name": "arg0" }],
+    "stateMutability": "view",
+    "type": "function",
+    "gas": 2250
+  },
+  {
     "name": "fee",
     "outputs": [{ "type": "uint256", "name": "" }],
     "inputs": [],

@@ -63,6 +63,31 @@ mainnet:
       decimals: 8
       address: "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599"
       benefactor: "0xbf72da2bd84c5170618fbe5914b0eca9638d5eb5"
+    # - name: Liquid staked Ether 2.0
+    #   symbol: stETH
+    #   decimals: 18
+    #   address: "0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84"
+    #   benefactor: "0x1982b2f5814301d4e9a8b0201555376e62f82428"
+    - name: Chainlink
+      symbol: LINK
+      decimals: 18
+      address: "0x514910771AF9Ca656af840dff83E8264EcF986CA"
+      benefactor: "0x98c63b7b319dfbdf3d811530f2ab9dfe4983af9d"
+    - name: Synth sLINK
+      symbol: sLINK
+      decimals: 18
+      address: "0xbBC455cb4F1B9e4bFC4B73970d360c8f032EfEE6"
+      benefactor: "0x2c095f9a475b47d4a60a4102b224441796dbf1c1"
+    - name: Binance USD
+      symbol: BUSD
+      decimals: 18
+      address: "0x4Fabb145d64652a948d72533023f6E7A623C7C53"
+      benefactor: "0xf977814e90da44bfa03b6295a0616a897441acec"
+    - name: Gemini dollar
+      symbol: GUSD
+      decimals: 2
+      address: "0x056Fd409E1d7A124BD7017459dFEa2F387b6d5Cd"
+      benefactor: "0x5f65f7b609678448494de4c87521cdf6cef1e932"
   contracts:
     - venue: uniswap
       interfaces: [uniswap_router_v2_02]
