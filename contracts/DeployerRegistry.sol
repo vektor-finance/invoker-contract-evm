@@ -5,7 +5,7 @@ pragma solidity ^0.8.6;
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/Create2.sol";
 
-contract Registry is Ownable {
+contract DeployerRegistry is Ownable {
     event ContractDeployed(address deployedAddress);
 
     function deployNewContract(
