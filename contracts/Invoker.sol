@@ -13,8 +13,8 @@ contract Invoker is Storage, Log, PausableAccessControl {
     bytes32 public constant APPROVED_COMMAND_IMPLEMENTATION =
         keccak256("APPROVED_COMMAND_IMPLEMENTATION");
 
-    constructor() {
-        _setupRole(DEFAULT_ADMIN_ROLE, msg.sender);
+    constructor(address defaultOwner) {
+        _setupRole(DEFAULT_ADMIN_ROLE, defaultOwner);
     }
 
     receive() external payable {
