@@ -1,12 +1,13 @@
 from typing import Dict
 
-from brownie import ZERO_ADDRESS, Contract, CWrap, DeployerRegistry, web3
+from brownie import ZERO_ADDRESS, Contract, DeployerRegistry, web3
+from eth_utils import keccak
 from tabulate import tabulate
 
-from helpers.addresses import get_create1_address
+from helpers.addresses import get_create1_address, get_create2_address
 
-REGISTRY_DEPLOYER = "0x12331c2dDb0E841a40Bd5239365CE98F4b114e87"  # hardcoded
-TRUSTED_DEPLOYER = "0xbeEf6e409E5374c15C50f60D07098aF846cB8178"  # hardcoded
+REGISTRY_DEPLOYER = "0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266"  # hardcoded
+TRUSTED_DEPLOYER = "0x70997970c51812dc3a010c7d01b50e0d17dc79c8"  # hardcoded
 
 
 class DeployRegistryContainer:
@@ -33,15 +34,18 @@ class DeployRegistryContainer:
             # the deployer has been deployed, get the current contract
             print(f"DeployRegistry found at {registry_address}")
             self.contract: Contract = DeployerRegistry.at(registry_address)
-            self.trusted_deployers = trusted_deployer
+            self.trusted_deployers = [trusted_deployer]
 
         self.registry_deployer = registry_deployer
         self.deployed_contracts: Dict[str, Contract] = {}
 
-    def deploy(self, contract: Contract, args) -> Contract:
-        creation_code = contract.bytecode
+    def _get_creation_code(self, contract, args):
         if args:
-            creation_code = contract.deploy.encode_input(*args)
+            return contract.deploy.encode_input(*args)
+        return contract.bytecode
+
+    def deploy(self, contract: Contract, args) -> Contract:
+        creation_code = self._get_creation_code(contract, args)
         tx = self.contract.deployNewContract(
             creation_code, "0", 0, {"from": self.trusted_deployers[0]}
         )
@@ -49,21 +53,22 @@ class DeployRegistryContainer:
 
         self.deployed_contracts[contract._name] = deployed_contract
 
+        print(f"{contract._name} deployed at {deployed_contract.address}")
+
         return deployed_contract
 
-    def is_deployed(self, contract: Contract) -> bool:
-        return bool(self.deployed_contracts.get(contract._name))
+    def _get_salt_bytes(self, salt: int):
+        return "0x" + (salt).to_bytes(32, "big").hex()
 
-    def _get_deployment_args(contract):
-        if contract == CWrap:
-            return [ZERO_ADDRESS]
-        else:
-            return None
-
-    def deploy_all_contracts(self):
-        # for contract in SUPPORTED_CONTRACTS:
-        # self.deploy(contract, self._get_deployment_args(contract))
-        self.print_deployments()
+    def is_deployed(self, contract: Contract, args) -> bool:
+        creation_code = self._get_creation_code(contract, args)
+        b_creation_code = bytes.fromhex(creation_code)
+        init_code_hash = "0x" + keccak(b_creation_code).hex()
+        predicted_address = get_create2_address(
+            self.contract.address, self._get_salt_bytes(0), init_code_hash
+        )
+        deployed_code = web3.eth.get_code(predicted_address)
+        return deployed_code != b""
 
     def print_deployments(self):
         print(
@@ -74,8 +79,14 @@ class DeployRegistryContainer:
             )
         )
 
-    def deployed_contract(self, contract) -> Contract:
-        return self.deployed_contracts[contract._name]
+    def deployed_contract(self, contract, args=None) -> Contract:
+        creation_code = self._get_creation_code(contract, args)
+        b_creation_code = bytes.fromhex(creation_code)
+        init_code_hash = "0x" + keccak(b_creation_code).hex()
+        predicted_address = get_create2_address(
+            self.contract.address, self._get_salt_bytes(0), init_code_hash
+        )
+        return contract.at(predicted_address)
 
     def __repr__(self) -> str:
         return f"<DeployRegistry> {self.contract.address}"
