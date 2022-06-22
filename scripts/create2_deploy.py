@@ -12,18 +12,15 @@ from brownie import (
     CSwapUniswapV2,
     CSwapUniswapV3,
     CWrap,
-    DeployerRegistry,
     Invoker,
     accounts,
 )
 from tabulate import tabulate
 
 from data.chain import get_all_chain_names, get_chain_data
-from helpers.addresses import get_create1_address
 from helpers.network_switcher import NetworkSwitcher
+from scripts.deployment import DeployRegistryContainer
 
-REGISTRY_DEPLOYER = "0x0fbC5562670d73b060C44Bb6085d39AA628624BE"
-REGISTRY_ADDRESS = get_create1_address(REGISTRY_DEPLOYER, 0)
 SUPPORTED_CONTRACTS: List[Contract] = [
     Invoker,
     CMove,
@@ -73,40 +70,6 @@ def old_main():
     print(tabulate(data, headers=get_network_headers()))
 
 
-class DeployRegistryContainer:
-    def __init__(self, contract: Contract, deployer) -> None:
-        self.contract: Contract = contract
-        self.deployer = deployer
-        self.deployed_contracts = {}
-
-    def deploy(self, contract: Contract, args):
-        creation_code = contract.bytecode
-        if args:
-            creation_code = contract.deploy.encode_input(*args)
-        tx = self.contract.deployNewContract(creation_code, "0", 0, {"from": self.deployer})
-        deployed_contract = contract.at(tx.return_value)
-
-        self.deployed_contracts[contract._name] = deployed_contract
-
-        return deployed_contract
-
-    def print_deployments(self):
-        print(
-            tabulate(
-                [[self.contract, *self.deployed_contracts.values()]],
-                headers=["Registry", *self.deployed_contracts.keys()],
-                tablefmt="github",
-            )
-        )
-
-    @classmethod
-    def create_from(cls, deployer):
-        return cls(deployer.deploy(DeployerRegistry), deployer)
-
-    def __repr__(self) -> str:
-        return f"<DeployRegistry> {self.contract.address}"
-
-
 def _get_deployment_args(contract):
     if contract == CWrap:
         return [ZERO_ADDRESS]
@@ -114,14 +77,12 @@ def _get_deployment_args(contract):
         return None
 
 
-def deploy_all_contracts(deployer):
-    registry = DeployRegistryContainer.create_from(deployer)
-    for contract in SUPPORTED_CONTRACTS:
-        registry.deploy(contract, _get_deployment_args(contract))
-    registry.print_deployments()
-
-
 def main():
+    REGISTRY_DEPLOYER = "0x12331c2dDb0E841a40Bd5239365CE98F4b114e87"
+    TRUSTED_DEPLOYER = "0xbeEf6e409E5374c15C50f60D07098aF846cB8178"
     assert brownie.network.show_active() == "hardhat"
-    deployer = accounts.at("0x12331c2dDb0E841a40Bd5239365CE98F4b114e87", force=True)
-    deploy_all_contracts(deployer)
+    registry_deployer = accounts.at(REGISTRY_DEPLOYER, force=True)
+    trusted_deployer = accounts.at(TRUSTED_DEPLOYER, force=True)
+
+    registry = DeployRegistryContainer(registry_deployer, trusted_deployer)
+    registry.deploy_all_contracts()
