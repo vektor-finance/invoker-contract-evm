@@ -7,6 +7,7 @@ from scripts.deployment import (
     REGISTRY_DEPLOYER,
     TRUSTED_USER,
     DeployRegistryContainer,
+    overview,
 )
 
 
@@ -44,3 +45,5 @@ def main():
     registry = get_registry()
     for contract in CONTRACTS_TO_DEPLOY:
         deploy_and_approve_contract_if_not_deployed(registry, contract)
+
+    overview.main()

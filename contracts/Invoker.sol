@@ -7,14 +7,18 @@ import "./utils/Address.sol";
 import "./utils/Log.sol";
 import "./utils/PausableAccessControl.sol";
 
+interface Deployer {
+    function deployArgs() external view returns (bytes memory);
+}
+
 contract Invoker is Storage, Log, PausableAccessControl {
     using Address for address;
 
     bytes32 public constant APPROVED_COMMAND_IMPLEMENTATION =
         keccak256("APPROVED_COMMAND_IMPLEMENTATION");
 
-    constructor(address defaultOwner) {
-        _setupRole(DEFAULT_ADMIN_ROLE, defaultOwner);
+    constructor() {
+        _setupRole(DEFAULT_ADMIN_ROLE, abi.decode(Deployer(msg.sender).deployArgs(), (address)));
     }
 
     receive() external payable {

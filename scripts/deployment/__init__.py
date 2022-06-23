@@ -11,6 +11,7 @@ from brownie import (
     network,
     web3,
 )
+from eth_abi import encode_single
 from eth_utils import keccak
 
 from data.chain import get_chain_from_network_name, get_wnative_address
@@ -63,22 +64,16 @@ class DeployRegistryContainer:
 
     def get_deployment_args(self, contract):
         if contract == Invoker:
-            return [TRUSTED_DEPLOYER]
+            return encode_single("address", TRUSTED_DEPLOYER)
         elif contract == CWrap:
             (chain, _) = get_chain_from_network_name(network.show_active())
-            return [get_wnative_address(chain)]
+            wnative_address = get_wnative_address(chain)
+            return encode_single("address", wnative_address)
         else:
-            return None
-
-    def _get_creation_code(self, contract, args):
-        if args:
-            return contract.deploy.encode_input(*args)
-        return contract.bytecode
+            return "0x"
 
     def predict_deployment_address(self, contract):
-        args = self.get_deployment_args(contract)
-        creation_code = self._get_creation_code(contract, args)
-        b_creation_code = bytes.fromhex(creation_code)
+        b_creation_code = bytes.fromhex(contract.bytecode)
         init_code_hash = "0x" + keccak(b_creation_code).hex()
         predicted_address = get_create2_address(
             self.contract.address, self._get_salt_bytes(0), init_code_hash
@@ -87,9 +82,8 @@ class DeployRegistryContainer:
 
     def deploy(self, contract: Contract) -> Contract:
         args = self.get_deployment_args(contract)
-        creation_code = self._get_creation_code(contract, args)
         tx = self.contract.deployNewContract(
-            creation_code, "0", 0, {"from": self.trusted_deployers[0]}
+            contract.bytecode, "0", 0, args, {"from": self.trusted_deployers[0]}
         )
         deployed_contract = tx.return_value
 

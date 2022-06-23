@@ -7,6 +7,8 @@ import "@openzeppelin/contracts/utils/Create2.sol";
 contract DeployerRegistry {
     mapping(address => uint256) public isAuthorisedToDeploy;
 
+    bytes public deployArgs;
+
     event ContractDeployed(address deployedAddress);
     event UserAuthorised(address indexed user);
     event UserRevoked(address indexed user);
@@ -33,11 +35,14 @@ contract DeployerRegistry {
     }
 
     function deployNewContract(
-        bytes memory bytecode,
+        bytes calldata bytecode,
         bytes32 salt,
-        uint256 value
+        uint256 value,
+        bytes calldata _deployArgs
     ) external onlyAuthorised returns (address newContract) {
+        deployArgs = _deployArgs;
         newContract = Create2.deploy(value, salt, bytecode);
         emit ContractDeployed(newContract);
+        delete deployArgs;
     }
 }
