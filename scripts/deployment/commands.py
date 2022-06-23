@@ -1,19 +1,20 @@
 import brownie
-from brownie import CMove, Contract, CSwapUniswapV2, CWrap, Invoker
+from brownie import Contract, Invoker
 
 from data.access_control import APPROVED_COMMAND
-from scripts.deployment import REGISTRY_DEPLOYER, TRUSTED_DEPLOYER, DeployRegistryContainer
-
-SUPPORTED_COMMANDS = [Invoker, CMove, CWrap, CSwapUniswapV2]
+from scripts.deployment import (
+    CONTRACTS_TO_DEPLOY,
+    REGISTRY_DEPLOYER,
+    TRUSTED_DEPLOYER,
+    DeployRegistryContainer,
+)
 
 
 def get_registry():
     registry_deployer = brownie.accounts.at(REGISTRY_DEPLOYER)
     trusted_deployer = brownie.accounts.at(TRUSTED_DEPLOYER)
 
-    return DeployRegistryContainer(
-        registry_deployer, trusted_deployer, ensure_deployed=False
-    )  # todo: need to set this to True for live
+    return DeployRegistryContainer(registry_deployer, trusted_deployer, ensure_deployed=True)
 
 
 def deploy_and_approve_contract_if_not_deployed(
@@ -39,5 +40,5 @@ def deploy_and_approve_contract_if_not_deployed(
 
 def main():
     registry = get_registry()
-    for contract in SUPPORTED_COMMANDS:
+    for contract in CONTRACTS_TO_DEPLOY:
         deploy_and_approve_contract_if_not_deployed(registry, contract)

@@ -1,10 +1,25 @@
-from brownie import ZERO_ADDRESS, Contract, CWrap, DeployerRegistry, Invoker, web3
+from brownie import (
+    ZERO_ADDRESS,
+    CMove,
+    Contract,
+    CSwapCurve,
+    CSwapUniswapV2,
+    CSwapUniswapV3,
+    CWrap,
+    DeployerRegistry,
+    Invoker,
+    web3,
+)
 from eth_utils import keccak
 
 from helpers.addresses import get_create1_address, get_create2_address
 
 REGISTRY_DEPLOYER = "0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266"  # hardcoded
 TRUSTED_DEPLOYER = "0x70997970c51812dc3a010c7d01b50e0d17dc79c8"  # hardcoded
+
+ALL_COMMANDS = [CMove, CWrap, CSwapUniswapV2, CSwapUniswapV3, CSwapCurve]
+ALL_CONTRACTS = [Invoker, *ALL_COMMANDS]
+CONTRACTS_TO_DEPLOY = ALL_CONTRACTS
 
 
 class RegistryNotDeployedError(Exception):
@@ -28,7 +43,8 @@ class DeployRegistryContainer:
         deployed_code = web3.eth.get_code(registry_address)
 
         if deployed_code == b"":
-            assert not ensure_deployed, RegistryNotDeployedError
+            if ensure_deployed:
+                raise RegistryNotDeployedError
             # the deployer has not been deployed, deploy it
             assert trusted_deployer != ZERO_ADDRESS, "need to trust somebody to deploy!"
             self.contract: Contract = registry_deployer.deploy(DeployerRegistry, trusted_deployer)

@@ -1,12 +1,14 @@
-from brownie import CMove, CSwapCurve, CSwapUniswapV2, CSwapUniswapV3, CWrap, Invoker, network
+from brownie import Invoker, network
 from brownie.exceptions import ContractNotFound
 from tabulate import tabulate
 
 from data.access_control import APPROVED_COMMAND
-from scripts.deployment import REGISTRY_DEPLOYER, TRUSTED_DEPLOYER, DeployRegistryContainer
-
-ALL_COMMANDS = [CMove, CWrap, CSwapUniswapV2, CSwapUniswapV3, CSwapCurve]
-ALL_CONTRACTS = [Invoker, *ALL_COMMANDS]
+from scripts.deployment import (
+    ALL_CONTRACTS,
+    REGISTRY_DEPLOYER,
+    TRUSTED_DEPLOYER,
+    DeployRegistryContainer,
+)
 
 
 def shorten_address(address):
@@ -37,7 +39,7 @@ def get_network_deployment_info():
     else:
         network_deployments[Invoker._name] = "-"
 
-    for contract in ALL_COMMANDS:
+    for contract in ALL_CONTRACTS:
         if registry:
             try:
                 deployed_contract = registry.get_deployed_contract(contract)
