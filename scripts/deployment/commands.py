@@ -5,21 +5,23 @@ from data.access_control import APPROVED_COMMAND
 from scripts.deployment import (
     CONTRACTS_TO_DEPLOY,
     REGISTRY_DEPLOYER,
-    TRUSTED_DEPLOYER,
+    TRUSTED_USER,
     DeployRegistryContainer,
 )
 
 
 def get_registry():
-    registry_deployer = brownie.accounts.at(REGISTRY_DEPLOYER)
-    trusted_deployer = brownie.accounts.at(TRUSTED_DEPLOYER)
+    registry_deployer = brownie.accounts.at(REGISTRY_DEPLOYER, force=True)
+    trusted_deployer = brownie.accounts.load(TRUSTED_USER)
+    brownie.accounts[0].transfer(trusted_deployer, 10e18)
 
-    return DeployRegistryContainer(registry_deployer, trusted_deployer, ensure_deployed=True)
+    return DeployRegistryContainer(registry_deployer, trusted_deployer)
 
 
 def deploy_and_approve_contract_if_not_deployed(
     registry: DeployRegistryContainer, contract: Contract
 ):
+    print(f"Trying to deploy {contract._name}")
 
     if registry.is_deployed(contract):
         print(f"{contract._name} already deployed. Skipping")

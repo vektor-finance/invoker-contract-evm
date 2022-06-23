@@ -29,23 +29,15 @@ def get_network_deployment_info():
     else:
         network_deployments["registry"] = "NO REGISTRY DEPLOYED"
 
-    # Do Invoker separately
-    if registry:
-        try:
-            deployed_invoker = registry.get_deployed_contract(Invoker)
-            network_deployments[Invoker._name] = shorten_address(deployed_invoker.address)
-        except ContractNotFound:
-            network_deployments[Invoker._name] = "not deployed"
-    else:
-        network_deployments[Invoker._name] = "-"
-
     for contract in ALL_CONTRACTS:
         if registry:
             try:
+                status = ""
                 deployed_contract = registry.get_deployed_contract(contract)
-                invoker = registry.get_deployed_contract(Invoker)
-                is_approved = invoker.hasRole(APPROVED_COMMAND, deployed_contract.address)
-                status = "✅ " if is_approved else "❌ "
+                if contract != Invoker:
+                    invoker = registry.get_deployed_contract(Invoker)
+                    is_approved = invoker.hasRole(APPROVED_COMMAND, deployed_contract.address)
+                    status = "✅ " if is_approved else "❌ "
                 network_deployments[contract._name] = status + shorten_address(
                     deployed_contract.address
                 )

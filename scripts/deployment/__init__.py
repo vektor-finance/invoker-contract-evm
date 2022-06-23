@@ -8,14 +8,19 @@ from brownie import (
     CWrap,
     DeployerRegistry,
     Invoker,
+    network,
     web3,
 )
 from eth_utils import keccak
 
+from data.chain import get_chain_from_network_name, get_wnative_address
 from helpers.addresses import get_create1_address, get_create2_address
 
-REGISTRY_DEPLOYER = "0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266"  # hardcoded
-TRUSTED_DEPLOYER = "0x70997970c51812dc3a010c7d01b50e0d17dc79c8"  # hardcoded
+REGISTRY_USER = "test_registry_deployer"
+TRUSTED_USER = "test_trusted_deployer"
+
+REGISTRY_DEPLOYER = "0x6a4bd80F84F988903bC80a4231BA4955bcF615Be"  # hardcoded
+TRUSTED_DEPLOYER = "0xCf1e00BF66ABE1b0C84aD7615A702F75d26d447a"  # hardcoded
 
 ALL_COMMANDS = [CMove, CWrap, CSwapUniswapV2, CSwapUniswapV3, CSwapCurve]
 ALL_CONTRACTS = [Invoker, *ALL_COMMANDS]
@@ -60,7 +65,8 @@ class DeployRegistryContainer:
         if contract == Invoker:
             return [TRUSTED_DEPLOYER]
         elif contract == CWrap:
-            return [ZERO_ADDRESS]
+            (chain, _) = get_chain_from_network_name(network.show_active())
+            return [get_wnative_address(chain)]
         else:
             return None
 
@@ -85,9 +91,9 @@ class DeployRegistryContainer:
         tx = self.contract.deployNewContract(
             creation_code, "0", 0, {"from": self.trusted_deployers[0]}
         )
-        deployed_contract = contract.at(tx.return_value)
+        deployed_contract = tx.return_value
 
-        print(f"{contract._name} deployed at {deployed_contract.address}")
+        print(f"{contract._name} deployed at {deployed_contract}")
 
         return deployed_contract
 
