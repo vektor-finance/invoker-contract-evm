@@ -1,0 +1,65 @@
+from brownie import CMove, CSwapCurve, CSwapUniswapV2, CSwapUniswapV3, CWrap, Invoker, network
+from brownie.exceptions import ContractNotFound
+from tabulate import tabulate
+
+from data.access_control import APPROVED_COMMAND
+from scripts.deployment import REGISTRY_DEPLOYER, TRUSTED_DEPLOYER, DeployRegistryContainer
+
+ALL_COMMANDS = [CMove, CWrap, CSwapUniswapV2, CSwapUniswapV3, CSwapCurve]
+ALL_CONTRACTS = [Invoker, *ALL_COMMANDS]
+
+
+def shorten_address(address):
+    return address[0:6] + "..." + address[-4:]
+
+
+def get_network_deployment_info():
+    registry_deployed = DeployRegistryContainer.is_registry_deployed()
+
+    network_deployments = {"network": network.show_active()}
+
+    registry = None
+    if registry_deployed:
+        registry = DeployRegistryContainer(
+            REGISTRY_DEPLOYER, TRUSTED_DEPLOYER, ensure_deployed=True
+        )
+        network_deployments["registry"] = shorten_address(registry.contract.address)
+    else:
+        network_deployments["registry"] = "NO REGISTRY DEPLOYED"
+
+    # Do Invoker separately
+    if registry:
+        try:
+            deployed_invoker = registry.get_deployed_contract(Invoker)
+            network_deployments[Invoker._name] = shorten_address(deployed_invoker.address)
+        except ContractNotFound:
+            network_deployments[Invoker._name] = "not deployed"
+    else:
+        network_deployments[Invoker._name] = "-"
+
+    for contract in ALL_COMMANDS:
+        if registry:
+            try:
+                deployed_contract = registry.get_deployed_contract(contract)
+                invoker = registry.get_deployed_contract(Invoker)
+                is_approved = invoker.hasRole(APPROVED_COMMAND, deployed_contract.address)
+                status = "✅ " if is_approved else "❌ "
+                network_deployments[contract._name] = status + shorten_address(
+                    deployed_contract.address
+                )
+            except ContractNotFound:
+                network_deployments[contract._name] = "not deployed"
+        else:
+            network_deployments[contract._name] = "-"
+
+    return network_deployments
+
+
+def main():
+
+    deployment_table = []
+
+    hardhat_table = get_network_deployment_info()
+    deployment_table.append(hardhat_table)
+
+    print(tabulate(deployment_table, headers="keys", tablefmt="github"))
