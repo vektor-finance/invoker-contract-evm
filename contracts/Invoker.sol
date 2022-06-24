@@ -7,10 +7,6 @@ import "./utils/Address.sol";
 import "./utils/Log.sol";
 import "./utils/PausableAccessControl.sol";
 
-interface Deployer {
-    function deployArgs() external view returns (bytes memory);
-}
-
 contract Invoker is Storage, Log, PausableAccessControl {
     using Address for address;
 

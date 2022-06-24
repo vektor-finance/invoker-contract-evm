@@ -6,6 +6,10 @@ pragma solidity ^0.8.6;
 
 import "@openzeppelin/contracts/access/AccessControl.sol";
 
+interface Deployer {
+    function deployArgs() external view returns (bytes memory);
+}
+
 // PAC is implemented by inheriting this contract
 contract PausableAccessControl is AccessControl {
     bytes32 public constant PAUSER = keccak256("ROLE_PAUSER");
@@ -18,7 +22,7 @@ contract PausableAccessControl is AccessControl {
         // Default behaviour: deployer is the only pauser.
         // Additional pausers can be added/removed using grantRole and revokeRole
         // See documentation for OZ AccessControl for more information
-        _setupRole(PAUSER, msg.sender);
+        _setupRole(PAUSER, abi.decode(Deployer(msg.sender).deployArgs(), (address)));
     }
 
     modifier whenPaused() {
