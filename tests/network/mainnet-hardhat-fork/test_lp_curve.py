@@ -140,11 +140,11 @@ class TestBasePool:
             _token = [asset for asset in assets if asset["symbol"] == token][0]
             _address = _token["address"] or CURVE_ETH
             _contract = interface.ERC20Detailed(_address)
-            _amount = 100 * 10 ** _token["decimals"]
+            _amount = 10 * 10 ** _token["decimals"]
             token_contracts.append(_contract)
             token_amounts.append(_amount)
             _contract.approve(invoker.address, _amount, {"from": alice})
-            mint_tokens_for(_contract, alice.address)
+            mint_tokens_for(_contract, alice.address, _amount)
             calldatas.append(cmove.moveERC20In.encode_input(_contract, _amount))
 
         curve_pool = interface.ICurvePool(curve_pool)
@@ -245,11 +245,11 @@ class UnderlyingPool:
             _token = [asset for asset in assets if asset["symbol"] == token][0]
             _address = _token["address"] or "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE"
             _contract = interface.ERC20Detailed(_address)
-            _amount = 100 * 10 ** _token["decimals"]
+            _amount = 10 * 10 ** _token["decimals"]
             token_contracts.append(_contract)
             token_amounts.append(_amount)
             _contract.approve(invoker.address, _amount, {"from": alice})
-            mint_tokens_for(_contract, alice.address)
+            mint_tokens_for(_contract, alice.address, _amount)
             calldatas.append(cmove.moveERC20In.encode_input(_contract, _amount))
 
         curve_pool = interface.ICurvePool(curve_pool)
