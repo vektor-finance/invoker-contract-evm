@@ -74,18 +74,7 @@ def get_balance_slot(token, network):
         sha_opcode["stack"][-2]
         == "0000000000000000000000000000000000000000000000000000000000000040"
     )
-    if (
-        sha_opcode["memory"][word_offset]
-        == "0000000000000000000000001234567890123456789012345678901234567890"
-    ):
-        balances_slot = int("0x" + sha_opcode["memory"][word_offset + 1], 16)
-    elif (
-        sha_opcode["memory"][word_offset + 1]
-        == "0000000000000000000000001234567890123456789012345678901234567890"
-    ):
-        balances_slot = int("0x" + sha_opcode["memory"][word_offset], 16)
-    else:
-        raise KeyError
+    balances_slot = int("0x" + sha_opcode["memory"][word_offset + 1], 16)
 
     storage_address = sha_opcode["address"]
 
@@ -146,11 +135,11 @@ def get_mint_strategy(token, network):
     try:
         balance_contract, balance_slot = get_balance_slot(token, network)
         user_slot = get_storage_key(user, balance_slot)
-        encoded_value = "0x" + encode_single("uint256", 123456).hex()
+        encoded_value = "0x" + encode_single("uint256", 123456789).hex()
         web3.provider.make_request(
             "hardhat_setStorageAt", [balance_contract, user_slot, encoded_value]
         )
-        assert interface.ERC20Detailed(token).balanceOf(user) == encoded_value
+        assert interface.ERC20Detailed(token).balanceOf(user) == 123456789
         return (MintStrategy.BALANCES, (balance_contract, balance_slot))
     except (AssertionError):
         if token.lower() in BENEFACTORS[network]:
@@ -160,6 +149,12 @@ def get_mint_strategy(token, network):
                 f"Need to add benefactor data for {interface.ERC20Detailed(token).name()}"
                 f" - {token} - {network}"
             )
+
+
+def strip_zeros(val):
+    # If the storage slot has a leading 0, hardhat gives us an error
+    # this removes any leading zeroes
+    return hex(int(val, 16))
 
 
 def mint_tokens_for(token, user, amount=0):
@@ -182,8 +177,8 @@ def mint_tokens_for(token, user, amount=0):
         if amount == 0:
             amount = 10 ** token.decimals()
 
-        user_slot = get_storage_key(user, params[1])
-        encoded_value = "0x" + encode_single("uint256", amount).hex()
+        user_slot = strip_zeros(get_storage_key(user, params[1]))
+        encoded_value = "0x" + encode_single("uint256", int(amount)).hex()
         web3.provider.make_request("hardhat_setStorageAt", [params[0], user_slot, encoded_value])
 
     elif strategy == MintStrategy.BENEFACTOR:
