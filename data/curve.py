@@ -1,8 +1,9 @@
-import json
 import os
 from dataclasses import dataclass
 from enum import IntEnum
-from typing import List
+from typing import List, Optional
+
+import yaml
 
 
 class CurveAssetType(IntEnum):
@@ -20,15 +21,18 @@ class CurveAssetType(IntEnum):
 @dataclass
 class CurvePool:
     name: str
-    swap_address: str
-    asset_type: int
+    pool_address: str
     coins: List[str]
+    is_underlying: bool
+    underlying_coins: Optional[List[str]] = None
+    is_v1: Optional[bool] = False
+    is_crypto: Optional[bool] = False
 
 
 def get_curve_pools(chain_id: str):
-    chain_id = str(chain_id)
-    with open(os.path.join("data", "curve.json"), "r") as infile:
-        CURVE_POOLS = json.load(infile)
-    obj = CURVE_POOLS.get(chain_id)
-    if obj is not None:
-        return [CurvePool(**o) for o in obj]
+    with open(os.path.join("data", "curve_mainnet.yaml"), "r") as infile:
+        _input = yaml.safe_load(infile)
+
+    curve_pools = [CurvePool(**_data) for _data in _input[str(chain_id)]]
+
+    return curve_pools
