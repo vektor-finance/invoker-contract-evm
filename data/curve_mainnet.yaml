@@ -21,12 +21,10 @@
 - coins:
   - '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'
   - '0xe95a203b1a91a908f9b9ce46459d101078c2c3cb'
-  is_underlying: true
+  is_underlying: false
   is_v1: false
   name: aeth [ETH, aETHc]
   pool_address: '0xA96A65c051bF88B4095Ee1f2451C2A9d43F53Ae2'
-  underlying_coins:
-  - '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'
 - coins:
   - '0xc2cb1040220768554cf699b0d863a3cd4324ce32'
   - '0x26ea744e5b887e5205727f55dfbe8685e3b21951'
@@ -391,12 +389,10 @@
 - coins:
   - '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'
   - '0x9559aaa82d9649c7a7b220e7c461d2e74c9a3593'
-  is_underlying: true
+  is_underlying: false
   is_v1: false
   name: reth [ETH, rETH]
   pool_address: '0xF9440930043eb3997fc70e1339dBb11F341de7A8'
-  underlying_coins:
-  - '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'
 - coins:
   - '0xbc6da0fe9ad5f3b0d58160288917aa56653660e9'
   - '0x6c3f90f043a72fa612cbac8115ee7e52bde6e490'

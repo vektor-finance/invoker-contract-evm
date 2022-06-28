@@ -33,9 +33,10 @@ abstract contract CSwapBase {
         IERC20 tokenIn,
         IERC20 tokenOut,
         address router,
-        uint256 amount
-    ) internal returns (uint256 balanceBefore) {
-        balanceBefore = tokenOut.balanceOf(address(this));
+        uint256 amount,
+        address receiver
+    ) internal virtual returns (uint256 balanceBefore) {
+        balanceBefore = tokenOut.balanceOf(receiver);
         _tokenApprove(tokenIn, router, amount);
     }
 
@@ -44,7 +45,7 @@ abstract contract CSwapBase {
         IERC20 tokenOut,
         uint256 minReceived,
         address receiver
-    ) internal {
+    ) internal virtual {
         uint256 balanceAfter = tokenOut.balanceOf(address(receiver));
         _requireMsg(balanceAfter >= balanceBefore + minReceived, "Slippage in");
     }

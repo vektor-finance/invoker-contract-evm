@@ -6,14 +6,14 @@ interface ICurvePool {
         int128 j,
         uint256 dx,
         uint256 min_dy
-    ) external;
+    ) external payable;
 
     function exchange_underlying(
         int128 i,
         int128 j,
         uint256 dx,
         uint256 min_dy
-    ) external;
+    ) external payable;
 
     function add_liquidity(uint256[2] calldata amounts, uint256 min_mint_amount) external;
 

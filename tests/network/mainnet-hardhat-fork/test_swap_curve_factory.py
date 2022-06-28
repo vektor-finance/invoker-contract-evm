@@ -4,7 +4,7 @@ from typing import List, Optional
 
 import pytest
 import yaml
-from brownie import interface
+from brownie import ETH_ADDRESS, interface
 
 from data.access_control import APPROVED_COMMAND
 from data.test_helpers import mint_tokens_for
@@ -37,8 +37,6 @@ def cswap_curve(invoker, deployer, CSwapCurve):
 
 @pytest.mark.parametrize("pool", CURVE_POOLS, ids=[c.name for c in CURVE_POOLS])
 def test_curve_sell(pool: CurvePool, alice, invoker, cswap_curve):
-    if "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee" in pool.coins:
-        return
 
     amount = mint_tokens_for(pool.coins[0], invoker)
 
@@ -47,8 +45,8 @@ def test_curve_sell(pool: CurvePool, alice, invoker, cswap_curve):
     is_underlying = False
     is_crypto = pool.is_crypto
 
-    token_in = interface.ERC20Detailed(pool.coins[0])
-    token_out = interface.ERC20Detailed(pool.coins[1])
+    token_in = pool.coins[0]
+    token_out = pool.coins[1]
 
     params = [pool.pool_address, i, j, (is_crypto * 2 + is_underlying)]
 
@@ -56,16 +54,16 @@ def test_curve_sell(pool: CurvePool, alice, invoker, cswap_curve):
 
     invoker.invoke([cswap_curve], [calldata_swap], {"from": alice})
 
-    assert token_out.balanceOf(invoker) > 0
+    if token_out == ETH_ADDRESS:
+        assert invoker.balance > 0
+    else:
+        assert interface.ERC20Detailed(token_out).balanceOf(invoker) > 0
 
 
 @pytest.mark.parametrize(
     "pool", CURVE_UNDERLYING_POOLS, ids=[c.name for c in CURVE_UNDERLYING_POOLS]
 )
 def test_curve_sell_underlying(pool: CurvePool, alice, invoker, cswap_curve):
-
-    if "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee" in pool.coins:
-        return
 
     amount = mint_tokens_for(pool.underlying_coins[0], invoker)
 
@@ -74,8 +72,8 @@ def test_curve_sell_underlying(pool: CurvePool, alice, invoker, cswap_curve):
     is_underlying = True
     is_crypto = pool.is_crypto
 
-    token_in = interface.ERC20Detailed(pool.underlying_coins[0])
-    token_out = interface.ERC20Detailed(pool.underlying_coins[1])
+    token_in = pool.underlying_coins[0]
+    token_out = pool.underlying_coins[1]
 
     params = [pool.pool_address, i, j, (is_crypto * 2 + is_underlying)]
 
@@ -83,4 +81,7 @@ def test_curve_sell_underlying(pool: CurvePool, alice, invoker, cswap_curve):
 
     invoker.invoke([cswap_curve], [calldata_swap], {"from": alice})
 
-    assert token_out.balanceOf(invoker) > 0
+    if token_out == ETH_ADDRESS:
+        assert invoker.balance > 0
+    else:
+        assert interface.ERC20Detailed(token_out).balanceOf(invoker) > 0

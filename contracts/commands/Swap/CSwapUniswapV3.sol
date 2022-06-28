@@ -28,9 +28,16 @@ contract CSwapUniswapV3 is CSwapBase, ICSwapUniswapV3 {
         uint256 minAmountOut,
         UniswapV3SwapParams calldata params
     ) external payable {
-        uint256 balanceBefore = _preSwap(tokenIn, tokenOut, address(params.router), amountIn);
-
         address receiver = params.receiver == address(0) ? address(this) : params.receiver;
+
+        uint256 balanceBefore = _preSwap(
+            tokenIn,
+            tokenOut,
+            address(params.router),
+            amountIn,
+            receiver
+        );
+
         //solhint-disable-next-line not-rely-on-time
         uint256 deadline = params.deadline == 0 ? block.timestamp + 1 : params.deadline;
 
@@ -63,9 +70,16 @@ contract CSwapUniswapV3 is CSwapBase, ICSwapUniswapV3 {
         uint256 maxAmountIn,
         UniswapV3SwapParams calldata params
     ) external payable {
-        uint256 balanceBefore = _preSwap(tokenIn, tokenOut, address(params.router), maxAmountIn);
-
         address receiver = params.receiver == address(0) ? address(this) : params.receiver;
+
+        uint256 balanceBefore = _preSwap(
+            tokenIn,
+            tokenOut,
+            address(params.router),
+            maxAmountIn,
+            receiver
+        );
+
         //solhint-disable-next-line not-rely-on-time
         uint256 deadline = params.deadline == 0 ? block.timestamp + 1 : params.deadline;
 
