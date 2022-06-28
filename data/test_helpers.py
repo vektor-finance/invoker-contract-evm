@@ -5,9 +5,11 @@ from enum import Enum
 from functools import wraps
 
 import brownie
-from brownie import interface, network, web3
+from brownie import interface, web3
 from eth_abi import encode_single
 from eth_utils import keccak
+
+from data.chain import get_chain_id
 
 
 @contextmanager
@@ -94,7 +96,7 @@ class MintStrategy(Enum):
 
 
 BENEFACTORS = {
-    "mainnet-hardhat-fork": {
+    "1": {
         "0x028171bca77440897b824ca71d1c56cac55b68a3": "0x0d33c811d0fcc711bcb388dfb3a152de445be66f",
         "0xbcca60bb61934080951369a648fb03df4f96263c": "0xbe67bb1aa7bacfc5d40d963d47e11e3d382a56bd",
         "0x3ed3b47dd13ec9a98b44e6204a523e766b225811": "0x87d48c565d0d85770406d248efd7dc3cbd41e729",
@@ -118,14 +120,14 @@ BENEFACTORS = {
 }
 
 NATIVES = {
-    "mainnet-hardhat-fork": [
+    "1": [
         "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE",
         "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
     ]
 }
 
 OVERRIDES = {
-    "mainnet-hardhat-fork": {
+    "1": {
         "0x3432b6a60d23ca0dfca7761b7ab56459d9c964d0": (
             MintStrategy.BENEFACTOR,
             "0xc8418af6358ffdda74e09ca9cc3fe03ca6adc5b0",
@@ -176,7 +178,7 @@ def mint_tokens_for(token, user, amount=0):
     if hasattr(token, "address"):
         token = token.address
 
-    active_network = network.show_active()
+    active_network = str(get_chain_id())
     strategy, params = get_mint_strategy(token, active_network)
 
     if strategy == MintStrategy.NATIVE:
