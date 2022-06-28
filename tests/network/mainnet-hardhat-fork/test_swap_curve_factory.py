@@ -36,13 +36,11 @@ def cswap_curve(invoker, deployer, CSwapCurve):
 
 
 @pytest.mark.parametrize("pool", CURVE_POOLS, ids=[c.name for c in CURVE_POOLS])
-def test_curve_sell(pool: CurvePool, alice, invoker, cmove, cswap_curve):
-    amount = []
-    for coin in pool.coins:
-        amount.append(mint_tokens_for(coin, alice))
-
+def test_curve_sell(pool: CurvePool, alice, invoker, cswap_curve):
     if "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee" in pool.coins:
         return
+
+    amount = mint_tokens_for(pool.coins[0], invoker)
 
     i = 0
     j = 1
@@ -52,13 +50,11 @@ def test_curve_sell(pool: CurvePool, alice, invoker, cmove, cswap_curve):
     token_in = interface.ERC20Detailed(pool.coins[0])
     token_out = interface.ERC20Detailed(pool.coins[1])
 
-    token_in.approve(invoker, amount[0], {"from": alice})
-    calldata_move = cmove.moveERC20In.encode_input(token_in, amount[0])
     params = [pool.pool_address, i, j, (is_crypto * 2 + is_underlying)]
 
-    calldata_swap = cswap_curve.sell.encode_input(amount[0], token_in, token_out, 0, params)
+    calldata_swap = cswap_curve.sell.encode_input(amount, token_in, token_out, 0, params)
 
-    invoker.invoke([cmove, cswap_curve], [calldata_move, calldata_swap], {"from": alice})
+    invoker.invoke([cswap_curve], [calldata_swap], {"from": alice})
 
     assert token_out.balanceOf(invoker) > 0
 
@@ -66,13 +62,12 @@ def test_curve_sell(pool: CurvePool, alice, invoker, cmove, cswap_curve):
 @pytest.mark.parametrize(
     "pool", CURVE_UNDERLYING_POOLS, ids=[c.name for c in CURVE_UNDERLYING_POOLS]
 )
-def test_curve_sell_underlying(pool: CurvePool, alice, invoker, cmove, cswap_curve):
-    amount = []
-    for coin in pool.underlying_coins:
-        amount.append(mint_tokens_for(coin, alice))
+def test_curve_sell_underlying(pool: CurvePool, alice, invoker, cswap_curve):
 
     if "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee" in pool.coins:
         return
+
+    amount = mint_tokens_for(pool.underlying_coins[0], invoker)
 
     i = 0
     j = 1
@@ -82,12 +77,10 @@ def test_curve_sell_underlying(pool: CurvePool, alice, invoker, cmove, cswap_cur
     token_in = interface.ERC20Detailed(pool.underlying_coins[0])
     token_out = interface.ERC20Detailed(pool.underlying_coins[1])
 
-    token_in.approve(invoker, amount[0], {"from": alice})
-    calldata_move = cmove.moveERC20In.encode_input(token_in, amount[0])
     params = [pool.pool_address, i, j, (is_crypto * 2 + is_underlying)]
 
-    calldata_swap = cswap_curve.sell.encode_input(amount[0], token_in, token_out, 0, params)
+    calldata_swap = cswap_curve.sell.encode_input(amount, token_in, token_out, 0, params)
 
-    invoker.invoke([cmove, cswap_curve], [calldata_move, calldata_swap], {"from": alice})
+    invoker.invoke([cswap_curve], [calldata_swap], {"from": alice})
 
     assert token_out.balanceOf(invoker) > 0
