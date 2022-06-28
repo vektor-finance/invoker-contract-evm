@@ -1,5 +1,6 @@
 import os
 from dataclasses import dataclass
+from itertools import permutations
 from typing import List, Optional
 
 import pytest
@@ -35,18 +36,38 @@ def cswap_curve(invoker, deployer, CSwapCurve):
     yield contract
 
 
-@pytest.mark.parametrize("pool", CURVE_POOLS, ids=[c.name for c in CURVE_POOLS])
-def test_curve_sell(pool: CurvePool, alice, invoker, cswap_curve):
+def pytest_generate_tests(metafunc):
+    if "coins" in metafunc.fixturenames:
+        metafunc.parametrize(
+            "pool,coins",
+            [
+                (curve_pool, coin)
+                for curve_pool in CURVE_POOLS
+                for coin in list(permutations(range(len(curve_pool.coins)), 2))
+            ],
+            indirect=["pool"],
+            ids=[
+                f"{pool.name}-{coin}"
+                for pool in CURVE_POOLS
+                for coin in list(permutations(range(len(pool.coins)), 2))
+            ],
+        )
 
-    amount = mint_tokens_for(pool.coins[0], invoker)
 
-    i = 0
-    j = 1
+@pytest.fixture
+def pool(request):
+    yield request.param
+
+
+def test_curve_sell(coins, pool, alice, invoker, cswap_curve):
+
+    i, j = coins
     is_underlying = False
     is_crypto = pool.is_crypto
 
-    token_in = pool.coins[0]
-    token_out = pool.coins[1]
+    amount = mint_tokens_for(pool.coins[i], invoker)
+    token_in = pool.coins[i]
+    token_out = pool.coins[j]
 
     params = [pool.pool_address, i, j, (is_crypto * 2 + is_underlying)]
 
@@ -54,8 +75,8 @@ def test_curve_sell(pool: CurvePool, alice, invoker, cswap_curve):
 
     invoker.invoke([cswap_curve], [calldata_swap], {"from": alice})
 
-    if token_out == ETH_ADDRESS:
-        assert invoker.balance > 0
+    if token_out == ETH_ADDRESS.lower():
+        assert invoker.balance() > 0
     else:
         assert interface.ERC20Detailed(token_out).balanceOf(invoker) > 0
 
@@ -81,7 +102,7 @@ def test_curve_sell_underlying(pool: CurvePool, alice, invoker, cswap_curve):
 
     invoker.invoke([cswap_curve], [calldata_swap], {"from": alice})
 
-    if token_out == ETH_ADDRESS:
-        assert invoker.balance > 0
+    if token_out == ETH_ADDRESS.lower():
+        assert invoker.balance() > 0
     else:
         assert interface.ERC20Detailed(token_out).balanceOf(invoker) > 0

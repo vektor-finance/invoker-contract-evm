@@ -124,9 +124,22 @@ NATIVES = {
     ]
 }
 
+OVERRIDES = {
+    "mainnet-hardhat-fork": {
+        "0x3432b6a60d23ca0dfca7761b7ab56459d9c964d0": (
+            MintStrategy.BENEFACTOR,
+            "0xc8418af6358ffdda74e09ca9cc3fe03ca6adc5b0",
+        )
+    }
+}
+
 
 @cached
 def get_mint_strategy(token, network):
+
+    if token in OVERRIDES[network]:
+        return OVERRIDES[network][token]
+
     user = "0x1234567890123456789012345678901234567890"
 
     if token.lower() in NATIVES[network]:

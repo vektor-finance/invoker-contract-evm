@@ -1430,14 +1430,6 @@
   is_underlying: false
   is_v1: false
   name: CNC/ETH [WETH, CNC]
-  pool_address: '0x782115c863A05abF8795dF377D89AAd1AAdF4Dfa'
-- coins:
-  - '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2'
-  - '0x9ae380f0272e2162340a5bb646c354271c0f5cfc'
-  is_crypto: true
-  is_underlying: false
-  is_v1: false
-  name: CNC/ETH [WETH, CNC]
   pool_address: '0x838af967537350D2C44ABB8c010E49E32673ab94'
 - coins:
   - '0x853d955acef822db058eb8505911ed77f175b99e'
