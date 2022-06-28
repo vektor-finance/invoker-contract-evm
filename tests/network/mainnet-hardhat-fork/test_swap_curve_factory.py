@@ -52,6 +52,21 @@ def pytest_generate_tests(metafunc):
                 for coin in list(permutations(range(len(pool.coins)), 2))
             ],
         )
+    if "underlying_coins" in metafunc.fixturenames:
+        metafunc.parametrize(
+            "pool,underlying_coins",
+            [
+                (curve_pool, coin)
+                for curve_pool in CURVE_UNDERLYING_POOLS
+                for coin in list(permutations(range(len(curve_pool.coins)), 2))
+            ],
+            indirect=["pool"],
+            ids=[
+                f"{pool.name}-{coin}"
+                for pool in CURVE_UNDERLYING_POOLS
+                for coin in list(permutations(range(len(pool.coins)), 2))
+            ],
+        )
 
 
 @pytest.fixture
@@ -59,7 +74,7 @@ def pool(request):
     yield request.param
 
 
-def test_curve_sell(coins, pool, alice, invoker, cswap_curve):
+def test_curve_sell(coins, pool: CurvePool, alice, invoker, cswap_curve):
 
     i, j = coins
     is_underlying = False
@@ -81,20 +96,15 @@ def test_curve_sell(coins, pool, alice, invoker, cswap_curve):
         assert interface.ERC20Detailed(token_out).balanceOf(invoker) > 0
 
 
-@pytest.mark.parametrize(
-    "pool", CURVE_UNDERLYING_POOLS, ids=[c.name for c in CURVE_UNDERLYING_POOLS]
-)
-def test_curve_sell_underlying(pool: CurvePool, alice, invoker, cswap_curve):
+def test_curve_sell_underlying(underlying_coins, pool: CurvePool, alice, invoker, cswap_curve):
 
-    amount = mint_tokens_for(pool.underlying_coins[0], invoker)
-
-    i = 0
-    j = 1
+    i, j = underlying_coins
     is_underlying = True
     is_crypto = pool.is_crypto
 
-    token_in = pool.underlying_coins[0]
-    token_out = pool.underlying_coins[1]
+    amount = mint_tokens_for(pool.underlying_coins[i], invoker)
+    token_in = pool.underlying_coins[i]
+    token_out = pool.underlying_coins[j]
 
     params = [pool.pool_address, i, j, (is_crypto * 2 + is_underlying)]
 
