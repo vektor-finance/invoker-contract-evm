@@ -116,15 +116,15 @@ BENEFACTORS = {
         "0x9fcf418b971134625cdf38448b949c8640971671": "0x3fb78e61784c9c637d560ede23ad57ca1294c14a",
         "0xf0a93d4994b3d98fb5e3a2f90dbc2d69073cb86b": "0xbcb91e689114b9cc865ad7871845c95241df4105",
         "0xd01ef7c0a5d8c432fc2d1a85c66cf2327362e5c6": "0xc437df90b37c1db6657339e31bfe54627f0e7181",
-    }
+    },
+    "10": {
+        "0x1337bedc9d22ecbe766df105c9623922a27963ec": "0x061b87122ed14b9526a813209c8a59a633257bab"
+    },
 }
 
-NATIVES = {
-    "1": [
-        "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE",
-        "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-    ]
-}
+NATIVES = [
+    "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+]
 
 OVERRIDES = {
     "1": {
@@ -132,7 +132,8 @@ OVERRIDES = {
             MintStrategy.BENEFACTOR,
             "0xc8418af6358ffdda74e09ca9cc3fe03ca6adc5b0",
         )
-    }
+    },
+    "10": {},
 }
 
 
@@ -144,7 +145,7 @@ def get_mint_strategy(token, network):
 
     user = "0x1234567890123456789012345678901234567890"
 
-    if token.lower() in NATIVES[network]:
+    if token.lower() in NATIVES:
         return (MintStrategy.NATIVE, None)
 
     try:

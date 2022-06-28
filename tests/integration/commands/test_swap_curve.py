@@ -1,8 +1,10 @@
+import atexit
 from itertools import permutations
 
 import brownie
 import pytest
 from brownie import ETH_ADDRESS, interface
+from brownie.exceptions import VirtualMachineError
 
 from data.access_control import APPROVED_COMMAND
 from data.chain import get_chain_id
@@ -60,10 +62,13 @@ def quote_output(pool: CurvePool, i, j, value, underlying=False):
     else:
         contract = interface.CurvePool(pool.pool_address)
 
-    if underlying:
-        return contract.get_dy_underlying(i, j, value)
-    else:
-        return contract.get_dy(i, j, value)
+    try:
+        if underlying:
+            return contract.get_dy_underlying(i, j, value)
+        else:
+            return contract.get_dy(i, j, value)
+    except VirtualMachineError:
+        atexit.register(print, f"Could not get quote for {pool.name} {pool.pool_address}")
 
 
 DEFAULT_SLIPPAGE = 0.99

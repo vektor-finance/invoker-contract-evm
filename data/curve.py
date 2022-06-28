@@ -30,7 +30,7 @@ class CurvePool:
 
 
 def get_curve_pools(chain_id: str):
-    with open(os.path.join("data", "curve_mainnet.yaml"), "r") as infile:
+    with open(os.path.join("data", "curve.yaml"), "r") as infile:
         _input = yaml.safe_load(infile)
 
     curve_pools = [CurvePool(**_data) for _data in _input[str(chain_id)]]
