@@ -27,7 +27,7 @@ def pytest_generate_tests(metafunc):
 
     if "coins" in metafunc.fixturenames:
         metafunc.parametrize(
-            "pool,coins",
+            "pool, coins",
             [
                 (curve_pool, coin)
                 for curve_pool in pools
