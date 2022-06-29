@@ -2587,3 +2587,170 @@
   - '0x6a6e93625ac1a40a8ca25a80dbe275474c6ad1e2'
   - '0x8d11ec38a3eb5e956b052f67da8bdc9bef8abf3e'
   - '0x04068da6c83afcfa0e13ba15a6696662335d5b75'
+'42161':
+- coins:
+  - '0xff970a61a04b1ca14834a43f5de4533ebddb5cc8'
+  - '0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9'
+  is_underlying: false
+  is_v1: false
+  name: 2pool [USDC, USDT]
+  pool_address: '0x7f90122BF0700F9E7e1F688fe926940E8839F353'
+- coins:
+  - '0x2f2a2543b76a4166549f7aab2e75bef0aefc5b0f'
+  - '0xdbf31df14b66535af65aac99c32e9ea844e14501'
+  is_underlying: false
+  is_v1: false
+  name: ren [WBTC, renBTC]
+  pool_address: '0x3E01dD8a5E1fb3481F0F589056b428Fc308AF0Fb'
+- coins:
+  - '0xfea7a6a0b346362bf88a9e4a88416b77a57d6c2a'
+  - '0x7f90122bf0700f9e7e1f688fe926940e8839f353'
+  is_underlying: true
+  is_v1: false
+  name: mim [MIM, 2CRV]
+  pool_address: '0x30dF229cefa463e991e29D42DB0bae2e122B2AC7'
+  underlying_coins:
+  - '0xfea7a6a0b346362bf88a9e4a88416b77a57d6c2a'
+  - '0xff970a61a04b1ca14834a43f5de4533ebddb5cc8'
+  - '0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9'
+- coins:
+  - '0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9'
+  - '0x2f2a2543b76a4166549f7aab2e75bef0aefc5b0f'
+  - '0x82af49447d8a07e3bd95bd0d56f35241523fbab1'
+  is_crypto: true
+  is_underlying: false
+  is_v1: false
+  name: tricrypto [USDT, WBTC, WETH]
+  pool_address: '0x960ea3e3C7FB317332d990873d354E18d7645590'
+- coins:
+  - '0xd22a58f79e9481d1a88e00c343885a588b34b68b'
+  - '0x7f90122bf0700f9e7e1f688fe926940e8839f353'
+  is_crypto: true
+  is_underlying: false
+  is_v1: false
+  name: eursusd [EURS, 2CRV]
+  pool_address: '0xA827a652Ead76c6B0b3D19dba05452E06e25c27e'
+- coins:
+  - '0xfea7a6a0b346362bf88a9e4a88416b77a57d6c2a'
+  - '0x7f90122bf0700f9e7e1f688fe926940e8839f353'
+  is_underlying: true
+  is_v1: false
+  name: MIM [MIM, 2CRV]
+  pool_address: '0x30dF229cefa463e991e29D42DB0bae2e122B2AC7'
+  underlying_coins:
+  - '0xfea7a6a0b346362bf88a9e4a88416b77a57d6c2a'
+  - '0xff970a61a04b1ca14834a43f5de4533ebddb5cc8'
+  - '0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9'
+- coins:
+  - '0xfea7a6a0b346362bf88a9e4a88416b77a57d6c2a'
+  - '0x7f90122bf0700f9e7e1f688fe926940e8839f353'
+  is_underlying: true
+  is_v1: false
+  name: MIM-2pool [MIM, 2CRV]
+  pool_address: '0xE9dcF2d2A17eAD11fab8b198578B20535370Be6a'
+  underlying_coins:
+  - '0xfea7a6a0b346362bf88a9e4a88416b77a57d6c2a'
+  - '0xff970a61a04b1ca14834a43f5de4533ebddb5cc8'
+  - '0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9'
+- coins:
+  - '0xda10009cbd5d07dd0cecc66161fc93d7c9000da1'
+  - '0x7f90122bf0700f9e7e1f688fe926940e8839f353'
+  is_underlying: true
+  is_v1: false
+  name: DAI-2pool [DAI, 2CRV]
+  pool_address: '0xF92C2A3C91bf869F77f9cB221C5AB1B1ada8a586'
+  underlying_coins:
+  - '0xda10009cbd5d07dd0cecc66161fc93d7c9000da1'
+  - '0xff970a61a04b1ca14834a43f5de4533ebddb5cc8'
+  - '0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9'
+- coins:
+  - '0x116172b2482c5dc3e6f445c16ac13367ac3fcd35'
+  - '0xd22a58f79e9481d1a88e00c343885a588b34b68b'
+  is_underlying: false
+  is_v1: false
+  name: handleEUR [fxEUR, EURS]
+  pool_address: '0xb0D2EB3C2cA3c6916FAb8DCbf9d9c165649231AE'
+- coins:
+  - '0x17fc002b466eec40dae837fc4be5c67993ddbd6f'
+  - '0x7f90122bf0700f9e7e1f688fe926940e8839f353'
+  is_underlying: true
+  is_v1: false
+  name: FRAX+2CRV [FRAX, 2CRV]
+  pool_address: '0xf07d553B195080F84F582e88ecdD54bAa122b279'
+  underlying_coins:
+  - '0x17fc002b466eec40dae837fc4be5c67993ddbd6f'
+  - '0xff970a61a04b1ca14834a43f5de4533ebddb5cc8'
+  - '0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9'
+- coins:
+  - '0x8616e8ea83f048ab9a5ec513c9412dd2993bce3f'
+  - '0x7f90122bf0700f9e7e1f688fe926940e8839f353'
+  is_underlying: true
+  is_v1: false
+  name: handle3pool [fxUSD, 2CRV]
+  pool_address: '0xd0DD5D76cF0fC06DaBC48632735566DCa241a35e'
+  underlying_coins:
+  - '0x8616e8ea83f048ab9a5ec513c9412dd2993bce3f'
+  - '0xff970a61a04b1ca14834a43f5de4533ebddb5cc8'
+  - '0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9'
+- coins:
+  - '0x641441c631e2f909700d2f41fd87f0aa6a6b4edb'
+  - '0x7f90122bf0700f9e7e1f688fe926940e8839f353'
+  is_underlying: true
+  is_v1: false
+  name: dForce [USX, 2CRV]
+  pool_address: '0x2ce5Fd6f6F4a159987eac99FF5158B7B62189Acf'
+  underlying_coins:
+  - '0x641441c631e2f909700d2f41fd87f0aa6a6b4edb'
+  - '0xff970a61a04b1ca14834a43f5de4533ebddb5cc8'
+  - '0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9'
+- coins:
+  - '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'
+  - '0xcab86f6fb6d1c2cbeeb97854a0c023446a075fe3'
+  is_underlying: false
+  is_v1: false
+  name: deBridge-ETH [ETH, deETH]
+  pool_address: '0x0a824B5d4C96EA0EC46306Efbd34Bf88fE1277e0'
+- coins:
+  - '0x1ddcaa4ed761428ae348befc6718bcb12e63bfaa'
+  - '0x7f90122bf0700f9e7e1f688fe926940e8839f353'
+  is_underlying: true
+  is_v1: false
+  name: deBridge-USDC [deUSDC, 2CRV]
+  pool_address: '0x76b44e0Cf9bD024dbEd09E1785DF295D59770138'
+  underlying_coins:
+  - '0x1ddcaa4ed761428ae348befc6718bcb12e63bfaa'
+  - '0xff970a61a04b1ca14834a43f5de4533ebddb5cc8'
+  - '0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9'
+- coins:
+  - '0x64343594ab9b56e99087bfa6f2335db24c2d1f17'
+  - '0x17fc002b466eec40dae837fc4be5c67993ddbd6f'
+  is_underlying: false
+  is_v1: false
+  name: VST+FRAX [VST, FRAX]
+  pool_address: '0x59bF0545FCa0E5Ad48E13DA269faCD2E8C886Ba4'
+- coins:
+  - '0x2d871631058827b703535228fb9ab5f35cf19e76'
+  - '0x7f90122bf0700f9e7e1f688fe926940e8839f353'
+  is_underlying: true
+  is_v1: false
+  name: deBridge-FRAX [deFRAX, 2CRV]
+  pool_address: '0xaa9dFbf31d2f807cA4d9f7BE281D75cA7BDCE64D'
+  underlying_coins:
+  - '0x2d871631058827b703535228fb9ab5f35cf19e76'
+  - '0xff970a61a04b1ca14834a43f5de4533ebddb5cc8'
+  - '0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9'
+- coins:
+  - '0x625e7708f30ca75bfd92586e17077590c60eb4cd'
+  - '0x6ab707aca953edaefbc4fd23ba73294241490620'
+  is_underlying: false
+  is_v1: false
+  name: Aave USDC+USDT [aArbUSDC, aArbUSDT]
+  pool_address: '0xE013593CEA239E445d2271106836b00C9E7356ae'
+- coins:
+  - '0x82e64f49ed5ec1bc6e43dad4fc8af9bb3a2312ee'
+  - '0x625e7708f30ca75bfd92586e17077590c60eb4cd'
+  - '0x6ab707aca953edaefbc4fd23ba73294241490620'
+  is_underlying: false
+  is_v1: false
+  name: Aave aDAI+aUSC+aUSDT [aArbDAI, aArbUSDC, aArbUSDT]
+  pool_address: '0x37C9Be6C81990398e9B87494484Afc6a4608C25d'

@@ -67,7 +67,7 @@ def quote_output(pool: CurvePool, i, j, value, underlying=False):
             return contract.get_dy_underlying(i, j, value)
         else:
             return contract.get_dy(i, j, value)
-    except VirtualMachineError:
+    except (VirtualMachineError, ValueError):
         atexit.register(print, f"Could not get quote for {pool.name} {pool.pool_address}")
 
 
