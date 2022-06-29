@@ -52,13 +52,7 @@ contract CSwapUniswapV2 is CSwapBase, ICSwapUniswapV2 {
         UniswapV2SwapParams calldata params
     ) external payable {
         UniswapV2SwapParams memory validatedParams = _validateParams(tokenIn, tokenOut, params);
-        uint256 balanceBefore = _preSwap(
-            tokenIn,
-            tokenOut,
-            validatedParams.router,
-            amountIn,
-            validatedParams.receiver
-        );
+        uint256 balanceBefore = _preSwap(tokenIn, tokenOut, validatedParams.router, amountIn);
         IUniswapV2Router02(validatedParams.router).swapExactTokensForTokens(
             amountIn,
             minAmountOut,
@@ -87,13 +81,7 @@ contract CSwapUniswapV2 is CSwapBase, ICSwapUniswapV2 {
         UniswapV2SwapParams calldata params
     ) external payable {
         UniswapV2SwapParams memory validatedParams = _validateParams(tokenIn, tokenOut, params);
-        uint256 balanceBefore = _preSwap(
-            tokenIn,
-            tokenOut,
-            validatedParams.router,
-            maxAmountIn,
-            validatedParams.receiver
-        );
+        uint256 balanceBefore = _preSwap(tokenIn, tokenOut, validatedParams.router, maxAmountIn);
         IUniswapV2Router02(validatedParams.router).swapTokensForExactTokens(
             amountOut,
             maxAmountIn,

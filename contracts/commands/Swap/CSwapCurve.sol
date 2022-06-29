@@ -7,42 +7,8 @@ import "../../../interfaces/Commands/Swap/Curve/ICurvePool.sol";
 import "./CSwapBase.sol";
 
 contract CSwapCurve is CSwapBase, ICSwapCurve {
-    address public constant ETH_ADDRESS = 0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE;
-
     function _getContractName() internal pure override returns (string memory) {
         return "CSwapCurve";
-    }
-
-    function _preSwap(
-        IERC20 tokenIn,
-        IERC20 tokenOut,
-        address router,
-        uint256 amount,
-        address receiver
-    ) internal override returns (uint256 balanceBefore) {
-        if (address(tokenOut) == ETH_ADDRESS) {
-            balanceBefore = address(receiver).balance;
-        } else {
-            balanceBefore = tokenOut.balanceOf(address(receiver));
-        }
-        if (address(tokenIn) != ETH_ADDRESS) {
-            _tokenApprove(tokenIn, router, amount);
-        }
-    }
-
-    function _postSwap(
-        uint256 balanceBefore,
-        IERC20 tokenOut,
-        uint256 minReceived,
-        address receiver
-    ) internal override {
-        uint256 balanceAfter;
-        if (address(tokenOut) == ETH_ADDRESS) {
-            balanceAfter = address(receiver).balance;
-        } else {
-            balanceAfter = tokenOut.balanceOf(address(receiver));
-        }
-        _requireMsg(balanceAfter >= balanceBefore + minReceived, "Slippage in");
     }
 
     /** @notice Use this function to SELL a fixed amount of an asset.
@@ -61,22 +27,11 @@ contract CSwapCurve is CSwapBase, ICSwapCurve {
         uint256 minAmountOut,
         CurveSwapParams calldata params
     ) external payable {
-        uint256 balanceBefore = _preSwap(
-            tokenIn,
-            tokenOut,
-            params.poolAddress,
-            amountIn,
-            address(this)
-        );
-        uint256 ethAmount;
-
-        if (address(tokenIn) == ETH_ADDRESS) {
-            ethAmount = amountIn;
-        }
+        uint256 balanceBefore = _preSwap(tokenIn, tokenOut, params.poolAddress, amountIn);
 
         if (params.swapType == CurveSwapType.STABLESWAP_EXCHANGE) {
             // Stableswap `exchange`
-            ICurvePool(params.poolAddress).exchange{value: ethAmount}(
+            ICurvePool(params.poolAddress).exchange(
                 int128(int256(params.tokenI)),
                 int128(int256(params.tokenJ)),
                 amountIn,
@@ -84,7 +39,7 @@ contract CSwapCurve is CSwapBase, ICSwapCurve {
             );
         } else if (params.swapType == CurveSwapType.STABLESWAP_UNDERLYING) {
             // Stableswap `exchange_underlying`
-            ICurvePool(params.poolAddress).exchange_underlying{value: ethAmount}(
+            ICurvePool(params.poolAddress).exchange_underlying(
                 int128(int256(params.tokenI)),
                 int128(int256(params.tokenJ)),
                 amountIn,
@@ -92,7 +47,7 @@ contract CSwapCurve is CSwapBase, ICSwapCurve {
             );
         } else if (params.swapType == CurveSwapType.CRYPTOSWAP_EXCHANGE) {
             // Cryptoswap `exchange`
-            ICryptoPool(params.poolAddress).exchange{value: ethAmount}(
+            ICryptoPool(params.poolAddress).exchange(
                 params.tokenI,
                 params.tokenJ,
                 amountIn,
@@ -100,7 +55,7 @@ contract CSwapCurve is CSwapBase, ICSwapCurve {
             );
         } else if (params.swapType == CurveSwapType.CRYPTOSWAP_UNDERLYING) {
             // Cryptoswap `exchange_underlying`
-            ICryptoPool(params.poolAddress).exchange_underlying{value: ethAmount}(
+            ICryptoPool(params.poolAddress).exchange_underlying(
                 params.tokenI,
                 params.tokenJ,
                 amountIn,
