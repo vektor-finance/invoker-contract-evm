@@ -28,6 +28,12 @@ class CurvePool:
     is_v1: Optional[bool] = False
     is_crypto: Optional[bool] = False
 
+    def __key(self):
+        return (self.name, self.pool_address)
+
+    def __hash__(self) -> int:
+        return hash(self.__key())
+
 
 def get_curve_pools(chain_id: str):
     with open(os.path.join("data", "curve.yaml"), "r") as infile:

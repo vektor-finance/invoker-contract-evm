@@ -120,6 +120,18 @@ BENEFACTORS = {
     "10": {
         "0x1337bedc9d22ecbe766df105c9623922a27963ec": "0x061b87122ed14b9526a813209c8a59a633257bab"
     },
+    "137": {
+        "0x27f8d03b3a2196956ed754badc28d73be8830a6e": "0xe6c23289ba5a9f0ef31b8eb36241d5c800889b7b",
+        "0x1a13f4ca1d028320a707d99520abfefca3998b7f": "0xd4f6d570133401079d213ecf4a14fa0b4bfb5b9c",
+        "0x60d55f02a771d515e077c9c2403a1ef324885cec": "0xeab7831c96876433db9b8953b4e7e8f66c3125c3",
+        "0x5c2ed810328349100a66b82b78a1791b101c9d61": "0x92215849c439e1f8612b6646060b4e3e5ef822cc",
+        "0xe7a24ef0c5e95ffb0f6684b813a78f2a3ad7d171": "0x92215849c439e1f8612b6646060b4e3e5ef822cc",
+        "0x28424507fefb6f7f8e9d3860f56504e4e5f5f390": "0x92215849c439e1f8612b6646060b4e3e5ef822cc",
+        "0x013f9c3fac3e2759d7e90aca4f9540f75194a0d7": "0xd30dcad4c32091d3b7c7582329787671abcc65fb",
+        "0xad326c253a84e9805559b73a08724e11e49ca651": "0x1e1506b8cf84f8d1c2dbf474bcb6fec36467c478",
+        "0x1ddcaa4ed761428ae348befc6718bcb12e63bfaa": "0xda43bfd7ecc6835aa6f1761ced30b986a574c0d2",
+        "0xa8d394fe7380b8ce6145d5f85e6ac22d4e91acde": "0x7a602815908e1615393148a7880a7fc9e57949ae",
+    },
 }
 
 NATIVES = [
@@ -134,7 +146,12 @@ OVERRIDES = {
         )
     },
     "10": {},
+    "137": {},
 }
+
+
+class BenefactorError(Exception):
+    pass
 
 
 @cached
@@ -161,9 +178,8 @@ def get_mint_strategy(token, network):
         if token.lower() in BENEFACTORS[network]:
             return (MintStrategy.BENEFACTOR, BENEFACTORS[network][token.lower()])
         else:
-            raise ValueError(
-                f"Need to add benefactor data for {interface.ERC20Detailed(token).name()}"
-                f" - {token} - {network}"
+            raise BenefactorError(
+                f"{interface.ERC20Detailed(token).name()}" f" - {token} - {network}"
             )
 
 

@@ -3,15 +3,19 @@ conftest for fixtures that are present during ALL tests (core + integrations)
 Most fixtures will be generated in subfolders
 """
 from pathlib import Path
+from typing import Set
 
 import pytest
 from brownie import Contract, interface
+from brownie.exceptions import VirtualMachineError
 from brownie.project.main import get_loaded_projects
 from eth_account import Account
 from eth_account.messages import encode_structured_data
 
 from data.anyswap import get_anyswap_tokens_for_chain
 from data.chain import get_chain, get_chain_name, get_network, get_wnative_address
+from data.curve import CurvePool
+from data.test_helpers import BenefactorError
 
 pytest_plugins = ["fixtures.accounts", "fixtures.vektor", "fixtures.chain"]
 
@@ -307,3 +311,37 @@ def sign_eip2612_permit():
         return owner.sign_message(permit).signature
 
     return sign_eip2612_permit
+
+
+bad_token_pools: Set[CurvePool] = set()
+bad_pools: Set[CurvePool] = set()
+
+
+@pytest.hookimpl(hookwrapper=True)
+def pytest_runtest_makereport(item, call):
+    outcome = yield
+    result = outcome.get_result()
+    if result.nodeid.split("::")[0] == "tests/integration/commands/test_swap_curve.py":
+        if result.when == "call" and result.failed:
+            if "pool" in item.fixturenames:
+                pool = item.funcargs["pool"]
+                exc_info = call.excinfo
+                if exc_info.errisinstance(AssertionError) or exc_info.errisinstance(
+                    VirtualMachineError
+                ):
+                    bad_pools.add(pool)
+                if exc_info.errisinstance(BenefactorError):
+                    bad_token_pools.add(pool)
+
+
+@pytest.hookimpl(hookwrapper=True)
+def pytest_terminal_summary(terminalreporter, exitstatus: int, config):
+    yield
+    terminalreporter.section("Custom Errors")
+    if len(bad_token_pools) > 0:
+        terminalreporter.write("---BAD TOKEN POOLS---\n")
+        terminalreporter.write(f"{[pool.pool_address for pool in bad_token_pools]}")
+        terminalreporter.ensure_newline()
+    if len(bad_pools) > 0:
+        terminalreporter.write("---BAD POOLS---\n")
+        terminalreporter.write(f"{[pool.pool_address for pool in bad_pools]}")
