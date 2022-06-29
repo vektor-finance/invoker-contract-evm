@@ -24,6 +24,7 @@ class CurvePool:
     pool_address: str
     coins: List[str]
     is_underlying: bool
+    chain_id: int
     underlying_coins: Optional[List[str]] = None
     is_v1: Optional[bool] = False
     is_crypto: Optional[bool] = False
@@ -39,6 +40,6 @@ def get_curve_pools(chain_id: str):
     with open(os.path.join("data", "curve.yaml"), "r") as infile:
         _input = yaml.safe_load(infile)
 
-    curve_pools = [CurvePool(**_data) for _data in _input[str(chain_id)]]
+    curve_pools = [CurvePool(**_data) for _data in _input["curve"][str(chain_id)]]
 
     return curve_pools
