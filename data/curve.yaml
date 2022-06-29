@@ -1533,6 +1533,69 @@
   is_v1: false
   name: sETH/ETH [ETH, sETH]
   pool_address: '0x7Bc5728BC2b59B45a58d9A576E2Ffc5f0505B35E'
+'100':
+- coins:
+  - '0xe91d153e0b41518a2ce8dd3d7944fa863463a97d'
+  - '0xddafbb505ad214d7b80b1f830fccc89b60fb7a83'
+  - '0x4ecaba5870353805a9f068101a40e0f32ed605c6'
+  is_underlying: false
+  is_v1: false
+  name: 3pool [WXDAI, USDC, USDT]
+  pool_address: '0x7f90122BF0700F9E7e1F688fe926940E8839F353'
+- coins:
+  - '0xd7a28aa9c470e7e9d8c676bcd5dd2f40c5683afa'
+  - '0x1337bedc9d22ecbe766df105c9623922a27963ec'
+  is_underlying: true
+  is_v1: false
+  name: rai [RAI, x3CRV]
+  pool_address: '0x85bA9Dfb4a3E4541420Fc75Be02E2B42042D7e46'
+  underlying_coins:
+  - '0xd7a28aa9c470e7e9d8c676bcd5dd2f40c5683afa'
+  - '0xe91d153e0b41518a2ce8dd3d7944fa863463a97d'
+  - '0xddafbb505ad214d7b80b1f830fccc89b60fb7a83'
+  - '0x4ecaba5870353805a9f068101a40e0f32ed605c6'
+- coins:
+  - '0xa4ef9da5ba71cc0d2e5e877a910a37ec43420445'
+  - '0x9c58bacc331c9aa871afd802db6379a98e80cedb'
+  is_underlying: false
+  is_v1: false
+  name: sGNO/GNO [sGNO, GNO]
+  pool_address: '0xBdF4488Dcf7165788D438b62B4C8A333879B7078'
+- coins:
+  - '0x6ac78efae880282396a335ca2f79863a1e6831d4'
+  - '0xa4ef9da5ba71cc0d2e5e877a910a37ec43420445'
+  is_underlying: false
+  is_v1: false
+  name: rGNO/sGNO [rGNO, sGNO]
+  pool_address: '0x5D7309a01B727d6769153fCB1dF5587858d53B9C'
+- coins:
+  - '0xddafbb505ad214d7b80b1f830fccc89b60fb7a83'
+  - '0xd51e1ddd116fff9a71c1b8feeb58113afa2b4d93'
+  is_underlying: false
+  is_v1: false
+  name: USDC/AMIS [USDC, AMIS]
+  pool_address: '0xe5F32A099Eb90dDB97F3684fc6663dD253dfAe55'
+- coins:
+  - '0x22bd2a732b39dace37ae7e8f50a186f3d9702e87'
+  - '0xddafbb505ad214d7b80b1f830fccc89b60fb7a83'
+  - '0x4ecaba5870353805a9f068101a40e0f32ed605c6'
+  - '0x44fa8e6f47987339850636f88629646662444217'
+  is_underlying: false
+  is_v1: false
+  name: yearn Curve.fi DAI/USDC/USDT [yDAI+yUSDC+yUSDT+yTUSD, USDC, USDT, DAI]
+  pool_address: '0xd7468E6c3C9259010D1148f79788bA631b94B506'
+- coins:
+  - '0x3f56e0c36d275367b8c502090edf38289b3dea0d'
+  - '0x1337bedc9d22ecbe766df105c9623922a27963ec'
+  is_underlying: true
+  is_v1: false
+  name: MAI Stablecoin [MAI, x3CRV]
+  pool_address: '0xA64D8025ddA09bCE94DA2cF2DC175d1831e2dF76'
+  underlying_coins:
+  - '0x3f56e0c36d275367b8c502090edf38289b3dea0d'
+  - '0xe91d153e0b41518a2ce8dd3d7944fa863463a97d'
+  - '0xddafbb505ad214d7b80b1f830fccc89b60fb7a83'
+  - '0x4ecaba5870353805a9f068101a40e0f32ed605c6'
 '137':
 - coins:
   - '0x27f8d03b3a2196956ed754badc28d73be8830a6e'
@@ -3021,6 +3084,18 @@
   is_v1: false
   name: Topshelf AVAXL [ETH, AVAX-L]
   pool_address: '0x445109BcF194c538B73EA60C71bb773849bc9b79'
+- coins:
+  - '0xaff6268287211783ca7c9934d5234765f57e98b6'
+  - '0x1337bedc9d22ecbe766df105c9623922a27963ec'
+  is_underlying: true
+  is_v1: false
+  name: Versus Token [VERS, av3CRV]
+  pool_address: '0xdC6eBB38Be3FDBA42Ff65da6Aafb9eDE6443DFDB'
+  underlying_coins:
+  - '0xaff6268287211783ca7c9934d5234765f57e98b6'
+  - '0x47afa96cdc9fab46904a55a6ad4bf6660b53c38a'
+  - '0x46a51127c3ce23fb7ab1de06226147f446e4a857'
+  - '0x532e6537fea298397212f09a61e03311686f548e'
 - coins:
   - '0x0f577433bf59560ef2a79c124e9ff99fca258948'
   - '0x1337bedc9d22ecbe766df105c9623922a27963ec'

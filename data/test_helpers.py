@@ -161,6 +161,10 @@ BENEFACTORS = {
         "0x18cb11c9f2b6f45a7ac0a95efd322ed4cf9eeebf": "0xa5ad811c4b2bd8161090e97c946e1a2003989599",
         "0x28690ec942671ac8d9bc442b667ec338ede6dfd3": "0xd39016475200ab8957e9c772c949ef54bda69111",
     },
+    "100": {
+        "0x1337bedc9d22ecbe766df105c9623922a27963ec": "0xb721cc32160ab0da2614cc6ab16ed822aeebc101",
+        "0x6ac78efae880282396a335ca2f79863a1e6831d4": "0x53811010085382d49ef12bcc55902bbfceb57790",
+    },
 }
 
 NATIVES = [
@@ -179,6 +183,7 @@ OVERRIDES = {
     "250": {},
     "42161": {},
     "43114": {},
+    "100": {},
 }
 
 
