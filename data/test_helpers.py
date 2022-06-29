@@ -6,6 +6,7 @@ from functools import wraps
 
 import brownie
 from brownie import interface, web3
+from brownie.exceptions import VirtualMachineError
 from eth_abi import encode_single
 from eth_utils import keccak
 
@@ -98,7 +99,7 @@ class MintStrategy(Enum):
 BENEFACTORS = {
     "1": {
         "0x028171bca77440897b824ca71d1c56cac55b68a3": "0x0d33c811d0fcc711bcb388dfb3a152de445be66f",
-        "0xbcca60bb61934080951369a648fb03df4f96263c": "0xbe67bb1aa7bacfc5d40d963d47e11e3d382a56bd",
+        "0xbcca60bb61934080951369a648fb03df4f96263c": "0x87d48c565d0d85770406d248efd7dc3cbd41e729",
         "0x3ed3b47dd13ec9a98b44e6204a523e766b225811": "0x87d48c565d0d85770406d248efd7dc3cbd41e729",
         "0x6c5024cd4f8a59110119c56f8933403a539555eb": "0xa2a3cae63476891ab2d640d9a5a800755ee79d6e",
         "0xae7ab96520de3a18e5e111b5eaab095312d7fe84": "0x7f39c581f595b53c5cb19bd0b3f8da6c935e2ca0",
@@ -215,9 +216,7 @@ def get_mint_strategy(token, network):
         if token.lower() in BENEFACTORS[network]:
             return (MintStrategy.BENEFACTOR, BENEFACTORS[network][token.lower()])
         else:
-            raise BenefactorError(
-                f"{interface.ERC20Detailed(token).name()}" f" - {token} - {network}"
-            )
+            raise BenefactorError(f"{interface.ERC20Detailed(token).name()} - {token} - {network}")
 
 
 def strip_zeros(val):
@@ -255,6 +254,9 @@ def mint_tokens_for(token, user, amount=0):
         if amount == 0:
             amount = 10 ** token.decimals()
 
-        token.transfer(user, amount, {"from": params})
+        try:
+            token.transfer(user, amount, {"from": params})
+        except VirtualMachineError:
+            raise BenefactorError(f"{token.name()} - {token.address} - {active_network}")
 
     return amount
