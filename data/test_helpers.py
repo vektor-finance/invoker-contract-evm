@@ -132,6 +132,14 @@ BENEFACTORS = {
         "0x1ddcaa4ed761428ae348befc6718bcb12e63bfaa": "0xda43bfd7ecc6835aa6f1761ced30b986a574c0d2",
         "0xa8d394fe7380b8ce6145d5f85e6ac22d4e91acde": "0x7a602815908e1615393148a7880a7fc9e57949ae",
     },
+    "250": {
+        "0x27e611fd27b276acbd5ffd632e5eaebec9761e40": "0x15bb164f9827de760174d3d3dad6816ef50de13c",
+        "0x07e6332dd090d287d3489245038daf987955dcfb": "0x49c93a95dbcc9a6a4d8f77e59c038ce5020e82f8",
+        "0xe578c856933d8e1082740bf7661e379aa2a30b26": "0xd1a992417a0abffa632cbde4da9f5dcf85caa858",
+        "0x940f41f0ec9ba1a34cf001cc03347ac092f5f6b5": "0xec51fffe35f5b2b841103cfc5d4f5eb22c8fa33e",
+        "0xd02a30d33153877bc20e5721ee53dedee0422b2f": "0xf7b9c402c4d6c2edba04a7a515b53d11b1e9b2cc",
+        "0xb42bf10ab9df82f9a47b86dd76eee4ba848d0fa2": "0x9b9e258b3dace1d814f697a9d9816c5e4a8b6736",
+    },
 }
 
 NATIVES = [
@@ -147,6 +155,7 @@ OVERRIDES = {
     },
     "10": {},
     "137": {},
+    "250": {},
 }
 
 

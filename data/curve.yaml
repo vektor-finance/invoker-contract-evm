@@ -2107,3 +2107,483 @@
   is_v1: false
   name: oUSD Pool [oDAI, oUSDT, oUSDC]
   pool_address: '0x3e12bEd01061631C2f274d957b4C4c04374Bb6a4'
+'250':
+- coins:
+  - '0x8d11ec38a3eb5e956b052f67da8bdc9bef8abf3e'
+  - '0x04068da6c83afcfa0e13ba15a6696662335d5b75'
+  is_underlying: false
+  is_v1: false
+  name: 2pool [DAI, USDC]
+  pool_address: '0x27E611FD27b276ACbd5Ffd632E5eAEBEC9761E40'
+- coins:
+  - '0x049d68029688eabf473097a2fc38ef61633a3c7a'
+  - '0x27e611fd27b276acbd5ffd632e5eaebec9761e40'
+  is_underlying: true
+  is_v1: false
+  name: fusdt [fUSDT, DAI+USDC]
+  pool_address: '0x92D5ebF3593a92888C25C0AbEF126583d4b5312E'
+  underlying_coins:
+  - '0x049d68029688eabf473097a2fc38ef61633a3c7a'
+  - '0x8d11ec38a3eb5e956b052f67da8bdc9bef8abf3e'
+  - '0x04068da6c83afcfa0e13ba15a6696662335d5b75'
+- coins:
+  - '0x321162cd933e2be498cd2267a90534a804051b11'
+  - '0xdbf31df14b66535af65aac99c32e9ea844e14501'
+  is_underlying: false
+  is_v1: false
+  name: btc [BTC, renBTC]
+  pool_address: '0x3eF6A01A0f81D6046290f3e2A8c5b843e738E604'
+- coins:
+  - '0x07e6332dd090d287d3489245038daf987955dcfb'
+  - '0xe578c856933d8e1082740bf7661e379aa2a30b26'
+  - '0x940f41f0ec9ba1a34cf001cc03347ac092f5f6b5'
+  is_underlying: true
+  is_v1: false
+  name: geist [gDAI, gUSDC, gfUSDT]
+  pool_address: '0x0fa949783947Bf6c1b171DB13AEACBB488845B3f'
+  underlying_coins:
+  - '0x8d11ec38a3eb5e956b052f67da8bdc9bef8abf3e'
+  - '0x04068da6c83afcfa0e13ba15a6696662335d5b75'
+  - '0x049d68029688eabf473097a2fc38ef61633a3c7a'
+- coins:
+  - '0x04c762a5df2fa02fe868f25359e0c259fb811cfe'
+  - '0x328a7b4d538a2b3942653a9983fda3c12c571141'
+  - '0x70fac71debfd67394d1278d98a29dea79dc6e57a'
+  is_underlying: true
+  is_v1: false
+  name: ib [iDAI, iUSDC, iFUSDT]
+  pool_address: '0x4FC8D635c3cB1d0aa123859e2B2587d0FF2707b1'
+  underlying_coins:
+  - '0x8d11ec38a3eb5e956b052f67da8bdc9bef8abf3e'
+  - '0x04068da6c83afcfa0e13ba15a6696662335d5b75'
+  - '0x049d68029688eabf473097a2fc38ef61633a3c7a'
+- coins:
+  - '0x049d68029688eabf473097a2fc38ef61633a3c7a'
+  - '0x321162cd933e2be498cd2267a90534a804051b11'
+  - '0x74b23882a30290451a17c44f4f05243b6b58c76d'
+  is_crypto: true
+  is_underlying: false
+  is_v1: false
+  name: tricrypto [fUSDT, BTC, ETH]
+  pool_address: '0x3a1659Ddcf2339Be3aeA159cA010979FB49155FF'
+- coins:
+  - '0x82f0b8b456c1a451378467398982d4834b6829c1'
+  - '0x27e611fd27b276acbd5ffd632e5eaebec9761e40'
+  is_underlying: true
+  is_v1: false
+  name: mim [MIM, DAI+USDC]
+  pool_address: '0x1cb5C03d0585333A6D0578D47a5F9de66C80fD5A'
+  underlying_coins:
+  - '0x82f0b8b456c1a451378467398982d4834b6829c1'
+  - '0x8d11ec38a3eb5e956b052f67da8bdc9bef8abf3e'
+  - '0x04068da6c83afcfa0e13ba15a6696662335d5b75'
+- coins:
+  - '0x82f0b8b456c1a451378467398982d4834b6829c1'
+  - '0x049d68029688eabf473097a2fc38ef61633a3c7a'
+  - '0x04068da6c83afcfa0e13ba15a6696662335d5b75'
+  is_underlying: false
+  is_v1: false
+  name: 3poolV2 [MIM, fUSDT, USDC]
+  pool_address: '0x2dd7C9371965472E5A5fD28fbE165007c61439E1'
+- coins:
+  - '0xad84341756bf337f5a0164515b1f6f993d194e1f'
+  - '0x27e611fd27b276acbd5ffd632e5eaebec9761e40'
+  is_underlying: true
+  is_v1: false
+  name: fUSD [FUSD, DAI+USDC]
+  pool_address: '0x1c7FA28E7BFa396a4B044cC939daFF51674d852B'
+  underlying_coins:
+  - '0xad84341756bf337f5a0164515b1f6f993d194e1f'
+  - '0x8d11ec38a3eb5e956b052f67da8bdc9bef8abf3e'
+  - '0x04068da6c83afcfa0e13ba15a6696662335d5b75'
+- coins:
+  - '0x049d68029688eabf473097a2fc38ef61633a3c7a'
+  - '0x04068da6c83afcfa0e13ba15a6696662335d5b75'
+  - '0x8d11ec38a3eb5e956b052f67da8bdc9bef8abf3e'
+  - '0x82f0b8b456c1a451378467398982d4834b6829c1'
+  is_underlying: false
+  is_v1: false
+  name: 4pool [fUSDT, USDC, DAI, MIM]
+  pool_address: '0xad71Fc10Fca8Ce6a98843A64b95E0C63516CA7F3'
+- coins:
+  - '0x321162cd933e2be498cd2267a90534a804051b11'
+  - '0x74b23882a30290451a17c44f4f05243b6b58c76d'
+  - '0x82f0b8b456c1a451378467398982d4834b6829c1'
+  is_underlying: false
+  is_v1: false
+  name: Tricrypto+MIM [BTC, ETH, MIM]
+  pool_address: '0x5AAC39FD59300f913096afafaa7b8E0be143f1b0'
+- coins:
+  - '0xfb98b335551a418cd0737375a2ea0ded62ea213b'
+  - '0x27e611fd27b276acbd5ffd632e5eaebec9761e40'
+  is_underlying: true
+  is_v1: false
+  name: MAIpool [miMATIC, DAI+USDC]
+  pool_address: '0x68dde7344a302394845097E96E83cDdFe6D4d76e'
+  underlying_coins:
+  - '0xfb98b335551a418cd0737375a2ea0ded62ea213b'
+  - '0x8d11ec38a3eb5e956b052f67da8bdc9bef8abf3e'
+  - '0x04068da6c83afcfa0e13ba15a6696662335d5b75'
+- coins:
+  - '0x3129662808bec728a27ab6a6b9afd3cbaca8a43c'
+  - '0x27e611fd27b276acbd5ffd632e5eaebec9761e40'
+  is_underlying: true
+  is_v1: false
+  name: Dola-2pool Curve Metapool [DOLA, DAI+USDC]
+  pool_address: '0x28368D7090421Ca544BC89799a2Ea8489306E3E5'
+  underlying_coins:
+  - '0x3129662808bec728a27ab6a6b9afd3cbaca8a43c'
+  - '0x8d11ec38a3eb5e956b052f67da8bdc9bef8abf3e'
+  - '0x04068da6c83afcfa0e13ba15a6696662335d5b75'
+- coins:
+  - '0xdc301622e621166bd8e82f2ca0a26c13ad0be355'
+  - '0x27e611fd27b276acbd5ffd632e5eaebec9761e40'
+  is_underlying: true
+  is_v1: false
+  name: FRAX3CRV [FRAX, DAI+USDC]
+  pool_address: '0x12cb0687B95158340287D8391D0Ca5314c10532D'
+  underlying_coins:
+  - '0xdc301622e621166bd8e82f2ca0a26c13ad0be355'
+  - '0x8d11ec38a3eb5e956b052f67da8bdc9bef8abf3e'
+  - '0x04068da6c83afcfa0e13ba15a6696662335d5b75'
+- coins:
+  - '0xdc301622e621166bd8e82f2ca0a26c13ad0be355'
+  - '0x27e611fd27b276acbd5ffd632e5eaebec9761e40'
+  is_underlying: true
+  is_v1: false
+  name: FRAX2pool [FRAX, DAI+USDC]
+  pool_address: '0x7a656B342E14F745e2B164890E88017e27AE7320'
+  underlying_coins:
+  - '0xdc301622e621166bd8e82f2ca0a26c13ad0be355'
+  - '0x8d11ec38a3eb5e956b052f67da8bdc9bef8abf3e'
+  - '0x04068da6c83afcfa0e13ba15a6696662335d5b75'
+- coins:
+  - '0x425ccc1390bed338d98daff91ff0f03738b534ef'
+  - '0x27e611fd27b276acbd5ffd632e5eaebec9761e40'
+  is_underlying: true
+  is_v1: false
+  name: MIM1 Pool [MIM1, DAI+USDC]
+  pool_address: '0xD5B51BA080F815446646a61039fBbFef5A12A4CF'
+  underlying_coins:
+  - '0x425ccc1390bed338d98daff91ff0f03738b534ef'
+  - '0x8d11ec38a3eb5e956b052f67da8bdc9bef8abf3e'
+  - '0x04068da6c83afcfa0e13ba15a6696662335d5b75'
+- coins:
+  - '0x9879abdea01a879644185341f7af7d8343556b7a'
+  - '0x82f0b8b456c1a451378467398982d4834b6829c1'
+  - '0x8d11ec38a3eb5e956b052f67da8bdc9bef8abf3e'
+  - '0x04068da6c83afcfa0e13ba15a6696662335d5b75'
+  is_underlying: false
+  is_v1: false
+  name: TrustPool [TUSD, MIM, DAI, USDC]
+  pool_address: '0xe38e2c6361c14a17219f7c00bDD93DCc945f096A'
+- coins:
+  - '0xeb9ac3e1c9c3f919804bdc412e0a39b94d4c09d3'
+  - '0x8d11ec38a3eb5e956b052f67da8bdc9bef8abf3e'
+  is_underlying: false
+  is_v1: false
+  name: renDAI [renDAI, DAI]
+  pool_address: '0x34033F0227C48bc3577aE5C6923A3DEEF3E36670'
+- coins:
+  - '0xd82a4f018ecf6be6e991c3c4a160c9758ec3338f'
+  - '0xc931f61b1534eb21d8c11b24f3f5ab2471d4ab50'
+  is_underlying: false
+  is_v1: false
+  name: renBUSD [renBUSD, BUSD]
+  pool_address: '0x43EC4106b3A09b17f8669E268f36Cc5cdd5F356f'
+- coins:
+  - '0x705bc47eba113be1a66e20824a05a176aa3b5265'
+  - '0x82f0b8b456c1a451378467398982d4834b6829c1'
+  is_underlying: false
+  is_v1: false
+  name: renMIM [renMIM, MIM]
+  pool_address: '0xD73a2802697263fb84cb06bBCe9501A2d33dc880'
+- coins:
+  - '0x6e48a0c5386211837d99daca233f45ef5aa5f594'
+  - '0x04068da6c83afcfa0e13ba15a6696662335d5b75'
+  is_underlying: false
+  is_v1: false
+  name: renUSDC [renUSDC, USDC]
+  pool_address: '0xAD6D5548c45b1b198A4A563Cba1C3D384AFc44C6'
+- coins:
+  - '0xf55941e971302c634c586416c43469f3ead5ad3e'
+  - '0x049d68029688eabf473097a2fc38ef61633a3c7a'
+  is_underlying: false
+  is_v1: false
+  name: renUSDT [renUSDT, fUSDT]
+  pool_address: '0x03fa4c23bA3a7BC0BeC18789CE29c7857324bD22'
+- coins:
+  - '0x0694bf58a4f48c5970454cd4874218eba843cf3e'
+  - '0x74b23882a30290451a17c44f4f05243b6b58c76d'
+  is_underlying: false
+  is_v1: false
+  name: renETH [renETH, ETH]
+  pool_address: '0xE8117F058A37367d6bf70a8E56B569d7fd5e2A8B'
+- coins:
+  - '0x3129ac70c738d398d1d74c87eab9483fd56d16f8'
+  - '0x27e611fd27b276acbd5ffd632e5eaebec9761e40'
+  is_underlying: true
+  is_v1: false
+  name: usdp+2pool [USDP, DAI+USDC]
+  pool_address: '0x83A503780983bbaBd6ACab577FbA2c5A3DcAa57f'
+  underlying_coins:
+  - '0x3129ac70c738d398d1d74c87eab9483fd56d16f8'
+  - '0x8d11ec38a3eb5e956b052f67da8bdc9bef8abf3e'
+  - '0x04068da6c83afcfa0e13ba15a6696662335d5b75'
+- coins:
+  - '0x82f0b8b456c1a451378467398982d4834b6829c1'
+  - '0xdc301622e621166bd8e82f2ca0a26c13ad0be355'
+  - '0x8d11ec38a3eb5e956b052f67da8bdc9bef8abf3e'
+  is_underlying: false
+  is_v1: false
+  name: 3PoolV1337 [MIM, FRAX, DAI]
+  pool_address: '0xB407481462ec40b706DF0D22e11d8BEFbc2Adf54'
+- coins:
+  - '0x2126be94443334fd71428dba3c638fb722d1838e'
+  - '0x27e611fd27b276acbd5ffd632e5eaebec9761e40'
+  is_underlying: true
+  is_v1: false
+  name: LAMBDA2pool [LAMBDA, DAI+USDC]
+  pool_address: '0x075C1D1d7E9E1aF077B0b6117C6eA06CD0a260b5'
+  underlying_coins:
+  - '0x2126be94443334fd71428dba3c638fb722d1838e'
+  - '0x8d11ec38a3eb5e956b052f67da8bdc9bef8abf3e'
+  - '0x04068da6c83afcfa0e13ba15a6696662335d5b75'
+- coins:
+  - '0xc931f61b1534eb21d8c11b24f3f5ab2471d4ab50'
+  - '0x04068da6c83afcfa0e13ba15a6696662335d5b75'
+  - '0x82f0b8b456c1a451378467398982d4834b6829c1'
+  - '0x8d11ec38a3eb5e956b052f67da8bdc9bef8abf3e'
+  is_underlying: false
+  is_v1: false
+  name: BUSD 4Pool [BUSD, USDC, MIM, DAI]
+  pool_address: '0xA7CC236F81b04c1058e9bfb70E0Ee9940e271676'
+- coins:
+  - '0xdc301622e621166bd8e82f2ca0a26c13ad0be355'
+  - '0xd02a30d33153877bc20e5721ee53dedee0422b2f'
+  is_underlying: true
+  is_v1: false
+  name: Geist Frax [FRAX, g3CRV]
+  pool_address: '0xDE535Ee3999470286178B736e6A8D976a6822A3E'
+  underlying_coins:
+  - '0xdc301622e621166bd8e82f2ca0a26c13ad0be355'
+  - '0x07e6332dd090d287d3489245038daf987955dcfb'
+  - '0xe578c856933d8e1082740bf7661e379aa2a30b26'
+  - '0x940f41f0ec9ba1a34cf001cc03347ac092f5f6b5'
+- coins:
+  - '0x4a89338a2079a01edbf5027330eac10b615024e5'
+  - '0xd02a30d33153877bc20e5721ee53dedee0422b2f'
+  is_underlying: true
+  is_v1: false
+  name: Topshelf USDL [USDL Stablecoin, g3CRV]
+  pool_address: '0x6EF78ad4a40E9A6c81B9229de3eCc33ce591bC34'
+  underlying_coins:
+  - '0x4a89338a2079a01edbf5027330eac10b615024e5'
+  - '0x07e6332dd090d287d3489245038daf987955dcfb'
+  - '0xe578c856933d8e1082740bf7661e379aa2a30b26'
+  - '0x940f41f0ec9ba1a34cf001cc03347ac092f5f6b5'
+- coins:
+  - '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'
+  - '0xc0d9784fdba39746919bbf236eb73bc015fd351d'
+  is_underlying: false
+  is_v1: false
+  name: Topshelf FTML [ETH, Fantom-L]
+  pool_address: '0x8B63F036F5a34226065bC0a7B0aE5bb5eBA1fF3D'
+- coins:
+  - '0x432d99efb26c22948b0062c9e70f9a8f5b3811db'
+  - '0x27e611fd27b276acbd5ffd632e5eaebec9761e40'
+  is_underlying: true
+  is_v1: false
+  name: Creditum [rfUSD, DAI+USDC]
+  pool_address: '0x6d304d364B461Aab0496bf696A23F44a55fc43b6'
+  underlying_coins:
+  - '0x432d99efb26c22948b0062c9e70f9a8f5b3811db'
+  - '0x8d11ec38a3eb5e956b052f67da8bdc9bef8abf3e'
+  - '0x04068da6c83afcfa0e13ba15a6696662335d5b75'
+- coins:
+  - '0x8d11ec38a3eb5e956b052f67da8bdc9bef8abf3e'
+  - '0x04068da6c83afcfa0e13ba15a6696662335d5b75'
+  - '0x2126be94443334fd71428dba3c638fb722d1838e'
+  is_underlying: false
+  is_v1: false
+  name: LambdaPool [DAI, USDC, LAMBDA]
+  pool_address: '0xBe26e1858faFbF2de92fdd717AC098E34d9e526A'
+- coins:
+  - '0xfb98b335551a418cd0737375a2ea0ded62ea213b'
+  - '0x04068da6c83afcfa0e13ba15a6696662335d5b75'
+  - '0x049d68029688eabf473097a2fc38ef61633a3c7a'
+  is_underlying: false
+  is_v1: false
+  name: MAI3Pool [miMATIC, USDC, fUSDT]
+  pool_address: '0x84f21b7ceb64906320E2b62cF73Ff03dcFd137dC'
+- coins:
+  - '0x7a02e2678afedffaa1103459bb3063bad7d3e117'
+  - '0x27e611fd27b276acbd5ffd632e5eaebec9761e40'
+  is_underlying: true
+  is_v1: false
+  name: HUGS-2pool [HUGS, DAI+USDC]
+  pool_address: '0xDC371bB71dE3a8E50683E7eb596690Db9D0365Cc'
+  underlying_coins:
+  - '0x7a02e2678afedffaa1103459bb3063bad7d3e117'
+  - '0x8d11ec38a3eb5e956b052f67da8bdc9bef8abf3e'
+  - '0x04068da6c83afcfa0e13ba15a6696662335d5b75'
+- coins:
+  - '0xe3a486c1903ea794eed5d5fa0c9473c7d7708f40'
+  - '0x27e611fd27b276acbd5ffd632e5eaebec9761e40'
+  is_underlying: true
+  is_v1: false
+  name: cUSD2pool [cUSD, DAI+USDC]
+  pool_address: '0x9e85a45772F1078f3CaFf4B8c0FB43de4CA776E2'
+  underlying_coins:
+  - '0xe3a486c1903ea794eed5d5fa0c9473c7d7708f40'
+  - '0x8d11ec38a3eb5e956b052f67da8bdc9bef8abf3e'
+  - '0x04068da6c83afcfa0e13ba15a6696662335d5b75'
+- coins:
+  - '0xe3a486c1903ea794eed5d5fa0c9473c7d7708f40'
+  - '0x27e611fd27b276acbd5ffd632e5eaebec9761e40'
+  is_underlying: true
+  is_v1: false
+  name: Creditum [cUSD, DAI+USDC]
+  pool_address: '0x138CCfE5d99c139B9c4918AcE02a082cA67693bB'
+  underlying_coins:
+  - '0xe3a486c1903ea794eed5d5fa0c9473c7d7708f40'
+  - '0x8d11ec38a3eb5e956b052f67da8bdc9bef8abf3e'
+  - '0x04068da6c83afcfa0e13ba15a6696662335d5b75'
+- coins:
+  - '0xe3a486c1903ea794eed5d5fa0c9473c7d7708f40'
+  - '0x27e611fd27b276acbd5ffd632e5eaebec9761e40'
+  is_underlying: true
+  is_v1: false
+  name: Creditum [cUSD, DAI+USDC]
+  pool_address: '0x96059756980fF6ced0473898d26F0EF828a59820'
+  underlying_coins:
+  - '0xe3a486c1903ea794eed5d5fa0c9473c7d7708f40'
+  - '0x8d11ec38a3eb5e956b052f67da8bdc9bef8abf3e'
+  - '0x04068da6c83afcfa0e13ba15a6696662335d5b75'
+- coins:
+  - '0xfb98b335551a418cd0737375a2ea0ded62ea213b'
+  - '0x049d68029688eabf473097a2fc38ef61633a3c7a'
+  - '0x04068da6c83afcfa0e13ba15a6696662335d5b75'
+  is_underlying: false
+  is_v1: false
+  name: MAI3Pool [miMATIC, fUSDT, USDC]
+  pool_address: '0xA58F16498c288c357e28EE899873fF2b55D7C437'
+- coins:
+  - '0x74e23df9110aa9ea0b6ff2faee01e740ca1c642e'
+  - '0x27e611fd27b276acbd5ffd632e5eaebec9761e40'
+  is_underlying: true
+  is_v1: false
+  name: TOR-2pool [TOR, DAI+USDC]
+  pool_address: '0x24699312CB27C26Cfc669459D670559E5E44EE60'
+  underlying_coins:
+  - '0x74e23df9110aa9ea0b6ff2faee01e740ca1c642e'
+  - '0x8d11ec38a3eb5e956b052f67da8bdc9bef8abf3e'
+  - '0x04068da6c83afcfa0e13ba15a6696662335d5b75'
+- coins:
+  - '0xfef9d4894fcd9d931613ce921dd656365db7f2ee'
+  - '0x27e611fd27b276acbd5ffd632e5eaebec9761e40'
+  is_underlying: true
+  is_v1: false
+  name: Test-Pool [Test, DAI+USDC]
+  pool_address: '0xCc0F443c62229f8944379d87a853f1898e682214'
+  underlying_coins:
+  - '0xfef9d4894fcd9d931613ce921dd656365db7f2ee'
+  - '0x8d11ec38a3eb5e956b052f67da8bdc9bef8abf3e'
+  - '0x04068da6c83afcfa0e13ba15a6696662335d5b75'
+- coins:
+  - '0x04068da6c83afcfa0e13ba15a6696662335d5b75'
+  - '0x8d11ec38a3eb5e956b052f67da8bdc9bef8abf3e'
+  - '0x82f0b8b456c1a451378467398982d4834b6829c1'
+  - '0x9879abdea01a879644185341f7af7d8343556b7a'
+  is_underlying: false
+  is_v1: false
+  name: TUSD 4Pool [USDC, DAI, MIM, TUSD]
+  pool_address: '0xc687e9038d7aCECF4842fD06D1b8d2d8CEF8e790'
+- coins:
+  - '0x04068da6c83afcfa0e13ba15a6696662335d5b75'
+  - '0x8d11ec38a3eb5e956b052f67da8bdc9bef8abf3e'
+  - '0x9879abdea01a879644185341f7af7d8343556b7a'
+  - '0xdc301622e621166bd8e82f2ca0a26c13ad0be355'
+  is_underlying: false
+  is_v1: false
+  name: FraxTUSD 4Pool [USDC, DAI, TUSD, FRAX]
+  pool_address: '0x872686B519E06B216EEf150dC4914f35672b0954'
+- coins:
+  - '0x02a2b736f9150d36c0919f3acee8ba2a92fbbb40'
+  - '0x13082681e8ce9bd0af505912d306403592490fc7'
+  is_underlying: false
+  is_v1: false
+  name: agEUR/PAR [agEUR, PAR]
+  pool_address: '0x8cD8Ab34189ee11A60c17Fb8bd394e4702De11fb'
+- coins:
+  - '0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83'
+  - '0xb42bf10ab9df82f9a47b86dd76eee4ba848d0fa2'
+  is_underlying: false
+  is_v1: false
+  name: Ankr Fantom Reward Earning Bond [WFTM, aFTMb]
+  pool_address: '0xa1F70A0515BDc2954508125aDd49f72d01ee74c0'
+- coins:
+  - '0x1b6382dbdea11d97f24495c9a90b7c88469134a4'
+  - '0x04068da6c83afcfa0e13ba15a6696662335d5b75'
+  is_underlying: false
+  is_v1: false
+  name: axlUSDC/USDC [axlUSDC, USDC]
+  pool_address: '0x261036923F4aAF1322a3173921fCBdaE51352CAe'
+- coins:
+  - '0xbe54c622c0851cfb4a25b92bb84dee7c6fc16169'
+  - '0x27e611fd27b276acbd5ffd632e5eaebec9761e40'
+  is_underlying: true
+  is_v1: false
+  name: Lunaria USD [lnUSD, DAI+USDC]
+  pool_address: '0xA8B3C9f298877dD93F30E8Ed359956faE10E8797'
+  underlying_coins:
+  - '0xbe54c622c0851cfb4a25b92bb84dee7c6fc16169'
+  - '0x8d11ec38a3eb5e956b052f67da8bdc9bef8abf3e'
+  - '0x04068da6c83afcfa0e13ba15a6696662335d5b75'
+- coins:
+  - '0x425c60cc870a4b4ed7eef9f292b4ee515db8bdcb'
+  - '0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83'
+  is_underlying: false
+  is_v1: false
+  name: Lunaria Fantom [lnWFTM, WFTM]
+  pool_address: '0x78AE5704B6664a07f14c7d3a14a98e7d6DfC80aa'
+- coins:
+  - '0x04068da6c83afcfa0e13ba15a6696662335d5b75'
+  - '0x049d68029688eabf473097a2fc38ef61633a3c7a'
+  - '0x8d11ec38a3eb5e956b052f67da8bdc9bef8abf3e'
+  - '0x3af00b7338ebf5b90115df2f62fc80f973071dcf'
+  is_underlying: false
+  is_v1: false
+  name: TestAssent [USDC, fUSDT, DAI, APUSDTEST]
+  pool_address: '0x7e4143Ed63635E5f53f0272c307eac4A5238037a'
+- coins:
+  - '0xe1545b37feab077af9368ca61c19e79e30d60d98'
+  - '0x27e611fd27b276acbd5ffd632e5eaebec9761e40'
+  is_underlying: true
+  is_v1: false
+  name: TEST/3Pool [KUSD, DAI+USDC]
+  pool_address: '0xF0B05FD8846F419FC0D4C9680A684cA28b60a368'
+  underlying_coins:
+  - '0xe1545b37feab077af9368ca61c19e79e30d60d98'
+  - '0x8d11ec38a3eb5e956b052f67da8bdc9bef8abf3e'
+  - '0x04068da6c83afcfa0e13ba15a6696662335d5b75'
+- coins:
+  - '0x429b741798582ba0d799c9a6458ed98853e92b43'
+  - '0x04068da6c83afcfa0e13ba15a6696662335d5b75'
+  - '0x8d11ec38a3eb5e956b052f67da8bdc9bef8abf3e'
+  - '0x049d68029688eabf473097a2fc38ef61633a3c7a'
+  is_underlying: false
+  is_v1: false
+  name: Test-3LP3CRV-f-2 [KUSD, USDC, DAI, fUSDT]
+  pool_address: '0x6fD29C93897B756939c4F67c9C9ECe9284aFdE2F'
+- coins:
+  - '0x6a6e93625ac1a40a8ca25a80dbe275474c6ad1e2'
+  - '0x27e611fd27b276acbd5ffd632e5eaebec9761e40'
+  is_underlying: true
+  is_v1: false
+  name: 3agUSD [AgUSD, DAI+USDC]
+  pool_address: '0x47cce0A4396a7Ec2a247CA81a9bDd74A3B727b11'
+  underlying_coins:
+  - '0x6a6e93625ac1a40a8ca25a80dbe275474c6ad1e2'
+  - '0x8d11ec38a3eb5e956b052f67da8bdc9bef8abf3e'
+  - '0x04068da6c83afcfa0e13ba15a6696662335d5b75'

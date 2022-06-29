@@ -340,8 +340,7 @@ def pytest_terminal_summary(terminalreporter, exitstatus: int, config):
     terminalreporter.section("Custom Errors")
     if len(bad_token_pools) > 0:
         terminalreporter.write("---BAD TOKEN POOLS---\n")
-        terminalreporter.write(f"{[pool.pool_address for pool in bad_token_pools]}")
-        terminalreporter.ensure_newline()
+        terminalreporter.write(f"{[pool.pool_address for pool in bad_token_pools]}\n")
     if len(bad_pools) > 0:
         terminalreporter.write("---BAD POOLS---\n")
         terminalreporter.write(f"{[pool.pool_address for pool in bad_pools]}")
