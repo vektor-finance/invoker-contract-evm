@@ -6,12 +6,12 @@ interface ICryptoPool {
         uint256 j,
         uint256 dx,
         uint256 min_dy
-    ) external;
+    ) external payable;
 
     function exchange_underlying(
         uint256 i,
         uint256 j,
         uint256 dx,
         uint256 min_dy
-    ) external;
+    ) external payable;
 }

@@ -1,11 +1,10 @@
-import os
-from dataclasses import dataclass
-from typing import List, Optional
+import itertools
 
 import pytest
-import yaml
 from brownie import interface
 
+from data.chain import get_chain_id
+from data.curve import get_curve_pools
 from data.test_helpers import mint_tokens_for
 
 
@@ -14,28 +13,37 @@ def test_mint(token, alice):
     assert token.balanceOf(alice) == amount
 
 
-@dataclass
-class CurvePool:
-    name: str
-    pool_address: str
-    coins: List[str]
-    is_underlying: bool
-    underlying_coins: Optional[List[str]] = None
-    is_v1: Optional[bool] = False
+def pytest_generate_tests(metafunc):
+    chain_id = get_chain_id()
+    pools = get_curve_pools(chain_id)
+
+    if "coin" in metafunc.fixturenames:
+        coins = list(set(itertools.chain(*[pool.coins for pool in pools])))
+        metafunc.parametrize(
+            "coin",
+            coins,
+        )
+
+    if "underlying_coin" in metafunc.fixturenames:
+        underlying_coins = list(
+            set(itertools.chain(*[pool.underlying_coins or [] for pool in pools]))
+        )
+        metafunc.parametrize("underlying_coin", underlying_coins)
 
 
-with open(os.path.join("data", "curve_mainnet.yaml"), "r") as infile:
-    _input = yaml.safe_load(infile)
-    CURVE_POOLS = [CurvePool(**_data) for _data in _input]
+def test_mint_curve_tokens(coin, alice):
+    amount = mint_tokens_for(coin, alice)
+    if coin == "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee":
+        assert alice.balance() == amount
+    else:
+        assert interface.ERC20Detailed(coin).balanceOf(alice) / amount == pytest.approx(1, rel=1e-5)
 
 
-@pytest.mark.parametrize("pool", CURVE_POOLS, ids=[c.name for c in CURVE_POOLS])
-def test_mint_curve_tokens(pool, alice):
-    for coin in pool.coins:
-        amount = mint_tokens_for(coin, alice)
-        if coin == "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee":
-            assert alice.balance() == amount
-        else:
-            assert interface.ERC20Detailed(coin).balanceOf(alice) / amount == pytest.approx(
-                1, rel=1e-5
-            )
+def test_mint_underlying_curve_tokens(underlying_coin, alice):
+    amount = mint_tokens_for(underlying_coin, alice)
+    if underlying_coin == "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee":
+        assert alice.balance() == amount
+    else:
+        assert interface.ERC20Detailed(underlying_coin).balanceOf(alice) / amount == pytest.approx(
+            1, rel=1e-5
+        )

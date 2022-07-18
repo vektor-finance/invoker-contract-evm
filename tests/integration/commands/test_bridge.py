@@ -1,3 +1,7 @@
+import pytest
+
+
+@pytest.mark.skip(reason="Bridging disabled")
 def test_native_bridge(cbridge_anyswap, alice, any_native_token, invoker, bob):
     amount = 100
     router = any_native_token["router"]
@@ -15,6 +19,7 @@ def test_native_bridge(cbridge_anyswap, alice, any_native_token, invoker, bob):
     assert evt["toChainID"] == 4
 
 
+@pytest.mark.skip(reason="Bridging disabled")
 def test_erc20_bridge(
     cbridge_anyswap,
     cmove,
