@@ -5,6 +5,10 @@ REFERRAL_CODE: constant(uint16) = 0
 
 interface LendingPool:
     def deposit(asset: address, amount: uint256, onBehalfOf: address, referralCode: uint16): nonpayable
+    def withdraw(asset: address, amount: uint256, to: address): nonpayable
+
+interface aToken:
+    def UNDERLYING_ASSET_ADDRESS() -> address: nonpayable
 
 @internal
 def erc20_safe_approve(token: address, spender: address, amount: uint256):
@@ -33,6 +37,13 @@ def __init__(lending_pool: address):
 
 @external
 @payable
-def deposit(asset: address, amount: uint256, receiver: address):
+def supply(asset: address, amount: uint256, receiver: address):
     self._approve_token(asset, LENDING_POOL, amount)
     LendingPool(LENDING_POOL).deposit(asset, amount, receiver, REFERRAL_CODE)
+
+@external
+@payable
+def withdraw(a_asset: address, amount: uint256, receiver: address):
+    underlying_asset: address = aToken(a_asset).UNDERLYING_ASSET_ADDRESS()
+    self._approve_token(a_asset, LENDING_POOL, amount)
+    LendingPool(LENDING_POOL).withdraw(underlying_asset, amount, receiver)
