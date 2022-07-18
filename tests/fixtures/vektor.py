@@ -33,6 +33,18 @@ def cmove(deployer, invoker, CMove):
 
 
 @pytest.fixture(scope="module")
+def clend_aavev2(deployer, invoker, Contract, interface, CLendAaveV2):
+    AAVE_LENDING_POOL = Contract.from_abi(
+        "Aave Lending Pool",
+        "0x7d2768de32b0b80b7a3454c06bdac94a69ddc7a9",
+        interface.AaveLendingPool.abi,
+    )
+    contract = deployer.deploy(CLendAaveV2, AAVE_LENDING_POOL.address)
+    invoker.grantRole(APPROVED_COMMAND, contract, {"from": deployer})
+    yield contract
+
+
+@pytest.fixture(scope="module")
 def cbridge_anyswap(deployer, invoker, CBridgeAnyswap, connected_chain):
     wnative = get_wnative_address(connected_chain)
     anyswap_tokens = get_anyswap_tokens_for_chain(connected_chain)
