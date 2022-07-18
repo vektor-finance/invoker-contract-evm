@@ -37,7 +37,7 @@ def test_withdraw(clend_aavev2, invoker, alice, Contract, interface):
     assert token.balanceOf(alice) == 101e6
 
 
-def test_borrow(clend_aavev2, invoker, alice, Contract, interface):
+def test_borrow_and_repay(clend_aavev2, invoker, alice, Contract, interface):
     token = Contract("USDC")
     atoken = Contract.from_abi(
         "aUSDC", "0xBcca60bB61934080951369a648Fb03DF4F96263C", interface.AaveToken.abi
@@ -63,3 +63,8 @@ def test_borrow(clend_aavev2, invoker, alice, Contract, interface):
     calldata_borrow = clend_aavev2.borrow.encode_input(token, 1e6, InterestRateMode.VARIABLE)
     invoker.invoke([clend_aavev2], [calldata_borrow], {"from": alice})
     assert token.balanceOf(alice) == 1e6
+
+    calldata_repay = clend_aavev2.repay.encode_input(token, 1e6, InterestRateMode.VARIABLE)
+    token.transfer(invoker, 1e6, {"from": alice})
+    invoker.invoke([clend_aavev2], [calldata_repay], {"from": alice})
+    assert token.balanceOf(alice) == 0

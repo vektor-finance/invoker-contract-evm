@@ -7,6 +7,7 @@ interface LendingPool:
     def deposit(asset: address, amount: uint256, onBehalfOf: address, referralCode: uint16): nonpayable
     def withdraw(asset: address, amount: uint256, to: address): nonpayable
     def borrow(asset: address, amount: uint256, interestRateMode: uint256, referralCode: uint16, onBehalfOf: address): nonpayable
+    def repay(asset: address, amount: uint256, rateMode: uint256, onBehalfOf: address): nonpayable
 
 interface aToken:
     def UNDERLYING_ASSET_ADDRESS() -> address: nonpayable
@@ -54,3 +55,9 @@ def withdraw(a_asset: address, amount: uint256, receiver: address):
 def borrow(asset: address, amount: uint256, interest_rate_mode: uint256):
     # user must first approveDelegation on invoker
     LendingPool(LENDING_POOL).borrow(asset, amount, interest_rate_mode, REFERRAL_CODE, msg.sender)
+
+@external
+@payable
+def repay(asset: address, amount: uint256, interest_rate_mode: uint256): 
+    self._approve_token(asset, LENDING_POOL, amount)
+    LendingPool(LENDING_POOL).repay(asset, amount, interest_rate_mode, msg.sender)
