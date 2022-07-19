@@ -108,8 +108,7 @@ def test_borrow_and_repay(
         else:
             raise
 
-    # assert_approx(token.balanceOf(alice), amount / 10)
-    assert amount / 10 - 1 <= token.balanceOf(alice) <= amount / 10 + 1
+    assert_approx(token.balanceOf(alice), amount / 10)
 
     calldata_repay = clend_aavev2.repay.encode_input(token, amount / 10, mode)
     token.transfer(invoker, amount / 10, {"from": alice})
