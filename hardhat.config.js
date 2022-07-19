@@ -3,6 +3,9 @@
 module.exports = {
   networks: {
     hardhat: {
+      accounts: {
+        mnemonic: "vektor vektor vektor vektor vektor"
+      },
       chainId: 1337,
       hardfork: "london",
       // base fee of 0 allows use of 0 gas price when testing
