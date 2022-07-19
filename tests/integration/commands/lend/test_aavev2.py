@@ -1,5 +1,7 @@
 from enum import IntEnum
 
+import pytest
+
 from data.test_helpers import mint_tokens_for
 
 
@@ -8,13 +10,33 @@ class InterestRateMode(IntEnum):
     VARIABLE = 2
 
 
-def test_supply(clend_aavev2, invoker, alice, Contract, interface):
-    token = Contract("USDC")
-    atoken = Contract.from_abi(
-        "aUSDC", "0xBcca60bB61934080951369a648Fb03DF4F96263C", interface.AaveToken.abi
+@pytest.fixture
+def data_provider(Contract, interface):
+    yield Contract.from_abi(
+        "Aave Data Provider",
+        "0x057835Ad21a177dbdd3090bB1CAE03EaCF78Fc6d",
+        interface.AaveDataProvider.abi,
     )
 
-    mint_tokens_for(token, invoker, 100e6)
+
+@pytest.fixture
+def get_aave_tokens(data_provider, interface):
+    def _get_aave_token(token):
+        (a_token, stable_debt, variable_debt) = data_provider.getReserveTokensAddresses(token)
+        return (
+            interface.AaveToken(a_token),
+            interface.AaveDebtToken(stable_debt),
+            interface.AaveDebtToken(variable_debt),
+        )
+
+    return _get_aave_token
+
+
+def test_supply(clend_aavev2, invoker, get_aave_tokens, alice, Contract, interface):
+    token = Contract("USDC")
+    (atoken, _, _) = get_aave_tokens(token)
+
+    mint_tokens_for(token, alice, 100e6)
 
     calldata_supply = clend_aavev2.supply.encode_input(token, 100e6, alice)
 
@@ -22,11 +44,9 @@ def test_supply(clend_aavev2, invoker, alice, Contract, interface):
     assert atoken.balanceOf(alice) == 100e6
 
 
-def test_withdraw(clend_aavev2, invoker, alice, Contract, interface):
+def test_withdraw(clend_aavev2, invoker, get_aave_tokens, alice, Contract, interface):
     token = Contract("USDC")
-    atoken = Contract.from_abi(
-        "aUSDC", "0xBcca60bB61934080951369a648Fb03DF4F96263C", interface.AaveToken.abi
-    )
+    (atoken, _, _) = get_aave_tokens(token)
 
     mint_tokens_for(atoken, invoker, 100e6)
 
@@ -34,23 +54,12 @@ def test_withdraw(clend_aavev2, invoker, alice, Contract, interface):
     invoker.invoke([clend_aavev2], [calldata_withdraw], {"from": alice})
 
     # this doesn't work, why?
-    assert token.balanceOf(alice) == 101e6
+    assert token.balanceOf(alice) == 100e6
 
 
-def test_borrow_and_repay(clend_aavev2, invoker, alice, Contract, interface):
+def test_borrow_and_repay(clend_aavev2, invoker, get_aave_tokens, alice, Contract, interface):
     token = Contract("USDC")
-    atoken = Contract.from_abi(
-        "aUSDC", "0xBcca60bB61934080951369a648Fb03DF4F96263C", interface.AaveToken.abi
-    )
-    data_provider = Contract.from_abi(
-        "Aave Data Provider",
-        "0x057835Ad21a177dbdd3090bB1CAE03EaCF78Fc6d",
-        interface.AaveDataProvider.abi,
-    )
-    (_, _, variable_debt) = data_provider.getReserveTokensAddresses(token)
-    variable_debt = Contract.from_abi(
-        "Aave variable debt bearing USDC", variable_debt, interface.AaveDebtToken.abi
-    )
+    (atoken, _, variable_debt) = get_aave_tokens(token)
 
     mint_tokens_for(token, invoker, 100e6)
 

@@ -35,17 +35,35 @@ def _approve_token(token: address, spender: address, amount: uint256):
 
 @external
 def __init__(lending_pool: address):
+    """
+    @dev design decision here whether we deploy one version of this contract to support all aave v2 forks vs only aave v2.
+    If we choose to support all forks, `lending_pool` should instead be passed to each of the below functions.
+    """
     LENDING_POOL = lending_pool
 
 @external
 @payable
 def supply(asset: address, amount: uint256, receiver: address):
+    """
+    @notice supplies an asset to aave v2, receiving an aToken receipt
+    @dev must first transfer asset to invoker
+    @param asset the underlying asset
+    @param amount the amount of asset to supply
+    @param receiver the user to receive the aToken
+    """
     self._approve_token(asset, LENDING_POOL, amount)
     LendingPool(LENDING_POOL).deposit(asset, amount, receiver, REFERRAL_CODE)
 
 @external
 @payable
 def withdraw(a_asset: address, amount: uint256, receiver: address):
+    """
+    @notice withdraws supplied liquidity from aave v2
+    @dev must first transfer aToken to invoker. user will receive 1:1
+    @param a_asset the aToken
+    @param amount the amount of a_token to withdraw. Can use type(uint).max to withdraw entire balance
+    @param receiver the user to receive the underlying asset
+    """
     underlying_asset: address = aToken(a_asset).UNDERLYING_ASSET_ADDRESS()
     self._approve_token(a_asset, LENDING_POOL, amount)
     LendingPool(LENDING_POOL).withdraw(underlying_asset, amount, receiver)
@@ -53,11 +71,26 @@ def withdraw(a_asset: address, amount: uint256, receiver: address):
 @external
 @payable
 def borrow(asset: address, amount: uint256, interest_rate_mode: uint256):
-    # user must first approveDelegation on invoker
+    """
+    @notice borrow an asset from aave v2
+    @dev user must first call approveDelegation() to allow invoker to generate debt
+    @param asset the asset to borrow
+    @param amount the amount of asset
+    @param interest_rate_mode the desired interest rate mode. 1 = stable, 2 = variable
+    """
     LendingPool(LENDING_POOL).borrow(asset, amount, interest_rate_mode, REFERRAL_CODE, msg.sender)
 
 @external
 @payable
 def repay(asset: address, amount: uint256, interest_rate_mode: uint256): 
+    """
+    @notice repay a loan taken on aave v2
+    @dev user must first transfer asset to invoker
+    @param asset the underlying asset
+    @param amount the amount of asset to repay
+    @param interest_rate_mode the desired interest rate mode. 1 = stable, 2 = variable
+    """
     self._approve_token(asset, LENDING_POOL, amount)
     LendingPool(LENDING_POOL).repay(asset, amount, interest_rate_mode, msg.sender)
+
+# todo: makes sense to have a repayAll function
