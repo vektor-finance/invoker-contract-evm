@@ -7,7 +7,7 @@ from dataclasses import dataclass
 
 
 @dataclass
-class AaveToken:
+class AaveAssetInfo:
     aTokenAddress: str
     aTokenSymbol: str
     stableDebtTokenAddress: str
@@ -21,7 +21,7 @@ def get_aave_tokens(chain_id: str):
     if chain_id == "1":
         with open(os.path.join("data/aave", "mainnet.json"), "r") as infile:
             input = json.load(infile)
-        tokens = [AaveToken(**data) for data in input["proto"]]
+        tokens = [AaveAssetInfo(**data) for data in input["proto"]]
         # KNC is disabled on protocol
         tokens[:] = [t for t in tokens if t.symbol != "KNC"]
         return tokens

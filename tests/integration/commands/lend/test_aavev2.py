@@ -3,7 +3,7 @@ from enum import IntEnum
 import pytest
 from brownie.exceptions import VirtualMachineError
 
-from data.aave.tokens import AaveToken, get_aave_tokens
+from data.aave.tokens import AaveAssetInfo, get_aave_tokens
 from data.chain import get_chain_id
 from data.test_helpers import mint_tokens_for
 
@@ -43,7 +43,7 @@ def pytest_generate_tests(metafunc):
         metafunc.parametrize("aave_token", aave_tokens, ids=[a.symbol for a in aave_tokens])
 
 
-def test_supply(clend_aavev2, aave_token: AaveToken, invoker, alice, interface):
+def test_supply(clend_aavev2, aave_token: AaveAssetInfo, invoker, alice, interface):
     token = aave_token.address
     atoken = interface.AaveToken(aave_token.aTokenAddress)
     amount = 10**aave_token.decimals
@@ -56,7 +56,7 @@ def test_supply(clend_aavev2, aave_token: AaveToken, invoker, alice, interface):
     assert_approx(atoken.balanceOf(alice), amount)
 
 
-def test_withdraw(clend_aavev2, invoker, aave_token: AaveToken, alice, interface):
+def test_withdraw(clend_aavev2, invoker, aave_token: AaveAssetInfo, alice, interface):
     token = interface.ERC20Detailed(aave_token.address)
     atoken = aave_token.aTokenAddress
     amount = 10**aave_token.decimals
@@ -71,7 +71,7 @@ def test_withdraw(clend_aavev2, invoker, aave_token: AaveToken, alice, interface
 
 @pytest.mark.parametrize("mode", InterestRateMode.list(), ids=InterestRateMode.keys())
 def test_borrow_and_repay(
-    clend_aavev2, cmove, invoker, aave_token: AaveToken, alice, mode, interface
+    clend_aavev2, cmove, invoker, aave_token: AaveAssetInfo, alice, mode, interface
 ):
     if aave_token.symbol in ["AAVE", "xSUSHI"]:
         return
@@ -104,9 +104,10 @@ def test_borrow_and_repay(
         invoker.invoke([clend_aavev2, cmove], [calldata_borrow, calldata_move_out], {"from": alice})
     except VirtualMachineError as e:
         if e.revert_msg == "12":
+            # "Stable borrowing not enabled"
             return
         else:
-            raise
+            raise e from None
 
     assert_approx(token.balanceOf(alice), amount / 10)
 
