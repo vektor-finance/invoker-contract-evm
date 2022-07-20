@@ -12,6 +12,7 @@ interface LendingPool:
 interface aToken:
     def UNDERLYING_ASSET_ADDRESS() -> address: nonpayable
 
+# can use default_return_value in vyper 0.3.4
 @internal
 def erc20_safe_approve(token: address, spender: address, amount: uint256):
     response: Bytes[32] = raw_call(
@@ -29,7 +30,7 @@ def erc20_safe_approve(token: address, spender: address, amount: uint256):
 @internal
 def _approve_token(token: address, spender: address, amount: uint256):
     if ERC20(token).allowance(self, spender) > 0:
-       self. erc20_safe_approve(token, spender, 0)
+       self.erc20_safe_approve(token, spender, 0)
     self.erc20_safe_approve(token, spender, amount)
 
 
@@ -92,5 +93,3 @@ def repay(asset: address, amount: uint256, interest_rate_mode: uint256):
     """
     self._approve_token(asset, LENDING_POOL, amount)
     LendingPool(LENDING_POOL).repay(asset, amount, interest_rate_mode, msg.sender)
-
-# todo: makes sense to have a repayAll function
