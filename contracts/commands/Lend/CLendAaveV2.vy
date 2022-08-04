@@ -66,7 +66,7 @@ def withdraw(a_asset: address, amount: uint256, receiver: address):
     @param receiver the user to receive the underlying asset
     """
     underlying_asset: address = aToken(a_asset).UNDERLYING_ASSET_ADDRESS()
-    self._approve_token(a_asset, LENDING_POOL, amount)
+    # self._approve_token(a_asset, LENDING_POOL, amount)
     LendingPool(LENDING_POOL).withdraw(underlying_asset, amount, receiver)
 
 @external

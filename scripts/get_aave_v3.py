@@ -14,8 +14,8 @@ def main():
     for (symbol, token_address) in reserve_tokens:
         (
             a_token_address,
-            variable_debt_address,
             stable_debt_address,
+            variable_debt_address,
         ) = ADP.getReserveTokensAddresses(token_address)
         decimals = interface.ERC20Detailed(token_address).decimals()
 

@@ -22,8 +22,8 @@ def main():
             _,
             _,
             a_token_address,
-            variable_debt_address,
             stable_debt_address,
+            variable_debt_address,
             _,
             _,
         ) = LENDING_POOL.getReserveData(token_address)

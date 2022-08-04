@@ -56,64 +56,65 @@ def test_supply(clend_aave_v3, aave_token: AaveAssetInfo, invoker, alice, interf
     assert_approx(atoken.balanceOf(alice), amount)
 
 
-@pytest.mark.skip
-def test_withdraw(clend_aavev2, invoker, aave_token: AaveAssetInfo, alice, interface):
+def test_withdraw(clend_aave_v3, invoker, aave_token: AaveAssetInfo, alice, interface):
     token = interface.ERC20Detailed(aave_token.address)
     atoken = aave_token.aTokenAddress
     amount = 10**aave_token.decimals
 
     mint_tokens_for(atoken, invoker, amount)
 
-    calldata_withdraw = clend_aavev2.withdraw.encode_input(atoken, amount, alice)
-    invoker.invoke([clend_aavev2], [calldata_withdraw], {"from": alice})
+    calldata_withdraw = clend_aave_v3.withdraw.encode_input(atoken, amount, alice)
+    invoker.invoke([clend_aave_v3], [calldata_withdraw], {"from": alice})
 
     assert_approx(token.balanceOf(alice), amount)
 
 
-@pytest.mark.skip
 @pytest.mark.parametrize("mode", InterestRateMode.list(), ids=InterestRateMode.keys())
 def test_borrow_and_repay(
-    clend_aavev2, cmove, invoker, aave_token: AaveAssetInfo, alice, mode, interface
+    clend_aave_v3, cmove, invoker, aave_token: AaveAssetInfo, alice, mode, interface
 ):
     if aave_token.symbol in ["AAVE", "xSUSHI"]:
         return
 
     token = interface.ERC20Detailed(aave_token.address)
-    vdebt = interface.AaveDebtToken(aave_token.variableDebtTokenAddress)
-    sdebt = interface.AaveDebtToken(aave_token.stableDebtTokenAddress)
+    vdebt = interface.AaveV2DebtToken(aave_token.variableDebtTokenAddress)
+    sdebt = interface.AaveV2DebtToken(aave_token.stableDebtTokenAddress)
     amount = 10**aave_token.decimals
 
+    # polygon
+    usdc_address = "0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174"
+    wbtc_address = "0x1BFD67037B42Cf73acF2047067bd4F2C47D9BfD6"
+
     # use USDC for collateral, except to borrow usdc - then use wbtc
-    collateral = (
-        "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599"
-        if aave_token.symbol == "USDC"
-        else "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"
-    )
+    collateral = wbtc_address if aave_token.symbol == "USDC" else usdc_address
     mint_tokens_for(collateral, invoker, 1e12)
 
-    calldata_supply = clend_aavev2.supply.encode_input(collateral, 1e12, alice)
+    calldata_supply = clend_aave_v3.supply.encode_input(collateral, 1e12, alice)
 
-    invoker.invoke([clend_aavev2], [calldata_supply], {"from": alice})
+    invoker.invoke([clend_aave_v3], [calldata_supply], {"from": alice})
 
     if mode == InterestRateMode.STABLE:
         sdebt.approveDelegation(invoker, 2**256 - 1, {"from": alice})
     elif mode == InterestRateMode.VARIABLE:
         vdebt.approveDelegation(invoker, 2**256 - 1, {"from": alice})
 
-    calldata_borrow = clend_aavev2.borrow.encode_input(token, amount / 10, mode)
+    calldata_borrow = clend_aave_v3.borrow.encode_input(token, amount / 10, mode)
     calldata_move_out = cmove.moveAllERC20Out.encode_input(token, alice)
     try:
-        invoker.invoke([clend_aavev2, cmove], [calldata_borrow, calldata_move_out], {"from": alice})
+        invoker.invoke(
+            [clend_aave_v3, cmove], [calldata_borrow, calldata_move_out], {"from": alice}
+        )
     except VirtualMachineError as e:
-        if e.revert_msg == "12":
-            # "Stable borrowing not enabled"
+        if e.revert_msg in ["30", "31"]:
+            # 30: "Borrowing not enabled"
+            # 31: "Stable borrowing not enabled"
             return
         else:
             raise e from None
 
     assert_approx(token.balanceOf(alice), amount / 10)
 
-    calldata_repay = clend_aavev2.repay.encode_input(token, amount / 10, mode)
+    calldata_repay = clend_aave_v3.repay.encode_input(token, amount / 10, mode)
     token.transfer(invoker, amount / 10, {"from": alice})
-    invoker.invoke([clend_aavev2], [calldata_repay], {"from": alice})
+    invoker.invoke([clend_aave_v3], [calldata_repay], {"from": alice})
     assert_approx(token.balanceOf(alice), 0)

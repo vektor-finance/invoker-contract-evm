@@ -36,7 +36,7 @@ def cmove(deployer, invoker, CMove):
 def clend_aave_v2(deployer, invoker, Contract, interface, CLendAaveV2):
     AAVE_LENDING_POOL = Contract.from_abi(
         "Aave Lending Pool",
-        "0x7d2768de32b0b80b7a3454c06bdac94a69ddc7a9",
+        "0x8dff5e27ea6b7ac08ebfdf9eb090f32ee9a30fcf",
         interface.AaveV2LendingPool.abi,
     )
     contract = deployer.deploy(CLendAaveV2, AAVE_LENDING_POOL.address)

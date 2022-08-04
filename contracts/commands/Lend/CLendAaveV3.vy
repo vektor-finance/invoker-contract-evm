@@ -5,6 +5,12 @@ REFERRAL_CODE: constant(uint16) = 0
 
 interface Pool:
     def supply(asset: address, amount: uint256, onBehalfOf: address, referralCode: uint16): nonpayable
+    def withdraw(asset: address, amount: uint256, to: address): nonpayable
+    def borrow(asset: address, amount: uint256, interestRateMode: uint256, referralCode: uint16, onBehalfOf: address): nonpayable
+    def repay(asset: address, amount: uint256, rateMode: uint256, onBehalfOf: address): nonpayable
+
+interface aToken:
+    def UNDERLYING_ASSET_ADDRESS() -> address: nonpayable
 
 # can use default_return_value in vyper 0.3.4
 @internal
@@ -36,3 +42,21 @@ def __init__(lending_pool: address):
 def supply(asset: address, amount: uint256, receiver: address):
     self._approve_token(asset, LENDING_POOL, amount)
     Pool(LENDING_POOL).supply(asset, amount, receiver, REFERRAL_CODE)
+
+@external
+@payable
+def withdraw(a_asset: address, amount: uint256, receiver: address):
+    underlying_asset: address = aToken(a_asset).UNDERLYING_ASSET_ADDRESS()
+    self._approve_token(a_asset, LENDING_POOL, amount)
+    Pool(LENDING_POOL).withdraw(underlying_asset, amount, receiver)
+
+@external
+@payable
+def borrow(asset: address, amount: uint256, interest_rate_mode: uint256):
+    Pool(LENDING_POOL).borrow(asset, amount, interest_rate_mode, REFERRAL_CODE, msg.sender)
+
+@external
+@payable
+def repay(asset: address, amount: uint256, interest_rate_mode: uint256): 
+    self._approve_token(asset, LENDING_POOL, amount)
+    Pool(LENDING_POOL).repay(asset, amount, interest_rate_mode, msg.sender)
