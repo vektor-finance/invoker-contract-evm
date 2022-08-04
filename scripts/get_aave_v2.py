@@ -8,8 +8,8 @@ def main():
     data = {}
     data["proto"] = []
 
-    LENDING_POOL = interface.AaveV2LendingPool("0x8dff5e27ea6b7ac08ebfdf9eb090f32ee9a30fcf")
-    ADP = interface.AaveV2DataProvider("0x7551b5D2763519d4e37e8B81929D336De671d46d")
+    LENDING_POOL = interface.AaveV2LendingPool("0x7d2768de32b0b80b7a3454c06bdac94a69ddc7a9")
+    ADP = interface.AaveV2DataProvider("0x057835Ad21a177dbdd3090bB1CAE03EaCF78Fc6d")
     reserve_tokens = ADP.getAllReservesTokens()
 
     for (symbol, token_address) in reserve_tokens:

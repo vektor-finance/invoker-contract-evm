@@ -33,26 +33,33 @@ def cmove(deployer, invoker, CMove):
 
 
 @pytest.fixture(scope="module")
-def clend_aave_v2(deployer, invoker, Contract, interface, CLendAaveV2):
+def clend_aave_v2(deployer, invoker, Contract, interface, CLendAave, connected_chain):
+    chain_id = connected_chain["chain_id"]
+    lending_pools = {
+        1: "0x7d2768de32b0b80b7a3454c06bdac94a69ddc7a9",
+        137: "0x8dff5e27ea6b7ac08ebfdf9eb090f32ee9a30fcf",
+    }
+
     AAVE_LENDING_POOL = Contract.from_abi(
         "Aave Lending Pool",
-        "0x8dff5e27ea6b7ac08ebfdf9eb090f32ee9a30fcf",
+        lending_pools[chain_id],
         interface.AaveV2LendingPool.abi,
     )
-    contract = deployer.deploy(CLendAaveV2, AAVE_LENDING_POOL.address)
+    contract = deployer.deploy(CLendAave, AAVE_LENDING_POOL.address)
     invoker.grantRole(APPROVED_COMMAND, contract, {"from": deployer})
     yield contract
 
 
-# polygon only
 @pytest.fixture(scope="module")
-def clend_aave_v3(deployer, invoker, Contract, interface, CLendAaveV3):
+def clend_aave_v3(deployer, invoker, Contract, interface, CLendAave, connected_chain):
+    chain_id = connected_chain["chain_id"]
+    lending_pools = {137: "0x794a61358D6845594F94dc1DB02A252b5b4814aD"}
     AAVE_LENDING_POOL = Contract.from_abi(
         "Aave V3 Pool",
-        "0x794a61358D6845594F94dc1DB02A252b5b4814aD",
+        lending_pools[chain_id],
         interface.AaveV3Pool.abi,
     )
-    contract = deployer.deploy(CLendAaveV3, AAVE_LENDING_POOL.address)
+    contract = deployer.deploy(CLendAave, AAVE_LENDING_POOL.address)
     invoker.grantRole(APPROVED_COMMAND, contract, {"from": deployer})
     yield contract
 

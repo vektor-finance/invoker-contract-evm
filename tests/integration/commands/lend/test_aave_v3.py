@@ -4,7 +4,7 @@ import pytest
 from brownie.exceptions import VirtualMachineError
 
 from data.aave.tokens import AaveAssetInfo, get_aave_tokens
-from data.chain import get_chain_id
+from data.chain import get_chain_id, get_chain_token
 from data.test_helpers import mint_tokens_for
 
 
@@ -81,12 +81,12 @@ def test_borrow_and_repay(
     sdebt = interface.AaveV2DebtToken(aave_token.stableDebtTokenAddress)
     amount = 10**aave_token.decimals
 
-    # polygon
-    usdc_address = "0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174"
-    wbtc_address = "0x1BFD67037B42Cf73acF2047067bd4F2C47D9BfD6"
-
     # use USDC for collateral, except to borrow usdc - then use wbtc
-    collateral = wbtc_address if aave_token.symbol == "USDC" else usdc_address
+    collateral = (
+        get_chain_token("wbtc")["address"]
+        if aave_token.symbol == "USDC"
+        else get_chain_token("usdc")["address"]
+    )
     mint_tokens_for(collateral, invoker, 1e12)
 
     calldata_supply = clend_aave_v3.supply.encode_input(collateral, 1e12, alice)
