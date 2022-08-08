@@ -4,25 +4,27 @@ Please first attempt a run locally before deploying to test/live network.
 
 # Initial setup
 
-You must first set up two EOAs `registry_deployer` and `trusted_deployer`.
+You must first set up two EOAs `vektor_registry_deployer` and `vektor_trusted_deployer`.
 
-The `registry_deployer` is the EOA which deploys the deployer contract. It is imperative that this account only performs one transaction, which is the transaction to deploy the deployer contract.
+The `vektor_registry_deployer` is the EOA which deploys the deployer contract. It is imperative that this account only performs one transaction, which is the transaction to deploy the deployer contract.
 
-The `trusted_deployer` can be any account/address. In the long-term, we can/will transition this into a multi-sig. For now, we will use an EOA.
+The `vektor_trusted_deployer` can be any account/address. In the long-term, we can/will transition this into a multi-sig. For now, we will use an EOA.
 
 To create these, I would recommend typing:
-`brownie accounts generate registry_deployer` and `brownie accounts generate trusted_deployer` which will generate the accounts locally in brownie, and password protect them.
+`brownie accounts generate vektor_registry_deployer` and `brownie accounts generate vektor_trusted_deployer` which will generate the accounts locally in brownie, and password protect them.
 
 You will receive the following output
+
 ```
-SUCCESS: A new account '0xF2A749D98F5bF0A388978bd9397157c4f2B9D3ac' has been generated with the id 'registry_deployer'
-SUCCESS: A new account '0xE983940c432D9e0a19B76496960583A83F112f39' has been generated with the id 'trusted_deployer'
+SUCCESS: A new account '0xF2A749D98F5bF0A388978bd9397157c4f2B9D3ac' has been generated with the id 'vektor_registry_deployer'
+SUCCESS: A new account '0xE983940c432D9e0a19B76496960583A83F112f39' has been generated with the id 'vektor_trusted_deployer'
 ```
 
 You should then update the following lines in `scripts/deployment/__init__.py` to the new addresses:
+
 ```
-REGISTRY_DEPLOYER = "0xF2A749D98F5bF0A388978bd9397157c4f2B9D3ac"  # hardcoded
-TRUSTED_DEPLOYER = "0xE983940c432D9e0a19B76496960583A83F112f39"  # hardcoded
+REGISTRY_DEPLOYER = "0xFB47e88C3FFF913D48F8EB08DdD96f86338E2568"  # hardcoded
+TRUSTED_DEPLOYER = "0x3302dBdD355fDfA7A439598885E189a4E9ad6B9b"  # hardcoded
 ```
 
 ## Deploying locally
@@ -31,7 +33,7 @@ Start hardhat by running `npx hardhat node`
 
 In a new terminal window, type `brownie run deployment/registry --network hardhat`
 
-This will prompt you for the password for the `registry_deployer`. After entering the password, it will deploy the CREATE2 deployer.
+This will prompt you for the password for the `vektor_registry_deployer`. After entering the password, it will deploy the CREATE2 deployer.
 
 After deploying the CREATE2 Deployer, you can then deploy the rest of the contracts by typing `brownie run deployment/deploy --network hardhat`.
 
@@ -53,7 +55,7 @@ To calculate the amount needed, take these values and insert them into this [cal
 Example: 500,000 gas at 30 gwei will cost `0.015 eth`.
 An 5,000,000 gas at 30 gwei will cost `0.15 eth`.
 
-Therefore, transfer `0.015` ETH to the `registry_deployer`.
+Therefore, transfer `0.015` ETH to the `vektor_registry_deployer`.
 Also transfer `0.15` ETH to the `trusted_deployer`.
 
 The same calculator can be used for other blockchains by taking the current gas price (eg 50 gwei on polygon) and replace the currency with the native currency.
