@@ -47,9 +47,11 @@ def pytest_generate_tests(metafunc):
         pool = is_venue_on_chain("aave_v2", chain)
         if pool:
             metafunc.parametrize("pool", [pool])
+        else:
+            pytest.skip(f"Aave V2 not on network {chain_id}")
 
 
-def test_supply(clend_aave_v2, pool, aave_token: AaveAssetInfo, invoker, alice, interface):
+def test_supply(clend_aave, pool, aave_token: AaveAssetInfo, invoker, alice, interface):
     if aave_token.symbol in ["UST"]:
         return
     token = aave_token.address
@@ -58,13 +60,13 @@ def test_supply(clend_aave_v2, pool, aave_token: AaveAssetInfo, invoker, alice, 
 
     mint_tokens_for(token, invoker, amount)
 
-    calldata_supply = clend_aave_v2.supply.encode_input(pool, token, amount, alice)
+    calldata_supply = clend_aave.supply.encode_input(pool, token, amount, alice)
 
-    invoker.invoke([clend_aave_v2], [calldata_supply], {"from": alice})
+    invoker.invoke([clend_aave], [calldata_supply], {"from": alice})
     assert_approx(atoken.balanceOf(alice), amount)
 
 
-def test_withdraw(clend_aave_v2, pool, invoker, aave_token: AaveAssetInfo, alice, interface):
+def test_withdraw(clend_aave, pool, invoker, aave_token: AaveAssetInfo, alice, interface):
     if aave_token.symbol in ["UST"]:
         return
     token = interface.ERC20Detailed(aave_token.address)
@@ -73,15 +75,15 @@ def test_withdraw(clend_aave_v2, pool, invoker, aave_token: AaveAssetInfo, alice
 
     mint_tokens_for(atoken, invoker, amount + 1)
 
-    calldata_withdraw = clend_aave_v2.withdraw.encode_input(pool, atoken, amount, alice)
-    invoker.invoke([clend_aave_v2], [calldata_withdraw], {"from": alice})
+    calldata_withdraw = clend_aave.withdraw.encode_input(pool, atoken, amount, alice)
+    invoker.invoke([clend_aave], [calldata_withdraw], {"from": alice})
 
     assert_approx(token.balanceOf(alice), amount)
 
 
 @pytest.mark.parametrize("mode", InterestRateMode.list(), ids=InterestRateMode.keys())
 def test_borrow_and_repay(
-    clend_aave_v2, pool, cmove, invoker, aave_token: AaveAssetInfo, alice, mode, interface
+    clend_aave, pool, cmove, invoker, aave_token: AaveAssetInfo, alice, mode, interface
 ):
     if aave_token.symbol in ["AAVE", "xSUSHI", "UST"]:
         return
@@ -99,21 +101,19 @@ def test_borrow_and_repay(
     )
     mint_tokens_for(collateral, invoker, 1e12)
 
-    calldata_supply = clend_aave_v2.supply.encode_input(pool, collateral, 1e12, alice)
+    calldata_supply = clend_aave.supply.encode_input(pool, collateral, 1e12, alice)
 
-    invoker.invoke([clend_aave_v2], [calldata_supply], {"from": alice})
+    invoker.invoke([clend_aave], [calldata_supply], {"from": alice})
 
     if mode == InterestRateMode.STABLE:
         sdebt.approveDelegation(invoker, 2**256 - 1, {"from": alice})
     elif mode == InterestRateMode.VARIABLE:
         vdebt.approveDelegation(invoker, 2**256 - 1, {"from": alice})
 
-    calldata_borrow = clend_aave_v2.borrow.encode_input(pool, token, amount / 10, mode)
+    calldata_borrow = clend_aave.borrow.encode_input(pool, token, amount / 10, mode)
     calldata_move_out = cmove.moveAllERC20Out.encode_input(token, alice)
     try:
-        invoker.invoke(
-            [clend_aave_v2, cmove], [calldata_borrow, calldata_move_out], {"from": alice}
-        )
+        invoker.invoke([clend_aave, cmove], [calldata_borrow, calldata_move_out], {"from": alice})
     except VirtualMachineError as e:
         if e.revert_msg in ["7", "12"]:
             # 7: "Borrowing is not enabled"
@@ -124,7 +124,7 @@ def test_borrow_and_repay(
 
     assert_approx(token.balanceOf(alice), amount / 10)
 
-    calldata_repay = clend_aave_v2.repay.encode_input(pool, token, amount / 10, mode)
+    calldata_repay = clend_aave.repay.encode_input(pool, token, amount / 10, mode)
     token.transfer(invoker, amount / 10, {"from": alice})
-    invoker.invoke([clend_aave_v2], [calldata_repay], {"from": alice})
+    invoker.invoke([clend_aave], [calldata_repay], {"from": alice})
     assert_approx(token.balanceOf(alice), 0)

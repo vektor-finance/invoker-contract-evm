@@ -209,7 +209,7 @@ polygon:
     - venue: aave_v2
       interfaces: [aave_v2_lending_pool]
       address: "0x8dff5e27ea6b7ac08ebfdf9eb090f32ee9a30fcf"
-    - venue: aave_v2
+    - venue: aave_v3
       interfaces: [aave_v3_lending_pool]
       address: "0x794a61358D6845594F94dc1DB02A252b5b4814aD"
 
