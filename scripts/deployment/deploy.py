@@ -25,7 +25,7 @@ def deploy_and_approve_contract_if_not_deployed(
 
     if registry.is_deployed(contract):
         print(f"{contract._name} already deployed. Skipping")
-        return registry.get_deployed_contract(contract)
+        return registry.get_deployed_contract(contract), 0
 
     deployed_contract, gas_used = registry.deploy(contract)
 
