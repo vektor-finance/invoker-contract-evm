@@ -146,6 +146,25 @@ rinkeby:
       interfaces: [uniswap_router_v2_02]
       address: "0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D"
 
+goerli:
+  id: goerli
+  name: Goerli Testnet
+  chain_id: 5
+  eip1559: true
+  network:
+    prod: ethereum-goerli-test
+    fork: ethereum-goerli-hardhat-fork
+  assets:
+    - name: Ethereum
+      symbol: ETH
+      decimals: 18
+      address: ~
+    - name: Wrapped Ethereum
+      symbol: WETH
+      decimals: 18
+      address: "0xb4fbf271143f4fbf7b91a5ded31805e42b2208d6"
+      wrapped_native: true
+
 polygon:
   id: polygon
   name: Polygon Mainnet
