@@ -35,11 +35,11 @@ def position(invoker, clp_uniswapv3, alice, cmove, chain):
     usdc = interface.ERC20Detailed("0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48")
     weth = interface.ERC20Detailed("0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2")
 
-    mint_tokens_for(usdc, alice)
-    mint_tokens_for(weth, alice)
-
     usdc_amount = 100e6
     weth_amount = 0.05e18
+
+    mint_tokens_for(usdc, alice, usdc_amount)
+    mint_tokens_for(weth, alice, weth_amount)
 
     usdc.approve(invoker, usdc_amount, {"from": alice})
     weth.approve(invoker, weth_amount, {"from": alice})
@@ -124,11 +124,10 @@ def test_mint(nftm, receiver, cmove, chain, invoker, alice, clp_uniswapv3):
     usdc = interface.ERC20Detailed("0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48")
     weth = interface.ERC20Detailed("0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2")
 
-    mint_tokens_for(usdc, alice)
-    mint_tokens_for(weth, alice)
-
     usdc_amount = 100e6
     weth_amount = 0.05e18
+    mint_tokens_for(usdc, alice, usdc_amount)
+    mint_tokens_for(weth, alice, weth_amount)
 
     usdc.approve(invoker, usdc_amount, {"from": alice})
     weth.approve(invoker, weth_amount, {"from": alice})
@@ -186,6 +185,9 @@ def test_add_liquidity(position, nftm, alice, clp_uniswapv3, cmove, chain, invok
 
     usdc_amount = 100e6
     weth_amount = 0.05e18
+
+    mint_tokens_for(usdc, alice, usdc_amount)
+    mint_tokens_for(weth, alice, weth_amount)
 
     usdc.approve(invoker, usdc_amount, {"from": alice})
     weth.approve(invoker, weth_amount, {"from": alice})

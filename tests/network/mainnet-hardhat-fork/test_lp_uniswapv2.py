@@ -47,8 +47,8 @@ def test_deposit(invoker, cmove, alice, clp, uni_router):
     usdc.approve(invoker.address, usdc_amount, {"from": alice})
 
     # Mint tokens for user
-    mint_tokens_for(weth, alice.address)
-    mint_tokens_for(usdc, alice.address)
+    mint_tokens_for(weth, alice.address, weth_amount)
+    mint_tokens_for(usdc, alice.address, usdc_amount)
 
     # build invoker command
     calldata_move_weth = cmove.moveERC20In.encode_input(weth.address, weth_amount)
