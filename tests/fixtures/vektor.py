@@ -33,19 +33,8 @@ def cmove(deployer, invoker, CMove):
 
 
 @pytest.fixture(scope="module")
-def clend_aave_v2(deployer, invoker, Contract, interface, CLendAave, connected_chain):
-    chain_id = connected_chain["chain_id"]
-    lending_pools = {
-        1: "0x7d2768de32b0b80b7a3454c06bdac94a69ddc7a9",
-        137: "0x8dff5e27ea6b7ac08ebfdf9eb090f32ee9a30fcf",
-    }
-
-    AAVE_LENDING_POOL = Contract.from_abi(
-        "Aave Lending Pool",
-        lending_pools[chain_id],
-        interface.AaveV2LendingPool.abi,
-    )
-    contract = deployer.deploy(CLendAave, AAVE_LENDING_POOL.address)
+def clend_aave_v2(deployer, invoker, CLendAave):
+    contract = deployer.deploy(CLendAave)
     invoker.grantRole(APPROVED_COMMAND, contract, {"from": deployer})
     yield contract
 

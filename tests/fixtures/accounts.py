@@ -3,14 +3,14 @@ import pytest
 
 @pytest.fixture(scope="module")
 def deployer(accounts):
-    yield accounts[0]
+    yield accounts[-1]
 
 
 @pytest.fixture(scope="module")
 def alice(accounts):
-    yield accounts[1]
+    yield accounts[3]
 
 
 @pytest.fixture(scope="module")
 def bob(accounts):
-    yield accounts[2]
+    yield accounts[4]

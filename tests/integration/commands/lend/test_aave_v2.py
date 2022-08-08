@@ -4,7 +4,7 @@ import pytest
 from brownie.exceptions import VirtualMachineError
 
 from data.aave.tokens import AaveAssetInfo, get_aave_tokens
-from data.chain import get_chain_id, get_chain_token
+from data.chain import get_chain, get_chain_id, get_chain_token, is_venue_on_chain
 from data.test_helpers import mint_tokens_for
 
 
@@ -36,14 +36,20 @@ def assert_approx(a, b):
 
 
 def pytest_generate_tests(metafunc):
+    chain = get_chain()
     chain_id = str(get_chain_id())
     aave_tokens = get_aave_tokens(chain_id, "2")
 
     if "aave_token" in metafunc.fixturenames:
         metafunc.parametrize("aave_token", aave_tokens, ids=[a.symbol for a in aave_tokens])
 
+    if "pool" in metafunc.fixturenames:
+        pool = is_venue_on_chain("aave_v2", chain)
+        if pool:
+            metafunc.parametrize("pool", [pool])
 
-def test_supply(clend_aave_v2, aave_token: AaveAssetInfo, invoker, alice, interface):
+
+def test_supply(clend_aave_v2, pool, aave_token: AaveAssetInfo, invoker, alice, interface):
     if aave_token.symbol in ["UST"]:
         return
     token = aave_token.address
@@ -52,13 +58,13 @@ def test_supply(clend_aave_v2, aave_token: AaveAssetInfo, invoker, alice, interf
 
     mint_tokens_for(token, invoker, amount)
 
-    calldata_supply = clend_aave_v2.supply.encode_input(token, amount, alice)
+    calldata_supply = clend_aave_v2.supply.encode_input(pool, token, amount, alice)
 
     invoker.invoke([clend_aave_v2], [calldata_supply], {"from": alice})
     assert_approx(atoken.balanceOf(alice), amount)
 
 
-def test_withdraw(clend_aave_v2, invoker, aave_token: AaveAssetInfo, alice, interface):
+def test_withdraw(clend_aave_v2, pool, invoker, aave_token: AaveAssetInfo, alice, interface):
     if aave_token.symbol in ["UST"]:
         return
     token = interface.ERC20Detailed(aave_token.address)
@@ -67,7 +73,7 @@ def test_withdraw(clend_aave_v2, invoker, aave_token: AaveAssetInfo, alice, inte
 
     mint_tokens_for(atoken, invoker, amount + 1)
 
-    calldata_withdraw = clend_aave_v2.withdraw.encode_input(atoken, amount, alice)
+    calldata_withdraw = clend_aave_v2.withdraw.encode_input(pool, atoken, amount, alice)
     invoker.invoke([clend_aave_v2], [calldata_withdraw], {"from": alice})
 
     assert_approx(token.balanceOf(alice), amount)
@@ -75,7 +81,7 @@ def test_withdraw(clend_aave_v2, invoker, aave_token: AaveAssetInfo, alice, inte
 
 @pytest.mark.parametrize("mode", InterestRateMode.list(), ids=InterestRateMode.keys())
 def test_borrow_and_repay(
-    clend_aave_v2, cmove, invoker, aave_token: AaveAssetInfo, alice, mode, interface
+    clend_aave_v2, pool, cmove, invoker, aave_token: AaveAssetInfo, alice, mode, interface
 ):
     if aave_token.symbol in ["AAVE", "xSUSHI", "UST"]:
         return
@@ -93,7 +99,7 @@ def test_borrow_and_repay(
     )
     mint_tokens_for(collateral, invoker, 1e12)
 
-    calldata_supply = clend_aave_v2.supply.encode_input(collateral, 1e12, alice)
+    calldata_supply = clend_aave_v2.supply.encode_input(pool, collateral, 1e12, alice)
 
     invoker.invoke([clend_aave_v2], [calldata_supply], {"from": alice})
 
@@ -102,7 +108,7 @@ def test_borrow_and_repay(
     elif mode == InterestRateMode.VARIABLE:
         vdebt.approveDelegation(invoker, 2**256 - 1, {"from": alice})
 
-    calldata_borrow = clend_aave_v2.borrow.encode_input(token, amount / 10, mode)
+    calldata_borrow = clend_aave_v2.borrow.encode_input(pool, token, amount / 10, mode)
     calldata_move_out = cmove.moveAllERC20Out.encode_input(token, alice)
     try:
         invoker.invoke(
@@ -118,7 +124,7 @@ def test_borrow_and_repay(
 
     assert_approx(token.balanceOf(alice), amount / 10)
 
-    calldata_repay = clend_aave_v2.repay.encode_input(token, amount / 10, mode)
+    calldata_repay = clend_aave_v2.repay.encode_input(pool, token, amount / 10, mode)
     token.transfer(invoker, amount / 10, {"from": alice})
     invoker.invoke([clend_aave_v2], [calldata_repay], {"from": alice})
     assert_approx(token.balanceOf(alice), 0)

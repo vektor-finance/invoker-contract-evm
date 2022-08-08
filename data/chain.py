@@ -121,6 +121,20 @@ def is_uniswapv3_on_chain(chain):
     return False
 
 
+def is_venue_on_chain(venue, chain):
+    assert venue in [
+        "aave_v2",
+        "aave_v3",
+        "uniswap_v3",
+        "uniswap",
+        "sushiswap",
+    ], "unrecognised venue"
+    for contract in chain["contracts"]:
+        if venue == contract["venue"]:
+            return contract["address"]
+    return None
+
+
 def get_chain_tokens():
     chain = get_chain()
     return chain["assets"]
