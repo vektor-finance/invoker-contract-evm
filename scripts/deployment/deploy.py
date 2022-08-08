@@ -14,7 +14,6 @@ from scripts.deployment import (
 def get_registry():
     registry_deployer = brownie.accounts.at(REGISTRY_DEPLOYER, force=True)
     trusted_deployer = brownie.accounts.load(TRUSTED_USER)
-    brownie.accounts[0].transfer(trusted_deployer, 10e18)
 
     return DeployRegistryContainer(registry_deployer, trusted_deployer)
 
@@ -28,22 +27,27 @@ def deploy_and_approve_contract_if_not_deployed(
         print(f"{contract._name} already deployed. Skipping")
         return registry.get_deployed_contract(contract)
 
-    deployed_contract = registry.deploy(contract)
+    deployed_contract, gas_used = registry.deploy(contract)
 
     if contract != Invoker:
         invoker = registry.get_deployed_contract(Invoker)
-        invoker.grantRole(
+        tx = invoker.grantRole(
             APPROVED_COMMAND, deployed_contract, {"from": registry.trusted_deployers[0]}
         )
+        gas_used += tx.gas_used
 
     print(f"{contract._name} has been deployed and approved.")
 
-    return deployed_contract
+    return deployed_contract, gas_used
 
 
 def main():
+    cumulative_gas = 0
     registry = get_registry()
     for contract in CONTRACTS_TO_DEPLOY:
-        deploy_and_approve_contract_if_not_deployed(registry, contract)
+        _, gas_used = deploy_and_approve_contract_if_not_deployed(registry, contract)
+        cumulative_gas += gas_used
+
+    print(f"Total Gas Used: {cumulative_gas}")
 
     overview.main()

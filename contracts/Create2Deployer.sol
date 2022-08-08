@@ -4,7 +4,7 @@ pragma solidity ^0.8.6;
 
 import "@openzeppelin/contracts/utils/Create2.sol";
 
-contract DeployerRegistry {
+contract Create2Deployer {
     mapping(address => uint256) public isAuthorisedToDeploy;
 
     bytes public deployArgs;
@@ -39,7 +39,7 @@ contract DeployerRegistry {
         bytes32 salt,
         uint256 value,
         bytes calldata _deployArgs
-    ) external onlyAuthorised returns (address newContract) {
+    ) external payable onlyAuthorised returns (address newContract) {
         deployArgs = _deployArgs;
         newContract = Create2.deploy(value, salt, bytecode);
         emit ContractDeployed(newContract);

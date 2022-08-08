@@ -2,11 +2,11 @@ from brownie import (
     ZERO_ADDRESS,
     CMove,
     Contract,
+    Create2Deployer,
     CSwapCurve,
     CSwapUniswapV2,
     CSwapUniswapV3,
     CWrap,
-    DeployerRegistry,
     Invoker,
     network,
     web3,
@@ -17,11 +17,11 @@ from eth_utils import keccak
 from data.chain import get_chain_from_network_name, get_wnative_address
 from helpers.addresses import get_create1_address, get_create2_address
 
-REGISTRY_USER = "test_registry_deployer"
-TRUSTED_USER = "test_trusted_deployer"
+REGISTRY_USER = "registry_deployer"
+TRUSTED_USER = "trusted_deployer"
 
-REGISTRY_DEPLOYER = "0x6a4bd80F84F988903bC80a4231BA4955bcF615Be"  # hardcoded
-TRUSTED_DEPLOYER = "0xCf1e00BF66ABE1b0C84aD7615A702F75d26d447a"  # hardcoded
+REGISTRY_DEPLOYER = "0xF2A749D98F5bF0A388978bd9397157c4f2B9D3ac"  # hardcoded
+TRUSTED_DEPLOYER = "0xE983940c432D9e0a19B76496960583A83F112f39"  # hardcoded
 
 ALL_COMMANDS = [CMove, CWrap, CSwapUniswapV2, CSwapUniswapV3, CSwapCurve]
 ALL_CONTRACTS = [Invoker, *ALL_COMMANDS]
@@ -53,12 +53,14 @@ class DeployRegistryContainer:
                 raise RegistryNotDeployedError
             # the deployer has not been deployed, deploy it
             assert trusted_deployer != ZERO_ADDRESS, "need to trust somebody to deploy!"
-            self.contract: Contract = registry_deployer.deploy(DeployerRegistry, trusted_deployer)
+            self.contract: Contract = registry_deployer.deploy(Create2Deployer, trusted_deployer)
+            print(f"Gas used to deploy CREATE2: {self.contract.tx.gas_used}")
             self.trusted_deployers = [trusted_deployer.address]
         else:
             # the deployer has been deployed, get the current contract
-            self.contract: Contract = DeployerRegistry.at(registry_address)
+            self.contract: Contract = Create2Deployer.at(registry_address)
             self.trusted_deployers = [trusted_deployer]
+            print(f"CREATE2 Deployer was already found at {self.contract.address}")
 
         self.registry_deployer = registry_deployer
 
@@ -86,10 +88,11 @@ class DeployRegistryContainer:
             contract.bytecode, "0", 0, args, {"from": self.trusted_deployers[0]}
         )
         deployed_contract = tx.return_value
+        gas_used = tx.gas_used
 
         print(f"{contract._name} deployed at {deployed_contract}")
 
-        return deployed_contract
+        return deployed_contract, gas_used
 
     def _get_salt_bytes(self, salt: int):
         return "0x" + (salt).to_bytes(32, "big").hex()
