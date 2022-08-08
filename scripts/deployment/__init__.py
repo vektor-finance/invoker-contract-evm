@@ -17,11 +17,11 @@ from eth_utils import keccak
 from data.chain import get_chain_from_network_name, get_wnative_address
 from helpers.addresses import get_create1_address, get_create2_address
 
-REGISTRY_USER = "registry_deployer"
-TRUSTED_USER = "trusted_deployer"
+REGISTRY_USER = "vektor_registry_deployer"
+TRUSTED_USER = "vektor_trusted_deployer"
 
-REGISTRY_DEPLOYER = "0xF2A749D98F5bF0A388978bd9397157c4f2B9D3ac"  # hardcoded
-TRUSTED_DEPLOYER = "0xE983940c432D9e0a19B76496960583A83F112f39"  # hardcoded
+REGISTRY_DEPLOYER = "0xFB47e88C3FFF913D48F8EB08DdD96f86338E2568"  # hardcoded
+TRUSTED_DEPLOYER = "0x3302dBdD355fDfA7A439598885E189a4E9ad6B9b"  # hardcoded
 
 ALL_COMMANDS = [CMove, CWrap, CSwapUniswapV2, CSwapUniswapV3, CSwapCurve]
 ALL_CONTRACTS = [Invoker, *ALL_COMMANDS]
