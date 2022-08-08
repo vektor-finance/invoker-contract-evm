@@ -87,7 +87,7 @@ class DeployRegistryContainer:
         tx = self.contract.deployNewContract(
             contract.bytecode, "0", 0, args, {"from": self.trusted_deployers[0]}
         )
-        deployed_contract = tx.return_value
+        deployed_contract = self.predict_deployment_address(contract)
         gas_used = tx.gas_used
 
         print(f"{contract._name} deployed at {deployed_contract}")
