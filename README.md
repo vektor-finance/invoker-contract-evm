@@ -20,10 +20,21 @@ Solidity contracts for Vektor's EVM invoker.
 - [Scripts](#scripts)
   - [Faucet](#faucet)
 
-
 ## Overview
 
 TODO
+
+## Deployments
+
+| Contract                      | Address                                    |
+|-------------------------------|--------------------------------------------|
+| Registry                      | 0xEcDFb7e848a9Ce0AE9c5dBEB5F9Ed10a8A5E2635 |
+| Invoker                       | 0xaC30625106b65D1CB827CE7cbACEe15946F2fAc7 |
+| CMove                         | 0x220EE64E6c4eF4cA9FEF9F8F2aaDe66a58aaa005 |
+| CWrap                         | 0xb9F9Eed528649655055FD98dC5C904989cB11796 |
+| CSwapUniswapV2                | 0xFCC5F7f32d1C70F9214EE2A6ad580a4520B44A7f |
+| CSwapUniswapV3                | 0x3cF40d84A8C8552210b3444ef761Fe7a00142C41 |
+| CSwaCSwapCurvepUniswapV3      | 0xA407c1C3De7078ce3082EB9Ef92EBf3AFB2280Cd |
 
 ## Testing and Development
 
@@ -98,12 +109,12 @@ brownie test
 
 In order to add a new blockchain to the testing suite, perform the following:
 
-1. Create an entry in `data/chains.yaml` with the relevant contract addresses.  
+1. Create an entry in `data/chains.yaml` with the relevant contract addresses.
 Many of the fields are self-explanatory, however please note:
     - The `network` field refers to the name of the network in the brownie config. We distinguish between a 'prod' network (which is the real network, and will be used for any deployments) and a 'fork' network (which will be a hardhat fork, used for all the testing).
     - EIP1559 status is specified by a flag (It is possible to disable 1559, even when a network supports it)
     - For each asset, please enter the name, symbol and decimals as directed by the smart contract. Please lowercase the address (for consistency)
-    -  The `benefactor` is an address that contains a large sum of the relevant token. (The testing suite moves tokens from the benefactor to the test users). For the purposes of these tests, it is best to pick a smart contract benefactor that we are unlikely to interact with (a yearn/aave vault is a good example)
+    - The `benefactor` is an address that contains a large sum of the relevant token. (The testing suite moves tokens from the benefactor to the test users). For the purposes of these tests, it is best to pick a smart contract benefactor that we are unlikely to interact with (a yearn/aave vault is a good example)
 2. Update `network-config.yaml` in root directory with the relevant information. You will likely need to create two entries. One for the 'prod' network, and one for the 'fork' network
 3. Update the CI and Makefile to include the network name (only the fork).
 4. Ensure any private RPC url are located within encrypted .env file.
