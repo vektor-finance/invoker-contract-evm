@@ -2,8 +2,8 @@
 
 pragma solidity ^0.8.6;
 
-import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
-import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
+import "../../external/OpenZeppelin/token/ERC20/utils/SafeERC20.sol";
+import "../../external/OpenZeppelin/token/ERC721/IERC721.sol";
 
 contract CMove {
     using SafeERC20 for IERC20;
