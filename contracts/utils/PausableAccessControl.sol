@@ -4,7 +4,7 @@
 
 pragma solidity ^0.8.6;
 
-import "../external/OpenZeppelin/access/AccessControl.sol";
+import "@openzeppelin/contracts/access/AccessControl.sol";
 
 interface Deployer {
     function deployArgs() external view returns (bytes memory);

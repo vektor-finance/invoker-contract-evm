@@ -2,7 +2,7 @@
 
 pragma solidity ^0.8.6;
 
-import "./external/OpenZeppelin/utils/Create2.sol";
+import "@openzeppelin/contracts/utils/Create2.sol";
 
 contract Create2Deployer {
     mapping(address => uint256) public isAuthorisedToDeploy;
