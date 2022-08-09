@@ -8,8 +8,8 @@ from data.chain import get_wnative_address
 
 
 @pytest.fixture(scope="module")
-def deployer_registry(registry_deployer_user, DeployerRegistry, deployer):
-    yield registry_deployer_user.deploy(DeployerRegistry, deployer)
+def deployer_registry(registry_deployer_user, Create2Deployer, deployer):
+    yield registry_deployer_user.deploy(Create2Deployer, deployer)
 
 
 @pytest.fixture(scope="module")
