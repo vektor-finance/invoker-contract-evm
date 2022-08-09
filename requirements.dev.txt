@@ -1,6 +1,7 @@
-black==21.11b1
-flake8==4.0.1
-isort==5.10.1
+-r requirements.txt
+black==22.6.0
+flake8==3.8.1
+isort==5.9.3
 pre-commit==2.15.0
 rlp==2.0.1
 tabulate==0.8.9
