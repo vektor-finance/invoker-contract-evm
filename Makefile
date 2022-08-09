@@ -7,7 +7,7 @@ fantom-hardhat-fork \
 arbitrum-hardhat-fork \
 avalanche-hardhat-fork \
 bsc-hardhat-fork \
-optimism-hardhat-fork \ 
+optimism-hardhat-fork \
 optimism-kovan-hardhat-fork \
 gnosis-mainnet-hardhat-fork \
 moonbeam-mainnet-hardhat-fork \
