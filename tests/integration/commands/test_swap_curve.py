@@ -127,7 +127,10 @@ def test_curve_sell_underlying(underlying_coins, pool: CurvePool, alice, invoker
 def test_curve_buy_fail(invoker, cswap_curve, alice):
     chain_id = get_chain_id()
     curve_pools = get_curve_pools(chain_id)
-    pool = curve_pools[0]
+    try:
+        pool = curve_pools[0]
+    except IndexError:
+        pytest.skip("No curve pools to test")
 
     amount = mint_tokens_for(pool.coins[0], invoker)
     token_in = pool.coins[0]

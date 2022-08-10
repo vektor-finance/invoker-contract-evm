@@ -1643,15 +1643,6 @@ curve:
     is_v1: false
     name: RAREPEPE [WETH, RAREPEPE]
     pool_address: '0xdDBDCEBb989B1ef804338d6c9a902f91c2738936'
-  - chain_id: 1
-    coins:
-    - '0xed03ed872159e199065401b6d0d487d78d9464aa'
-    - '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'
-    is_crypto: true
-    is_underlying: false
-    is_v1: false
-    name: MXNT/USDC [MXNt, USDC]
-    pool_address: '0xc12A73c46D49Fa0d7433C90291BC8D1A9EAe7B23'
   '10':
   - chain_id: 10
     coins:

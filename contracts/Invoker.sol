@@ -3,7 +3,7 @@
 pragma solidity ^0.8.6;
 
 import "./Storage.sol";
-import "./utils/Address.sol";
+import "@openzeppelin/contracts/utils/Address.sol";
 import "./utils/Log.sol";
 import "./utils/PausableAccessControl.sol";
 
@@ -14,7 +14,7 @@ contract Invoker is Storage, Log, PausableAccessControl {
         keccak256("APPROVED_COMMAND_IMPLEMENTATION");
 
     constructor() {
-        _setupRole(DEFAULT_ADMIN_ROLE, msg.sender);
+        _setupRole(DEFAULT_ADMIN_ROLE, abi.decode(Deployer(msg.sender).deployArgs(), (address)));
     }
 
     receive() external payable {

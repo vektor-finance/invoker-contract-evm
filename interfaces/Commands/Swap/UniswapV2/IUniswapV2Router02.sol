@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: GPL-3.0
 // https://github.com/Uniswap/uniswap-v2-periphery/blob/master/contracts/interfaces/IUniswapV2Router01.sol
 // https://github.com/Uniswap/uniswap-v2-periphery/blob/master/contracts/interfaces/IUniswapV2Router02.sol
 // Above files merged to form interface
