@@ -18,7 +18,6 @@ contract Create2Deployer {
         emit UserAuthorised(authorisedDeployer);
     }
 
-    // auth not tested
     modifier onlyAuthorised() {
         require(isAuthorisedToDeploy[msg.sender] == 1, "NOT_AUTHORISED");
         _;
