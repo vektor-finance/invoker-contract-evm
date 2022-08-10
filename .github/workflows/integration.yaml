@@ -47,7 +47,7 @@ jobs:
         network:
           - hardhat
           - mainnet-hardhat-fork
-          # - ethereum-rinkeby-hardhat-fork
+          # - ethereum-goerli-hardhat-fork
           # - polygon-hardhat-fork
           # - polygon-mumbai-hardhat-fork
           # - fantom-hardhat-fork
@@ -55,7 +55,7 @@ jobs:
           # - avalanche-hardhat-fork
           # - bsc-hardhat-fork
           # - optimism-hardhat-fork
-          # - optimism-kovan-hardhat-fork
+          # - optimism-goerli-hardhat-fork
           # - moonbeam-mainnet-hardhat-fork
           # - moonriver-mainnet-hardhat-fork
           # - gnosis-mainnet-hardhat-fork
