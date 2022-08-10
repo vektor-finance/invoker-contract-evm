@@ -16,8 +16,8 @@ To create these, I would recommend typing:
 You will receive the following output
 
 ```
-SUCCESS: A new account '0xF2A749D98F5bF0A388978bd9397157c4f2B9D3ac' has been generated with the id 'vektor_registry_deployer'
-SUCCESS: A new account '0xE983940c432D9e0a19B76496960583A83F112f39' has been generated with the id 'vektor_trusted_deployer'
+SUCCESS: A new account '0xFB47e88C3FFF913D48F8EB08DdD96f86338E2568' has been generated with the id 'vektor_registry_deployer'
+SUCCESS: A new account '0x3302dBdD355fDfA7A439598885E189a4E9ad6B9b' has been generated with the id 'vektor_trusted_deployer'
 ```
 
 You should then update the following lines in `scripts/deployment/__init__.py` to the new addresses:
@@ -41,7 +41,7 @@ If you see a table that looks like this, then you have successfully deployed the
 
 | network   | registry      | Invoker       | CMove            | CSwapUniswapV2   | CSwapUniswapV3   | CSwapCurve       |
 |-----------|---------------|---------------|------------------|------------------|------------------|------------------|
-| hardhat   | 0xFF8D...5511 | 0x62f2...8882 | ✅ 0x8ef5...9976 | ✅ 0xe3e8...13EA | ✅ 0xeCd0...0a38 | ✅ 0xb14a...fd18 |
+| hardhat   | 0xEcDF...2635 | 0xA7dA...EdB1 | ✅ 0x1d86...f191 | ✅ 0xC2cA...399e | ✅ 0x68DF...91Fb | ✅ 0x7DC7...87f4 | ✅ 0xf004...6b24 |
 
 ## Deploying on testnets/live
 
