@@ -52,7 +52,7 @@ def pytest_generate_tests(metafunc):
 
 
 def test_supply(clend_aave, pool, aave_token: AaveAssetInfo, invoker, alice, interface):
-    if aave_token.symbol in ["UST"]:
+    if aave_token.symbol in ["UST", "AMPL"]:
         return
     token = aave_token.address
     atoken = interface.AaveV2Token(aave_token.aTokenAddress)
@@ -67,7 +67,7 @@ def test_supply(clend_aave, pool, aave_token: AaveAssetInfo, invoker, alice, int
 
 
 def test_withdraw(clend_aave, pool, invoker, aave_token: AaveAssetInfo, alice, interface):
-    if aave_token.symbol in ["UST"]:
+    if aave_token.symbol in ["UST", "AMPL"]:
         return
     token = interface.ERC20Detailed(aave_token.address)
     atoken = aave_token.aTokenAddress
@@ -75,7 +75,7 @@ def test_withdraw(clend_aave, pool, invoker, aave_token: AaveAssetInfo, alice, i
 
     mint_tokens_for(atoken, invoker, amount + 1)
 
-    calldata_withdraw = clend_aave.withdraw.encode_input(pool, atoken, amount, alice)
+    calldata_withdraw = clend_aave.withdraw.encode_input(pool, atoken, amount - 1, alice)
     invoker.invoke([clend_aave], [calldata_withdraw], {"from": alice})
 
     assert_approx(token.balanceOf(alice), amount)
@@ -85,7 +85,7 @@ def test_withdraw(clend_aave, pool, invoker, aave_token: AaveAssetInfo, alice, i
 def test_borrow_and_repay(
     clend_aave, pool, cmove, invoker, aave_token: AaveAssetInfo, alice, mode, interface
 ):
-    if aave_token.symbol in ["AAVE", "xSUSHI", "UST"]:
+    if aave_token.symbol in ["AAVE", "xSUSHI", "UST", "AMPL"]:
         return
 
     token = interface.ERC20Detailed(aave_token.address)
