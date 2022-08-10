@@ -26,16 +26,9 @@ TODO
 
 ## Deployments
 
-| Contract                      | Address                                    |
-|-------------------------------|--------------------------------------------|
-| Registry                      | 0xEcDFb7e848a9Ce0AE9c5dBEB5F9Ed10a8A5E2635 |
-| Invoker                       | 0xaC30625106b65D1CB827CE7cbACEe15946F2fAc7 |
-| CMove                         | 0x220EE64E6c4eF4cA9FEF9F8F2aaDe66a58aaa005 |
-| CWrap                         | 0xb9F9Eed528649655055FD98dC5C904989cB11796 |
-| CSwapUniswapV2                | 0xFCC5F7f32d1C70F9214EE2A6ad580a4520B44A7f |
-| CSwapUniswapV3                | 0x3cF40d84A8C8552210b3444ef761Fe7a00142C41 |
-| CSwaCSwapCurvepUniswapV3      | 0xA407c1C3De7078ce3082EB9Ef92EBf3AFB2280Cd |
-
+| network              | registry                                   | Invoker                                    | CMove                                      | CWrap                                      | CSwapUniswapV2                             | CSwapUniswapV3                             | CSwapCurve                                 |
+|--------------------------------------------|--------------------------------------------|--------------------------------------------|--------------------------------------------|--------------------------------------------|--------------------------------------------|--------------------------------------------|
+| 0xEcDFb7e848a9Ce0AE9c5dBEB5F9Ed10a8A5E2635 | 0xA7dAC6938b17c4ac0BF879F4Bf8d2020c2c1EdB1 | 0x1d868fD27f92a490142F1Fc8583104573CE8f191 | 0xC2cA82f0A8E904C648E85b1ebbC92051Fb53399e | 0x68DF154F0ac49f7eD1A4CbDf6c5Fa70DB2Cb91Fb | 0x7DC7274c3b27542685fb093582955ABCf57987f4 | 0xf004CbD67d02166157f30A8085c69842ad556b24 |
 ## Testing and Development
 
 ### Dependencies
