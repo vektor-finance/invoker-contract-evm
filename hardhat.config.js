@@ -3,7 +3,7 @@
 module.exports = {
   networks: {
     hardhat: {
-      chainId: 137,
+      chainId: 1337,
       hardfork: "london",
       // base fee of 0 allows use of 0 gas price when testing
       initialBaseFeePerGas: 0,
