@@ -10,8 +10,8 @@ def test_owner(invoker, deployer):
 
 
 @pytest.fixture
-def invoker_no_approval(deployer_registry, deployer, Invoker):
-    tx = deployer_registry.deployNewContract(
+def invoker_no_approval(create2_deployer, deployer, Invoker):
+    tx = create2_deployer.deployNewContract(
         Invoker.bytecode, 1, 0, encode_single("address", deployer.address), {"from": deployer}
     )
     yield Invoker.at(tx.return_value)

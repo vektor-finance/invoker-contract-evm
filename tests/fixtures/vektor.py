@@ -8,13 +8,13 @@ from data.chain import get_wnative_address
 
 
 @pytest.fixture(scope="module")
-def deployer_registry(registry_deployer_user, Create2Deployer, deployer):
+def create2_deployer(registry_deployer_user, Create2Deployer, deployer):
     yield registry_deployer_user.deploy(Create2Deployer, deployer)
 
 
 @pytest.fixture(scope="module")
-def invoker(deployer_registry, deployer, Invoker):
-    tx = deployer_registry.deployNewContract(
+def invoker(create2_deployer, deployer, Invoker):
+    tx = create2_deployer.deployNewContract(
         Invoker.bytecode, "0x", 0, encode_single("address", deployer.address), {"from": deployer}
     )
     yield Invoker.at(tx.return_value)
@@ -28,8 +28,8 @@ def cswap(invoker, deployer, CSwapUniswapV2):
 
 
 @pytest.fixture(scope="module")
-def cwrap(deployer_registry, invoker, deployer, CWrap, wnative):
-    tx = deployer_registry.deployNewContract(
+def cwrap(create2_deployer, invoker, deployer, CWrap, wnative):
+    tx = create2_deployer.deployNewContract(
         CWrap.bytecode, "0x", 0, encode_single("address", wnative.address), {"from": deployer}
     )
     contract = CWrap.at(tx.return_value)
