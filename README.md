@@ -26,9 +26,14 @@ TODO
 
 ## Deployments
 
-| registry                                   | Invoker                                    | CMove                                      | CWrap                                      | CSwapUniswapV2                             | CSwapUniswapV3                             | CSwapCurve                                 |
-|--------------------------------------------|--------------------------------------------|--------------------------------------------|--------------------------------------------|--------------------------------------------|--------------------------------------------|--------------------------------------------|
-| 0xEcDFb7e848a9Ce0AE9c5dBEB5F9Ed10a8A5E2635 | 0xA7dAC6938b17c4ac0BF879F4Bf8d2020c2c1EdB1 | 0x1d868fD27f92a490142F1Fc8583104573CE8f191 | 0xC2cA82f0A8E904C648E85b1ebbC92051Fb53399e | 0x68DF154F0ac49f7eD1A4CbDf6c5Fa70DB2Cb91Fb | 0x7DC7274c3b27542685fb093582955ABCf57987f4 | 0xf004CbD67d02166157f30A8085c69842ad556b24 |
+| name           | address                                       |
+|----------------|-----------------------------------------------|
+| Invoker        | 0xA7dAC6938b17c4ac0BF879F4Bf8d2020c2c1EdB1    |
+| CMove          | 0x1d868fD27f92a490142F1Fc8583104573CE8f191    |
+| CWrap          | 0xC2cA82f0A8E904C648E85b1ebbC92051Fb53399e    |
+| CSwapUniswapV2 | 0x68DF154F0ac49f7eD1A4CbDf6c5Fa70DB2Cb91Fb    |
+| CSwapUniswapV3 | 0x7DC7274c3b27542685fb093582955ABCf57987f4    |
+| CSwapCurve     | 0xf004CbD67d02166157f30A8085c69842ad556b24    |
 ## Testing and Development
 
 ### Dependencies

@@ -64,6 +64,6 @@ The same calculator can be used for other blockchains by taking the current gas 
 
 Repeat the steps described for local deployment, but replace the network flag with the network id (corresponding to `network-config.yaml`).
 
-To deploy on rinkeby, you would type:
-`brownie run deployment/registry --network ethereum-rinkeby-test`
-`brownie run deployment/deploy --network ethereum-rinkeby-test`
+To deploy on goerli, you would type:
+`brownie run deployment/registry --network ethereum-goerli-test`
+`brownie run deployment/deploy --network ethereum-goerli-test`
