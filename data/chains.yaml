@@ -105,14 +105,14 @@ mainnet:
       interfaces: [aave_v2_lending_pool]
       address: "0x7d2768de32b0b80b7a3454c06bdac94a69ddc7a9"
 
-rinkeby:
-  id: rinkeby
-  name: Rinkeby Testnet
-  chain_id: 4
+goerli:
+  id: goerli
+  name: Goerli Testnet
+  chain_id: 5
   eip1559: true
   network:
-    prod: ethereum-rinkeby-test
-    fork: ethereum-rinkeby-hardhat-fork
+    prod: ethereum-goerli-test
+    fork: ethereum-goerli-hardhat-fork
   assets:
     - name: Ethereum
       symbol: ETH
@@ -121,33 +121,34 @@ rinkeby:
     - name: Wrapped Ethereum
       symbol: WETH
       decimals: 18
-      address: "0xc778417e063141139fce010982780140aa0cd5ab"
+      address: "0xb4fbf271143f4fbf7b91a5ded31805e42b2208d6"
       wrapped_native: true
-      benefactor: "0x306dd2eb9ddaceecdba4cfa0eccc009e7291cdde"
     - name: DAI
       symbol: DAI
       decimals: 18
-      address: "0x6A9865aDE2B6207dAAC49f8bCba9705dEB0B0e6D"
-      benefactor: "0x91169Dbb45e6804743F94609De50D511C437572E"
+      address: "0x11fE4B6AE13d2a6055C8D9cF65c55bac32B5d844"
     - name: Tether
       symbol: USDT
-      decimals: 18 # yes, this is 18 not 6 on rinkeby
-      address: "0xD9BA894E0097f8cC2BBc9D24D308b98e36dc6D02"
-      benefactor: "0x304f1ec2439d0919b27149c8798cba36a251d5ec"
+      decimals: 6
+      address: "0xe802376580c10fE23F027e1E19Ed9D54d4C9311e"
     - name: USD Coin
       symbol: USDC
       decimals: 6
-      address: "0x4dbcdf9b62e891a7cec5a2568c3f4faf9e8abe2b"
-      benefactor: "0x65671d573fc0e62139fbde470bfd03a38b4d5f26"
+      address: "0xD87Ba7A50B2E7E660f678A895E4B72E7CB4CCd9C"
     - name: Wrapped BTC
       symbol: WBTC
       decimals: 8
-      address: "0x577D296678535e4903D59A4C929B718e1D575e0A"
-      benefactor: "0xc7b79e5da46967cb8e7790b8e6c256fbc9d5f032"
+      address: "0xC04B0d3107736C32e19F1c62b2aF67BE61d63a05"
   contracts:
     - venue: uniswap
       interfaces: [uniswap_router_v2_02]
       address: "0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D"
+    - venue: sushiswap
+      interfaces: [uniswap_router_v2_02]
+      address: "0x1b02dA8Cb0d097eB8D57A175b88c7D8b47997506"
+    - venue: uniswap_v3
+      interfaces: [uniswap_router_v3]
+      address: "0xE592427A0AEce92De3Edee1F18E0157C05861564"   
 
 polygon:
   id: polygon

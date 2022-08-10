@@ -40,6 +40,8 @@ def get_curve_pools(chain_id: str):
     with open(os.path.join("data", "curve.yaml"), "r") as infile:
         _input = yaml.safe_load(infile)
 
-    curve_pools = [CurvePool(**_data) for _data in _input["curve"][str(chain_id)]]
-
-    return curve_pools
+    try:
+        curve_pools = [CurvePool(**_data) for _data in _input["curve"][str(chain_id)]]
+        return curve_pools
+    except KeyError:
+        return []

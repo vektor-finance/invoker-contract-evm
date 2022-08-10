@@ -24,11 +24,11 @@ development:
     timeout: 120
   - cmd: npx hardhat node
     cmd_settings:
-      fork: ethereum-rinkeby-test
+      fork: ethereum-goerli-test
       port: 8545
     host: http://localhost
-    id: ethereum-rinkeby-hardhat-fork
-    name: Hardhat (Rinkeby Fork)
+    id: ethereum-goerli-hardhat-fork
+    name: Hardhat (Goerli Fork)
     timeout: 120
   - cmd: npx hardhat node
     cmd_settings:
@@ -120,12 +120,12 @@ live:
         id: mainnet-prod
         multicall2: "0x5BA1e12693Dc8F9c48aAD8770482f4739bEeD696"
         name: Mainnet
-      - chainid: 4
-        explorer: https://api-rinkeby.etherscan.io/api
-        host: $NODE_ETHEREUM_RINKEBY_URL
-        id: ethereum-rinkeby-test
+      - chainid: 5
+        explorer: https://api-goerli.etherscan.io/api
+        host: $NODE_ETHEREUM_GOERLI_URL
+        id: ethereum-goerli-test
         multicall2: "0x5BA1e12693Dc8F9c48aAD8770482f4739bEeD696"
-        name: Rinkeby
+        name: goerli
   - name: Polygon
     networks:
       - chainid: 137

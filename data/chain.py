@@ -10,6 +10,11 @@ def get_chain_data():
         return yaml.safe_load(file)
 
 
+def get_all_chain_names():
+    data = get_chain_data()
+    return list(data.keys())
+
+
 def get_chain_from_network_name(network_name):
     """Returns 'chain' object from network name
     network_name specifically refers to the network name according to brownie

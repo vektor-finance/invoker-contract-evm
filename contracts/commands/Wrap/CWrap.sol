@@ -4,12 +4,16 @@ pragma solidity ^0.8.6;
 
 import "../../../interfaces/Commands/Wrap/IWeth.sol";
 
+interface Deployer {
+    function deployArgs() external view returns (bytes memory);
+}
+
 contract CWrap {
     IWETH public immutable WNATIVE;
 
     // When deploying on alternate networks, the WNATIVE address should be specified in constructor
-    constructor(IWETH _wnative) {
-        WNATIVE = _wnative;
+    constructor() {
+        WNATIVE = IWETH(abi.decode(Deployer(msg.sender).deployArgs(), (address)));
     }
 
     /**
