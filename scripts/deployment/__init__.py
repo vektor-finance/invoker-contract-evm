@@ -1,5 +1,6 @@
 from brownie import (
     ZERO_ADDRESS,
+    CLendAave,
     CMove,
     Contract,
     Create2Deployer,
@@ -23,13 +24,19 @@ TRUSTED_USER = "vektor_trusted_deployer"
 REGISTRY_DEPLOYER = "0xFB47e88C3FFF913D48F8EB08DdD96f86338E2568"  # hardcoded
 TRUSTED_DEPLOYER = "0x3302dBdD355fDfA7A439598885E189a4E9ad6B9b"  # hardcoded
 
-ALL_COMMANDS = [CMove, CWrap, CSwapUniswapV2, CSwapUniswapV3, CSwapCurve]
+ALL_COMMANDS = [CMove, CWrap, CSwapUniswapV2, CSwapUniswapV3, CSwapCurve, CLendAave]
 ALL_CONTRACTS = [Invoker, *ALL_COMMANDS]
 CONTRACTS_TO_DEPLOY = ALL_CONTRACTS
 
 
 class RegistryNotDeployedError(Exception):
     pass
+
+
+def strip_0x(hex_str: str):
+    if hex_str.startswith("0x"):
+        return hex_str[2:]
+    return hex_str
 
 
 class DeployRegistryContainer:
@@ -75,7 +82,7 @@ class DeployRegistryContainer:
             return "0x"
 
     def predict_deployment_address(self, contract):
-        b_creation_code = bytes.fromhex(contract.bytecode)
+        b_creation_code = bytes.fromhex(strip_0x(contract.bytecode))
         init_code_hash = "0x" + keccak(b_creation_code).hex()
         predicted_address = get_create2_address(
             self.contract.address, self._get_salt_bytes(0), init_code_hash
