@@ -101,6 +101,9 @@ mainnet:
     - venue: uniswap_v3
       interfaces: [uniswap_router_v3]
       address: "0xE592427A0AEce92De3Edee1F18E0157C05861564"
+    - venue: aave_v2
+      interfaces: [aave_v2_lending_pool]
+      address: "0x7d2768de32b0b80b7a3454c06bdac94a69ddc7a9"
 
 goerli:
   id: goerli
@@ -204,6 +207,12 @@ polygon:
     - venue: uniswap_v3
       interfaces: [uniswap_router_v3]
       address: "0xE592427A0AEce92De3Edee1F18E0157C05861564"
+    - venue: aave_v2
+      interfaces: [aave_v2_lending_pool]
+      address: "0x8dff5e27ea6b7ac08ebfdf9eb090f32ee9a30fcf"
+    - venue: aave_v3
+      interfaces: [aave_v3_lending_pool]
+      address: "0x794a61358D6845594F94dc1DB02A252b5b4814aD"
 
 mumbai:
   id: mumbai

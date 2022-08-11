@@ -45,6 +45,13 @@ def cmove(deployer, invoker, CMove):
 
 
 @pytest.fixture(scope="module")
+def clend_aave(deployer, invoker, CLendAave):
+    contract = deployer.deploy(CLendAave)
+    invoker.grantRole(APPROVED_COMMAND, contract, {"from": deployer})
+    yield contract
+
+
+@pytest.fixture(scope="module")
 def cbridge_anyswap(deployer, invoker, CBridgeAnyswap, connected_chain):
     wnative = get_wnative_address(connected_chain)
     anyswap_tokens = get_anyswap_tokens_for_chain(connected_chain)
