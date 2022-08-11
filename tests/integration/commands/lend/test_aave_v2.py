@@ -46,7 +46,7 @@ def pytest_generate_tests(metafunc):
     if "pool" in metafunc.fixturenames:
         pool = is_venue_on_chain("aave_v2", chain)
         if pool:
-            metafunc.parametrize("pool", [pool])
+            metafunc.parametrize("pool", [pool], ids=["Aave V2"])
         else:
             pytest.skip(f"Aave V2 not on network {chain_id}")
 
