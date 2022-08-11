@@ -28,7 +28,7 @@ def _approve_token(token: address, spender: address, amount: uint256):
 @payable
 def supply(lending_pool: address, asset: address, amount: uint256, receiver: address):
     """
-    @notice supplies an asset to aave v2, receiving an aToken receipt
+    @notice supplies an asset to Aave V2/V3, receiving an aToken receipt
     @dev must first transfer asset to invoker
     @param lending_pool the address of the 'lending pool' contract for aave-like protocols
     @param asset the underlying asset
@@ -42,7 +42,7 @@ def supply(lending_pool: address, asset: address, amount: uint256, receiver: add
 @payable
 def withdraw(lending_pool: address, a_asset: address, amount: uint256, receiver: address):
     """
-    @notice withdraws supplied liquidity from aave v2
+    @notice withdraws supplied liquidity from Aave V2/V3
     @dev must first transfer aToken to invoker. user will receive 1:1
     @param lending_pool the address of the 'lending pool' contract for aave-like protocols
     @param a_asset the aToken
@@ -56,7 +56,7 @@ def withdraw(lending_pool: address, a_asset: address, amount: uint256, receiver:
 @payable
 def borrow(lending_pool: address, asset: address, amount: uint256, interest_rate_mode: uint256):
     """
-    @notice borrow an asset from aave v2
+    @notice borrow an asset from Aave V2/V3
     @dev user must first call approveDelegation() to allow invoker to generate debt
     @param lending_pool the address of the 'lending pool' contract for aave-like protocols
     @param asset the asset to borrow
@@ -69,7 +69,7 @@ def borrow(lending_pool: address, asset: address, amount: uint256, interest_rate
 @payable
 def repay(lending_pool: address, asset: address, amount: uint256, interest_rate_mode: uint256): 
     """
-    @notice repay a loan taken on aave v2
+    @notice repay a loan taken on Aave V2/V3
     @dev user must first transfer asset to invoker
     @param lending_pool the address of the 'lending pool' contract for aave-like protocols
     @param asset the underlying asset
