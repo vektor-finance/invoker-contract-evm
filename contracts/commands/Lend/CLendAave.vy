@@ -17,33 +17,18 @@ interface LendingPool:
 interface aToken:
     def UNDERLYING_ASSET_ADDRESS() -> address: nonpayable
 
-# can use default_return_value in vyper 0.3.4
-@internal
-def erc20_safe_approve(token: address, spender: address, amount: uint256):
-    response: Bytes[32] = raw_call(
-        token,
-        concat(
-            method_id("approve(address,uint256)"),
-            convert(spender,bytes32),
-            convert(amount,bytes32)
-        ),
-        max_outsize = 32
-    )
-    if len(response) > 0:
-        assert convert(response,bool), "Approval failed"
-
 @internal
 def _approve_token(token: address, spender: address, amount: uint256):
     if ERC20(token).allowance(self, spender) > 0:
-       self.erc20_safe_approve(token, spender, 0)
-    self.erc20_safe_approve(token, spender, amount)
+       ERC20(token).approve(spender, 0, default_return_value=True)
+    ERC20(token).approve(spender, amount, default_return_value=True)
 
 
 @external
 @payable
 def supply(lending_pool: address, asset: address, amount: uint256, receiver: address):
     """
-    @notice supplies an asset to aave v2, receiving an aToken receipt
+    @notice supplies an asset to Aave V2/V3, receiving an aToken receipt
     @dev must first transfer asset to invoker
     @param lending_pool the address of the 'lending pool' contract for aave-like protocols
     @param asset the underlying asset
@@ -57,7 +42,7 @@ def supply(lending_pool: address, asset: address, amount: uint256, receiver: add
 @payable
 def withdraw(lending_pool: address, a_asset: address, amount: uint256, receiver: address):
     """
-    @notice withdraws supplied liquidity from aave v2
+    @notice withdraws supplied liquidity from Aave V2/V3
     @dev must first transfer aToken to invoker. user will receive 1:1
     @param lending_pool the address of the 'lending pool' contract for aave-like protocols
     @param a_asset the aToken
@@ -71,7 +56,7 @@ def withdraw(lending_pool: address, a_asset: address, amount: uint256, receiver:
 @payable
 def borrow(lending_pool: address, asset: address, amount: uint256, interest_rate_mode: uint256):
     """
-    @notice borrow an asset from aave v2
+    @notice borrow an asset from Aave V2/V3
     @dev user must first call approveDelegation() to allow invoker to generate debt
     @param lending_pool the address of the 'lending pool' contract for aave-like protocols
     @param asset the asset to borrow
@@ -84,7 +69,7 @@ def borrow(lending_pool: address, asset: address, amount: uint256, interest_rate
 @payable
 def repay(lending_pool: address, asset: address, amount: uint256, interest_rate_mode: uint256): 
     """
-    @notice repay a loan taken on aave v2
+    @notice repay a loan taken on Aave V2/V3
     @dev user must first transfer asset to invoker
     @param lending_pool the address of the 'lending pool' contract for aave-like protocols
     @param asset the underlying asset
