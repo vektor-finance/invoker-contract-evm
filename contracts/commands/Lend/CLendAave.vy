@@ -17,26 +17,11 @@ interface LendingPool:
 interface aToken:
     def UNDERLYING_ASSET_ADDRESS() -> address: nonpayable
 
-# can use default_return_value in vyper 0.3.4
-@internal
-def erc20_safe_approve(token: address, spender: address, amount: uint256):
-    response: Bytes[32] = raw_call(
-        token,
-        concat(
-            method_id("approve(address,uint256)"),
-            convert(spender,bytes32),
-            convert(amount,bytes32)
-        ),
-        max_outsize = 32
-    )
-    if len(response) > 0:
-        assert convert(response,bool), "Approval failed"
-
 @internal
 def _approve_token(token: address, spender: address, amount: uint256):
     if ERC20(token).allowance(self, spender) > 0:
-       self.erc20_safe_approve(token, spender, 0)
-    self.erc20_safe_approve(token, spender, amount)
+       ERC20(token).approve(spender, 0, default_return_value=True)
+    ERC20(token).approve(spender, amount, default_return_value=True)
 
 
 @external
