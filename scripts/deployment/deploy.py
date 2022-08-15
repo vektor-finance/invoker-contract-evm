@@ -25,16 +25,18 @@ def deploy_and_approve_contract_if_not_deployed(
 
     if registry.is_deployed(contract):
         print(f"{contract._name} already deployed. Skipping")
-        return registry.get_deployed_contract(contract), 0
-
-    deployed_contract, gas_used = registry.deploy(contract)
+        deployed_contract, gas_used = registry.get_deployed_contract(contract), 0
+    else:
+        deployed_contract, gas_used = registry.deploy(contract)
 
     if contract != Invoker:
         invoker = registry.get_deployed_contract(Invoker)
-        tx = invoker.grantRole(
-            APPROVED_COMMAND, deployed_contract, {"from": registry.trusted_deployers[0]}
-        )
-        gas_used += tx.gas_used
+        is_approved = invoker.hasRole(APPROVED_COMMAND, deployed_contract)
+        if not is_approved:
+            tx = invoker.grantRole(
+                APPROVED_COMMAND, deployed_contract, {"from": registry.trusted_deployers[0]}
+            )
+            gas_used += tx.gas_used
 
     print(f"{contract._name} has been deployed and approved.")
 
