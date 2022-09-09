@@ -1,0 +1,86 @@
+{
+  "pool": "0x7220FFD5Dc173BA3717E47033a01d870f06E5284",
+  "proto": [
+    {
+      "symbol": "DAI",
+      "address": "0x8D11eC38a3EB5E956B052f67Da8Bdc9bef8Abf3E",
+      "aTokenAddress": "0x8e4bFB85962A63caCfa2C0fde5eaD86D9b120B16",
+      "aTokenSymbol": "grainDAI",
+      "stableDebtTokenAddress": "0xfEda350d9d2E40c45911b998d057f44116Ec2b31",
+      "variableDebtTokenAddress": "0xa2b4a1C676d99E62744044D14Dc84f156D405cd1",
+      "decimals": 18
+    },
+    {
+      "symbol": "USDC",
+      "address": "0x04068DA6C83AFCFA0e13ba15A6696662335D5B75",
+      "aTokenAddress": "0x0638546741f12fA55F840A763A5aEF9671C74Fc1",
+      "aTokenSymbol": "grainUSDC",
+      "stableDebtTokenAddress": "0x79328AC2afc8F8ca43f171C559b1885eB073FFaD",
+      "variableDebtTokenAddress": "0xBF96F444F3e9e7730b028d54C4b3AAd94beefe1e",
+      "decimals": 6
+    },
+    {
+      "symbol": "fUSDT",
+      "address": "0x049d68029688eAbF473097a2fC38ef61633A3C7A",
+      "aTokenAddress": "0x6cBE07B362f2be4217a5ce247F07C422B0Bd88f3",
+      "aTokenSymbol": "grainUSDT",
+      "stableDebtTokenAddress": "0x8A4749a09996CbC64A29aee3e6e79Bb46c184227",
+      "variableDebtTokenAddress": "0x090335c737914bfF44d2c8039E5f689882dC8242",
+      "decimals": 6
+    },
+    {
+      "symbol": "BTC",
+      "address": "0x321162Cd933E2Be498Cd2267a90534A804051b11",
+      "aTokenAddress": "0xf3Cb6762F5C159a1494b01c50a131d7f2b24fb14",
+      "aTokenSymbol": "grainWBTC",
+      "stableDebtTokenAddress": "0xf94220d5cbc789BdB41Ac37BdfD876ce9c935348",
+      "variableDebtTokenAddress": "0x43ec673b1244ee137161b5E7cB41D1770549940E",
+      "decimals": 8
+    },
+    {
+      "symbol": "ETH",
+      "address": "0x74b23882a30290451A17c44f4F05243b6b58C76d",
+      "aTokenAddress": "0xA44E588Ec78066D27F768f4901A2577F821938a1",
+      "aTokenSymbol": "grainWETH",
+      "stableDebtTokenAddress": "0x820d438f88ED6B4B8798856a1746CfF95147460D",
+      "variableDebtTokenAddress": "0x73bfDE00d27eD9Fa671E9dDdBBc86b6cC51c5839",
+      "decimals": 18
+    },
+    {
+      "symbol": "WFTM",
+      "address": "0x21be370D5312f44cB42ce377BC9b8a0cEF1A4C83",
+      "aTokenAddress": "0x98d5105370191D641f32589B35cDa9eCd367C74F",
+      "aTokenSymbol": "grainFTM",
+      "stableDebtTokenAddress": "0x9C4babD83df9dC709b898D498766C94B6E7A1b84",
+      "variableDebtTokenAddress": "0x0f7f11AA3C42aaa5e653EbEd07220B4392a976A4",
+      "decimals": 18
+    },
+    {
+      "symbol": "BOO",
+      "address": "0x841FAD6EAe12c286d1Fd18d1d525DFfA75C7EFFE",
+      "aTokenAddress": "0x37D17a09f662d0145D1B4D6182D0cbEb8B90f9B7",
+      "aTokenSymbol": "grainBOO",
+      "stableDebtTokenAddress": "0xB48692b40b49ddAa20aA397733C798548fB295e5",
+      "variableDebtTokenAddress": "0x591A16dbE7836c1116F17C8F54f8970D49ab2E38",
+      "decimals": 18
+    },
+    {
+      "symbol": "LINK",
+      "address": "0xb3654dc3D10Ea7645f8319668E8F54d2574FBdC8",
+      "aTokenAddress": "0x072d8851075CA70f1112Ae54fC508fE2fA62bB5a",
+      "aTokenSymbol": "grainLINK",
+      "stableDebtTokenAddress": "0x20dd2e0afbc6469F91eE8D23a8bB0DA2Ee5a3b62",
+      "variableDebtTokenAddress": "0xE07D10416f58626cEcD3FD73B0B56482Bb5Ef117",
+      "decimals": 18
+    },
+    {
+      "symbol": "sFTMX",
+      "address": "0xd7028092c830b5C8FcE061Af2E593413EbbC1fc1",
+      "aTokenAddress": "0x4Bef26FA85C3B5c620c760f8f5427a520d9A0565",
+      "aTokenSymbol": "grainSFTMX",
+      "stableDebtTokenAddress": "0xA19B2e43Ff0B6879AD6d253CE6A1a7aC4a0F9133",
+      "variableDebtTokenAddress": "0x3e7498642AD798f15C410Fb9d61a79847Ff27194",
+      "decimals": 18
+    }
+  ]
+}
