@@ -306,6 +306,9 @@ arbitrum:
     - venue: uniswap_v3
       interfaces: [uniswap_router_v3]
       address: "0xE592427A0AEce92De3Edee1F18E0157C05861564"
+    - venue: aave_v2 # radiant capital
+      interfaces: [aave_v2_lending_pool]
+      address: "0x2032b9A8e9F7e76768CA9271003d3e43E1616B1F"
 
 fantom:
   id: fantom
