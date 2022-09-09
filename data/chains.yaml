@@ -306,9 +306,6 @@ arbitrum:
     - venue: uniswap_v3
       interfaces: [uniswap_router_v3]
       address: "0xE592427A0AEce92De3Edee1F18E0157C05861564"
-    - venue: aave_v2 # radiant capital
-      interfaces: [aave_v2_lending_pool]
-      address: "0x2032b9A8e9F7e76768CA9271003d3e43E1616B1F"
 
 fantom:
   id: fantom
@@ -352,10 +349,6 @@ fantom:
     - venue: spookyswap
       interfaces: [uniswap_router_v2_02]
       address: "0xf491e7b69e4244ad4002bc14e878a34207e38c29"
-    - venue: aave_v2 # geist
-      interfaces: [aave_v2_lending_pool]
-      address: "0x9FAD24f572045c7869117160A571B2e50b10d068"
-
 
 avalanche:
   id: avalanche
