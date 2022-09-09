@@ -21,6 +21,7 @@ file_name = {
     "1": {"2": "mainnet_v2.json"},
     "137": {"2": "polygon_v2.json", "3": "polygon_v3.json"},
     "42161": {"2": "radiant.json"},
+    "250": {"2": "geist.json"},
 }
 
 

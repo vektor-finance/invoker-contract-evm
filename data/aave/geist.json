@@ -1,0 +1,85 @@
+{
+  "proto": [
+    {
+      "symbol": "DAI",
+      "address": "0x8D11eC38a3EB5E956B052f67Da8Bdc9bef8Abf3E",
+      "aTokenAddress": "0x07E6332dD090D287d3489245038daF987955DCFB",
+      "aTokenSymbol": "aDAI",
+      "stableDebtTokenAddress": "0x069D292B2b7D7e588B09fa8329ea27545395d690",
+      "variableDebtTokenAddress": "0xd25aa085EF6a304C6861750f16A3Fa0D03d25DDB",
+      "decimals": 18
+    },
+    {
+      "symbol": "ETH",
+      "address": "0x74b23882a30290451A17c44f4F05243b6b58C76d",
+      "aTokenAddress": "0x25c130B2624CF12A4Ea30143eF50c5D68cEFA22f",
+      "aTokenSymbol": "aETH",
+      "stableDebtTokenAddress": "0xCeC0c5b239E42D59Ce3f8fBB54d7D30640FB4deE",
+      "variableDebtTokenAddress": "0xbDCE00a99a4b7E99f7A6Af7D44724F77D471F923",
+      "decimals": 18
+    },
+    {
+      "symbol": "WFTM",
+      "address": "0x21be370D5312f44cB42ce377BC9b8a0cEF1A4C83",
+      "aTokenAddress": "0x39B3bd37208CBaDE74D0fcBDBb12D606295b430a",
+      "aTokenSymbol": "aWFTM",
+      "stableDebtTokenAddress": "0xFE008b75b580C0C0DAf0B59F6b600F035Cc79C33",
+      "variableDebtTokenAddress": "0x53d01d351Fa001DB3c893388E43e3C630A8764F5",
+      "decimals": 18
+    },
+    {
+      "symbol": "BTC",
+      "address": "0x321162Cd933E2Be498Cd2267a90534A804051b11",
+      "aTokenAddress": "0x38aCa5484B8603373Acc6961Ecd57a6a594510A3",
+      "aTokenSymbol": "aBTC",
+      "stableDebtTokenAddress": "0x44088023b1Fd7F12d317cD7b192049019a4f61D9",
+      "variableDebtTokenAddress": "0x4318d7aD332A0feE9Db6D2B9b4B021fDA865aBdB",
+      "decimals": 8
+    },
+    {
+      "symbol": "fUSDT",
+      "address": "0x049d68029688eAbF473097a2fC38ef61633A3C7A",
+      "aTokenAddress": "0x940F41F0ec9ba1A34CF001cc03347ac092F5F6B5",
+      "aTokenSymbol": "afUSDT",
+      "stableDebtTokenAddress": "0xe22367ed4eC6fD250f712D61560BB46Ce5B29a82",
+      "variableDebtTokenAddress": "0x816eD5Ee0c7b011024be3fb5b6166f59A7cbe0e4",
+      "decimals": 6
+    },
+    {
+      "symbol": "USDC",
+      "address": "0x04068DA6C83AFCFA0e13ba15A6696662335D5B75",
+      "aTokenAddress": "0xe578C856933D8e1082740bf7661e379Aa2A30b26",
+      "aTokenSymbol": "aUSDC",
+      "stableDebtTokenAddress": "0x66aB97bCcE5176dd81601be0e806cDE8370896F7",
+      "variableDebtTokenAddress": "0x3EeF981640064d63BB7eaD4c6E3C0457E5c2934D",
+      "decimals": 6
+    },
+    {
+      "symbol": "CRV",
+      "address": "0x1E4F97b9f9F913c46F1632781732927B9019C68b",
+      "aTokenAddress": "0x690754A168B022331cAA2467207c61919b3F8A98",
+      "aTokenSymbol": "aCRV",
+      "stableDebtTokenAddress": "0xdfEc74Cb2433527FBA605562Cf3d2FFA71D2Ef0c",
+      "variableDebtTokenAddress": "0x811A951D15f4DD33e9Aa8D6F7AfF6d1433fe644A",
+      "decimals": 18
+    },
+    {
+      "symbol": "MIM",
+      "address": "0x82f0B8B456c1A451378467398982d4834b6829c1",
+      "aTokenAddress": "0xc664Fc7b8487a3E10824Cda768c1d239F2403bBe",
+      "aTokenSymbol": "aMIM",
+      "stableDebtTokenAddress": "0x30522D0EA6Be3938cBEdF9a9020FA13C439EE71e",
+      "variableDebtTokenAddress": "0xe6f5b2d4DE014d8fa4c45b744921fFDf13f15D4a",
+      "decimals": 18
+    },
+    {
+      "symbol": "LINK",
+      "address": "0xb3654dc3D10Ea7645f8319668E8F54d2574FBdC8",
+      "aTokenAddress": "0xBeCF29265B0cc8D33fA24446599955C7bcF7F73B",
+      "aTokenSymbol": "aLINK",
+      "stableDebtTokenAddress": "0x54D547Ed8e6f6B237b3C5ee50680Bb08B35708b7",
+      "variableDebtTokenAddress": "0xFc8F690B285A013A86B7A71c0aF70bC57302e7e4",
+      "decimals": 18
+    }
+  ]
+}

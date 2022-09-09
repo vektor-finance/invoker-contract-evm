@@ -344,7 +344,7 @@ fantom:
       address: "0x049d68029688eabf473097a2fc38ef61633a3c7a"
       benefactor: "0x374b8a9f3ec5eb2d97eca84ea27aca45aa1c57ef"
     - name: Bitcoin
-      symbol: BTC
+      symbol: WBTC
       decimals: 8
       address: "0x321162cd933e2be498cd2267a90534a804051b11"
       benefactor: "0x38aca5484b8603373acc6961ecd57a6a594510a3"
@@ -352,6 +352,10 @@ fantom:
     - venue: spookyswap
       interfaces: [uniswap_router_v2_02]
       address: "0xf491e7b69e4244ad4002bc14e878a34207e38c29"
+    - venue: aave_v2 # geist
+      interfaces: [aave_v2_lending_pool]
+      address: "0x9FAD24f572045c7869117160A571B2e50b10d068"
+
 
 avalanche:
   id: avalanche
