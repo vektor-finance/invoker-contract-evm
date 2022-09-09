@@ -27,6 +27,7 @@ file_name = {
     # "43114": {"2": "granary_avalanche.json"},
     "10": {"2": "granary_optimism.json"},
     "100": {"2": "agave.json"},
+    "56": {"2": "valas.json"},
 }
 
 

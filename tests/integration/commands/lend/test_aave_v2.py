@@ -88,14 +88,17 @@ def test_borrow_and_repay(
     amount = 10**aave_token.decimals
 
     # use USDC for collateral, except to borrow usdc - then use wbtc
-    collateral = (
-        get_chain_token("wbtc")["address"]
-        if aave_token.symbol == "USDC"
-        else get_chain_token("usdc")["address"]
+    collateral_token = (
+        get_chain_token("wbtc") if aave_token.symbol == "USDC" else get_chain_token("usdc")
     )
-    mint_tokens_for(collateral, invoker, 1e12)
+    collateral = collateral_token["address"]
+    collateral_amount = 100_000 * 10 ** collateral_token["decimals"]
+    # This will give error #11 when the price of WBTC is greater than 100,000 USD
+    mint_tokens_for(collateral, invoker, collateral_amount)
 
-    calldata_supply = clend_aave.supply.encode_input(aave_token.pool, collateral, 1e12, alice)
+    calldata_supply = clend_aave.supply.encode_input(
+        aave_token.pool, collateral, collateral_amount, alice
+    )
 
     invoker.invoke([clend_aave], [calldata_supply], {"from": alice})
 

@@ -13,9 +13,9 @@ def registry_deployer_user(accounts):
 
 @pytest.fixture(scope="module")
 def alice(accounts):
-    yield accounts[3]
+    yield accounts[5]
 
 
 @pytest.fixture(scope="module")
 def bob(accounts):
-    yield accounts[4]
+    yield accounts[6]

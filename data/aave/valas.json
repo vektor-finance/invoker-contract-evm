@@ -1,0 +1,86 @@
+{
+  "pool": "0xE29A55A6AEFf5C8B1beedE5bCF2F0Cb3AF8F91f5",
+  "proto": [
+    {
+      "symbol": "WBNB",
+      "address": "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c",
+      "aTokenAddress": "0xB11A912CD93DcffA8b609b4C021E89723ceb7FE8",
+      "aTokenSymbol": "valBNB",
+      "stableDebtTokenAddress": "0x2Adc0c94A055f1FF64A35672D30Eb523ec647816",
+      "variableDebtTokenAddress": "0xE7CDC4e53915D50B74496847EeBa7233caE85CE5",
+      "decimals": 18
+    },
+    {
+      "symbol": "BUSD",
+      "address": "0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56",
+      "aTokenAddress": "0xaeD19DAB3cd68E4267aec7B2479b1eD2144Ad77f",
+      "aTokenSymbol": "valBUSD",
+      "stableDebtTokenAddress": "0x576efee43A35e8adf9FaaC6f9DDC5f8AAc77768F",
+      "variableDebtTokenAddress": "0x24758d41e5Aa89f79048076254A3d22927b2E0D4",
+      "decimals": 18
+    },
+    {
+      "symbol": "USDC",
+      "address": "0x8AC76a51cc950d9822D68b83fE1Ad97B32Cd580d",
+      "aTokenAddress": "0xA6fDEa1655910C504E974f7F1B520B74be21857B",
+      "aTokenSymbol": "valUSDC",
+      "stableDebtTokenAddress": "0xd67dF5a99512697305F121E669Dd10a1A5E6081c",
+      "variableDebtTokenAddress": "0x8Ef780a3e1C266aF586315a9aDA19dBfC3a1E45c",
+      "decimals": 18
+    },
+    {
+      "symbol": "USDT",
+      "address": "0x55d398326f99059fF775485246999027B3197955",
+      "aTokenAddress": "0x5f7f6cB266737B89f7aF86b30F03Ae94334b83e9",
+      "aTokenSymbol": "valUSDT",
+      "stableDebtTokenAddress": "0x0DBE974029970fFA1e298e1C1B723100c8f3B7b5",
+      "variableDebtTokenAddress": "0x256B441313e10b7210A6239070C085446a507bD8",
+      "decimals": 18
+    },
+    {
+      "symbol": "DAI",
+      "address": "0x1AF3F329e8BE154074D8769D1FFa4eE058B1DBc3",
+      "aTokenAddress": "0x2c85EBAE81b7078Cd656b2C6e2d58411cB41D91A",
+      "aTokenSymbol": "valDAI",
+      "stableDebtTokenAddress": "0x68cc1E4d949C41eDBB2b0A7498635E70c610072B",
+      "variableDebtTokenAddress": "0x1CF681fc1Df8aEF478A675DF40E62091B93E0Aac",
+      "decimals": 18
+    },
+    {
+      "symbol": "Cake",
+      "address": "0x0E09FaBB73Bd3Ade0a17ECC321fD13a19e81cE82",
+      "aTokenAddress": "0xC37079A50611a742A018c39ba1C5EbDd89896334",
+      "aTokenSymbol": "valCAKE",
+      "stableDebtTokenAddress": "0x0978AFdb6787779B4Eac6fEFE7E43e948F6cD6b8",
+      "variableDebtTokenAddress": "0xC7C7bF1F28d29cEa48F4AAAefb7E8C1FB43DB200",
+      "decimals": 18
+    },
+    {
+      "symbol": "ETH",
+      "address": "0x2170Ed0880ac9A755fd29B2688956BD959F933F8",
+      "aTokenAddress": "0x831F42c8A0892C1a5b7Fa3E972B3CE3AA40D676e",
+      "aTokenSymbol": "valETH",
+      "stableDebtTokenAddress": "0x27fE030832A8F01BCcBc0aAFBcb1C07da241D16c",
+      "variableDebtTokenAddress": "0x9e06035740ab5eD9F48D8fF8B588056693b83e3a",
+      "decimals": 18
+    },
+    {
+      "symbol": "BTCB",
+      "address": "0x7130d2A12B9BCbFAe4f2634d864A1Ee1Ce3Ead9c",
+      "aTokenAddress": "0x204992f7fCBC4c0455d7Fec5f712BeDd98E7d6d6",
+      "aTokenSymbol": "valBTCB",
+      "stableDebtTokenAddress": "0x07a1375a55C43fc8A02a051A3194cA400b30a890",
+      "variableDebtTokenAddress": "0x5651565e4F544911F16f9a717d3aCEccD29d1BdA",
+      "decimals": 18
+    },
+    {
+      "symbol": "TUSD",
+      "address": "0x14016E85a25aeb13065688cAFB43044C2ef86784",
+      "aTokenAddress": "0xBB5DDE96BAD874e4FFe000B41Fa5E98F0665a4BC",
+      "aTokenSymbol": "valTUSD",
+      "stableDebtTokenAddress": "0x8B0bFa69062315cD2063944d4d6723022B9c6E67",
+      "variableDebtTokenAddress": "0xaEB0AE2B4CF427E6E3ebe14b6B92f8bF2D68dfD4",
+      "decimals": 18
+    }
+  ]
+}

@@ -437,7 +437,7 @@ bsc:
       address: "0x2170ed0880ac9a755fd29b2688956bd959f933f8"
       benefactor: "0xbff4a34a4644a113e8200d7f1d79b3555f723afe"
     - name: Binance-Peg BTCB Token
-      symbol: BTCB
+      symbol: WBTC
       decimals: 18
       address: "0x7130d2a12b9bcbfae4f2634d864a1ee1ce3ead9c"
       benefactor: "0x882c173bc7ff3b7786ca16dfed3dfffb9ee7847b"
