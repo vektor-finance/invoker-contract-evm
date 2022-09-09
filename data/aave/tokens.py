@@ -15,13 +15,15 @@ class AaveAssetInfo:
     symbol: str
     address: str
     decimals: int
+    venue: str
+    pool: str
 
 
 file_name = {
     "1": {"2": "mainnet_v2.json"},
     "137": {"2": "polygon_v2.json", "3": "polygon_v3.json"},
     "42161": {"2": "radiant.json"},
-    "250": {"2": "geist.json"},
+    "250": {"2": ["geist.json", "granary_fantom.json"]},
 }
 
 
@@ -34,7 +36,10 @@ def get_aave_tokens(chain_id: str, version: int):
         for file in files:
             with open(os.path.join("data/aave", file), "r") as infile:
                 input = json.load(infile)
-            _tokens = [AaveAssetInfo(**data) for data in input["proto"]]
+            _tokens = [
+                AaveAssetInfo(**data, venue=file.split(".")[0], pool=input["pool"])
+                for data in input["proto"]
+            ]
             tokens.extend(_tokens)
         return tokens
     except KeyError:

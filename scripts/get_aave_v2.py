@@ -3,12 +3,13 @@ import os
 
 from brownie import interface
 
-AAVE_V2_LENDING_POOL = "0x2032b9A8e9F7e76768CA9271003d3e43E1616B1F"
-AAVE_V2_DATA_PROVIDER = "0xa3e42d11d8CC148160CC3ACED757FB44696a9CcA"
+AAVE_V2_LENDING_POOL = "0x7220FFD5Dc173BA3717E47033a01d870f06E5284"
+AAVE_V2_DATA_PROVIDER = "0x3132870d08f736505FF13B19199be17629085072"
 
 
 def main():
     data = {}
+    data["pool"] = AAVE_V2_LENDING_POOL
     data["proto"] = []
 
     LENDING_POOL = interface.AaveV2LendingPool(AAVE_V2_LENDING_POOL)
@@ -31,13 +32,14 @@ def main():
             _,
         ) = LENDING_POOL.getReserveData(token_address)
         decimals = interface.ERC20Detailed(token_address).decimals()
+        asymbol = interface.ERC20Detailed(a_token_address).symbol()
 
         data["proto"].append(
             {
                 "symbol": symbol,
                 "address": token_address,
                 "aTokenAddress": a_token_address,
-                "aTokenSymbol": "a" + symbol,
+                "aTokenSymbol": asymbol,
                 "stableDebtTokenAddress": stable_debt_address,
                 "variableDebtTokenAddress": variable_debt_address,
                 "decimals": decimals,
