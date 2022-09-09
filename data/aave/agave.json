@@ -1,0 +1,68 @@
+{
+  "pool": "0x5E15d5E33d318dCEd84Bfe3F4EACe07909bE6d9c",
+  "proto": [
+    {
+      "symbol": "USDC",
+      "address": "0xDDAfbb505ad214D7b80b1f830fcCc89B60fb7A83",
+      "aTokenAddress": "0x291B5957c9CBe9Ca6f0b98281594b4eB495F4ec1",
+      "aTokenSymbol": "agUSDC",
+      "stableDebtTokenAddress": "0x05c43e14d38bC5123F6408A57BE03714aB689F6e",
+      "variableDebtTokenAddress": "0xa728C8f1CF7fC4d8c6d5195945C3760c87532724",
+      "decimals": 6
+    },
+    {
+      "symbol": "WXDAI",
+      "address": "0xe91D153E0b41518A2Ce8Dd3D7944Fa863463a97d",
+      "aTokenAddress": "0xd4e420bBf00b0F409188b338c5D87Df761d6C894",
+      "aTokenSymbol": "agWXDAI",
+      "stableDebtTokenAddress": "0xF4401355B41c867edbF09C821FA7B4fffbed5C82",
+      "variableDebtTokenAddress": "0xec72De30C3084023F7908002A2252a606CCe0B2c",
+      "decimals": 18
+    },
+    {
+      "symbol": "LINK",
+      "address": "0xE2e73A1c69ecF83F464EFCE6A5be353a37cA09b2",
+      "aTokenAddress": "0xa286Ce70FB3a6269676c8d99BD9860DE212252Ef",
+      "aTokenSymbol": "agLINK",
+      "stableDebtTokenAddress": "0x4f9401Fb52fe53de977dcbF05A0F6237AaDC7Eb1",
+      "variableDebtTokenAddress": "0x5b0568531322759EAB69269a86448b39B47e2AE8",
+      "decimals": 18
+    },
+    {
+      "symbol": "GNO",
+      "address": "0x9C58BAcC331c9aa871AFD802DB6379a98e80CEdb",
+      "aTokenAddress": "0xA26783eAd6C1f4744685c14079950622674ae8A8",
+      "aTokenSymbol": "agGNO",
+      "stableDebtTokenAddress": "0x0DfD401903bA960B2EED32A10f8aeB601Cd9A7A5",
+      "variableDebtTokenAddress": "0x99272C6E2Baa601cEA8212b8fBAA7920A9f916F0",
+      "decimals": 18
+    },
+    {
+      "symbol": "WBTC",
+      "address": "0x8e5bBbb09Ed1ebdE8674Cda39A0c169401db4252",
+      "aTokenAddress": "0x4863cfaF3392F20531aa72CE19E5783f489817d6",
+      "aTokenSymbol": "agWBTC",
+      "stableDebtTokenAddress": "0xca0f3B157165FE11692a047ea14963ffAdfB31fD",
+      "variableDebtTokenAddress": "0x110C5A1494F0AB6C851abB72AA2efa3dA738aB72",
+      "decimals": 8
+    },
+    {
+      "symbol": "WETH",
+      "address": "0x6A023CCd1ff6F2045C3309768eAd9E68F978f6e1",
+      "aTokenAddress": "0x44932e3b1E662AdDE2F7bac6D5081C5adab908c6",
+      "aTokenSymbol": "agWETH",
+      "stableDebtTokenAddress": "0x43Ae4A9474eA23b0BC04C99F9fF2A9B4c2d5554c",
+      "variableDebtTokenAddress": "0x73Ada33D706085d6B93350B5e6aED6178905Fb8A",
+      "decimals": 18
+    },
+    {
+      "symbol": "FOX",
+      "address": "0x21a42669643f45Bc0e086b8Fc2ed70c23D67509d",
+      "aTokenAddress": "0xA916A4891D80494c6cB0B49b11FD68238AAaF617",
+      "aTokenSymbol": "agFOX",
+      "stableDebtTokenAddress": "0x6Ca958336e7A1BDCDf7762aeb81613EaDdCc3110",
+      "variableDebtTokenAddress": "0x7388cbdeb284902E1e07be616F92Adb3660Ed3a4",
+      "decimals": 18
+    }
+  ]
+}
