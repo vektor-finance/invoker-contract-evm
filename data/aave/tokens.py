@@ -17,17 +17,24 @@ class AaveAssetInfo:
     decimals: int
 
 
+file_name = {
+    "1": {"2": "mainnet_v2.json"},
+    "137": {"2": "polygon_v2.json", "3": "polygon_v3.json"},
+    "42161": {"2": "radiant.json"},
+}
+
+
 def get_aave_tokens(chain_id: str, version: int):
+    tokens = []
     try:
-        file_name = {
-            "1": {"2": "mainnet_v2.json"},
-            "137": {"2": "polygon_v2.json", "3": "polygon_v3.json"},
-        }
-        with open(os.path.join("data/aave", file_name[chain_id][version]), "r") as infile:
-            input = json.load(infile)
-        tokens = [AaveAssetInfo(**data) for data in input["proto"]]
-        # KNC is disabled on protocol
-        tokens[:] = [t for t in tokens if t.symbol != "KNC"]
+        files = file_name[chain_id][version]
+        if isinstance(files, str):
+            files = [files]
+        for file in files:
+            with open(os.path.join("data/aave", file), "r") as infile:
+                input = json.load(infile)
+            _tokens = [AaveAssetInfo(**data) for data in input["proto"]]
+            tokens.extend(_tokens)
         return tokens
     except KeyError:
         return []

@@ -3,13 +3,16 @@ import os
 
 from brownie import interface
 
+AAVE_V2_LENDING_POOL = "0x2032b9A8e9F7e76768CA9271003d3e43E1616B1F"
+AAVE_V2_DATA_PROVIDER = "0xa3e42d11d8CC148160CC3ACED757FB44696a9CcA"
+
 
 def main():
     data = {}
     data["proto"] = []
 
-    LENDING_POOL = interface.AaveV2LendingPool("0x7d2768de32b0b80b7a3454c06bdac94a69ddc7a9")
-    ADP = interface.AaveV2DataProvider("0x057835Ad21a177dbdd3090bB1CAE03EaCF78Fc6d")
+    LENDING_POOL = interface.AaveV2LendingPool(AAVE_V2_LENDING_POOL)
+    ADP = interface.AaveV2DataProvider(AAVE_V2_DATA_PROVIDER)
     reserve_tokens = ADP.getAllReservesTokens()
 
     for (symbol, token_address) in reserve_tokens:
