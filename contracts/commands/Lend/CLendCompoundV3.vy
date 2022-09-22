@@ -36,12 +36,12 @@ def withdraw(comet: address, asset: address, amount: uint256, receiver: address)
 
 @external
 @payable
-def borrow(comet: address, asset: address, amount: uint256):
+def borrow(comet: address, amount: uint256, receiver: address):
     base_asset: address = Comet(comet).baseToken()
-    Comet(comet).withdrawFrom(msg.sender, msg.sender, base_asset, amount)
+    Comet(comet).withdrawFrom(msg.sender, receiver, base_asset, amount)
 
 @external
 @payable
-def repay(comet: address, asset: address, amount: uint256):
+def repay(comet: address, amount: uint256, receiver: address):
     base_asset: address = Comet(comet).baseToken()
-    Comet(comet).supplyFrom(msg.sender, msg.sender, base_asset, amount)
+    Comet(comet).supplyFrom(msg.sender, receiver, base_asset, amount)
