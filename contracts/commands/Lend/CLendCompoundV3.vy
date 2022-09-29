@@ -1,5 +1,5 @@
 """
-@title CLendAave.vy
+@title CLendCompoundV3.vy
 @license Unlicensed
 @notice This contract can be used by Invoker to interact with Compound V3
 
