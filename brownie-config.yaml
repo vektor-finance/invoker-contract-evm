@@ -3,8 +3,6 @@ compiler:
     version: 0.8.9
     remappings:
       - "@openzeppelin=OpenZeppelin/openzeppelin-contracts@4.2.0"
-  vyper:
-    version: 0.3.6
 
 networks:
   default: mainnet-hardhat-fork
