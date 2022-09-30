@@ -1,3 +1,4 @@
+# @version 0.3.7
 """
 Simple ERC20 contract which can be used for testing.
 DO NOT deploy this

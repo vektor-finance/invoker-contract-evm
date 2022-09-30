@@ -1,3 +1,4 @@
+# @version 0.3.7
 """
 Simple ERC20 contract which can be used for testing.
 Sends 5% of transferred amount to owner, and burns 5%
