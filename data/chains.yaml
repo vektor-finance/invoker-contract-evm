@@ -16,7 +16,7 @@ mainnet:
   eip1559: true
   network:
     prod: mainnet-prod
-    fork: mainnet-infura-hardhat-fork
+    fork: mainnet-hardhat-fork
   assets:
     - name: Ethereum
       symbol: ETH
