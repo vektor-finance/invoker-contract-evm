@@ -22,14 +22,14 @@ curve:
     - '0x6b175474e89094c44da98b954eedeac495271d0f'
     - '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'
     - '0xdac17f958d2ee523a2206206994597c13d831ec7'
-  # - chain_id: 1
-  #   coins:
-  #   - '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'
-  #   - '0xe95a203b1a91a908f9b9ce46459d101078c2c3cb'
-  #   is_underlying: false
-  #   is_v1: false
-  #   name: aeth [ETH, aETHc]
-  #   pool_address: '0xA96A65c051bF88B4095Ee1f2451C2A9d43F53Ae2'
+  - chain_id: 1
+    coins:
+    - '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'
+    - '0xe95a203b1a91a908f9b9ce46459d101078c2c3cb'
+    is_underlying: false
+    is_v1: false
+    name: aeth [ETH, aETHc]
+    pool_address: '0xA96A65c051bF88B4095Ee1f2451C2A9d43F53Ae2'
   - chain_id: 1
     coins:
     - '0xc2cb1040220768554cf699b0d863a3cd4324ce32'
@@ -136,22 +136,22 @@ curve:
     is_v1: true
     name: sbtc [renBTC, WBTC, sBTC]
     pool_address: '0x7fC77b5c7614E1533320Ea6DDc2Eb61fa00A9714'
-  # - chain_id: 1
-  #   coins:
-  #   - '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'
-  #   - '0x5e74c9036fb86bd7ecdcb084a0673efc32ea31cb'
-  #   is_underlying: false
-  #   is_v1: false
-  #   name: seth [ETH, sETH]
-  #   pool_address: '0xc5424B857f758E906013F3555Dad202e4bdB4567'
-  # - chain_id: 1
-  #   coins:
-  #   - '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'
-  #   - '0xae7ab96520de3a18e5e111b5eaab095312d7fe84'
-  #   is_underlying: false
-  #   is_v1: false
-  #   name: steth [ETH, stETH]
-  #   pool_address: '0xDC24316b9AE028F1497c275EB9192a3Ea0f67022'
+  - chain_id: 1
+    coins:
+    - '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'
+    - '0x5e74c9036fb86bd7ecdcb084a0673efc32ea31cb'
+    is_underlying: false
+    is_v1: false
+    name: seth [ETH, sETH]
+    pool_address: '0xc5424B857f758E906013F3555Dad202e4bdB4567'
+  - chain_id: 1
+    coins:
+    - '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'
+    - '0xae7ab96520de3a18e5e111b5eaab095312d7fe84'
+    is_underlying: false
+    is_v1: false
+    name: steth [ETH, stETH]
+    pool_address: '0xDC24316b9AE028F1497c275EB9192a3Ea0f67022'
   - chain_id: 1
     coins:
     - '0x6b175474e89094c44da98b954eedeac495271d0f'
@@ -411,14 +411,14 @@ curve:
     - '0x6b175474e89094c44da98b954eedeac495271d0f'
     - '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'
     - '0xdac17f958d2ee523a2206206994597c13d831ec7'
-  # - chain_id: 1
-  #   coins:
-  #   - '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'
-  #   - '0x9559aaa82d9649c7a7b220e7c461d2e74c9a3593'
-  #   is_underlying: false
-  #   is_v1: false
-  #   name: reth [ETH, rETH]
-  #   pool_address: '0xF9440930043eb3997fc70e1339dBb11F341de7A8'
+  - chain_id: 1
+    coins:
+    - '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'
+    - '0x9559aaa82d9649c7a7b220e7c461d2e74c9a3593'
+    is_underlying: false
+    is_v1: false
+    name: reth [ETH, rETH]
+    pool_address: '0xF9440930043eb3997fc70e1339dBb11F341de7A8'
   - chain_id: 1
     coins:
     - '0xbc6da0fe9ad5f3b0d58160288917aa56653660e9'
@@ -754,20 +754,12 @@ curve:
     pool_address: '0x3Fb78e61784C9c637D560eDE23Ad57CA1294c14a'
   - chain_id: 1
     coins:
-    - '0x478bbc744811ee8310b461514bdc29d03739084d'
-    - '0xd533a949740bb3306d119cc777fa900ba034cd52'
+    - '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'
+    - '0x0100546f2cd4c9d97f798ffc9755e47865ff7ee6'
     is_underlying: false
     is_v1: false
-    name: sdCRV [sdveCRV-DAO, CRV]
-    pool_address: '0x737bC004136f66aE3F8fd5a1199e81c18388097B'
-  # - chain_id: 1
-  #   coins:
-  #   - '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'
-  #   - '0x0100546f2cd4c9d97f798ffc9755e47865ff7ee6'
-  #   is_underlying: false
-  #   is_v1: false
-  #   name: alETH [ETH, alETH]
-  #   pool_address: '0xC4C319E2D4d66CcA4464C0c2B32c9Bd23ebe784e'
+    name: alETH [ETH, alETH]
+    pool_address: '0xC4C319E2D4d66CcA4464C0c2B32c9Bd23ebe784e'
   - chain_id: 1
     coins:
     - '0x18084fba666a33d37592fa2633fd49a74dd93a88'
@@ -862,14 +854,14 @@ curve:
     is_v1: false
     name: Badger Locked CVX [CVX, bveCVX]
     pool_address: '0x04c90C198b2eFF55716079bc06d7CCc4aa4d7512'
-  # - chain_id: 1
-  #   coins:
-  #   - '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'
-  #   - '0xd01ef7c0a5d8c432fc2d1a85c66cf2327362e5c6'
-  #   is_underlying: false
-  #   is_v1: false
-  #   name: Ankr Reward-Earning Staked ETH [ETH, aETHb]
-  #   pool_address: '0xFB9a265b5a1f52d97838Ec7274A0b1442efAcC87'
+  - chain_id: 1
+    coins:
+    - '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'
+    - '0xd01ef7c0a5d8c432fc2d1a85c66cf2327362e5c6'
+    is_underlying: false
+    is_v1: false
+    name: Ankr Reward-Earning Staked ETH [ETH, aETHb]
+    pool_address: '0xFB9a265b5a1f52d97838Ec7274A0b1442efAcC87'
   - chain_id: 1
     coins:
     - '0x853d955acef822db058eb8505911ed77f175b99e'
@@ -1285,14 +1277,6 @@ curve:
     - '0xdac17f958d2ee523a2206206994597c13d831ec7'
   - chain_id: 1
     coins:
-    - '0xd533a949740bb3306d119cc777fa900ba034cd52'
-    - '0xc5bddf9843308380375a611c18b50fb9341f502a'
-    is_underlying: false
-    is_v1: false
-    name: yveCRV [CRV, yveCRV-DAO]
-    pool_address: '0x7E46fd8a30869aa9ed55af031067Df666EfE87da'
-  - chain_id: 1
-    coins:
     - '0x99899399c097a55afb6b48f797dc5acfa7d343b1'
     - '0x6c3f90f043a72fa612cbac8115ee7e52bde6e490'
     is_underlying: true
@@ -1609,15 +1593,6 @@ curve:
     pool_address: '0xF3456E8061461e144b3f252E69DcD5b6070fdEE0'
   - chain_id: 1
     coins:
-    - '0x8cc0f052fff7ead7f2edcccac895502e884a8a71'
-    - '0x6b175474e89094c44da98b954eedeac495271d0f'
-    is_crypto: true
-    is_underlying: false
-    is_v1: false
-    name: ARTH/DAI [ARTH, DAI]
-    pool_address: '0xFD484A99d21CA118f22871134f467B1ca3F842Aa'
-  - chain_id: 1
-    coins:
     - '0xb4bd4628e6efb0cb521d9ec35050c75840320374'
     - '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2'
     is_crypto: true
@@ -1679,14 +1654,14 @@ curve:
     - '0xda10009cbd5d07dd0cecc66161fc93d7c9000da1'
     - '0x7f5c764cbc14f9669b88837ca1490cca17c31607'
     - '0x94b008aa00579c1307b0ef2c499ad98a8ce58e58'
-  # - chain_id: 10
-  #   coins:
-  #   - '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'
-  #   - '0xe405de8f52ba7559f9df3c368500b6e6ae6cee49'
-  #   is_underlying: false
-  #   is_v1: false
-  #   name: sETH/ETH [ETH, sETH]
-  #   pool_address: '0x7Bc5728BC2b59B45a58d9A576E2Ffc5f0505B35E'
+  - chain_id: 10
+    coins:
+    - '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'
+    - '0xe405de8f52ba7559f9df3c368500b6e6ae6cee49'
+    is_underlying: false
+    is_v1: false
+    name: sETH/ETH [ETH, sETH]
+    pool_address: '0x7Bc5728BC2b59B45a58d9A576E2Ffc5f0505B35E'
   '100':
   - chain_id: 100
     coins:
@@ -2672,14 +2647,14 @@ curve:
     - '0x07e6332dd090d287d3489245038daf987955dcfb'
     - '0xe578c856933d8e1082740bf7661e379aa2a30b26'
     - '0x940f41f0ec9ba1a34cf001cc03347ac092f5f6b5'
-  # - chain_id: 250
-  #   coins:
-  #   - '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'
-  #   - '0xc0d9784fdba39746919bbf236eb73bc015fd351d'
-  #   is_underlying: false
-  #   is_v1: false
-  #   name: Topshelf FTML [ETH, Fantom-L]
-  #   pool_address: '0x8B63F036F5a34226065bC0a7B0aE5bb5eBA1fF3D'
+  - chain_id: 250
+    coins:
+    - '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'
+    - '0xc0d9784fdba39746919bbf236eb73bc015fd351d'
+    is_underlying: false
+    is_v1: false
+    name: Topshelf FTML [ETH, Fantom-L]
+    pool_address: '0x8B63F036F5a34226065bC0a7B0aE5bb5eBA1fF3D'
   - chain_id: 250
     coins:
     - '0x432d99efb26c22948b0062c9e70f9a8f5b3811db'
@@ -3015,14 +2990,14 @@ curve:
     - '0x641441c631e2f909700d2f41fd87f0aa6a6b4edb'
     - '0xff970a61a04b1ca14834a43f5de4533ebddb5cc8'
     - '0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9'
-  # - chain_id: 42161
-  #   coins:
-  #   - '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'
-  #   - '0xcab86f6fb6d1c2cbeeb97854a0c023446a075fe3'
-  #   is_underlying: false
-  #   is_v1: false
-  #   name: deBridge-ETH [ETH, deETH]
-  #   pool_address: '0x0a824B5d4C96EA0EC46306Efbd34Bf88fE1277e0'
+  - chain_id: 42161
+    coins:
+    - '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'
+    - '0xcab86f6fb6d1c2cbeeb97854a0c023446a075fe3'
+    is_underlying: false
+    is_v1: false
+    name: deBridge-ETH [ETH, deETH]
+    pool_address: '0x0a824B5d4C96EA0EC46306Efbd34Bf88fE1277e0'
   - chain_id: 42161
     coins:
     - '0x1ddcaa4ed761428ae348befc6718bcb12e63bfaa'
@@ -3341,14 +3316,14 @@ curve:
     - '0x47afa96cdc9fab46904a55a6ad4bf6660b53c38a'
     - '0x46a51127c3ce23fb7ab1de06226147f446e4a857'
     - '0x532e6537fea298397212f09a61e03311686f548e'
-  # - chain_id: 43114
-  #   coins:
-  #   - '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'
-  #   - '0xe0237f9e2aaabd7ffb8630be5203d573a045bca7'
-  #   is_underlying: false
-  #   is_v1: false
-  #   name: Topshelf AVAXL [ETH, AVAX-L]
-  #   pool_address: '0x445109BcF194c538B73EA60C71bb773849bc9b79'
+  - chain_id: 43114
+    coins:
+    - '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'
+    - '0xe0237f9e2aaabd7ffb8630be5203d573a045bca7'
+    is_underlying: false
+    is_v1: false
+    name: Topshelf AVAXL [ETH, AVAX-L]
+    pool_address: '0x445109BcF194c538B73EA60C71bb773849bc9b79'
   - chain_id: 43114
     coins:
     - '0x0f577433bf59560ef2a79c124e9ff99fca258948'
