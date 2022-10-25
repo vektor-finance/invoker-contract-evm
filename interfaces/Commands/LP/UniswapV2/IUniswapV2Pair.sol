@@ -1,3 +1,4 @@
+// // SPDX-License-Identifier: GPL-3.0
 // https://github.com/Uniswap/v2-core/blob/master/contracts/interfaces/IUniswapV2Pair.sol
 pragma solidity >=0.5.0;
 

@@ -10,6 +10,11 @@ def get_chain_data():
         return yaml.safe_load(file)
 
 
+def get_all_chain_names():
+    data = get_chain_data()
+    return list(data.keys())
+
+
 def get_chain_from_network_name(network_name):
     """Returns 'chain' object from network name
     network_name specifically refers to the network name according to brownie
@@ -119,3 +124,27 @@ def is_uniswapv3_on_chain(chain):
         if "uniswap_router_v3" in contract["interfaces"]:
             return True
     return False
+
+
+def is_venue_on_chain(venue, chain):
+    assert venue in [
+        "aave_v2",
+        "aave_v3",
+        "uniswap_v3",
+        "uniswap",
+        "sushiswap",
+    ], "unrecognised venue"
+    for contract in chain["contracts"]:
+        if venue == contract["venue"]:
+            return contract["address"]
+    return None
+
+
+def get_chain_tokens():
+    chain = get_chain()
+    return chain["assets"]
+
+
+def get_chain_token(symbol: str):
+    tokens = get_chain_tokens()
+    return [a for a in tokens if a["symbol"] == symbol.upper()][0]

@@ -1,12 +1,15 @@
-# Will eventually move this file into test_swap
+import atexit
+from itertools import permutations
 
 import brownie
 import pytest
-from brownie import Contract
+from brownie import ETH_ADDRESS, interface
+from brownie.exceptions import VirtualMachineError
 
 from data.access_control import APPROVED_COMMAND
-from data.chain import get_chain
-from data.curve import CurveAssetType, get_curve_pools
+from data.chain import get_chain_id
+from data.curve import CurvePool, get_curve_pools
+from data.test_helpers import mint_tokens_for
 
 
 @pytest.fixture(scope="module")
@@ -17,128 +20,126 @@ def cswap_curve(invoker, deployer, CSwapCurve):
     yield contract
 
 
-@pytest.fixture(scope="module")
-def curve_dest(request, interface):
-    dest_token = Contract.from_abi(
-        request.param["name"], request.param["address"], interface.ERC20Detailed.abi
-    )
-    yield dest_token
-
-
-@pytest.fixture(scope="module")
-def provider(interface):
-    yield Contract.from_abi(
-        "Curve Provider", "0x0000000022D53366457F9d5E68Ec105046FC4383", interface.CurveProvider.abi
-    )
-
-
-@pytest.fixture(scope="module")
-def registry(provider, interface):
-    yield Contract.from_abi("Curve Registry", provider.get_registry(), interface.CurveRegistry.abi)
-
-
-@pytest.fixture(scope="function")
-def curve_pool(request):
-    yield request.param
-
-
 def pytest_generate_tests(metafunc):
-    chain = get_chain()
+    chain_id = get_chain_id()
+    pools = get_curve_pools(chain_id)
+    underlying_pools = [p for p in pools if p.is_underlying]
 
-    if "curve_pool" in metafunc.fixturenames:
-        pools = get_curve_pools(chain["chain_id"])
-        if pools is None:
-            pytest.skip("No Curve Pools")
-        pool_names = [pool.name for pool in pools]
-        metafunc.parametrize("curve_pool", pools, ids=pool_names, indirect=True)
-    if "curve_dest" in metafunc.fixturenames:
-        tokens = [asset for asset in chain["assets"] if asset.get("address")]
-        token_names = [token["name"] for token in tokens]
-        metafunc.parametrize("curve_dest", tokens, ids=token_names, indirect=True)
+    if "coins" in metafunc.fixturenames:
+        metafunc.parametrize(
+            "pool, coins",
+            [
+                (curve_pool, coin)
+                for curve_pool in pools
+                for coin in list(permutations(range(len(curve_pool.coins)), 2))
+            ],
+            ids=[
+                f"{pool.name}-{coin}"
+                for pool in pools
+                for coin in list(permutations(range(len(pool.coins)), 2))
+            ],
+        )
+    if "underlying_coins" in metafunc.fixturenames:
+        metafunc.parametrize(
+            "pool, underlying_coins",
+            [
+                (curve_pool, coin)
+                for curve_pool in underlying_pools
+                for coin in list(permutations(range(len(curve_pool.coins)), 2))
+            ],
+            ids=[
+                f"{pool.name}-{coin}"
+                for pool in underlying_pools
+                for coin in list(permutations(range(len(pool.coins)), 2))
+            ],
+        )
 
 
-@pytest.mark.only_curve_pool_tokens("tokens_for_alice", "curve_dest")
-def test_sell_with_curve(
-    curve_pool,
-    tokens_for_alice,
-    curve_dest,
-    invoker,
-    alice,
-    cswap_curve,
-    cmove,
-    interface,
-    registry,
-):
-
-    value = 10 ** tokens_for_alice.decimals()
-    underlying = False
-    is_crypto_pool = curve_pool.asset_type == CurveAssetType.CRYPTO
-    pool = curve_pool.swap_address
-    (i, j, underlying) = registry.get_coin_indices(pool, tokens_for_alice, curve_dest)
-    params = [pool, i, j, None]
-
-    if is_crypto_pool:
-        pool = Contract.from_abi("Curve Crypto Pool", pool, interface.CurveCryptoPool.abi)
+def quote_output(pool: CurvePool, i, j, value, underlying=False):
+    contract = None
+    if pool.is_crypto:
+        contract = interface.CurveCryptoPool(pool.pool_address)
     else:
-        pool = Contract.from_abi("Curve Pool", pool, interface.CurvePool.abi)
+        contract = interface.CurvePool(pool.pool_address)
 
-    if underlying:
-        amount_out = int(pool.get_dy_underlying(i, j, value) // 1.01)
+    try:
+        if underlying:
+            return contract.get_dy_underlying(i, j, value)
+        else:
+            return contract.get_dy(i, j, value)
+    except (VirtualMachineError, ValueError):
+        atexit.register(print, f"Could not get quote for {pool.name} {pool.pool_address}")
+
+
+DEFAULT_SLIPPAGE = 0.99
+
+
+def test_curve_sell(coins, pool: CurvePool, alice, invoker, cswap_curve):
+
+    i, j = coins
+    is_underlying = False
+    is_crypto = pool.is_crypto
+
+    amount = mint_tokens_for(pool.coins[i], invoker)
+    token_in = pool.coins[i]
+    token_out = pool.coins[j]
+
+    params = [pool.pool_address, i, j, (is_crypto * 2 + is_underlying)]
+
+    expected_output = quote_output(pool, i, j, amount, is_underlying)
+    min_output = int(expected_output * DEFAULT_SLIPPAGE)
+
+    calldata_swap = cswap_curve.sell.encode_input(amount, token_in, token_out, min_output, params)
+
+    invoker.invoke([cswap_curve], [calldata_swap], {"from": alice})
+
+    if token_out == ETH_ADDRESS.lower():
+        assert invoker.balance() > min_output
     else:
-        amount_out = int(pool.get_dy(i, j, value) // 1.01)
-
-    params[3] = (is_crypto_pool * 2) + underlying
-
-    tokens_for_alice.approve(invoker, value, {"from": alice})
-    calldata_move = cmove.moveERC20In.encode_input(tokens_for_alice, value)
-    calldata_swap = cswap_curve.sell.encode_input(
-        value, tokens_for_alice, curve_dest, amount_out, params
-    )
-
-    invoker.invoke([cmove, cswap_curve], [calldata_move, calldata_swap], {"from": alice})
-
-    assert curve_dest.balanceOf(invoker) >= amount_out
+        assert interface.ERC20Detailed(token_out).balanceOf(invoker) > min_output
 
 
-@pytest.mark.only_curve_pool_tokens("tokens_for_alice", "curve_dest")
-def test_buy_with_curve(
-    curve_pool,
-    tokens_for_alice,
-    curve_dest,
-    invoker,
-    alice,
-    cswap_curve,
-    cmove,
-    interface,
-    registry,
-):
+def test_curve_sell_underlying(underlying_coins, pool: CurvePool, alice, invoker, cswap_curve):
 
-    value = 10 ** tokens_for_alice.decimals()
-    underlying = False
-    is_crypto_pool = curve_pool.asset_type == CurveAssetType.CRYPTO
-    pool = curve_pool.swap_address
-    (i, j, underlying) = registry.get_coin_indices(pool, tokens_for_alice, curve_dest)
-    params = [pool, i, j, None]
+    i, j = underlying_coins
+    is_underlying = True
+    is_crypto = pool.is_crypto
 
-    if is_crypto_pool:
-        pool = Contract.from_abi("Curve Crypto Pool", pool, interface.CurveCryptoPool.abi)
+    amount = mint_tokens_for(pool.underlying_coins[i], invoker)
+    token_in = pool.underlying_coins[i]
+    token_out = pool.underlying_coins[j]
+
+    params = [pool.pool_address, i, j, (is_crypto * 2 + is_underlying)]
+
+    expected_output = quote_output(pool, i, j, amount, is_underlying)
+    min_output = int(expected_output * DEFAULT_SLIPPAGE)
+
+    calldata_swap = cswap_curve.sell.encode_input(amount, token_in, token_out, min_output, params)
+
+    invoker.invoke([cswap_curve], [calldata_swap], {"from": alice})
+
+    if token_out == ETH_ADDRESS.lower():
+        assert invoker.balance() > min_output
     else:
-        pool = Contract.from_abi("Curve Pool", pool, interface.CurvePool.abi)
+        assert interface.ERC20Detailed(token_out).balanceOf(invoker) > min_output
 
-    if underlying:
-        amount_out = int(pool.get_dy_underlying(i, j, value) // 1.01)
-    else:
-        amount_out = int(pool.get_dy(i, j, value) // 1.01)
 
-    params[3] = (is_crypto_pool * 2) + underlying
+def test_curve_buy_fail(invoker, cswap_curve, alice):
+    chain_id = get_chain_id()
+    curve_pools = get_curve_pools(chain_id)
+    try:
+        pool = curve_pools[0]
+    except IndexError:
+        pytest.skip("No curve pools to test")
 
-    tokens_for_alice.approve(invoker, value, {"from": alice})
-    calldata_move = cmove.moveERC20In.encode_input(tokens_for_alice, value)
+    amount = mint_tokens_for(pool.coins[0], invoker)
+    token_in = pool.coins[0]
+    token_out = pool.coins[1]
+    is_crypto = pool.is_crypto
 
-    # These are the same parameters for sell, just changed for buy
-    calldata_swap = cswap_curve.buy.encode_input(
-        value, tokens_for_alice, curve_dest, amount_out, params
-    )
+    params = [pool.pool_address, 0, 1, is_crypto * 2]
+
+    calldata_swap = cswap_curve.buy.encode_input(amount, token_in, token_out, 0, params)
 
     with brownie.reverts("CSwapCurve:buy not supported"):
-        invoker.invoke([cmove, cswap_curve], [calldata_move, calldata_swap], {"from": alice})
+        invoker.invoke([cswap_curve], [calldata_swap], {"from": alice})
