@@ -128,6 +128,18 @@ def test_move_deflationary_erc20_in(alice, mock_deflationary_erc20, invoker, cmo
     mock_deflationary_erc20.mint(alice, amount, {"from": alice})
     mock_deflationary_erc20.approve(invoker.address, amount, {"from": alice})
     calldata_move_deflationary_in = cmove.moveERC20In.encode_input(
+        mock_deflationary_erc20.address, amount, False
+    )
+    invoker.invoke([cmove.address], [calldata_move_deflationary_in], {"from": alice})
+    assert mock_deflationary_erc20.balanceOf(alice) == 0
+    assert mock_deflationary_erc20.balanceOf(invoker) == amount * 0.90
+
+
+def test_fail_move_deflationary_erc20_in(alice, mock_deflationary_erc20, invoker, cmove):
+    amount = 100 * 1e18
+    mock_deflationary_erc20.mint(alice, amount, {"from": alice})
+    mock_deflationary_erc20.approve(invoker.address, amount, {"from": alice})
+    calldata_move_deflationary_in = cmove.moveERC20In.encode_input(
         mock_deflationary_erc20.address, amount
     )
     with brownie.reverts("CMove: Deflationary token"):
@@ -138,6 +150,17 @@ def test_move_deflationary_erc20_out(alice, mock_deflationary_erc20, invoker, cm
     amount = 100 * 1e18
     mock_deflationary_erc20.mint(invoker.address, amount, {"from": alice})
     calldata_move_deflationary_out = cmove.moveERC20Out.encode_input(
+        mock_deflationary_erc20.address, alice, amount, False
+    )
+    invoker.invoke([cmove.address], [calldata_move_deflationary_out], {"from": alice})
+    assert mock_deflationary_erc20.balanceOf(alice) == amount * 0.90
+    assert mock_deflationary_erc20.balanceOf(invoker) == 0
+
+
+def test_fail_move_deflationary_erc20_out(alice, mock_deflationary_erc20, invoker, cmove):
+    amount = 100 * 1e18
+    mock_deflationary_erc20.mint(invoker.address, amount, {"from": alice})
+    calldata_move_deflationary_out = cmove.moveERC20Out.encode_input(
         mock_deflationary_erc20.address, alice, amount
     )
     with brownie.reverts("CMove: Deflationary token"):
@@ -145,6 +168,17 @@ def test_move_deflationary_erc20_out(alice, mock_deflationary_erc20, invoker, cm
 
 
 def test_move_all_deflationary_erc20_out(alice, mock_deflationary_erc20, invoker, cmove):
+    amount = 100 * 1e18
+    mock_deflationary_erc20.mint(invoker.address, amount, {"from": alice})
+    calldata_move_all_deflationary_out = cmove.moveAllERC20Out.encode_input(
+        mock_deflationary_erc20.address, alice, False
+    )
+    invoker.invoke([cmove.address], [calldata_move_all_deflationary_out], {"from": alice})
+    assert mock_deflationary_erc20.balanceOf(alice) == amount * 0.90
+    assert mock_deflationary_erc20.balanceOf(invoker) == 0
+
+
+def test_fail_move_all_deflationary_erc20_out(alice, mock_deflationary_erc20, invoker, cmove):
     amount = 100 * 1e18
     mock_deflationary_erc20.mint(invoker.address, amount, {"from": alice})
     calldata_move_all_deflationary_out = cmove.moveAllERC20Out.encode_input(
