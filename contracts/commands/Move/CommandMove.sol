@@ -16,6 +16,7 @@ contract CMove {
             Please note: user needs to approve invoker contract first
         @param _token The contract address for the ERC20 token
         @param _amount The amount of tokens to transfer
+        @param strict Whether to check the balance after the transfer to ensure full amount transferred
     **/
     function moveERC20In(
         IERC20 _token,
@@ -45,6 +46,7 @@ contract CMove {
         @param _token The contract address for the ERC20 token
         @param _to  The address you wish to send the tokens to
         @param _amount The amount of tokens to transfer
+        @param strict Whether to check the balance after the transfer to ensure full amount transferred
     **/
     function moveERC20Out(
         IERC20 _token,
@@ -78,6 +80,7 @@ contract CMove {
             Solidity compiler 0.8 has built in overflow checks
         @param _token The contract address for the ERC20 token
         @param _to  The address you wish to send the tokens to
+        @param strict Whether to check the balance after the transfer to ensure full amount transferred
     **/
     function moveAllERC20Out(
         IERC20 _token,
