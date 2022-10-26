@@ -18,6 +18,7 @@ development:
     cmd_settings:
       fork: mainnet-prod
       port: 8545
+      fork_block: 15825617
     host: http://localhost
     id: mainnet-hardhat-fork
     name: Hardhat (Mainnet Fork)
