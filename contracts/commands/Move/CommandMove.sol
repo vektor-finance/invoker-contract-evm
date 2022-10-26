@@ -25,7 +25,9 @@ contract CMove {
         uint256 balanceBefore = _token.balanceOf(address(this));
         _token.safeTransferFrom(msg.sender, address(this), _amount);
         uint256 balanceAfter = _token.balanceOf(address(this));
-        require(strict && balanceAfter == balanceBefore + _amount, "CMove: Deflationary token");
+        if (strict && balanceAfter != balanceBefore + _amount) {
+            revert("CMove: Deflationary token");
+        }
     }
 
     /**
@@ -53,7 +55,9 @@ contract CMove {
         uint256 balanceBefore = _token.balanceOf(_to);
         _token.safeTransfer(_to, _amount);
         uint256 balanceAfter = _token.balanceOf(_to);
-        require(strict && balanceAfter == balanceBefore + _amount, "CMove: Deflationary token");
+        if (strict && balanceAfter != balanceBefore + _amount) {
+            revert("CMove: Deflationary token");
+        }
     }
 
     /**
@@ -85,7 +89,9 @@ contract CMove {
             uint256 balanceBefore = _token.balanceOf(_to);
             _token.safeTransfer(_to, amount);
             uint256 balanceAfter = _token.balanceOf(_to);
-            require(strict && balanceAfter == balanceBefore + amount, "CMove: Deflationary token");
+            if (strict && balanceAfter != balanceBefore + amount) {
+                revert("CMove: Deflationary token");
+            }
         }
     }
 
