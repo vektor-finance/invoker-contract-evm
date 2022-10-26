@@ -1,4 +1,5 @@
 import brownie
+import pytest
 from brownie.test import strategy
 
 # ETH tests
@@ -66,6 +67,14 @@ def test_stateful(accounts, state_machine, invoker, cmove):
     state_machine(NativeEthStateMachine, accounts, invoker, cmove)
 
 
+def test_sweep_native_when_zero_balance(alice, invoker, cmove):
+    start_balance = alice.balance()
+    calldata_sweep = cmove.moveAllNativeOut.encode_input(alice.address)
+    invoker.invoke([cmove.address], [calldata_sweep], {"from": alice})
+    assert invoker.balance() == 0
+    assert alice.balance() == start_balance
+
+
 # ERC20 TESTS
 
 
@@ -95,6 +104,13 @@ def test_move_all_erc20_out(alice, mock_erc20, invoker, cmove):
     invoker.invoke([cmove.address], [calldata_move_all_out], {"from": alice})
     assert mock_erc20.balanceOf(invoker.address) == 0
     assert mock_erc20.balanceOf(alice) == amount
+
+
+def test_move_all_erc20_out_when_no_balance(alice, mock_erc20, invoker, cmove):
+    calldata_move_all_out = cmove.moveAllERC20Out.encode_input(mock_erc20.address, alice)
+    invoker.invoke([cmove.address], [calldata_move_all_out], {"from": alice})
+    assert mock_erc20.balanceOf(invoker.address) == 0
+    assert mock_erc20.balanceOf(alice) == 0
 
 
 def test_fail_insufficient_balance_move_erc20_in(alice, mock_erc20, invoker, cmove):
@@ -186,3 +202,29 @@ def test_fail_move_all_deflationary_erc20_out(alice, mock_deflationary_erc20, in
     )
     with brownie.reverts("CMove: Deflationary token"):
         invoker.invoke([cmove.address], [calldata_move_all_deflationary_out], {"from": alice})
+
+
+# Rebasing tokens
+# These tests are generally handled by the above tests,
+# but the following tests enforce that we have tested rebase tokens explicitly
+# to account for any unexpected rounding errors
+
+
+@pytest.fixture(scope="module")
+def rebase_setup(mock_rebasing_erc20, alice, bob, deployer, invoker):
+    mock_rebasing_erc20.set_pooled_eth(5, {"from": deployer})
+    mock_rebasing_erc20.mint(alice, 4, {"from": deployer})
+    mock_rebasing_erc20.mint(bob, 3, {"from": deployer})
+    mock_rebasing_erc20.approve(invoker, 100, {"from": alice})
+    yield mock_rebasing_erc20
+
+
+def test_rebase_move_in(rebase_setup, alice, cmove, invoker):
+    rebase_token = rebase_setup
+    calldata_move = cmove.moveERC20In.encode_input(rebase_token.address, 2)
+    with brownie.reverts("CMove: Deflationary token"):
+        invoker.invoke([cmove.address], [calldata_move], {"from": alice})
+    calldata_move = cmove.moveERC20In.encode_input(rebase_token.address, 2, False)
+    invoker.invoke([cmove.address], [calldata_move], {"from": alice})
+    assert rebase_token.balanceOf(invoker) == 1
+    assert rebase_token.balanceOf(alice) == 1
