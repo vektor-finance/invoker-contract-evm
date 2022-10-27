@@ -8,6 +8,14 @@ import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
 contract CMove {
     using SafeERC20 for IERC20;
 
+    function _validateBalance(
+        uint256 balanceBefore,
+        uint256 balanceAfter,
+        uint256 amount
+    ) internal view {
+        require(balanceAfter == balanceBefore + amount, "CMove: Deflationary token");
+    }
+
     /**
         @notice Allows a user to move their tokens to the invoker
         @dev Uses OpenZepellin SafeERC20, and validates balance before and after transfer
@@ -23,11 +31,14 @@ contract CMove {
         uint256 _amount,
         bool strict
     ) public payable {
-        uint256 balanceBefore = _token.balanceOf(address(this));
+        uint256 balanceBefore;
+        if (strict) {
+            balanceBefore = _token.balanceOf(address(this));
+        }
         _token.safeTransferFrom(msg.sender, address(this), _amount);
-        uint256 balanceAfter = _token.balanceOf(address(this));
-        if (strict && balanceAfter != balanceBefore + _amount) {
-            revert("CMove: Deflationary token");
+        if (strict) {
+            uint256 balanceAfter = _token.balanceOf(address(this));
+            _validateBalance(balanceBefore, balanceAfter, _amount);
         }
     }
 
@@ -54,11 +65,14 @@ contract CMove {
         uint256 _amount,
         bool strict
     ) public payable {
-        uint256 balanceBefore = _token.balanceOf(_to);
+        uint256 balanceBefore;
+        if (strict) {
+            balanceBefore = _token.balanceOf(_to);
+        }
         _token.safeTransfer(_to, _amount);
-        uint256 balanceAfter = _token.balanceOf(_to);
-        if (strict && balanceAfter != balanceBefore + _amount) {
-            revert("CMove: Deflationary token");
+        if (strict) {
+            uint256 balanceAfter = _token.balanceOf(_to);
+            _validateBalance(balanceBefore, balanceAfter, _amount);
         }
     }
 
@@ -89,11 +103,14 @@ contract CMove {
     ) public payable {
         uint256 amount = _token.balanceOf(address(this));
         if (amount > 0) {
-            uint256 balanceBefore = _token.balanceOf(_to);
+            uint256 balanceBefore;
+            if (strict) {
+                balanceBefore = _token.balanceOf(_to);
+            }
             _token.safeTransfer(_to, amount);
-            uint256 balanceAfter = _token.balanceOf(_to);
-            if (strict && balanceAfter != balanceBefore + amount) {
-                revert("CMove: Deflationary token");
+            if (strict) {
+                uint256 balanceAfter = _token.balanceOf(_to);
+                _validateBalance(balanceBefore, balanceAfter, amount);
             }
         }
     }
