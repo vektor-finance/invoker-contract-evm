@@ -13,5 +13,10 @@ def mock_deflationary_erc20(deployer, MockERC20Deflationary):
 
 
 @pytest.fixture(scope="module")
+def mock_rebasing_erc20(deployer, MockERC20Rebasing):
+    yield deployer.deploy(MockERC20Rebasing, "Rebasing Test Token", "RTT", 18)
+
+
+@pytest.fixture(scope="module")
 def mock_erc721(deployer, MockERC721):
     yield deployer.deploy(MockERC721, "Mock ERC721", "NFT TEST")
