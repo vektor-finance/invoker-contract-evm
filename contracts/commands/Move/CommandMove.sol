@@ -13,7 +13,7 @@ contract CMove {
         uint256 balanceAfter,
         uint256 amount
     ) internal view {
-        require(balanceAfter == balanceBefore + amount, "CMove: Deflationary token");
+        require(balanceAfter == (balanceBefore + amount), "CMove: Deflationary token");
     }
 
     /**
