@@ -2,11 +2,10 @@
 
 pragma solidity ^0.8.6;
 
-import "./Storage.sol";
 import "@openzeppelin/contracts/utils/Address.sol";
 import "./utils/PausableAccessControl.sol";
 
-contract Invoker is Storage, PausableAccessControl {
+contract Invoker is PausableAccessControl {
     using Address for address;
 
     bytes32 public constant APPROVED_COMMAND_IMPLEMENTATION =
