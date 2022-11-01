@@ -34,7 +34,7 @@ contract Invoker is Storage, Log, PausableAccessControl {
         whenNotPaused
         returns (bytes[] memory output)
     {
-        require(_tos.length == _datas.length, "dev: to+data length not equal"); // dev: to+data length not equal
+        require(_tos.length == _datas.length, "dev: to+data length not equal");
         output = new bytes[](_tos.length);
         for (uint256 i = 0; i < _tos.length; i++) {
             output[i] = _invokeDelegate(_tos[i], _datas[i]);

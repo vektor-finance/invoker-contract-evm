@@ -3,7 +3,7 @@
 pragma solidity ^0.8.6;
 
 import "./CLPBase.sol";
-import "../../../interfaces/Commands/Swap/UniswapV2/IUniswapV2Router02.sol"; // There is a Namespace collision if we duplicate this into LP folder
+import "../../../interfaces/Commands/Swap/UniswapV2/IUniswapV2Router02.sol";
 import "../../../interfaces/Commands/LP/UniswapV2/IUniswapV2Factory.sol";
 import "../../../interfaces/Commands/LP/UniswapV2/IUniswapV2Pair.sol";
 import "../../../interfaces/Commands/LP/UniswapV2/ICLPUniswapV2.sol";
@@ -78,7 +78,7 @@ contract CLPUniswapV2 is CLPBase, ICLPUniswapV2 {
         uint256 balanceAfter0 = IERC20(token0).balanceOf(receiver);
         uint256 balanceAfter1 = IERC20(token1).balanceOf(receiver);
 
-        // It is vitally important that token0 corresponds to tokenA
+        // token0 corresponds to tokenA, token1 corresponds to tokenB
         require(
             balanceAfter0 >= balanceBefore0 + params.amountAMin,
             "CLPUniswapV2: insufficient A received"
@@ -90,7 +90,6 @@ contract CLPUniswapV2 is CLPBase, ICLPUniswapV2 {
     }
 
     // https://github.com/Uniswap/v2-core/blob/master/contracts/UniswapV2ERC20.sol#L81
-    // Should refactor this into base contract
     function eip2612Permit(
         IERC2612 token,
         address owner,
