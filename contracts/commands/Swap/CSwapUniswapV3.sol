@@ -14,7 +14,6 @@ contract CSwapUniswapV3 is CSwapBase, ICSwapUniswapV3 {
     /** @notice Use this function to SELL a fixed amount of an asset.
         @dev This function sells an EXACT amount of `tokenIn` to receive `tokenOut`.
         If the price is worse than a threshold, the transaction will revert.
-        This function was previously known as 'swapUniswapIn'
         @param amountIn The exact amount of `tokenIn` to sell.
         @param tokenIn The token to sell. Note: This must be an ERC20 token.
         @param tokenOut The token that the user wishes to receive. Note: This must be an ERC20 token.

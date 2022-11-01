@@ -71,9 +71,9 @@ contract CLPUniswapV3 is CLPBase, ICLPUniswapV3 {
         // receiver needs to be able to receive NFT
         INonfungiblePositionManager(params.router).mint(
             INonfungiblePositionManager.MintParams({
-                token0: pool.token0(), //todo: check if these use SLOAD
-                token1: pool.token1(), //todo: check if these use SLOAD
-                fee: pool.fee(), //todo: check if these use SLOAD
+                token0: pool.token0(),
+                token1: pool.token1(),
+                fee: pool.fee(),
                 tickLower: tickLower,
                 tickUpper: tickUpper,
                 amount0Desired: amountA,

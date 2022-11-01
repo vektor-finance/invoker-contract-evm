@@ -113,7 +113,7 @@ contract CSwapCurve is CSwapBase, ICSwapCurve {
         _postSwap(balanceBefore, tokenOut, minAmountOut, address(this));
     }
 
-    /** @notice This function is not implemented
+    /** @notice Function not implemented by choice
         @dev It is not possible to specify an EXACT number of tokens to buy using curve.
      */
     function buy(
@@ -125,6 +125,4 @@ contract CSwapCurve is CSwapBase, ICSwapCurve {
     ) external payable {
         _revertMsg("buy not supported");
     }
-
-    // need to consider how to handle native eth (alternatively, enforce wrapped eth)
 }
