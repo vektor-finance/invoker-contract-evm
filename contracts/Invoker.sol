@@ -4,10 +4,9 @@ pragma solidity ^0.8.6;
 
 import "./Storage.sol";
 import "@openzeppelin/contracts/utils/Address.sol";
-import "./utils/Log.sol";
 import "./utils/PausableAccessControl.sol";
 
-contract Invoker is Storage, Log, PausableAccessControl {
+contract Invoker is Storage, PausableAccessControl {
     using Address for address;
 
     bytes32 public constant APPROVED_COMMAND_IMPLEMENTATION =
@@ -23,14 +22,12 @@ contract Invoker is Storage, Log, PausableAccessControl {
 
     function _invokeDelegate(address _to, bytes calldata _data) private returns (bytes memory) {
         require(hasRole(APPROVED_COMMAND_IMPLEMENTATION, _to), "Command not approved");
-        logStep(_data);
         return _to.functionDelegateCall(_data);
     }
 
     function invoke(address[] calldata _tos, bytes[] calldata _datas)
         external
         payable
-        logInvocation
         whenNotPaused
         returns (bytes[] memory output)
     {
