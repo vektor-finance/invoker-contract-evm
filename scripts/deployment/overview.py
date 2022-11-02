@@ -35,8 +35,12 @@ def get_network_deployment_info():
                 status = ""
                 deployed_contract = registry.get_deployed_contract(contract)
                 if contract != Invoker:
-                    invoker = registry.get_deployed_contract(Invoker)
-                    is_approved = invoker.hasRole(APPROVED_COMMAND, deployed_contract.address)
+                    is_approved = False
+                    try:
+                        invoker = registry.get_deployed_contract(Invoker)
+                        is_approved = invoker.hasRole(APPROVED_COMMAND, deployed_contract.address)
+                    except ContractNotFound:
+                        pass
                     status = "✅ " if is_approved else "❌ "
                 network_deployments[contract._name] = status + shorten_address(
                     deployed_contract.address
