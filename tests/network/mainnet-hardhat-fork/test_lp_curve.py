@@ -16,6 +16,11 @@ def pytest_generate_tests(metafunc):
     if "pool" in metafunc.fixturenames:
         metafunc.parametrize("pool", pools, ids=[pool.name for pool in pools])
 
+    if "metapool" in metafunc.fixturenames:
+        metafunc.parametrize(
+            "metapool", [p for p in pools if p.is_meta], ids=[p.name for p in pools if p.is_meta]
+        )
+
 
 class CurveLPType(IntEnum):
     BASE = 0
@@ -60,12 +65,31 @@ def test_deposit_and_withdraw(pool: CurvePool, invoker, clp_curve, alice):
         amount = mint_tokens_for(coin, invoker)
         amounts.append(amount / 10)
 
-    calldata = clp_curve.deposit.encode_input(pool.coins, amounts, get_deposit_params(pool, False))
-    invoker.invoke([clp_curve], [calldata], {"from": alice})
+    deposit = clp_curve.deposit.encode_input(pool.coins, amounts, get_deposit_params(pool, False))
+    invoker.invoke([clp_curve], [deposit], {"from": alice})
 
     withdraw_amount = int(interface.ERC20Detailed(pool.lp_token).balanceOf(invoker) / 2)
 
     withdraw = clp_curve.withdraw.encode_input(
         pool.lp_token, withdraw_amount, get_withdraw_params(pool, False)
+    )
+    invoker.invoke([clp_curve], [withdraw], {"from": alice})
+
+
+def test_metapool_deposit_and_withdraw(metapool: CurvePool, invoker, clp_curve, alice):
+    amounts = []
+    for coin in metapool.underlying_coins:
+        amount = mint_tokens_for(coin, invoker)
+        amounts.append(amount / 10)
+
+    deposit = clp_curve.deposit.encode_input(
+        metapool.underlying_coins, amounts, get_deposit_params(metapool, True)
+    )
+    invoker.invoke([clp_curve], [deposit], {"from": alice})
+
+    withdraw_amount = int(interface.ERC20Detailed(metapool.lp_token).balanceOf(invoker) / 2)
+
+    withdraw = clp_curve.withdraw.encode_input(
+        metapool.lp_token, withdraw_amount, get_withdraw_params(metapool, False)
     )
     invoker.invoke([clp_curve], [withdraw], {"from": alice})
