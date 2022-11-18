@@ -10,6 +10,8 @@ import "../../../interfaces/Commands/LP/Curve/ICurveDepositMetapoolZap.sol";
 import "./CLPBase.sol";
 
 contract CLPCurve is CLPBase, ICLPCurve {
+    address public constant ETH_ADDRESS = 0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE;
+
     function _getContractName() internal pure override returns (string memory) {
         return "CLPCurve";
     }
@@ -20,18 +22,23 @@ contract CLPCurve is CLPBase, ICLPCurve {
         CurveLPDepositParams calldata params
     ) external payable {
         _requireMsg(amounts.length == tokens.length, "amounts+tokens length not equal");
+        uint256 ethAmount = 0;
         // for loop `i` cannot overflow, so we use unchecked block to save gas
         unchecked {
             for (uint256 i; i < tokens.length; ++i) {
                 if (amounts[i] > 0) {
-                    _approveToken(tokens[i], params.curveDepositAddress, amounts[i]);
+                    if (address(tokens[i]) == ETH_ADDRESS) {
+                        ethAmount = amounts[i];
+                    } else {
+                        _approveToken(tokens[i], params.curveDepositAddress, amounts[i]);
+                    }
                 }
             }
         }
         if (amounts.length == 2) {
             uint256[2] memory _tokenAmounts = [amounts[0], amounts[1]];
             if (params.lpType == CurveLPType.BASE || params.lpType == CurveLPType.HELPER) {
-                ICurveDepositZap(params.curveDepositAddress).add_liquidity(
+                ICurveDepositZap(params.curveDepositAddress).add_liquidity{value: ethAmount}(
                     _tokenAmounts,
                     params.minReceivedLiquidity
                 );
@@ -47,7 +54,7 @@ contract CLPCurve is CLPBase, ICLPCurve {
         } else if (amounts.length == 3) {
             uint256[3] memory _tokenAmounts = [amounts[0], amounts[1], amounts[2]];
             if (params.lpType == CurveLPType.BASE || params.lpType == CurveLPType.HELPER) {
-                ICurveDepositZap(params.curveDepositAddress).add_liquidity(
+                ICurveDepositZap(params.curveDepositAddress).add_liquidity{value: ethAmount}(
                     _tokenAmounts,
                     params.minReceivedLiquidity
                 );
@@ -69,7 +76,7 @@ contract CLPCurve is CLPBase, ICLPCurve {
         } else if (amounts.length == 4) {
             uint256[4] memory _tokenAmounts = [amounts[0], amounts[1], amounts[2], amounts[3]];
             if (params.lpType == CurveLPType.BASE || params.lpType == CurveLPType.HELPER) {
-                ICurveDepositZap(params.curveDepositAddress).add_liquidity(
+                ICurveDepositZap(params.curveDepositAddress).add_liquidity{value: ethAmount}(
                     _tokenAmounts,
                     params.minReceivedLiquidity
                 );

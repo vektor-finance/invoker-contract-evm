@@ -1,7 +1,7 @@
 from enum import IntEnum
 
 import pytest
-from brownie import ZERO_ADDRESS
+from brownie import ZERO_ADDRESS, interface
 
 from data.access_control import APPROVED_COMMAND
 from data.chain import get_chain_id
@@ -31,7 +31,7 @@ def clp_curve(invoker, deployer, CLPCurve):
     yield contract
 
 
-def get_params(pool: CurvePool, underlying=False):
+def get_deposit_params(pool: CurvePool, underlying=False):
     lp_type = CurveLPType.BASE
     deposit_address = pool.pool_address
     metapool_address = ZERO_ADDRESS
@@ -48,11 +48,24 @@ def get_params(pool: CurvePool, underlying=False):
     return [0, lp_type, deposit_address, metapool_address]
 
 
-def test_deposit(pool: CurvePool, invoker, clp_curve, alice):
+def get_withdraw_params(pool: CurvePool, underlying=False):
+    wip = get_deposit_params(pool, underlying)
+    wip[0] = [0] * len(pool.coins)
+    return wip
+
+
+def test_deposit_and_withdraw(pool: CurvePool, invoker, clp_curve, alice):
     amounts = []
     for coin in pool.coins:
         amount = mint_tokens_for(coin, invoker)
         amounts.append(amount / 10)
 
-    calldata = clp_curve.deposit.encode_input(pool.coins, amounts, get_params(pool, False))
+    calldata = clp_curve.deposit.encode_input(pool.coins, amounts, get_deposit_params(pool, False))
     invoker.invoke([clp_curve], [calldata], {"from": alice})
+
+    withdraw_amount = int(interface.ERC20Detailed(pool.lp_token).balanceOf(invoker) / 2)
+
+    withdraw = clp_curve.withdraw.encode_input(
+        pool.lp_token, withdraw_amount, get_withdraw_params(pool, False)
+    )
+    invoker.invoke([clp_curve], [withdraw], {"from": alice})
