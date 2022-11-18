@@ -39,5 +39,6 @@ interface ICLPCurve {
         uint256[] minimumReceived;
         CurveLPType lpType;
         address curveWithdrawAddress;
+        address metapool;
     }
 }

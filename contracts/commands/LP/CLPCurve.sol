@@ -98,7 +98,7 @@ contract CLPCurve is CLPBase, ICLPCurve {
         uint256 liquidity,
         CurveLPWithdrawParams calldata params
     ) external payable {
-        if (params.lpType == CurveLPType.HELPER) {
+        if (params.lpType == CurveLPType.HELPER || params.lpType == CurveLPType.METAPOOL_HELPER) {
             _approveToken(LPToken, params.curveWithdrawAddress, liquidity);
         }
         if (params.minimumReceived.length == 2) {
@@ -131,6 +131,12 @@ contract CLPCurve is CLPBase, ICLPCurve {
                     liquidity,
                     _tokenAmounts
                 );
+            } else if (params.lpType == CurveLPType.METAPOOL_HELPER) {
+                ICurveDepositMetapoolZap(params.curveWithdrawAddress).remove_liquidity(
+                    params.metapool,
+                    liquidity,
+                    _tokenAmounts
+                );
             } else if (params.lpType == CurveLPType.UNDERLYING) {
                 ICurveDepositZap(params.curveWithdrawAddress).remove_liquidity(
                     liquidity,
@@ -149,6 +155,12 @@ contract CLPCurve is CLPBase, ICLPCurve {
             ];
             if (params.lpType == CurveLPType.BASE || params.lpType == CurveLPType.HELPER) {
                 ICurveDepositZap(params.curveWithdrawAddress).remove_liquidity(
+                    liquidity,
+                    _tokenAmounts
+                );
+            } else if (params.lpType == CurveLPType.METAPOOL_HELPER) {
+                ICurveDepositMetapoolZap(params.curveWithdrawAddress).remove_liquidity(
+                    params.metapool,
                     liquidity,
                     _tokenAmounts
                 );
