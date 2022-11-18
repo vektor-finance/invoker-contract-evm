@@ -20,14 +20,19 @@ class CurveAssetType(IntEnum):
 
 @dataclass
 class CurvePool:
+    venue: str
+    chain_id: str
+    coins: List[str]
+    underlying_coins: Optional[List[str]]
+    is_underlying: bool
+    is_meta: bool
+    is_crypto: bool
     name: str
     pool_address: str
-    coins: List[str]
-    is_underlying: bool
-    chain_id: int
-    underlying_coins: Optional[List[str]] = None
-    is_v1: Optional[bool] = False
-    is_crypto: Optional[bool] = False
+    lp_token: str
+    zap_address: Optional[str]
+    fee: str
+    balance_abi: str
 
     def __key(self):
         return (self.name, self.pool_address)

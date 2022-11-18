@@ -20,17 +20,20 @@ interface ICLPCurve {
         @param BASE The user is interacting directly with the Curve contract and depositing base assets.
         @param UNDERLYING The user is interacting directly with the Curve contract and depositing underlying assets.
         @param HELPER The user is interacting with a Curve `Deposit.vy` contract, and depositing underlying assets.
+        @param METAPOOL_HELPER The user is interacting with a Curve 'metapool_helper' contract, and depositing underlying assets.
     */
     enum CurveLPType {
         BASE,
         UNDERLYING,
-        HELPER
+        HELPER,
+        METAPOOL_HELPER
     }
 
     struct CurveLPDepositParams {
         uint256 minReceivedLiquidity;
         CurveLPType lpType;
         address curveDepositAddress;
+        address metapool;
     }
     struct CurveLPWithdrawParams {
         uint256[] minimumReceived;

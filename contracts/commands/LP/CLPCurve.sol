@@ -6,6 +6,7 @@ import "../../../interfaces/Commands/Swap/Curve/ICryptoPool.sol";
 import "../../../interfaces/Commands/Swap/Curve/ICurvePool.sol";
 import "../../../interfaces/Commands/LP/Curve/ICLPCurve.sol";
 import "../../../interfaces/Commands/LP/Curve/ICurveDepositZap.sol";
+import "../../../interfaces/Commands/LP/Curve/ICurveDepositMetapoolZap.sol";
 import "./CLPBase.sol";
 
 contract CLPCurve is CLPBase, ICLPCurve {
@@ -50,6 +51,12 @@ contract CLPCurve is CLPBase, ICLPCurve {
                     _tokenAmounts,
                     params.minReceivedLiquidity
                 );
+            } else if (params.lpType == CurveLPType.METAPOOL_HELPER) {
+                ICurveDepositMetapoolZap(params.curveDepositAddress).add_liquidity(
+                    params.metapool,
+                    _tokenAmounts,
+                    params.minReceivedLiquidity
+                );
             } else if (params.lpType == CurveLPType.UNDERLYING) {
                 ICurveDepositZap(params.curveDepositAddress).add_liquidity(
                     _tokenAmounts,
@@ -63,6 +70,12 @@ contract CLPCurve is CLPBase, ICLPCurve {
             uint256[4] memory _tokenAmounts = [amounts[0], amounts[1], amounts[2], amounts[3]];
             if (params.lpType == CurveLPType.BASE || params.lpType == CurveLPType.HELPER) {
                 ICurveDepositZap(params.curveDepositAddress).add_liquidity(
+                    _tokenAmounts,
+                    params.minReceivedLiquidity
+                );
+            } else if (params.lpType == CurveLPType.METAPOOL_HELPER) {
+                ICurveDepositMetapoolZap(params.curveDepositAddress).add_liquidity(
+                    params.metapool,
                     _tokenAmounts,
                     params.minReceivedLiquidity
                 );
