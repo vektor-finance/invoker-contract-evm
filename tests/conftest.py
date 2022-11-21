@@ -6,6 +6,7 @@ from pathlib import Path
 from typing import Set
 
 import pytest
+from _pytest.terminal import TerminalReporter
 from brownie import Contract, interface
 from brownie.exceptions import VirtualMachineError
 from brownie.project.main import get_loaded_projects
@@ -332,10 +333,17 @@ def pytest_runtest_makereport(item, call):
                     bad_pools.add(pool)
                 if exc_info.errisinstance(BenefactorError):
                     bad_token_pools.add(pool)
+    if result.nodeid.split("::")[0] == "tests/network/mainnet-hardhat-fork/test_lp_curve.py":
+        if result.when == "call" and result.failed:
+            if "pool" in item.fixturenames:
+                pool = item.funcargs["pool"]
+                exc_info = call.excinfo
+                if exc_info.errisinstance(VirtualMachineError):
+                    bad_pools.add(pool)
 
 
 @pytest.hookimpl(hookwrapper=True)
-def pytest_terminal_summary(terminalreporter, exitstatus: int, config):
+def pytest_terminal_summary(terminalreporter: TerminalReporter, exitstatus: int, config):
     yield
     terminalreporter.section("Custom Errors")
     if len(bad_token_pools) > 0:
@@ -343,4 +351,5 @@ def pytest_terminal_summary(terminalreporter, exitstatus: int, config):
         terminalreporter.write(f"{[pool.pool_address for pool in bad_token_pools]}\n")
     if len(bad_pools) > 0:
         terminalreporter.write("---BAD POOLS---\n")
-        terminalreporter.write(f"{[pool.pool_address for pool in bad_pools]}")
+        for pool in bad_pools:
+            terminalreporter.write_line(f"{pool.name}: {pool.pool_address}")
