@@ -25,6 +25,7 @@ class CurvePool:
     coins: List[str]
     underlying_coins: Optional[List[str]]
     is_underlying: bool
+    is_factory: bool
     is_meta: bool
     is_crypto: bool
     name: str

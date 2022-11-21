@@ -41,7 +41,7 @@ def get_deposit_params(pool: CurvePool, underlying=False):
     deposit_address = pool.pool_address
     metapool_address = ZERO_ADDRESS
     if underlying:
-        if pool.zap_address and pool.is_meta:
+        if pool.zap_address and pool.is_factory and pool.is_meta:
             lp_type = CurveLPType.METAPOOL_HELPER
             deposit_address = pool.zap_address
             metapool_address = pool.pool_address
