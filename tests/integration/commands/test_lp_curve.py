@@ -88,6 +88,7 @@ def test_metapool_deposit_and_withdraw(metapool: CurvePool, invoker, clp_curve, 
     invoker.invoke([clp_curve], [deposit], {"from": alice})
 
     withdraw_amount = int(interface.ERC20Detailed(metapool.lp_token).balanceOf(invoker) / 2)
+    assert withdraw_amount > 0
 
     withdraw = clp_curve.withdraw.encode_input(
         metapool.lp_token, withdraw_amount, get_withdraw_params(metapool, False)

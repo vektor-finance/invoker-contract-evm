@@ -47,7 +47,7 @@ def get_curve_pools(chain_id: str):
         _input = yaml.safe_load(infile)
 
     try:
-        curve_pools = [CurvePool(**_data) for _data in _input["curve"][str(chain_id)]]
+        curve_pools = [CurvePool(**_data) for _data in _input]
         return curve_pools
     except KeyError:
         return []
