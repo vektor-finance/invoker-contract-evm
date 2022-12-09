@@ -95,6 +95,32 @@ contract CLPCurve is CLPBase, ICLPCurve {
             } else {
                 _revertMsg("invalid lpType");
             }
+        } else if (amounts.length == 5) {
+            uint256[5] memory _tokenAmounts = [
+                amounts[0],
+                amounts[1],
+                amounts[2],
+                amounts[3],
+                amounts[4]
+            ];
+            if (params.lpType == CurveLPType.BASE || params.lpType == CurveLPType.HELPER) {
+                ICurveDepositZap(params.curveDepositAddress).add_liquidity{value: ethAmount}(
+                    _tokenAmounts,
+                    params.minReceivedLiquidity
+                );
+            } else if (params.lpType == CurveLPType.METAPOOL_HELPER) {
+                ICurveDepositMetapoolZap(params.curveDepositAddress).add_liquidity(
+                    params.metapool,
+                    _tokenAmounts,
+                    params.minReceivedLiquidity
+                );
+            } else if (params.lpType == CurveLPType.UNDERLYING) {
+                ICurveDepositZap(params.curveDepositAddress).add_liquidity(
+                    _tokenAmounts,
+                    params.minReceivedLiquidity,
+                    true
+                );
+            }
         } else {
             _revertMsg("unsupported length");
         }
