@@ -21,6 +21,12 @@ interface ICurveDepositMetapoolZap {
         uint256 min_mint_amount
     ) external;
 
+    function add_liquidity(
+        address pool,
+        uint256[6] calldata amounts,
+        uint256 min_mint_amount
+    ) external;
+
     function remove_liquidity(
         address pool,
         uint256 amount,
@@ -37,5 +43,11 @@ interface ICurveDepositMetapoolZap {
         address pool,
         uint256 amount,
         uint256[5] calldata min_amounts
+    ) external;
+
+    function remove_liquidity(
+        address pool,
+        uint256 amount,
+        uint256[6] calldata min_amounts
     ) external;
 }
