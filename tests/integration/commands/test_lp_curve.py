@@ -55,7 +55,7 @@ def get_deposit_params(pool: CurvePool, underlying=False):
 
 def get_withdraw_params(pool: CurvePool, underlying=False):
     wip = get_deposit_params(pool, underlying)
-    wip[0] = [0] * len(pool.coins)
+    wip[0] = [0] * len(pool.underlying_coins) if underlying else [0] * len(pool.coins)
     return wip
 
 
@@ -69,11 +69,13 @@ def test_deposit_and_withdraw(pool: CurvePool, invoker, clp_curve, alice):
     invoker.invoke([clp_curve], [deposit], {"from": alice})
 
     withdraw_amount = int(interface.ERC20Detailed(pool.lp_token).balanceOf(invoker) / 2)
+    assert withdraw_amount > 0
 
     withdraw = clp_curve.withdraw.encode_input(
         pool.lp_token, withdraw_amount, get_withdraw_params(pool, False)
     )
     invoker.invoke([clp_curve], [withdraw], {"from": alice})
+    assert interface.ERC20Detailed(pool.lp_token).balanceOf(invoker) < withdraw_amount
 
 
 def test_metapool_deposit_and_withdraw(metapool: CurvePool, invoker, clp_curve, alice):
@@ -87,10 +89,14 @@ def test_metapool_deposit_and_withdraw(metapool: CurvePool, invoker, clp_curve, 
     )
     invoker.invoke([clp_curve], [deposit], {"from": alice})
 
-    withdraw_amount = int(interface.ERC20Detailed(metapool.lp_token).balanceOf(invoker) / 2)
-    assert withdraw_amount > 0
+    deposited_amount = interface.ERC20Detailed(metapool.lp_token).balanceOf(invoker)
+    assert deposited_amount > 0
 
+    withdraw_amount = int(deposited_amount / 2)
     withdraw = clp_curve.withdraw.encode_input(
-        metapool.lp_token, withdraw_amount, get_withdraw_params(metapool, False)
+        metapool.lp_token, withdraw_amount, get_withdraw_params(metapool, True)
     )
     invoker.invoke([clp_curve], [withdraw], {"from": alice})
+
+    new_balance = interface.ERC20Detailed(metapool.lp_token).balanceOf(invoker)
+    assert new_balance < deposited_amount
