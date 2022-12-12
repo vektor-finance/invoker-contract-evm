@@ -288,7 +288,12 @@ OVERRIDES = {
     "43114": {},
     "100": {},
     "56": {},
-    "1284": {},
+    "1284": {
+        "0xffffffff1fcacbd218edc0eba20fc2308c778080": (
+            MintStrategy.BENEFACTOR,
+            "0xc6e37086d09ec2048f151d11cdb9f9bbbdb7d685",
+        )
+    },
     "1285": {},
     "5": {},
 }
