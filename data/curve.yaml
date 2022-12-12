@@ -1,2128 +1,4494 @@
 - balance_abi: uint256
-  chain_id: 137
+  chain_id: 1
   coins:
-  - '0x5c2ed810328349100a66b82b78a1791b101c9d61'
-  - '0xdbf31df14b66535af65aac99c32e9ea844e14501'
+  - '0x6b175474e89094c44da98b954eedeac495271d0f'
+  - '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'
+  - '0xdac17f958d2ee523a2206206994597c13d831ec7'
+  dy_abi: int128
+  fee: '0.0001'
+  is_crypto: false
+  is_factory: false
+  is_meta: false
+  is_underlying: false
+  lp_token: '0x6c3f90f043a72fa612cbac8115ee7e52bde6e490'
+  name: 3pool
+  pool_address: '0xbebc44782c7db0a1a60cb6fe97d0b483032ff1c7'
+  underlying_coins: []
+  venue: curve
+  zap_address: null
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0x028171bca77440897b824ca71d1c56cac55b68a3'
+  - '0xbcca60bb61934080951369a648fb03df4f96263c'
+  - '0x3ed3b47dd13ec9a98b44e6204a523e766b225811'
   dy_abi: int128
   fee: '0.0004'
   is_crypto: false
   is_factory: false
   is_meta: false
   is_underlying: true
-  lp_token: '0xf8a57c1d3b9629b77b6726a042ca48990a84fb49'
-  name: ren
-  pool_address: '0xc2d95eef97ec6c17551d45e77b590dc1f9117c67'
+  lp_token: '0xfd2a8fa60abd58efe3eee34dd494cd491dc14900'
+  name: aave
+  pool_address: '0xdebf20617708857ebe4f679508e7b7863a8a8eee'
   underlying_coins:
-  - '0x1bfd67037b42cf73acf2047067bd4f2c47d9bfd6'
-  - '0xdbf31df14b66535af65aac99c32e9ea844e14501'
+  - '0x6b175474e89094c44da98b954eedeac495271d0f'
+  - '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'
+  - '0xdac17f958d2ee523a2206206994597c13d831ec7'
   venue: curve
   zap_address: null
 - balance_abi: uint256
-  chain_id: 137
+  chain_id: 1
   coins:
-  - '0x27f8d03b3a2196956ed754badc28d73be8830a6e'
-  - '0x1a13f4ca1d028320a707d99520abfefca3998b7f'
-  - '0x60d55f02a771d515e077c9c2403a1ef324885cec'
+  - '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'
+  - '0xe95a203b1a91a908f9b9ce46459d101078c2c3cb'
+  dy_abi: int128
+  fee: '0.0004'
+  is_crypto: false
+  is_factory: false
+  is_meta: false
+  is_underlying: false
+  lp_token: '0xaa17a236f2badc98ddc0cf999abb47d47fc0a6cf'
+  name: aeth
+  pool_address: '0xa96a65c051bf88b4095ee1f2451c2a9d43f53ae2'
+  underlying_coins: []
+  venue: curve
+  zap_address: null
+- balance_abi: int128
+  chain_id: 1
+  coins:
+  - '0xc2cb1040220768554cf699b0d863a3cd4324ce32'
+  - '0x26ea744e5b887e5205727f55dfbe8685e3b21951'
+  - '0xe6354ed5bc4b393a5aad09f21c46e101e692d447'
+  - '0x04bc0ab673d88ae9dbc9da2380cb6b79c4bca9ae'
+  dy_abi: int128
+  fee: '0.0004'
+  is_crypto: false
+  is_factory: false
+  is_meta: false
+  is_underlying: true
+  lp_token: '0x3b3ac5386837dc563660fb6a0937dfaa5924333b'
+  name: busd
+  pool_address: '0x79a8c46dea5ada233abaffd40f3a0a2b1e5a4f27'
+  underlying_coins:
+  - '0x6b175474e89094c44da98b954eedeac495271d0f'
+  - '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'
+  - '0xdac17f958d2ee523a2206206994597c13d831ec7'
+  - '0x4fabb145d64652a948d72533023f6e7a623c7c53'
+  venue: curve
+  zap_address: '0xb6c057591e073249f2d9d88ba59a46cfc9b59edb'
+- balance_abi: int128
+  chain_id: 1
+  coins:
+  - '0x5d3a536e4d6dbd6114cc1ead35777bab948e3643'
+  - '0x39aa39c021dfbae8fac545936693ac917d5e7563'
+  dy_abi: int128
+  fee: '0.0004'
+  is_crypto: false
+  is_factory: false
+  is_meta: false
+  is_underlying: true
+  lp_token: '0x845838df265dcd2c412a1dc9e959c7d08537f8a2'
+  name: compound
+  pool_address: '0xa2b47e3d5c44877cca798226b7b8118f9bfb7a56'
+  underlying_coins:
+  - '0x6b175474e89094c44da98b954eedeac495271d0f'
+  - '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'
+  venue: curve
+  zap_address: '0xeb21209ae4c2c9ff2a86aca31e123764a3b6bc06'
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0xdb25f211ab05b1c97d595516f45794528a807ad8'
+  - '0xd71ecff9342a5ced620049e616c5035f1db98620'
+  dy_abi: int128
+  fee: '0.0004'
+  is_crypto: false
+  is_factory: false
+  is_meta: false
+  is_underlying: false
+  lp_token: '0x194ebd173f6cdace046c53eacce9b953f28411d1'
+  name: eurs
+  pool_address: '0x0ce6a5ff5217e38315f87032cf90686c96627caa'
+  underlying_coins: []
+  venue: curve
+  zap_address: null
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0x0316eb71485b0ab14103307bf65a021042c6d380'
+  - '0x2260fac5e5542a773aa44fbcfedf7c193bc2c599'
+  dy_abi: int128
+  fee: '0.0004'
+  is_crypto: false
+  is_factory: false
+  is_meta: false
+  is_underlying: false
+  lp_token: '0xb19059ebb43466c323583928285a49f558e572fd'
+  name: hbtc
+  pool_address: '0x4ca9b3063ec5866a4b82e437059d2c43d1be596f'
+  underlying_coins: []
+  venue: curve
+  zap_address: null
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0x8e595470ed749b85c6f7669de83eae304c2ec68f'
+  - '0x76eb2fe28b36b3ee97f3adae0c69606eedb2a37c'
+  - '0x48759f220ed983db51fa7a8c0d2aab8f3ce4166a'
+  dy_abi: int128
+  fee: '0.0006'
+  is_crypto: false
+  is_factory: false
+  is_meta: false
+  is_underlying: true
+  lp_token: '0x5282a4ef67d9c33135340fb3289cc1711c13638c'
+  name: ib
+  pool_address: '0x2dded6da1bf5dbdf597c45fcfaa3194e53ecfeaf'
+  underlying_coins:
+  - '0x6b175474e89094c44da98b954eedeac495271d0f'
+  - '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'
+  - '0xdac17f958d2ee523a2206206994597c13d831ec7'
+  venue: curve
+  zap_address: null
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0x514910771af9ca656af840dff83e8264ecf986ca'
+  - '0xbbc455cb4f1b9e4bfc4b73970d360c8f032efee6'
+  dy_abi: int128
+  fee: '0.0004'
+  is_crypto: false
+  is_factory: false
+  is_meta: false
+  is_underlying: false
+  lp_token: '0xcee60cfa923170e4f8204ae08b4fa6a3f5656f3a'
+  name: link
+  pool_address: '0xf178c0b5bb7e7abf4e12a4838c7b7c5ba2c623c0'
+  underlying_coins: []
+  venue: curve
+  zap_address: null
+- balance_abi: int128
+  chain_id: 1
+  coins:
+  - '0x99d1fa417f94dcd62bfe781a1213c092a47041bc'
+  - '0x9777d7e2b60bb01759d0e2f8be2095df444cb07e'
+  - '0x1be5d71f2da660bfdee8012ddc58d024448a0a59'
+  - '0x8e870d67f660d95d5be530380d0ec0bd388289e1'
+  dy_abi: int128
+  fee: '0.0004'
+  is_crypto: false
+  is_factory: false
+  is_meta: false
+  is_underlying: true
+  lp_token: '0xd905e2eaebe188fc92179b6350807d8bd91db0d8'
+  name: pax
+  pool_address: '0x06364f10b501e868329afbc005b3492902d6c763'
+  underlying_coins:
+  - '0x6b175474e89094c44da98b954eedeac495271d0f'
+  - '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'
+  - '0xdac17f958d2ee523a2206206994597c13d831ec7'
+  - '0x8e870d67f660d95d5be530380d0ec0bd388289e1'
+  venue: curve
+  zap_address: '0xa50ccc70b6a011cffddf45057e39679379187287'
+- balance_abi: int128
+  chain_id: 1
+  coins:
+  - '0xeb4c2781e4eba804ce9a9803c67d0893436bb27d'
+  - '0x2260fac5e5542a773aa44fbcfedf7c193bc2c599'
+  dy_abi: int128
+  fee: '0.0004'
+  is_crypto: false
+  is_factory: false
+  is_meta: false
+  is_underlying: false
+  lp_token: '0x49849c98ae39fff122806c06791fa73784fb3675'
+  name: ren
+  pool_address: '0x93054188d876f558f4a66b2ef1d97d16edf0895b'
+  underlying_coins: []
+  venue: curve
+  zap_address: null
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0x028171bca77440897b824ca71d1c56cac55b68a3'
+  - '0x6c5024cd4f8a59110119c56f8933403a539555eb'
+  dy_abi: int128
+  fee: '0.0004'
+  is_crypto: false
+  is_factory: false
+  is_meta: false
+  is_underlying: true
+  lp_token: '0x02d341ccb60faaf662bc0554d13778015d1b285c'
+  name: saave
+  pool_address: '0xeb16ae0052ed37f479f7fe63849198df1765a733'
+  underlying_coins:
+  - '0x6b175474e89094c44da98b954eedeac495271d0f'
+  - '0x57ab1ec28d129707052df4df418d58a2d46d5f51'
+  venue: curve
+  zap_address: null
+- balance_abi: int128
+  chain_id: 1
+  coins:
+  - '0xeb4c2781e4eba804ce9a9803c67d0893436bb27d'
+  - '0x2260fac5e5542a773aa44fbcfedf7c193bc2c599'
+  - '0xfe18be6b3bd88a2d2a7f928d00292e7a9963cfc6'
+  dy_abi: int128
+  fee: '0.0004'
+  is_crypto: false
+  is_factory: false
+  is_meta: false
+  is_underlying: false
+  lp_token: '0x075b1bb99792c9e1041ba13afef80c91a1e70fb3'
+  name: sbtc
+  pool_address: '0x7fc77b5c7614e1533320ea6ddc2eb61fa00a9714'
+  underlying_coins: []
+  venue: curve
+  zap_address: null
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'
+  - '0x5e74c9036fb86bd7ecdcb084a0673efc32ea31cb'
+  dy_abi: int128
+  fee: '0.0004'
+  is_crypto: false
+  is_factory: false
+  is_meta: false
+  is_underlying: false
+  lp_token: '0xa3d87fffce63b53e0d54faa1cc983b7eb0b74a9c'
+  name: seth
+  pool_address: '0xc5424b857f758e906013f3555dad202e4bdb4567'
+  underlying_coins: []
+  venue: curve
+  zap_address: null
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'
+  - '0xae7ab96520de3a18e5e111b5eaab095312d7fe84'
+  dy_abi: int128
+  fee: '0.0004'
+  is_crypto: false
+  is_factory: false
+  is_meta: false
+  is_underlying: false
+  lp_token: '0x06325440d014e39736583c165c2963ba99faf14e'
+  name: steth
+  pool_address: '0xdc24316b9ae028f1497c275eb9192a3ea0f67022'
+  underlying_coins: []
+  venue: curve
+  zap_address: null
+- balance_abi: int128
+  chain_id: 1
+  coins:
+  - '0x6b175474e89094c44da98b954eedeac495271d0f'
+  - '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'
+  - '0xdac17f958d2ee523a2206206994597c13d831ec7'
+  - '0x57ab1ec28d129707052df4df418d58a2d46d5f51'
+  dy_abi: int128
+  fee: '0.0004'
+  is_crypto: false
+  is_factory: false
+  is_meta: false
+  is_underlying: false
+  lp_token: '0xc25a3a3b969415c80451098fa907ec722572917f'
+  name: susd
+  pool_address: '0xa5407eae9ba41422680e2e00537571bcc53efbfd'
+  underlying_coins: []
+  venue: curve
+  zap_address: '0xfcba3e75865d2d561be8d220616520c171f12851'
+- balance_abi: int128
+  chain_id: 1
+  coins:
+  - '0x5d3a536e4d6dbd6114cc1ead35777bab948e3643'
+  - '0x39aa39c021dfbae8fac545936693ac917d5e7563'
+  - '0xdac17f958d2ee523a2206206994597c13d831ec7'
+  dy_abi: int128
+  fee: '0.0004'
+  is_crypto: false
+  is_factory: false
+  is_meta: false
+  is_underlying: true
+  lp_token: '0x9fc689ccada600b6df723d9e47d84d76664a1f23'
+  name: usdt
+  pool_address: '0x52ea46506b9cc5ef470c5bf89f17dc28bb35d85c'
+  underlying_coins:
+  - '0x6b175474e89094c44da98b954eedeac495271d0f'
+  - '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'
+  - '0xdac17f958d2ee523a2206206994597c13d831ec7'
+  venue: curve
+  zap_address: '0xac795d2c97e60df6a99ff1c814727302fd747a80'
+- balance_abi: int128
+  chain_id: 1
+  coins:
+  - '0x16de59092dae5ccf4a1e6439d611fd0653f0bd01'
+  - '0xd6ad7a6750a7593e092a9b218d66c0a814a3436e'
+  - '0x83f798e925bcd4017eb265844fddabb448f1707d'
+  - '0x73a052500105205d34daf004eab301916da8190f'
+  dy_abi: int128
+  fee: '0.0004'
+  is_crypto: false
+  is_factory: false
+  is_meta: false
+  is_underlying: true
+  lp_token: '0xdf5e0e81dff6faf3a7e52ba697820c5e32d806a8'
+  name: y
+  pool_address: '0x45f783cce6b7ff23b2ab2d70e416cdb7d6055f51'
+  underlying_coins:
+  - '0x6b175474e89094c44da98b954eedeac495271d0f'
+  - '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'
+  - '0xdac17f958d2ee523a2206206994597c13d831ec7'
+  - '0x0000000000085d4780b73119b644ae5ecd22b376'
+  venue: curve
+  zap_address: '0xbbc81d23ea2c3ec7e56d39296f0cbb648873a5d3'
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0x5bc25f649fc4e26069ddf4cf4010f9f706c23831'
+  - '0x6c3f90f043a72fa612cbac8115ee7e52bde6e490'
+  dy_abi: int128
+  fee: '0.0004'
+  is_crypto: false
+  is_factory: false
+  is_meta: true
+  is_underlying: true
+  lp_token: '0x3a664ab939fd8482048609f652f9a0b0677337b9'
+  name: dusd
+  pool_address: '0x8038c01a0390a8c547446a0b2c18fc9aefecc10c'
+  underlying_coins:
+  - '0x5bc25f649fc4e26069ddf4cf4010f9f706c23831'
+  - '0x6b175474e89094c44da98b954eedeac495271d0f'
+  - '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'
+  - '0xdac17f958d2ee523a2206206994597c13d831ec7'
+  venue: curve
+  zap_address: '0x61e10659fe3aa93d036d099405224e4ac24996d0'
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0x056fd409e1d7a124bd7017459dfea2f387b6d5cd'
+  - '0x6c3f90f043a72fa612cbac8115ee7e52bde6e490'
+  dy_abi: int128
+  fee: '0.0004'
+  is_crypto: false
+  is_factory: false
+  is_meta: true
+  is_underlying: true
+  lp_token: '0xd2967f45c4f384deea880f807be904762a3dea07'
+  name: gusd
+  pool_address: '0x4f062658eaaf2c1ccf8c8e36d6824cdf41167956'
+  underlying_coins:
+  - '0x056fd409e1d7a124bd7017459dfea2f387b6d5cd'
+  - '0x6b175474e89094c44da98b954eedeac495271d0f'
+  - '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'
+  - '0xdac17f958d2ee523a2206206994597c13d831ec7'
+  venue: curve
+  zap_address: '0x64448b78561690b70e17cbe8029a3e5c1bb7136e'
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0xdf574c24545e5ffecb9a659c229253d4111d87e1'
+  - '0x6c3f90f043a72fa612cbac8115ee7e52bde6e490'
+  dy_abi: int128
+  fee: '0.0004'
+  is_crypto: false
+  is_factory: false
+  is_meta: true
+  is_underlying: true
+  lp_token: '0x5b5cfe992adac0c9d48e05854b2d91c73a003858'
+  name: husd
+  pool_address: '0x3ef6a01a0f81d6046290f3e2a8c5b843e738e604'
+  underlying_coins:
+  - '0xdf574c24545e5ffecb9a659c229253d4111d87e1'
+  - '0x6b175474e89094c44da98b954eedeac495271d0f'
+  - '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'
+  - '0xdac17f958d2ee523a2206206994597c13d831ec7'
+  venue: curve
+  zap_address: '0x09672362833d8f703d5395ef3252d4bfa51c15ca'
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0x0e2ec54fc0b509f445631bf4b91ab8168230c752'
+  - '0x6c3f90f043a72fa612cbac8115ee7e52bde6e490'
+  dy_abi: int128
+  fee: '0.0004'
+  is_crypto: false
+  is_factory: false
+  is_meta: true
+  is_underlying: true
+  lp_token: '0x6d65b498cb23deaba52db31c93da9bffb340fb8f'
+  name: linkusd
+  pool_address: '0xe7a24ef0c5e95ffb0f6684b813a78f2a3ad7d171'
+  underlying_coins:
+  - '0x0e2ec54fc0b509f445631bf4b91ab8168230c752'
+  - '0x6b175474e89094c44da98b954eedeac495271d0f'
+  - '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'
+  - '0xdac17f958d2ee523a2206206994597c13d831ec7'
+  venue: curve
+  zap_address: '0x1de7f0866e2c4adac7b457c58cc25c8688cda1f2'
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0xe2f2a5c287993345a840db3b0845fbc70f5935a5'
+  - '0x6c3f90f043a72fa612cbac8115ee7e52bde6e490'
+  dy_abi: int128
+  fee: '0.0004'
+  is_crypto: false
+  is_factory: false
+  is_meta: true
+  is_underlying: true
+  lp_token: '0x1aef73d49dedc4b1778d0706583995958dc862e6'
+  name: musd
+  pool_address: '0x8474ddbe98f5aa3179b3b3f5942d724afcdec9f6'
+  underlying_coins:
+  - '0xe2f2a5c287993345a840db3b0845fbc70f5935a5'
+  - '0x6b175474e89094c44da98b954eedeac495271d0f'
+  - '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'
+  - '0xdac17f958d2ee523a2206206994597c13d831ec7'
+  venue: curve
+  zap_address: '0x803a2b40c5a9bb2b86dd630b274fa2a9202874c2'
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0x196f4727526ea7fb1e17b2071b3d8eaa38486988'
+  - '0x6c3f90f043a72fa612cbac8115ee7e52bde6e490'
+  dy_abi: int128
+  fee: '0.0004'
+  is_crypto: false
+  is_factory: false
+  is_meta: true
+  is_underlying: true
+  lp_token: '0xc2ee6b0334c261ed60c72f6054450b61b8f18e35'
+  name: rsv
+  pool_address: '0xc18cc39da8b11da8c3541c598ee022258f9744da'
+  underlying_coins:
+  - '0x196f4727526ea7fb1e17b2071b3d8eaa38486988'
+  - '0x6b175474e89094c44da98b954eedeac495271d0f'
+  - '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'
+  - '0xdac17f958d2ee523a2206206994597c13d831ec7'
+  venue: curve
+  zap_address: '0xbe175115bf33e12348ff77ccfee4726866a0fbd5'
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0x1c48f86ae57291f7686349f12601910bd8d470bb'
+  - '0x6c3f90f043a72fa612cbac8115ee7e52bde6e490'
+  dy_abi: int128
+  fee: '0.0004'
+  is_crypto: false
+  is_factory: false
+  is_meta: true
+  is_underlying: true
+  lp_token: '0x97e2768e8e73511ca874545dc5ff8067eb19b787'
+  name: usdk
+  pool_address: '0x3e01dd8a5e1fb3481f0f589056b428fc308af0fb'
+  underlying_coins:
+  - '0x1c48f86ae57291f7686349f12601910bd8d470bb'
+  - '0x6b175474e89094c44da98b954eedeac495271d0f'
+  - '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'
+  - '0xdac17f958d2ee523a2206206994597c13d831ec7'
+  venue: curve
+  zap_address: '0xf1f85a74ad6c64315f85af52d3d46bf715236adc'
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0x674c6ad92fd080e4004b2312b45f796a192d27a0'
+  - '0x6c3f90f043a72fa612cbac8115ee7e52bde6e490'
+  dy_abi: int128
+  fee: '0.0004'
+  is_crypto: false
+  is_factory: false
+  is_meta: true
+  is_underlying: true
+  lp_token: '0x4f3e8f405cf5afc05d68142f3783bdfe13811522'
+  name: usdn
+  pool_address: '0x0f9cb53ebe405d49a0bbdbd291a65ff571bc83e1'
+  underlying_coins:
+  - '0x674c6ad92fd080e4004b2312b45f796a192d27a0'
+  - '0x6b175474e89094c44da98b954eedeac495271d0f'
+  - '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'
+  - '0xdac17f958d2ee523a2206206994597c13d831ec7'
+  venue: curve
+  zap_address: '0x094d12e5b541784701fd8d65f11fc0598fbc6332'
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0x1456688345527be1f37e9e627da0837d6f08c925'
+  - '0x6c3f90f043a72fa612cbac8115ee7e52bde6e490'
+  dy_abi: int128
+  fee: '0.0004'
+  is_crypto: false
+  is_factory: false
+  is_meta: true
+  is_underlying: true
+  lp_token: '0x7eb40e450b9655f4b3cc4259bcc731c63ff55ae6'
+  name: usdp
+  pool_address: '0x42d7025938bec20b69cbae5a77421082407f053a'
+  underlying_coins:
+  - '0x1456688345527be1f37e9e627da0837d6f08c925'
+  - '0x6b175474e89094c44da98b954eedeac495271d0f'
+  - '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'
+  - '0xdac17f958d2ee523a2206206994597c13d831ec7'
+  venue: curve
+  zap_address: '0x3c8caee4e09296800f8d29a68fa3837e2dae4940'
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0xa47c8bf37f92abed4a126bda807a7b7498661acd'
+  - '0x6c3f90f043a72fa612cbac8115ee7e52bde6e490'
+  dy_abi: int128
+  fee: '0.0004'
+  is_crypto: false
+  is_factory: false
+  is_meta: true
+  is_underlying: true
+  lp_token: '0x94e131324b6054c0d789b190b2dac504e4361b53'
+  name: ust
+  pool_address: '0x890f4e345b1daed0367a877a1612f86a1f86985f'
+  underlying_coins:
+  - '0xa47c8bf37f92abed4a126bda807a7b7498661acd'
+  - '0x6b175474e89094c44da98b954eedeac495271d0f'
+  - '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'
+  - '0xdac17f958d2ee523a2206206994597c13d831ec7'
+  venue: curve
+  zap_address: '0xb0a0716841f2fc03fba72a891b8bb13584f52f2d'
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0x9be89d2a4cd102d8fecc6bf9da793be995c22541'
+  - '0x075b1bb99792c9e1041ba13afef80c91a1e70fb3'
+  dy_abi: int128
+  fee: '0.0004'
+  is_crypto: false
+  is_factory: false
+  is_meta: true
+  is_underlying: true
+  lp_token: '0x410e3e86ef427e30b9235497143881f717d93c2a'
+  name: bbtc
+  pool_address: '0x071c661b4deefb59e2a3ddb20db036821eee8f4b'
+  underlying_coins:
+  - '0x9be89d2a4cd102d8fecc6bf9da793be995c22541'
+  - '0xeb4c2781e4eba804ce9a9803c67d0893436bb27d'
+  - '0x2260fac5e5542a773aa44fbcfedf7c193bc2c599'
+  - '0xfe18be6b3bd88a2d2a7f928d00292e7a9963cfc6'
+  venue: curve
+  zap_address: '0xc45b2eee6e09ca176ca3bb5f7eee7c47bf93c756'
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0x8064d9ae6cdf087b1bcd5bdf3531bd5d8c537a68'
+  - '0x075b1bb99792c9e1041ba13afef80c91a1e70fb3'
+  dy_abi: int128
+  fee: '0.0004'
+  is_crypto: false
+  is_factory: false
+  is_meta: true
+  is_underlying: true
+  lp_token: '0x2fe94ea3d5d4a175184081439753de15aef9d614'
+  name: obtc
+  pool_address: '0xd81da8d904b52208541bade1bd6595d8a251f8dd'
+  underlying_coins:
+  - '0x8064d9ae6cdf087b1bcd5bdf3531bd5d8c537a68'
+  - '0xeb4c2781e4eba804ce9a9803c67d0893436bb27d'
+  - '0x2260fac5e5542a773aa44fbcfedf7c193bc2c599'
+  - '0xfe18be6b3bd88a2d2a7f928d00292e7a9963cfc6'
+  venue: curve
+  zap_address: '0xd5bcf53e2c81e1991570f33fa881c49eea570c8d'
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0x5228a22e72ccc52d415ecfd199f99d0665e7733b'
+  - '0x075b1bb99792c9e1041ba13afef80c91a1e70fb3'
+  dy_abi: int128
+  fee: '0.0004'
+  is_crypto: false
+  is_factory: false
+  is_meta: true
+  is_underlying: true
+  lp_token: '0xde5331ac4b3630f94853ff322b66407e0d6331e8'
+  name: pbtc
+  pool_address: '0x7f55dde206dbad629c080068923b36fe9d6bdbef'
+  underlying_coins:
+  - '0x5228a22e72ccc52d415ecfd199f99d0665e7733b'
+  - '0xeb4c2781e4eba804ce9a9803c67d0893436bb27d'
+  - '0x2260fac5e5542a773aa44fbcfedf7c193bc2c599'
+  - '0xfe18be6b3bd88a2d2a7f928d00292e7a9963cfc6'
+  venue: curve
+  zap_address: '0x11f419adabbff8d595e7d5b223eee3863bb3902c'
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0x8daebade922df735c38c80c7ebd708af50815faa'
+  - '0x075b1bb99792c9e1041ba13afef80c91a1e70fb3'
+  dy_abi: int128
+  fee: '0.0004'
+  is_crypto: false
+  is_factory: false
+  is_meta: true
+  is_underlying: true
+  lp_token: '0x64eda51d3ad40d56b9dfc5554e06f94e1dd786fd'
+  name: tbtc
+  pool_address: '0xc25099792e9349c7dd09759744ea681c7de2cb66'
+  underlying_coins:
+  - '0x8daebade922df735c38c80c7ebd708af50815faa'
+  - '0xeb4c2781e4eba804ce9a9803c67d0893436bb27d'
+  - '0x2260fac5e5542a773aa44fbcfedf7c193bc2c599'
+  - '0xfe18be6b3bd88a2d2a7f928d00292e7a9963cfc6'
+  venue: curve
+  zap_address: '0xaa82ca713d94bba7a89ceab55314f9effeddc78c'
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0x5f98805a4e8be255a32880fdec7f6728c6568ba0'
+  - '0x6c3f90f043a72fa612cbac8115ee7e52bde6e490'
+  dy_abi: int128
+  fee: '0.0004'
+  is_crypto: false
+  is_factory: true
+  is_meta: true
+  is_underlying: true
+  lp_token: '0xed279fdd11ca84beef15af5d39bb4d4bee23f0ca'
+  name: liquity
+  pool_address: '0xed279fdd11ca84beef15af5d39bb4d4bee23f0ca'
+  underlying_coins:
+  - '0x5f98805a4e8be255a32880fdec7f6728c6568ba0'
+  - '0x6b175474e89094c44da98b954eedeac495271d0f'
+  - '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'
+  - '0xdac17f958d2ee523a2206206994597c13d831ec7'
+  venue: curve
+  zap_address: '0xa79828df1850e8a3a3064576f380d90aecdd3359'
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'
+  - '0x9559aaa82d9649c7a7b220e7c461d2e74c9a3593'
+  dy_abi: int128
+  fee: '0.0004'
+  is_crypto: false
+  is_factory: false
+  is_meta: false
+  is_underlying: false
+  lp_token: '0x53a901d48795c58f485cbb38df08fa96a24669d5'
+  name: reth
+  pool_address: '0xf9440930043eb3997fc70e1339dbb11f341de7a8'
+  underlying_coins: []
+  venue: curve
+  zap_address: null
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0xbc6da0fe9ad5f3b0d58160288917aa56653660e9'
+  - '0x6c3f90f043a72fa612cbac8115ee7e52bde6e490'
+  dy_abi: int128
+  fee: '0.0004'
+  is_crypto: false
+  is_factory: true
+  is_meta: true
+  is_underlying: true
+  lp_token: '0x43b4fdfd4ff969587185cdb6f0bd875c5fc83f8c'
+  name: alchemix usd
+  pool_address: '0x43b4fdfd4ff969587185cdb6f0bd875c5fc83f8c'
+  underlying_coins:
+  - '0xbc6da0fe9ad5f3b0d58160288917aa56653660e9'
+  - '0x6b175474e89094c44da98b954eedeac495271d0f'
+  - '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'
+  - '0xdac17f958d2ee523a2206206994597c13d831ec7'
+  venue: curve
+  zap_address: '0xa79828df1850e8a3a3064576f380d90aecdd3359'
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0xdac17f958d2ee523a2206206994597c13d831ec7'
+  - '0x2260fac5e5542a773aa44fbcfedf7c193bc2c599'
+  - '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2'
+  dy_abi: uint256
+  fee: variable
+  is_crypto: true
+  is_factory: false
+  is_meta: false
+  is_underlying: false
+  lp_token: '0xc4ad29ba4b3c580e6d59105fff484999997675ff'
+  name: tricrypto2
+  pool_address: '0xd51a44d3fae010294c616388b506acda1bfaae46'
+  underlying_coins: []
+  venue: curve
+  zap_address: null
+- #tricrypto2 should take precedence over tricrypto
+  balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0xdac17f958d2ee523a2206206994597c13d831ec7'
+  - '0x2260fac5e5542a773aa44fbcfedf7c193bc2c599'
+  - '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2'
+  dy_abi: uint256
+  fee: 'variable'
+  is_crypto: true
+  is_factory: false
+  is_meta: false
+  is_underlying: false
+  lp_token: '0xca3d75ac011bf5ad07a98d02f18225f9bd9a6bdf'
+  name: tricrypto
+  pool_address: '0x80466c64868e1ab14a1ddf27a676c3fcbe638fe5'
+  underlying_coins: []
+  venue: curve
+  zap_address: '0x331af2e331bd619defaa5dac6c038f53fcf9f785'
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0x99d8a9c45b2eca8864373a26d1459e3dff1e17f3'
+  - '0x6c3f90f043a72fa612cbac8115ee7e52bde6e490'
+  dy_abi: int128
+  fee: '0.0004'
+  is_crypto: false
+  is_factory: true
+  is_meta: true
+  is_underlying: true
+  lp_token: '0x5a6a4d54456819380173272a5e8e9b9904bdf41b'
+  name: magic internet money 3pool
+  pool_address: '0x5a6a4d54456819380173272a5e8e9b9904bdf41b'
+  underlying_coins:
+  - '0x99d8a9c45b2eca8864373a26d1459e3dff1e17f3'
+  - '0x6b175474e89094c44da98b954eedeac495271d0f'
+  - '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'
+  - '0xdac17f958d2ee523a2206206994597c13d831ec7'
+  venue: curve
+  zap_address: '0xa79828df1850e8a3a3064576f380d90aecdd3359'
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0xc581b735a1688071a1746c968e0798d642ede491'
+  - '0xd71ecff9342a5ced620049e616c5035f1db98620'
+  dy_abi: int128
+  fee: '0.0004'
+  is_crypto: false
+  is_factory: false
+  is_meta: false
+  is_underlying: false
+  lp_token: '0xfd5db7463a3ab53fd211b4af195c5bccc1a03890'
+  name: eurt
+  pool_address: '0xfd5db7463a3ab53fd211b4af195c5bccc1a03890'
+  underlying_coins: []
+  venue: curve
+  zap_address: null
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'
+  - '0xdac17f958d2ee523a2206206994597c13d831ec7'
+  - '0xa693b19d2931d498c5b318df961919bb4aee87a5'
+  - '0x853d955acef822db058eb8505911ed77f175b99e'
   dy_abi: int128
   fee: '0.0003'
   is_crypto: false
   is_factory: false
   is_meta: false
-  is_underlying: true
-  lp_token: '0xe7a24ef0c5e95ffb0f6684b813a78f2a3ad7d171'
-  name: curve.fi am3pool
-  pool_address: '0x445fe580ef8d70ff569ab36e80c647af338db351'
-  underlying_coins:
-  - '0x8f3cf7ad23cd3cadbd9735aff958023239c6a063'
-  - '0x2791bca1f2de4661ed88a30c99a7a9449aa84174'
-  - '0xc2132d05d31c914a87c6611c10748aeb04b58e8f'
-  venue: curve
-  zap_address: null
-- balance_abi: uint256
-  chain_id: 137
-  coins:
-  - '0xe7a24ef0c5e95ffb0f6684b813a78f2a3ad7d171'
-  - '0x5c2ed810328349100a66b82b78a1791b101c9d61'
-  - '0x28424507fefb6f7f8e9d3860f56504e4e5f5f390'
-  dy_abi: uint256
-  fee: variable
-  is_crypto: true
-  is_factory: false
-  is_meta: true
-  is_underlying: true
-  lp_token: '0xdad97f7713ae9437fa9249920ec8507e5fbb23d3'
-  name: atricrypto3
-  pool_address: '0x92215849c439e1f8612b6646060b4e3e5ef822cc'
-  underlying_coins:
-  - '0x8f3cf7ad23cd3cadbd9735aff958023239c6a063'
-  - '0x2791bca1f2de4661ed88a30c99a7a9449aa84174'
-  - '0xc2132d05d31c914a87c6611c10748aeb04b58e8f'
-  - '0x1bfd67037b42cf73acf2047067bd4f2c47d9bfd6'
-  - '0x7ceb23fd6bc0add59e62ac25578270cff1b9f619'
-  venue: curve
-  zap_address: '0x1d8b86e3d88cdb2d34688e87e72f388cb541b7c8'
-- balance_abi: uint256
-  chain_id: 137
-  coins:
-  - '0x7bdf330f423ea880ff95fc41a280fd5ecfd3d09f'
-  - '0xe7a24ef0c5e95ffb0f6684b813a78f2a3ad7d171'
-  dy_abi: uint256
-  fee: variable
-  is_crypto: true
-  is_factory: false
-  is_meta: true
-  is_underlying: true
-  lp_token: '0x600743b1d8a96438bd46836fd34977a00293f6aa'
-  name: eurtusd
-  pool_address: '0xb446bf7b8d6d4276d0c75ec0e3ee8dd7fe15783a'
-  underlying_coins:
-  - '0x7bdf330f423ea880ff95fc41a280fd5ecfd3d09f'
-  - '0x8f3cf7ad23cd3cadbd9735aff958023239c6a063'
-  - '0x2791bca1f2de4661ed88a30c99a7a9449aa84174'
-  - '0xc2132d05d31c914a87c6611c10748aeb04b58e8f'
-  venue: curve
-  zap_address: '0x225fb4176f0e20cdb66b4a3df70ca3063281e855'
-- balance_abi: uint256
-  chain_id: 137
-  coins:
-  - '0xe111178a87a3bff0c8d18decba5798827539ae99'
-  - '0xe7a24ef0c5e95ffb0f6684b813a78f2a3ad7d171'
-  dy_abi: uint256
-  fee: variable
-  is_crypto: true
-  is_factory: false
-  is_meta: true
-  is_underlying: true
-  lp_token: '0x7bd9757fbac089d60daff1fa6bfe3bc99b0f5735'
-  name: eursusd
-  pool_address: '0x9b3d675fdbe6a0935e8b7d1941bc6f78253549b7'
-  underlying_coins:
-  - '0xe111178a87a3bff0c8d18decba5798827539ae99'
-  - '0x8f3cf7ad23cd3cadbd9735aff958023239c6a063'
-  - '0x2791bca1f2de4661ed88a30c99a7a9449aa84174'
-  - '0xc2132d05d31c914a87c6611c10748aeb04b58e8f'
-  venue: curve
-  zap_address: '0x4df7ef55e99a56851187822d96b4e17d98a47ded'
-- balance_abi: uint256
-  chain_id: 137
-  coins:
-  - '0x87ff96aba480f1813af5c780387d8de7cf7d8261'
-  - '0xe7a24ef0c5e95ffb0f6684b813a78f2a3ad7d171'
-  dy_abi: int128
-  fee: '0.01'
-  is_crypto: false
-  is_factory: true
-  is_meta: true
-  is_underlying: true
-  lp_token: '0x10f38a56720ff3a16bd04754e9b49e1f39d4aa4a'
-  name: busd2
-  pool_address: '0x10f38a56720ff3a16bd04754e9b49e1f39d4aa4a'
-  underlying_coins:
-  - '0x87ff96aba480f1813af5c780387d8de7cf7d8261'
-  - '0x8f3cf7ad23cd3cadbd9735aff958023239c6a063'
-  - '0x2791bca1f2de4661ed88a30c99a7a9449aa84174'
-  - '0xc2132d05d31c914a87c6611c10748aeb04b58e8f'
-  venue: curve
-  zap_address: '0x5ab5c56b9db92ba45a0b46a207286cd83c15c939'
-- balance_abi: uint256
-  chain_id: 137
-  coins:
-  - '0x4e3decbb3645551b8a19f0ea1678079fcb33fb4c'
-  - '0xe2aa7db6da1dae97c5f5c6914d285fbfcc32a128'
-  - '0xe111178a87a3bff0c8d18decba5798827539ae99'
-  dy_abi: int128
-  fee: '0.0004'
-  is_crypto: false
-  is_factory: true
-  is_meta: false
   is_underlying: false
-  lp_token: '0x62619f1091cd0261b7c16199c6c58da694248cff'
-  name: 3eur
-  pool_address: '0x62619f1091cd0261b7c16199c6c58da694248cff'
-  underlying_coins: []
-  venue: curve
-  zap_address: null
-- balance_abi: uint256
-  chain_id: 137
-  coins:
-  - '0xa3fa99a148fa48d14ed51d610c367c61876997f1'
-  - '0xe7a24ef0c5e95ffb0f6684b813a78f2a3ad7d171'
-  dy_abi: int128
-  fee: '0.0004'
-  is_crypto: false
-  is_factory: true
-  is_meta: true
-  is_underlying: true
-  lp_token: '0xce113ffc5b4c9f088bb0ad9459e10387f232c3e3'
-  name: maipool
-  pool_address: '0xce113ffc5b4c9f088bb0ad9459e10387f232c3e3'
-  underlying_coins:
-  - '0xa3fa99a148fa48d14ed51d610c367c61876997f1'
-  - '0x8f3cf7ad23cd3cadbd9735aff958023239c6a063'
-  - '0x2791bca1f2de4661ed88a30c99a7a9449aa84174'
-  - '0xc2132d05d31c914a87c6611c10748aeb04b58e8f'
-  venue: curve
-  zap_address: '0x5ab5c56b9db92ba45a0b46a207286cd83c15c939'
-- balance_abi: uint256
-  chain_id: 137
-  coins:
-  - '0x27f8d03b3a2196956ed754badc28d73be8830a6e'
-  - '0x1a13f4ca1d028320a707d99520abfefca3998b7f'
-  - '0x60d55f02a771d515e077c9c2403a1ef324885cec'
-  dy_abi: int128
-  fee: '0.0004'
-  is_crypto: false
-  is_factory: true
-  is_meta: false
-  is_underlying: false
-  lp_token: '0x78a8cc2a24fcc5b358bb8a371072403ce092d599'
-  name: polygon aave
-  pool_address: '0x78a8cc2a24fcc5b358bb8a371072403ce092d599'
-  underlying_coins: []
-  venue: curve
-  zap_address: null
-- balance_abi: uint256
-  chain_id: 137
-  coins:
-  - '0x172370d5cd63279efa6d502dab29171933a610af'
-  - '0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270'
-  dy_abi: int128
-  fee: '0.0004'
-  is_crypto: false
-  is_factory: true
-  is_meta: false
-  is_underlying: false
-  lp_token: '0x43910e07554312fc7a43e4b71d16a72ddcb5ec5f'
-  name: curvewmatic
-  pool_address: '0x43910e07554312fc7a43e4b71d16a72ddcb5ec5f'
-  underlying_coins: []
-  venue: curve
-  zap_address: null
-- balance_abi: uint256
-  chain_id: 137
-  coins:
-  - '0x013f9c3fac3e2759d7e90aca4f9540f75194a0d7'
-  - '0xe7a24ef0c5e95ffb0f6684b813a78f2a3ad7d171'
-  dy_abi: int128
-  fee: '0.0004'
-  is_crypto: false
-  is_factory: true
-  is_meta: true
-  is_underlying: true
-  lp_token: '0xc729a8bfebb7f9089112c081565eb4a0031612ba'
-  name: neutrino
-  pool_address: '0xc729a8bfebb7f9089112c081565eb4a0031612ba'
-  underlying_coins:
-  - '0x013f9c3fac3e2759d7e90aca4f9540f75194a0d7'
-  - '0x8f3cf7ad23cd3cadbd9735aff958023239c6a063'
-  - '0x2791bca1f2de4661ed88a30c99a7a9449aa84174'
-  - '0xc2132d05d31c914a87c6611c10748aeb04b58e8f'
-  venue: curve
-  zap_address: '0x5ab5c56b9db92ba45a0b46a207286cd83c15c939'
-- balance_abi: uint256
-  chain_id: 137
-  coins:
-  - '0x45c32fa6df82ead1e2ef74d17b76547eddfaff89'
-  - '0xe7a24ef0c5e95ffb0f6684b813a78f2a3ad7d171'
-  dy_abi: int128
-  fee: '0.0004'
-  is_crypto: false
-  is_factory: true
-  is_meta: true
-  is_underlying: true
-  lp_token: '0x5e5a23b52cb48f5e70271be83079ca5bc9c9e9ac'
-  name: curve frax3crv pool
-  pool_address: '0x5e5a23b52cb48f5e70271be83079ca5bc9c9e9ac'
-  underlying_coins:
-  - '0x45c32fa6df82ead1e2ef74d17b76547eddfaff89'
-  - '0x8f3cf7ad23cd3cadbd9735aff958023239c6a063'
-  - '0x2791bca1f2de4661ed88a30c99a7a9449aa84174'
-  - '0xc2132d05d31c914a87c6611c10748aeb04b58e8f'
-  venue: curve
-  zap_address: '0x5ab5c56b9db92ba45a0b46a207286cd83c15c939'
-- balance_abi: uint256
-  chain_id: 137
-  coins:
-  - '0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270'
-  - '0x172370d5cd63279efa6d502dab29171933a610af'
-  dy_abi: int128
-  fee: '0.0004'
-  is_crypto: false
-  is_factory: true
-  is_meta: false
-  is_underlying: false
-  lp_token: '0x32d14d697eaf6c254a08ddac1aa5e6ed89ab32b9'
-  name: curvewmatic better settings
-  pool_address: '0x32d14d697eaf6c254a08ddac1aa5e6ed89ab32b9'
-  underlying_coins: []
-  venue: curve
-  zap_address: null
-- balance_abi: uint256
-  chain_id: 137
-  coins:
-  - '0xfc40a4f89b410a1b855b5e205064a38fc29f5eb5'
-  - '0xe7a24ef0c5e95ffb0f6684b813a78f2a3ad7d171'
-  dy_abi: int128
-  fee: '0.0004'
-  is_crypto: false
-  is_factory: true
-  is_meta: true
-  is_underlying: true
-  lp_token: '0x850e1b0b203f9b0ebfc9648ef8c7a6f211a200ae'
-  name: ramp rusd
-  pool_address: '0x850e1b0b203f9b0ebfc9648ef8c7a6f211a200ae'
-  underlying_coins:
-  - '0xfc40a4f89b410a1b855b5e205064a38fc29f5eb5'
-  - '0x8f3cf7ad23cd3cadbd9735aff958023239c6a063'
-  - '0x2791bca1f2de4661ed88a30c99a7a9449aa84174'
-  - '0xc2132d05d31c914a87c6611c10748aeb04b58e8f'
-  venue: curve
-  zap_address: '0x5ab5c56b9db92ba45a0b46a207286cd83c15c939'
-- balance_abi: uint256
-  chain_id: 137
-  coins:
-  - '0x4e3decbb3645551b8a19f0ea1678079fcb33fb4c'
-  - '0xe111178a87a3bff0c8d18decba5798827539ae99'
-  dy_abi: int128
-  fee: '0.0004'
-  is_crypto: false
-  is_factory: true
-  is_meta: false
-  is_underlying: false
-  lp_token: '0x9cd96405ae301d4ba833eeb98fcf5f4a31d4029a'
-  name: 2euro
-  pool_address: '0x9cd96405ae301d4ba833eeb98fcf5f4a31d4029a'
-  underlying_coins: []
-  venue: curve
-  zap_address: null
-- balance_abi: uint256
-  chain_id: 137
-  coins:
-  - '0xa926db7a4cc0cb1736d5ac60495ca8eb7214b503'
-  - '0x769434dca303597c8fc4997bf3dab233e961eda2'
-  dy_abi: int128
-  fee: '0.0004'
-  is_crypto: false
-  is_factory: true
-  is_meta: false
-  is_underlying: false
-  lp_token: '0xef75e9c7097842acc5d0869e1db4e5fddf4bfdda'
-  name: 2sgd
-  pool_address: '0xef75e9c7097842acc5d0869e1db4e5fddf4bfdda'
-  underlying_coins: []
-  venue: curve
-  zap_address: null
-- balance_abi: uint256
-  chain_id: 137
-  coins:
-  - '0x8ca194a3b22077359b5732de53373d4afc11dee3'
-  - '0x5d146d8b1dacb1ebba5cb005ae1059da8a1fbf57'
-  dy_abi: int128
-  fee: '0.0004'
-  is_crypto: false
-  is_factory: true
-  is_meta: false
-  is_underlying: false
-  lp_token: '0xa69b0d5c0c401bba2d5162138613b5e38584f63f'
-  name: 2cad
-  pool_address: '0xa69b0d5c0c401bba2d5162138613b5e38584f63f'
-  underlying_coins: []
-  venue: curve
-  zap_address: null
-- balance_abi: uint256
-  chain_id: 137
-  coins:
-  - '0xe6537cb12f1c2a91adc20a0889202d2b0cc1e4d7'
-  - '0xe7a24ef0c5e95ffb0f6684b813a78f2a3ad7d171'
-  dy_abi: int128
-  fee: '0.0004'
-  is_crypto: false
-  is_factory: true
-  is_meta: true
-  is_underlying: true
-  lp_token: '0xe4eb7e0ecb5099fce9505fa0dae72efaff73c4cb'
-  name: meg
-  pool_address: '0xe4eb7e0ecb5099fce9505fa0dae72efaff73c4cb'
-  underlying_coins:
-  - '0xe6537cb12f1c2a91adc20a0889202d2b0cc1e4d7'
-  - '0x8f3cf7ad23cd3cadbd9735aff958023239c6a063'
-  - '0x2791bca1f2de4661ed88a30c99a7a9449aa84174'
-  - '0xc2132d05d31c914a87c6611c10748aeb04b58e8f'
-  venue: curve
-  zap_address: '0x5ab5c56b9db92ba45a0b46a207286cd83c15c939'
-- balance_abi: uint256
-  chain_id: 137
-  coins:
-  - '0x9fffb2f49adfc231b44ddcff3ffcf0e81b06430a'
-  - '0xe7a24ef0c5e95ffb0f6684b813a78f2a3ad7d171'
-  dy_abi: int128
-  fee: '0.0004'
-  is_crypto: false
-  is_factory: true
-  is_meta: true
-  is_underlying: true
-  lp_token: '0x162b21ba1a90dd9384c615192fa4053217d2a8db'
-  name: mousd
-  pool_address: '0x162b21ba1a90dd9384c615192fa4053217d2a8db'
-  underlying_coins:
-  - '0x9fffb2f49adfc231b44ddcff3ffcf0e81b06430a'
-  - '0x8f3cf7ad23cd3cadbd9735aff958023239c6a063'
-  - '0x2791bca1f2de4661ed88a30c99a7a9449aa84174'
-  - '0xc2132d05d31c914a87c6611c10748aeb04b58e8f'
-  venue: curve
-  zap_address: '0x5ab5c56b9db92ba45a0b46a207286cd83c15c939'
-- balance_abi: uint256
-  chain_id: 137
-  coins:
-  - '0x4e3decbb3645551b8a19f0ea1678079fcb33fb4c'
-  - '0xe2aa7db6da1dae97c5f5c6914d285fbfcc32a128'
-  - '0xe111178a87a3bff0c8d18decba5798827539ae99'
-  - '0x7bdf330f423ea880ff95fc41a280fd5ecfd3d09f'
-  dy_abi: int128
-  fee: '0.0004'
-  is_crypto: false
-  is_factory: true
-  is_meta: false
-  is_underlying: false
-  lp_token: '0xad326c253a84e9805559b73a08724e11e49ca651'
-  name: 4eur
-  pool_address: '0xad326c253a84e9805559b73a08724e11e49ca651'
-  underlying_coins: []
-  venue: curve
-  zap_address: null
-- balance_abi: uint256
-  chain_id: 137
-  coins:
-  - '0x172370d5cd63279efa6d502dab29171933a610af'
-  - '0x596ebe76e2db4470966ea395b0d063ac6197a8c5'
-  - '0x361a5a4993493ce00f61c32d4ecca5512b82ce90'
-  dy_abi: int128
-  fee: '0.0004'
-  is_crypto: false
-  is_factory: true
-  is_meta: false
-  is_underlying: false
-  lp_token: '0xc007b1ef592ddec342f377234e0b7a78cb915cc1'
-  name: tribalanced
-  pool_address: '0xc007b1ef592ddec342f377234e0b7a78cb915cc1'
-  underlying_coins: []
-  venue: curve
-  zap_address: null
-- balance_abi: uint256
-  chain_id: 137
-  coins:
-  - '0x172370d5cd63279efa6d502dab29171933a610af'
-  - '0x596ebe76e2db4470966ea395b0d063ac6197a8c5'
-  - '0x361a5a4993493ce00f61c32d4ecca5512b82ce90'
-  - '0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270'
-  dy_abi: int128
-  fee: '0.0004'
-  is_crypto: false
-  is_factory: true
-  is_meta: false
-  is_underlying: false
-  lp_token: '0xb731e7ced547a636f7cd3eee3972eb32b0402893'
-  name: wbalanced
-  pool_address: '0xb731e7ced547a636f7cd3eee3972eb32b0402893'
-  underlying_coins: []
-  venue: curve
-  zap_address: null
-- balance_abi: uint256
-  chain_id: 137
-  coins:
-  - '0x27f8d03b3a2196956ed754badc28d73be8830a6e'
-  - '0x1a13f4ca1d028320a707d99520abfefca3998b7f'
-  - '0x60d55f02a771d515e077c9c2403a1ef324885cec'
-  - '0x6f57ec3c983a04c9bf9958c9e908c39a3cd0870d'
-  dy_abi: int128
-  fee: '0.005'
-  is_crypto: false
-  is_factory: true
-  is_meta: false
-  is_underlying: false
-  lp_token: '0x19b4ff57ccd45e7b0a22a454619921ef284460fe'
-  name: amis+am3crv
-  pool_address: '0x19b4ff57ccd45e7b0a22a454619921ef284460fe'
-  underlying_coins: []
-  venue: curve
-  zap_address: null
-- balance_abi: uint256
-  chain_id: 137
-  coins:
-  - '0xfe712251173a2cd5f5be2b46bb528328ea3565e1'
-  - '0xe7a24ef0c5e95ffb0f6684b813a78f2a3ad7d171'
-  dy_abi: int128
-  fee: '0.00097'
-  is_crypto: false
-  is_factory: true
-  is_meta: true
-  is_underlying: true
-  lp_token: '0x0e9b542172200df93eaf4c6edc919f9923567517'
-  name: 's / metaverse index '
-  pool_address: '0x0e9b542172200df93eaf4c6edc919f9923567517'
-  underlying_coins:
-  - '0xfe712251173a2cd5f5be2b46bb528328ea3565e1'
-  - '0x8f3cf7ad23cd3cadbd9735aff958023239c6a063'
-  - '0x2791bca1f2de4661ed88a30c99a7a9449aa84174'
-  - '0xc2132d05d31c914a87c6611c10748aeb04b58e8f'
-  venue: curve
-  zap_address: '0x5ab5c56b9db92ba45a0b46a207286cd83c15c939'
-- balance_abi: uint256
-  chain_id: 137
-  coins:
-  - '0xba3608738bbd5d3f4fd9694cdd482ce890806850'
-  - '0xe7a24ef0c5e95ffb0f6684b813a78f2a3ad7d171'
-  dy_abi: int128
-  fee: '0.00098'
-  is_crypto: false
-  is_factory: true
-  is_meta: true
-  is_underlying: true
-  lp_token: '0xcc3520a1ddb017740f1a7a267ffbed797adf9d49'
-  name: atri toni
-  pool_address: '0xcc3520a1ddb017740f1a7a267ffbed797adf9d49'
-  underlying_coins:
-  - '0xba3608738bbd5d3f4fd9694cdd482ce890806850'
-  - '0x8f3cf7ad23cd3cadbd9735aff958023239c6a063'
-  - '0x2791bca1f2de4661ed88a30c99a7a9449aa84174'
-  - '0xc2132d05d31c914a87c6611c10748aeb04b58e8f'
-  venue: curve
-  zap_address: '0x5ab5c56b9db92ba45a0b46a207286cd83c15c939'
-- balance_abi: uint256
-  chain_id: 137
-  coins:
-  - '0x723c9267f37cda496ee2bcce1d5211a5712a7591'
-  - '0xe7a24ef0c5e95ffb0f6684b813a78f2a3ad7d171'
-  dy_abi: int128
-  fee: '0.00098'
-  is_crypto: false
-  is_factory: true
-  is_meta: true
-  is_underlying: true
-  lp_token: '0x20e3f345e229be9ce08488ae79e906955183ebab'
-  name: btri marco
-  pool_address: '0x20e3f345e229be9ce08488ae79e906955183ebab'
-  underlying_coins:
-  - '0x723c9267f37cda496ee2bcce1d5211a5712a7591'
-  - '0x8f3cf7ad23cd3cadbd9735aff958023239c6a063'
-  - '0x2791bca1f2de4661ed88a30c99a7a9449aa84174'
-  - '0xc2132d05d31c914a87c6611c10748aeb04b58e8f'
-  venue: curve
-  zap_address: '0x5ab5c56b9db92ba45a0b46a207286cd83c15c939'
-- balance_abi: uint256
-  chain_id: 137
-  coins:
-  - '0x9ef75be5494f7c3ec8097490e3ff50bf1e182ff1'
-  - '0xe7a24ef0c5e95ffb0f6684b813a78f2a3ad7d171'
-  dy_abi: int128
-  fee: '0.0004'
-  is_crypto: false
-  is_factory: true
-  is_meta: true
-  is_underlying: true
-  lp_token: '0x69fc13493240c274a798e9dc9ce2219bfa1b1235'
-  name: artha3pool
-  pool_address: '0x69fc13493240c274a798e9dc9ce2219bfa1b1235'
-  underlying_coins:
-  - '0x9ef75be5494f7c3ec8097490e3ff50bf1e182ff1'
-  - '0x8f3cf7ad23cd3cadbd9735aff958023239c6a063'
-  - '0x2791bca1f2de4661ed88a30c99a7a9449aa84174'
-  - '0xc2132d05d31c914a87c6611c10748aeb04b58e8f'
-  venue: curve
-  zap_address: '0x5ab5c56b9db92ba45a0b46a207286cd83c15c939'
-- balance_abi: uint256
-  chain_id: 137
-  coins:
-  - '0xab29a13baf85635f40b913bbad199d3db9ab8b76'
-  - '0xc2132d05d31c914a87c6611c10748aeb04b58e8f'
-  dy_abi: int128
-  fee: '0.0004'
-  is_crypto: false
-  is_factory: true
-  is_meta: false
-  is_underlying: false
-  lp_token: '0x120fbbc9e6ae733f52ef57d775c05c3eff159c21'
-  name: lambo-usdt
-  pool_address: '0x120fbbc9e6ae733f52ef57d775c05c3eff159c21'
-  underlying_coins: []
-  venue: curve
-  zap_address: null
-- balance_abi: uint256
-  chain_id: 137
-  coins:
-  - '0x0527c8c43250279d6eb74da1078193f5316fc9a0'
-  - '0xe7a24ef0c5e95ffb0f6684b813a78f2a3ad7d171'
-  dy_abi: int128
-  fee: '0.001'
-  is_crypto: false
-  is_factory: true
-  is_meta: true
-  is_underlying: true
-  lp_token: '0x9a30e9a76afbdf52f44b8b8bc2dc3cd941282789'
-  name: polyquity pool
-  pool_address: '0x9a30e9a76afbdf52f44b8b8bc2dc3cd941282789'
-  underlying_coins:
-  - '0x0527c8c43250279d6eb74da1078193f5316fc9a0'
-  - '0x8f3cf7ad23cd3cadbd9735aff958023239c6a063'
-  - '0x2791bca1f2de4661ed88a30c99a7a9449aa84174'
-  - '0xc2132d05d31c914a87c6611c10748aeb04b58e8f'
-  venue: curve
-  zap_address: '0x5ab5c56b9db92ba45a0b46a207286cd83c15c939'
-- balance_abi: uint256
-  chain_id: 137
-  coins:
-  - '0xe0b52e49357fd4daf2c15e02058dce6bc0057db4'
-  - '0xad326c253a84e9805559b73a08724e11e49ca651'
-  dy_abi: int128
-  fee: '0.0004'
-  is_crypto: false
-  is_factory: true
-  is_meta: false
-  is_underlying: false
-  lp_token: '0x81212149b983602474fcd0943e202f38b38d7484'
-  name: ag5eur
-  pool_address: '0x81212149b983602474fcd0943e202f38b38d7484'
-  underlying_coins: []
-  venue: curve
-  zap_address: null
-- balance_abi: uint256
-  chain_id: 137
-  coins:
-  - '0x6728b653f042f00e434c62c43f779c014d883cb2'
-  - '0xe7a24ef0c5e95ffb0f6684b813a78f2a3ad7d171'
-  dy_abi: int128
-  fee: '0.0004'
-  is_crypto: false
-  is_factory: true
-  is_meta: true
-  is_underlying: true
-  lp_token: '0x8aa1d5874e9cd918d66fdbe0d3caa65301995be0'
-  name: liquidity luk
-  pool_address: '0x8aa1d5874e9cd918d66fdbe0d3caa65301995be0'
-  underlying_coins:
-  - '0x6728b653f042f00e434c62c43f779c014d883cb2'
-  - '0x8f3cf7ad23cd3cadbd9735aff958023239c6a063'
-  - '0x2791bca1f2de4661ed88a30c99a7a9449aa84174'
-  - '0xc2132d05d31c914a87c6611c10748aeb04b58e8f'
-  venue: curve
-  zap_address: '0x5ab5c56b9db92ba45a0b46a207286cd83c15c939'
-- balance_abi: uint256
-  chain_id: 137
-  coins:
-  - '0x4318cb63a2b8edf2de971e2f17f77097e499459d'
-  - '0x576cf361711cd940cd9c397bb98c4c896cbd38de'
-  - '0xe6469ba6d2fd6130788e0ea9c0a0515900563b59'
-  - '0x2791bca1f2de4661ed88a30c99a7a9449aa84174'
-  dy_abi: int128
-  fee: '0.0004'
-  is_crypto: false
-  is_factory: true
-  is_meta: false
-  is_underlying: false
-  lp_token: '0xaed94544941ac4bed9c61ed31fa843c85a7daae5'
-  name: wormhole usdc + ust 4pool
-  pool_address: '0xaed94544941ac4bed9c61ed31fa843c85a7daae5'
-  underlying_coins: []
-  venue: curve
-  zap_address: null
-- balance_abi: uint256
-  chain_id: 137
-  coins:
-  - '0x8343091f2499fd4b6174a46d067a920a3b851ff9'
-  - '0x6ae7dfc73e0dde2aa99ac063dcf7e8a63265108c'
-  dy_abi: int128
-  fee: '0.0004'
-  is_crypto: false
-  is_factory: true
-  is_meta: false
-  is_underlying: false
-  lp_token: '0xe8dcea7fb2baf7a9f4d9af608f06d78a687f8d9a'
-  name: 2jpy
-  pool_address: '0xe8dcea7fb2baf7a9f4d9af608f06d78a687f8d9a'
-  underlying_coins: []
-  venue: curve
-  zap_address: null
-- balance_abi: uint256
-  chain_id: 137
-  coins:
-  - '0xc2132d05d31c914a87c6611c10748aeb04b58e8f'
-  - '0x2791bca1f2de4661ed88a30c99a7a9449aa84174'
-  - '0x60d01ec2d5e98ac51c8b4cf84dfcce98d527c747'
-  dy_abi: int128
-  fee: '0.0004'
-  is_crypto: false
-  is_factory: true
-  is_meta: false
-  is_underlying: false
-  lp_token: '0x27c23852ff93254cae7d5fd4183b331f700e09e8'
-  name: izumi factory
-  pool_address: '0x27c23852ff93254cae7d5fd4183b331f700e09e8'
-  underlying_coins: []
-  venue: curve
-  zap_address: null
-- balance_abi: uint256
-  chain_id: 137
-  coins:
-  - '0xe145524abf229cce1d536623d32bf4794bb02a61'
-  - '0x1a3acf6d19267e2d3e7f898f42803e90c9219062'
-  dy_abi: int128
-  fee: '0.0004'
-  is_crypto: false
-  is_factory: true
-  is_meta: false
-  is_underlying: false
-  lp_token: '0xfc48484f10b47666a7f8ffca1be4558d3c38d98c'
-  name: fxs pool
-  pool_address: '0xfc48484f10b47666a7f8ffca1be4558d3c38d98c'
-  underlying_coins: []
-  venue: curve
-  zap_address: null
-- balance_abi: uint256
-  chain_id: 137
-  coins:
-  - '0xa3fa99a148fa48d14ed51d610c367c61876997f1'
-  - '0xe7a24ef0c5e95ffb0f6684b813a78f2a3ad7d171'
-  dy_abi: int128
-  fee: '0.0004'
-  is_crypto: false
-  is_factory: true
-  is_meta: true
-  is_underlying: true
-  lp_token: '0x447646e84498552e62ecf097cc305eabfff09308'
-  name: mai+3pool
-  pool_address: '0x447646e84498552e62ecf097cc305eabfff09308'
-  underlying_coins:
-  - '0xa3fa99a148fa48d14ed51d610c367c61876997f1'
-  - '0x8f3cf7ad23cd3cadbd9735aff958023239c6a063'
-  - '0x2791bca1f2de4661ed88a30c99a7a9449aa84174'
-  - '0xc2132d05d31c914a87c6611c10748aeb04b58e8f'
-  venue: curve
-  zap_address: '0x5ab5c56b9db92ba45a0b46a207286cd83c15c939'
-- balance_abi: uint256
-  chain_id: 137
-  coins:
-  - '0x172370d5cd63279efa6d502dab29171933a610af'
-  - '0x6220d3d80020a4023eb29a9f9e206100f7bb581e'
-  dy_abi: int128
-  fee: '0.0004'
-  is_crypto: false
-  is_factory: true
-  is_meta: false
-  is_underlying: false
-  lp_token: '0x0b88ef5d9e8d63a7c6b3b6a6d9b50601112a5c75'
-  name: convex crv pool
-  pool_address: '0x0b88ef5d9e8d63a7c6b3b6a6d9b50601112a5c75'
-  underlying_coins: []
-  venue: curve
-  zap_address: null
-- balance_abi: uint256
-  chain_id: 137
-  coins:
-  - '0xa3fa99a148fa48d14ed51d610c367c61876997f1'
-  - '0xe7a24ef0c5e95ffb0f6684b813a78f2a3ad7d171'
-  dy_abi: int128
-  fee: '0.0004'
-  is_crypto: false
-  is_factory: true
-  is_meta: true
-  is_underlying: true
-  lp_token: '0x309be34adb7866cb3bde9770fbedc2cb3be2bd26'
-  name: mai+3pool
-  pool_address: '0x309be34adb7866cb3bde9770fbedc2cb3be2bd26'
-  underlying_coins:
-  - '0xa3fa99a148fa48d14ed51d610c367c61876997f1'
-  - '0x8f3cf7ad23cd3cadbd9735aff958023239c6a063'
-  - '0x2791bca1f2de4661ed88a30c99a7a9449aa84174'
-  - '0xc2132d05d31c914a87c6611c10748aeb04b58e8f'
-  venue: curve
-  zap_address: '0x5ab5c56b9db92ba45a0b46a207286cd83c15c939'
-- balance_abi: uint256
-  chain_id: 137
-  coins:
-  - '0x1ddcaa4ed761428ae348befc6718bcb12e63bfaa'
-  - '0xe7a24ef0c5e95ffb0f6684b813a78f2a3ad7d171'
-  dy_abi: int128
-  fee: '0.0004'
-  is_crypto: false
-  is_factory: true
-  is_meta: true
-  is_underlying: true
-  lp_token: '0xda43bfd7ecc6835aa6f1761ced30b986a574c0d2'
-  name: debridge-usdc
-  pool_address: '0xda43bfd7ecc6835aa6f1761ced30b986a574c0d2'
-  underlying_coins:
-  - '0x1ddcaa4ed761428ae348befc6718bcb12e63bfaa'
-  - '0x8f3cf7ad23cd3cadbd9735aff958023239c6a063'
-  - '0x2791bca1f2de4661ed88a30c99a7a9449aa84174'
-  - '0xc2132d05d31c914a87c6611c10748aeb04b58e8f'
-  venue: curve
-  zap_address: '0x5ab5c56b9db92ba45a0b46a207286cd83c15c939'
-- balance_abi: uint256
-  chain_id: 137
-  coins:
-  - '0x172370d5cd63279efa6d502dab29171933a610af'
-  - '0x7d645cbbcade2a130bf1bf0528b8541d32d3f8cf'
-  dy_abi: int128
-  fee: '0.0025'
-  is_crypto: false
-  is_factory: true
-  is_meta: false
-  is_underlying: false
-  lp_token: '0x8914b29f7bea602a183e89d6843ecb251d56d07e'
-  name: crv/alrto
-  pool_address: '0x8914b29f7bea602a183e89d6843ecb251d56d07e'
-  underlying_coins: []
-  venue: curve
-  zap_address: null
-- balance_abi: uint256
-  chain_id: 137
-  coins:
-  - '0x9cb74c8032b007466865f060ad2c46145d45553d'
-  - '0xe7a24ef0c5e95ffb0f6684b813a78f2a3ad7d171'
-  dy_abi: int128
-  fee: '0.0004'
-  is_crypto: false
-  is_factory: true
-  is_meta: true
-  is_underlying: true
-  lp_token: '0x7168c51e6e37aaced3aa7a15a03f77ebc90197c0'
-  name: idex/usdt
-  pool_address: '0x7168c51e6e37aaced3aa7a15a03f77ebc90197c0'
-  underlying_coins:
-  - '0x9cb74c8032b007466865f060ad2c46145d45553d'
-  - '0x8f3cf7ad23cd3cadbd9735aff958023239c6a063'
-  - '0x2791bca1f2de4661ed88a30c99a7a9449aa84174'
-  - '0xc2132d05d31c914a87c6611c10748aeb04b58e8f'
-  venue: curve
-  zap_address: '0x5ab5c56b9db92ba45a0b46a207286cd83c15c939'
-- balance_abi: uint256
-  chain_id: 137
-  coins:
-  - '0x7dff46370e9ea5f0bad3c4e29711ad50062ea7a4'
-  - '0x24834bbec7e39ef42f4a75eaf8e5b6486d3f0e57'
-  dy_abi: int128
-  fee: '0.01'
-  is_crypto: false
-  is_factory: true
-  is_meta: false
-  is_underlying: false
-  lp_token: '0x038ff5771ed27e6f14409672285359b79107ead2'
-  name: earth
-  pool_address: '0x038ff5771ed27e6f14409672285359b79107ead2'
-  underlying_coins: []
-  venue: curve
-  zap_address: null
-- balance_abi: uint256
-  chain_id: 137
-  coins:
-  - '0x40cab7c05fc1686e198c8d6d6aa4aacf77be8590'
-  - '0x038ff5771ed27e6f14409672285359b79107ead2'
-  dy_abi: int128
-  fee: '0.0004'
-  is_crypto: false
-  is_factory: true
-  is_meta: false
-  is_underlying: false
-  lp_token: '0x3bfb65904cb66408bca4c73ebb548126dd77f3db'
-  name: chr23
-  pool_address: '0x3bfb65904cb66408bca4c73ebb548126dd77f3db'
-  underlying_coins: []
-  venue: curve
-  zap_address: null
-- balance_abi: uint256
-  chain_id: 137
-  coins:
-  - '0x3bfb65904cb66408bca4c73ebb548126dd77f3db'
-  - '0x9719d867a500ef117cc201206b8ab51e794d3f82'
-  dy_abi: int128
-  fee: '0.0004'
-  is_crypto: false
-  is_factory: true
-  is_meta: false
-  is_underlying: false
-  lp_token: '0x622703d6517bdedf1fa5d076d30dcbb00ee18d5c'
-  name: sol+luna+aave+mausd
-  pool_address: '0x622703d6517bdedf1fa5d076d30dcbb00ee18d5c'
-  underlying_coins: []
-  venue: curve
-  zap_address: null
-- balance_abi: uint256
-  chain_id: 137
-  coins:
-  - '0x622703d6517bdedf1fa5d076d30dcbb00ee18d5c'
-  - '0xe7a24ef0c5e95ffb0f6684b813a78f2a3ad7d171'
-  dy_abi: int128
-  fee: '0.0004'
-  is_crypto: false
-  is_factory: true
-  is_meta: true
-  is_underlying: true
-  lp_token: '0xcecf60b95109cb4c897b22877612228f0c76e52c'
-  name: lithereum
-  pool_address: '0xcecf60b95109cb4c897b22877612228f0c76e52c'
-  underlying_coins:
-  - '0x622703d6517bdedf1fa5d076d30dcbb00ee18d5c'
-  - '0x8f3cf7ad23cd3cadbd9735aff958023239c6a063'
-  - '0x2791bca1f2de4661ed88a30c99a7a9449aa84174'
-  - '0xc2132d05d31c914a87c6611c10748aeb04b58e8f'
-  venue: curve
-  zap_address: '0x5ab5c56b9db92ba45a0b46a207286cd83c15c939'
-- balance_abi: uint256
-  chain_id: 137
-  coins:
-  - '0x37149a67a088848738a2427c2b1c42cbbef9e403'
-  - '0xe7a24ef0c5e95ffb0f6684b813a78f2a3ad7d171'
-  dy_abi: int128
-  fee: '0.0004'
-  is_crypto: false
-  is_factory: true
-  is_meta: true
-  is_underlying: true
-  lp_token: '0x1271a6bdc04cdec2c8863361b11f2c95f2dff3e4'
-  name: psol/matic
-  pool_address: '0x1271a6bdc04cdec2c8863361b11f2c95f2dff3e4'
-  underlying_coins:
-  - '0x37149a67a088848738a2427c2b1c42cbbef9e403'
-  - '0x8f3cf7ad23cd3cadbd9735aff958023239c6a063'
-  - '0x2791bca1f2de4661ed88a30c99a7a9449aa84174'
-  - '0xc2132d05d31c914a87c6611c10748aeb04b58e8f'
-  venue: curve
-  zap_address: '0x5ab5c56b9db92ba45a0b46a207286cd83c15c939'
-- balance_abi: uint256
-  chain_id: 137
-  coins:
-  - '0x171e7c3aa467cbe972a1596e14124bec5df0ab7a'
-  - '0x3eb7e868b1f34ff4c4f8dd68bdfb4c8a5d01602a'
-  dy_abi: int128
-  fee: '0.0004'
-  is_crypto: false
-  is_factory: true
-  is_meta: false
-  is_underlying: false
-  lp_token: '0xd3e9014aa9c9531ea5a5fb96c3cab4269c3c9bb1'
-  name: nubi/sec
-  pool_address: '0xd3e9014aa9c9531ea5a5fb96c3cab4269c3c9bb1'
-  underlying_coins: []
-  venue: curve
-  zap_address: null
-- balance_abi: uint256
-  chain_id: 137
-  coins:
-  - '0x2e1ad108ff1d8c782fcbbb89aad783ac49586756'
-  - '0xe7a24ef0c5e95ffb0f6684b813a78f2a3ad7d171'
-  dy_abi: int128
-  fee: '0.0004'
-  is_crypto: false
-  is_factory: true
-  is_meta: true
-  is_underlying: true
-  lp_token: '0xadf577b69eeac9df325536cf1af106372f2da263'
-  name: curve.fi tusd/am3crv pool
-  pool_address: '0xadf577b69eeac9df325536cf1af106372f2da263'
-  underlying_coins:
-  - '0x2e1ad108ff1d8c782fcbbb89aad783ac49586756'
-  - '0x8f3cf7ad23cd3cadbd9735aff958023239c6a063'
-  - '0x2791bca1f2de4661ed88a30c99a7a9449aa84174'
-  - '0xc2132d05d31c914a87c6611c10748aeb04b58e8f'
-  venue: curve
-  zap_address: '0x5ab5c56b9db92ba45a0b46a207286cd83c15c939'
-- balance_abi: uint256
-  chain_id: 137
-  coins:
-  - '0x84f168e646d31f6c33fdbf284d9037f59603aa28'
-  - '0xe7a24ef0c5e95ffb0f6684b813a78f2a3ad7d171'
-  dy_abi: int128
-  fee: '0.002'
-  is_crypto: false
-  is_factory: true
-  is_meta: true
-  is_underlying: true
-  lp_token: '0xdde5fdb48b2ec6bc26bb4487f8e3a4eb99b3d633'
-  name: arth.usd + 3pool
-  pool_address: '0xdde5fdb48b2ec6bc26bb4487f8e3a4eb99b3d633'
-  underlying_coins:
-  - '0x84f168e646d31f6c33fdbf284d9037f59603aa28'
-  - '0x8f3cf7ad23cd3cadbd9735aff958023239c6a063'
-  - '0x2791bca1f2de4661ed88a30c99a7a9449aa84174'
-  - '0xc2132d05d31c914a87c6611c10748aeb04b58e8f'
-  venue: curve
-  zap_address: '0x5ab5c56b9db92ba45a0b46a207286cd83c15c939'
-- balance_abi: uint256
-  chain_id: 137
-  coins:
-  - '0xaaf165e75b4c9370d22b971af08c630e76bfa70c'
-  - '0xb52cfbca305e13c4c6774846f8d42bb1f0ec51d0'
-  - '0xc125d5429a1e1fc1946f40feffca1c7859bf1d80'
-  - '0x9cd42aed7d44ee801c827a8e5dcf41df534e9e82'
-  dy_abi: int128
-  fee: '0.005'
-  is_crypto: false
-  is_factory: true
-  is_meta: false
-  is_underlying: false
-  lp_token: '0x8a95282517721cb7bbc539b8834073198e35ad07'
-  name: omi/womi (pos/wormhole)
-  pool_address: '0x8a95282517721cb7bbc539b8834073198e35ad07'
-  underlying_coins: []
-  venue: curve
-  zap_address: null
-- balance_abi: uint256
-  chain_id: 137
-  coins:
-  - '0xc125d5429a1e1fc1946f40feffca1c7859bf1d80'
-  - '0x20828b944a9b3c19916dec685da8489de6db28d5'
-  - '0x9cd42aed7d44ee801c827a8e5dcf41df534e9e82'
-  - '0x8a95282517721cb7bbc539b8834073198e35ad07'
-  dy_abi: int128
-  fee: '0.01'
-  is_crypto: false
-  is_factory: true
-  is_meta: false
-  is_underlying: false
-  lp_token: '0xa0e8a70f28c5342e3e01b14ff899d7c5d2ce0ec0'
-  name: omi/kte
-  pool_address: '0xa0e8a70f28c5342e3e01b14ff899d7c5d2ce0ec0'
-  underlying_coins: []
-  venue: curve
-  zap_address: null
-- balance_abi: uint256
-  chain_id: 137
-  coins:
-  - '0x03a97594aa5ece130e2e956fc0ced2fea8ed8989'
-  - '0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270'
-  dy_abi: int128
-  fee: '0.0004'
-  is_crypto: false
-  is_factory: true
-  is_meta: false
-  is_underlying: false
-  lp_token: '0x81c86081d533f280a8daae17f672fb84b6ed65e3'
-  name: amaticb/wmatic
-  pool_address: '0x81c86081d533f280a8daae17f672fb84b6ed65e3'
-  underlying_coins: []
-  venue: curve
-  zap_address: null
-- balance_abi: uint256
-  chain_id: 137
-  coins:
-  - '0x7e9928afe96fefb820b85b4ce6597b8f660fe4f4'
-  - '0xecdcb5b88f8e3c15f95c720c51c71c9e2080525d'
-  dy_abi: int128
-  fee: '0.002'
-  is_crypto: false
-  is_factory: true
-  is_meta: false
-  is_underlying: false
-  lp_token: '0x6e00136d2ee7b488348e4b9fb59b0f92252ae5c5'
-  name: wbnb/pbnb (bnb wormhole/bridge)
-  pool_address: '0x6e00136d2ee7b488348e4b9fb59b0f92252ae5c5'
-  underlying_coins: []
-  venue: curve
-  zap_address: null
-- balance_abi: uint256
-  chain_id: 137
-  coins:
-  - '0xd106fb0cfb6a3b6a8e9b08c19f8f4d39e4b4cda1'
-  - '0xe7a24ef0c5e95ffb0f6684b813a78f2a3ad7d171'
-  dy_abi: int128
-  fee: '0.0004'
-  is_crypto: false
-  is_factory: true
-  is_meta: true
-  is_underlying: true
-  lp_token: '0x1ed0855c93bb3eb531232d4350f49861b026d087'
-  name: softminer
-  pool_address: '0x1ed0855c93bb3eb531232d4350f49861b026d087'
-  underlying_coins:
-  - '0xd106fb0cfb6a3b6a8e9b08c19f8f4d39e4b4cda1'
-  - '0x8f3cf7ad23cd3cadbd9735aff958023239c6a063'
-  - '0x2791bca1f2de4661ed88a30c99a7a9449aa84174'
-  - '0xc2132d05d31c914a87c6611c10748aeb04b58e8f'
-  venue: curve
-  zap_address: '0x5ab5c56b9db92ba45a0b46a207286cd83c15c939'
-- balance_abi: uint256
-  chain_id: 137
-  coins:
-  - '0x71e44e0986b5c9955988ca24ff8047272c0178d8'
-  - '0xa3fa99a148fa48d14ed51d610c367c61876997f1'
-  dy_abi: int128
-  fee: '0.00963'
-  is_crypto: false
-  is_factory: true
-  is_meta: false
-  is_underlying: false
-  lp_token: '0x012171c87ae388139e98734cf7b3ddb4ee38fe92'
-  name: mimatic+ latam peso
-  pool_address: '0x012171c87ae388139e98734cf7b3ddb4ee38fe92'
-  underlying_coins: []
-  venue: curve
-  zap_address: null
-- balance_abi: uint256
-  chain_id: 137
-  coins:
-  - '0xe0b52e49357fd4daf2c15e02058dce6bc0057db4'
-  - '0x4e3decbb3645551b8a19f0ea1678079fcb33fb4c'
-  dy_abi: int128
-  fee: '0.0004'
-  is_crypto: false
-  is_factory: true
-  is_meta: false
-  is_underlying: false
-  lp_token: '0x2ffbce9099cbed86984286a54e5932414af4b717'
-  name: ageur-jeur
-  pool_address: '0x2ffbce9099cbed86984286a54e5932414af4b717'
-  underlying_coins: []
-  venue: curve
-  zap_address: null
-- balance_abi: uint256
-  chain_id: 137
-  coins:
-  - '0xe2aa7db6da1dae97c5f5c6914d285fbfcc32a128'
-  - '0x4e3decbb3645551b8a19f0ea1678079fcb33fb4c'
-  dy_abi: int128
-  fee: '0.0004'
-  is_crypto: false
-  is_factory: true
-  is_meta: false
-  is_underlying: false
-  lp_token: '0x9ec22669c820b3b4303dca33e7d790f2f5b5ee86'
-  name: par-jeur
-  pool_address: '0x9ec22669c820b3b4303dca33e7d790f2f5b5ee86'
-  underlying_coins: []
-  venue: curve
-  zap_address: null
-- balance_abi: uint256
-  chain_id: 137
-  coins:
-  - '0x2d871631058827b703535228fb9ab5f35cf19e76'
-  - '0xe7a24ef0c5e95ffb0f6684b813a78f2a3ad7d171'
-  dy_abi: int128
-  fee: '0.0004'
-  is_crypto: false
-  is_factory: true
-  is_meta: true
-  is_underlying: true
-  lp_token: '0x9d5f024e1a83c783f47f38945654b13ecaa26a5c'
-  name: debridge-frax
-  pool_address: '0x9d5f024e1a83c783f47f38945654b13ecaa26a5c'
-  underlying_coins:
-  - '0x2d871631058827b703535228fb9ab5f35cf19e76'
-  - '0x8f3cf7ad23cd3cadbd9735aff958023239c6a063'
-  - '0x2791bca1f2de4661ed88a30c99a7a9449aa84174'
-  - '0xc2132d05d31c914a87c6611c10748aeb04b58e8f'
-  venue: curve
-  zap_address: '0x5ab5c56b9db92ba45a0b46a207286cd83c15c939'
-- balance_abi: uint256
-  chain_id: 137
-  coins:
-  - '0x750e4c4984a9e0f12978ea6742bc1c5d248f40ed'
-  - '0x2791bca1f2de4661ed88a30c99a7a9449aa84174'
-  dy_abi: int128
-  fee: '0.0004'
-  is_crypto: false
-  is_factory: true
-  is_meta: false
-  is_underlying: false
-  lp_token: '0xfba3b7bb043415035220b1c44fb4756434639392'
-  name: axlusdc/usdc
-  pool_address: '0xfba3b7bb043415035220b1c44fb4756434639392'
-  underlying_coins: []
-  venue: curve
-  zap_address: null
-- balance_abi: uint256
-  chain_id: 137
-  coins:
-  - '0x45c32fa6df82ead1e2ef74d17b76547eddfaff89'
-  - '0xe6469ba6d2fd6130788e0ea9c0a0515900563b59'
-  - '0x1a13f4ca1d028320a707d99520abfefca3998b7f'
-  - '0x60d55f02a771d515e077c9c2403a1ef324885cec'
-  dy_abi: int128
-  fee: '0.0004'
-  is_crypto: false
-  is_factory: true
-  is_meta: false
-  is_underlying: false
-  lp_token: '0xe4ae3ee65bb687045e401827b404fee34be4ba53'
+  lp_token: '0x4e0915c88bc70750d68c481540f081fefaf22273'
   name: 4pool
-  pool_address: '0xe4ae3ee65bb687045e401827b404fee34be4ba53'
+  pool_address: '0x4e0915c88bc70750d68c481540f081fefaf22273'
   underlying_coins: []
   venue: curve
   zap_address: null
 - balance_abi: uint256
-  chain_id: 137
+  chain_id: 1
   coins:
-  - '0x6b526daf03b4c47af2bcc5860b12151823ff70e0'
-  - '0xeafe31cd9e8e01c8f0073a2c974f728fb80e9dce'
+  - '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'
+  - '0xdac17f958d2ee523a2206206994597c13d831ec7'
+  dy_abi: int128
+  fee: '0.0003'
+  is_crypto: false
+  is_factory: false
+  is_meta: false
+  is_underlying: false
+  lp_token: '0x1005f7406f32a61bd760cfa14accd2737913d546'
+  name: 2pool
+  pool_address: '0x1005f7406f32a61bd760cfa14accd2737913d546'
+  underlying_coins: []
+  venue: curve
+  zap_address: null
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0x853d955acef822db058eb8505911ed77f175b99e'
+  - '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'
   dy_abi: int128
   fee: '0.0004'
   is_crypto: false
-  is_factory: true
+  is_factory: false
   is_meta: false
   is_underlying: false
-  lp_token: '0x976a750168801f58e8aedbcff9328138d544cc09'
-  name: 2nzd
-  pool_address: '0x976a750168801f58e8aedbcff9328138d544cc09'
+  lp_token: '0x3175df0976dfa876431c2e9ee6bc45b65d3473cc'
+  name: curve.fi frax/usdc
+  pool_address: '0xdcef968d416a41cdac0ed8702fac8128a64241a2'
   underlying_coins: []
   venue: curve
   zap_address: null
 - balance_abi: uint256
-  chain_id: 137
-  coins:
-  - '0x8f3cf7ad23cd3cadbd9735aff958023239c6a063'
-  - '0xc2132d05d31c914a87c6611c10748aeb04b58e8f'
-  - '0x2791bca1f2de4661ed88a30c99a7a9449aa84174'
-  - '0x1b12bdef2d562e19dd3b8cb66f61f1e1b714d491'
-  dy_abi: int128
-  fee: '0.005'
-  is_crypto: false
-  is_factory: true
-  is_meta: false
-  is_underlying: false
-  lp_token: '0xaaea3f0c74943c23f627a3a63f4f4af507ec831f'
-  name: dai/usdt/usdc/xa9
-  pool_address: '0xaaea3f0c74943c23f627a3a63f4f4af507ec831f'
-  underlying_coins: []
-  venue: curve
-  zap_address: null
-- balance_abi: uint256
-  chain_id: 137
-  coins:
-  - '0x2e1ad108ff1d8c782fcbbb89aad783ac49586756'
-  - '0x8f3cf7ad23cd3cadbd9735aff958023239c6a063'
-  - '0xa8d394fe7380b8ce6145d5f85e6ac22d4e91acde'
-  - '0x1b12bdef2d562e19dd3b8cb66f61f1e1b714d491'
-  dy_abi: int128
-  fee: '0.005'
-  is_crypto: false
-  is_factory: true
-  is_meta: false
-  is_underlying: false
-  lp_token: '0x1de5aa1d0dc7cc68efa51283699887ee7d6de412'
-  name: dai/tusd/busd/xa9
-  pool_address: '0x1de5aa1d0dc7cc68efa51283699887ee7d6de412'
-  underlying_coins: []
-  venue: curve
-  zap_address: null
-- balance_abi: uint256
-  chain_id: 137
-  coins:
-  - '0x6d969cea201e427d2875724fd4e8044833fbc7f4'
-  - '0xe7a24ef0c5e95ffb0f6684b813a78f2a3ad7d171'
-  dy_abi: int128
-  fee: '0.0004'
-  is_crypto: false
-  is_factory: true
-  is_meta: true
-  is_underlying: true
-  lp_token: '0x63e271a9a8b8eaa47c684732770592320b6cdd80'
-  name: phbd/am3crv
-  pool_address: '0x63e271a9a8b8eaa47c684732770592320b6cdd80'
-  underlying_coins:
-  - '0x6d969cea201e427d2875724fd4e8044833fbc7f4'
-  - '0x8f3cf7ad23cd3cadbd9735aff958023239c6a063'
-  - '0x2791bca1f2de4661ed88a30c99a7a9449aa84174'
-  - '0xc2132d05d31c914a87c6611c10748aeb04b58e8f'
-  venue: curve
-  zap_address: '0x5ab5c56b9db92ba45a0b46a207286cd83c15c939'
-- balance_abi: uint256
-  chain_id: 137
-  coins:
-  - '0x8343091f2499fd4b6174a46d067a920a3b851ff9'
-  - '0x431d5dff03120afa4bdf332c61a6e1766ef37bdb'
-  dy_abi: int128
-  fee: '0.0004'
-  is_crypto: false
-  is_factory: true
-  is_meta: false
-  is_underlying: false
-  lp_token: '0xaa91cdd7abb47f821cf07a2d38cc8668deaf1bdc'
-  name: 2jpy-2
-  pool_address: '0xaa91cdd7abb47f821cf07a2d38cc8668deaf1bdc'
-  underlying_coins: []
-  venue: curve
-  zap_address: null
-- balance_abi: uint256
-  chain_id: 137
-  coins:
-  - '0xa8d394fe7380b8ce6145d5f85e6ac22d4e91acde'
-  - '0x9719d867a500ef117cc201206b8ab51e794d3f82'
-  - '0x45c32fa6df82ead1e2ef74d17b76547eddfaff89'
-  - '0x1b12bdef2d562e19dd3b8cb66f61f1e1b714d491'
-  dy_abi: int128
-  fee: '0.01'
-  is_crypto: false
-  is_factory: true
-  is_meta: false
-  is_underlying: false
-  lp_token: '0x56c36983dc83c6c1bccd4d8dad7517b348529434'
-  name: mausdc/frax/busd/xa9
-  pool_address: '0x56c36983dc83c6c1bccd4d8dad7517b348529434'
-  underlying_coins: []
-  venue: curve
-  zap_address: null
-- balance_abi: uint256
-  chain_id: 137
-  coins:
-  - '0x2791bca1f2de4661ed88a30c99a7a9449aa84174'
-  - '0xa3fa99a148fa48d14ed51d610c367c61876997f1'
-  - '0x45c32fa6df82ead1e2ef74d17b76547eddfaff89'
-  - '0x1b12bdef2d562e19dd3b8cb66f61f1e1b714d491'
-  dy_abi: int128
-  fee: '0.0004'
-  is_crypto: false
-  is_factory: true
-  is_meta: false
-  is_underlying: false
-  lp_token: '0x01343441137a8e59c887c111be600de781327559'
-  name: usdc/mimatic/frax/xa9
-  pool_address: '0x01343441137a8e59c887c111be600de781327559'
-  underlying_coins: []
-  venue: curve
-  zap_address: null
-- balance_abi: uint256
-  chain_id: 137
-  coins:
-  - '0x2f1b1662a895c6ba01a99dcaf56778e7d77e5609'
-  - '0xe7a24ef0c5e95ffb0f6684b813a78f2a3ad7d171'
-  dy_abi: int128
-  fee: '0.0004'
-  is_crypto: false
-  is_factory: true
-  is_meta: true
-  is_underlying: true
-  lp_token: '0xcf5186491739aac19db943d71a9b9b759f3afabf'
-  name: usds+3pool
-  pool_address: '0xcf5186491739aac19db943d71a9b9b759f3afabf'
-  underlying_coins:
-  - '0x2f1b1662a895c6ba01a99dcaf56778e7d77e5609'
-  - '0x8f3cf7ad23cd3cadbd9735aff958023239c6a063'
-  - '0x2791bca1f2de4661ed88a30c99a7a9449aa84174'
-  - '0xc2132d05d31c914a87c6611c10748aeb04b58e8f'
-  venue: curve
-  zap_address: '0x5ab5c56b9db92ba45a0b46a207286cd83c15c939'
-- balance_abi: uint256
-  chain_id: 137
-  coins:
-  - '0x18ec0a6e18e5bc3784fdd3a3634b31245ab704f6'
-  - '0x4e3decbb3645551b8a19f0ea1678079fcb33fb4c'
-  dy_abi: int128
-  fee: '0.0004'
-  is_crypto: false
-  is_factory: true
-  is_meta: false
-  is_underlying: false
-  lp_token: '0xadb0b4287bce455368d12513003ad2a8212fb9ef'
-  name: eure-jeur
-  pool_address: '0xadb0b4287bce455368d12513003ad2a8212fb9ef'
-  underlying_coins: []
-  venue: curve
-  zap_address: null
-- balance_abi: uint256
-  chain_id: 137
-  coins:
-  - '0x2791bca1f2de4661ed88a30c99a7a9449aa84174'
-  - '0x8f3cf7ad23cd3cadbd9735aff958023239c6a063'
-  - '0xa3fa99a148fa48d14ed51d610c367c61876997f1'
-  - '0x45c32fa6df82ead1e2ef74d17b76547eddfaff89'
-  dy_abi: int128
-  fee: '0.0004'
-  is_crypto: false
-  is_factory: true
-  is_meta: false
-  is_underlying: false
-  lp_token: '0xa1ee546e2a53e86ea7e1c5d017af3fea1d1a9620'
-  name: 4rok
-  pool_address: '0xa1ee546e2a53e86ea7e1c5d017af3fea1d1a9620'
-  underlying_coins: []
-  venue: curve
-  zap_address: null
-- balance_abi: uint256
-  chain_id: 137
-  coins:
-  - '0x2175110f2936bf630a278660e9b6e4efa358490a'
-  - '0x1372c34acc14f1e8644c72dad82e3a21c211729f'
-  - '0xebb865bf286e6ea8abf5ac97e1b56a76530f3fbe'
-  dy_abi: int128
-  fee: '0.0004'
-  is_crypto: false
-  is_factory: true
-  is_meta: false
-  is_underlying: false
-  lp_token: '0x3e12bed01061631c2f274d957b4c4c04374bb6a4'
-  name: ousd pool
-  pool_address: '0x3e12bed01061631c2f274d957b4c4c04374bb6a4'
-  underlying_coins: []
-  venue: curve
-  zap_address: null
-- balance_abi: uint256
-  chain_id: 137
-  coins:
-  - '0x7979917b2b4b1a596fbccfd15f7d5d905862603c'
-  - '0xd3d4ab88b048edbe63a64425f750023786e87bb6'
-  - '0xa1ee546e2a53e86ea7e1c5d017af3fea1d1a9620'
-  dy_abi: int128
-  fee: '0.001'
-  is_crypto: false
-  is_factory: true
-  is_meta: false
-  is_underlying: false
-  lp_token: '0x80e66fc895f2b55f6bc38d299b298130cbc4fca2'
-  name: crvrok
-  pool_address: '0x80e66fc895f2b55f6bc38d299b298130cbc4fca2'
-  underlying_coins: []
-  venue: curve
-  zap_address: null
-- balance_abi: uint256
-  chain_id: 137
-  coins:
-  - '0xe2aa7db6da1dae97c5f5c6914d285fbfcc32a128'
-  - '0x4e3decbb3645551b8a19f0ea1678079fcb33fb4c'
-  dy_abi: int128
-  fee: '0.0004'
-  is_crypto: false
-  is_factory: true
-  is_meta: false
-  is_underlying: false
-  lp_token: '0x0f110c55efe62c16d553a3d3464b77e1853d0e97'
-  name: 2eur (par)
-  pool_address: '0x0f110c55efe62c16d553a3d3464b77e1853d0e97'
-  underlying_coins: []
-  venue: curve
-  zap_address: null
-- balance_abi: uint256
-  chain_id: 137
-  coins:
-  - '0x7bdf330f423ea880ff95fc41a280fd5ecfd3d09f'
-  - '0x4e3decbb3645551b8a19f0ea1678079fcb33fb4c'
-  dy_abi: int128
-  fee: '0.0004'
-  is_crypto: false
-  is_factory: true
-  is_meta: false
-  is_underlying: false
-  lp_token: '0x2c3cc8e698890271c8141be9f6fd6243d56b39f1'
-  name: 2eur (eurt)
-  pool_address: '0x2c3cc8e698890271c8141be9f6fd6243d56b39f1'
-  underlying_coins: []
-  venue: curve
-  zap_address: null
-- balance_abi: uint256
-  chain_id: 137
+  chain_id: 1
   coins:
   - '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'
-  - '0xfa68fb4628dff1028cfec22b4162fccd0d45efb6'
+  - '0x5e8422345238f34275888049021821e8e08caa1f'
   dy_abi: int128
-  fee: '0.00293'
+  fee: '0.0004'
   is_crypto: false
-  is_factory: true
+  is_factory: false
   is_meta: false
   is_underlying: false
-  lp_token: '0xca409f7c21e970411e9a5b163bbf82d21c175274'
-  name: maticx/wmatic
-  pool_address: '0xca409f7c21e970411e9a5b163bbf82d21c175274'
+  lp_token: '0xf43211935c781d5ca1a41d2041f397b8a7366c7a'
+  name: curve.fi eth/frxeth
+  pool_address: '0xa1f8a6807c402e4a15ef4eba36528a3fed24e577'
   underlying_coins: []
   venue: curve
   zap_address: null
 - balance_abi: uint256
-  chain_id: 137
+  chain_id: 1
   coins:
-  - '0x8117214c361098915e6ec1a108def4e63f3c9ee5'
-  - '0x9efabcfd22e00743328404fc4d8f0b7bd030f2f6'
-  - '0x649438142441a4f168a2a1b3a2a14b08cd80d7ce'
+  - '0x2260fac5e5542a773aa44fbcfedf7c193bc2c599'
+  - '0xfe18be6b3bd88a2d2a7f928d00292e7a9963cfc6'
+  dy_abi: int128
+  fee: '0.0004'
+  is_crypto: false
+  is_factory: false
+  is_meta: false
+  is_underlying: false
+  lp_token: '0x051d7e5609917bd9b73f04bac0ded8dd46a74301'
+  name: curve.fi wbtc/sbtc
+  pool_address: '0xf253f83aca21aabd2a20553ae0bf7f65c755a07f'
+  underlying_coins: []
+  venue: curve
+  zap_address: null
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0xc581b735a1688071a1746c968e0798d642ede491'
+  - '0x6c3f90f043a72fa612cbac8115ee7e52bde6e490'
+  dy_abi: uint256
+  fee: variable
+  is_crypto: true
+  is_factory: false
+  is_meta: false
+  is_underlying: false
+  lp_token: '0x3b6831c0077a1e44ed0a21841c3bc4dc11bce833'
+  name: eurtusd
+  pool_address: '0x9838eccc42659fa8aa7daf2ad134b53984c9427b'
+  underlying_coins: []
+  venue: curve
+  zap_address: null
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'
+  - '0xdb25f211ab05b1c97d595516f45794528a807ad8'
+  dy_abi: uint256
+  fee: variable
+  is_crypto: true
+  is_factory: false
+  is_meta: false
+  is_underlying: false
+  lp_token: '0x3d229e1b4faab62f621ef2f6a610961f7bd7b23b'
+  name: eursusd
+  pool_address: '0x98a7f18d4e56cfe84e3d081b40001b3d5bd3eb8b'
+  underlying_coins: []
+  venue: curve
+  zap_address: null
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2'
+  - '0xd533a949740bb3306d119cc777fa900ba034cd52'
+  dy_abi: uint256
+  fee: variable
+  is_crypto: true
+  is_factory: false
+  is_meta: false
+  is_underlying: false
+  lp_token: '0xed4064f376cb8d68f770fb1ff088a3d0f3ff5c4d'
+  name: crveth
+  pool_address: '0x8301ae4fc9c624d1d396cbdaa1ed877821d7c511'
+  underlying_coins: []
+  venue: curve
+  zap_address: null
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2'
+  - '0x4e3fbd56cd56c3e72c1403e103b45db9da5b9d2b'
+  dy_abi: uint256
+  fee: variable
+  is_crypto: true
+  is_factory: false
+  is_meta: false
+  is_underlying: false
+  lp_token: '0x3a283d9c08e8b55966afb64c515f5143cf907611'
+  name: cvxeth
+  pool_address: '0xb576491f1e6e5e62f1d8f26062ee822b40b0e0d4'
+  underlying_coins: []
+  venue: curve
+  zap_address: null
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0x68749665ff8d2d112fa859aa293f07a622782f38'
+  - '0x6c3f90f043a72fa612cbac8115ee7e52bde6e490'
+  dy_abi: uint256
+  fee: variable
+  is_crypto: true
+  is_factory: false
+  is_meta: false
+  is_underlying: false
+  lp_token: '0x8484673ca7bff40f82b041916881aea15ee84834'
+  name: xaut3crv
+  pool_address: '0xadcfcf9894335dc340f6cd182afa45999f45fc44'
+  underlying_coins: []
+  venue: curve
+  zap_address: null
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2'
+  - '0x090185f2135308bad17527004364ebcc2d37e5f6'
+  dy_abi: uint256
+  fee: variable
+  is_crypto: true
+  is_factory: false
+  is_meta: false
+  is_underlying: false
+  lp_token: '0x8282bd15dca2ea2bdf24163e8f2781b30c43a2ef'
+  name: spell
+  pool_address: '0x98638facf9a3865cd033f36548713183f6996122'
+  underlying_coins: []
+  venue: curve
+  zap_address: null
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2'
+  - '0xcdf7028ceab81fa0c6971208e83fa7872994bee5'
+  dy_abi: uint256
+  fee: variable
+  is_crypto: true
+  is_factory: false
+  is_meta: false
+  is_underlying: false
+  lp_token: '0xcb08717451aae9ef950a2524e33b6dcaba60147b'
+  name: t
+  pool_address: '0x752ebeb79963cf0732e9c0fec72a49fd1defaeac'
+  underlying_coins: []
+  venue: curve
+  zap_address: null
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0x1abaea1f7c830bd89acc67ec4af516284b1bc33c'
+  - '0x6c3f90f043a72fa612cbac8115ee7e52bde6e490'
+  dy_abi: uint256
+  fee: variable
+  is_crypto: true
+  is_factory: false
+  is_meta: false
+  is_underlying: false
+  lp_token: '0x70fc957eb90e37af82acdbd12675699797745f68'
+  name: euroc
+  pool_address: '0xe84f5b1582ba325fdf9ce6b0c1f087ccfc924e54'
+  underlying_coins: []
+  venue: curve
+  zap_address: null
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0x95dfdc8161832e4ff7816ac4b6367ce201538253'
+  - '0x269895a3df4d73b077fc823dd6da1b95f72aaf9b'
   dy_abi: int128
   fee: '0.0004'
   is_crypto: false
   is_factory: true
   is_meta: false
   is_underlying: false
-  lp_token: '0x28e78e7f1ac37ca1f7562b6f2e9745afb9e69bfe'
-  name: crv tri assets
-  pool_address: '0x28e78e7f1ac37ca1f7562b6f2e9745afb9e69bfe'
+  lp_token: '0x8461a004b50d321cb22b7d034969ce6803911899'
+  name: ibkrw/skrw
+  pool_address: '0x8461a004b50d321cb22b7d034969ce6803911899'
   underlying_coins: []
   venue: curve
   zap_address: null
 - balance_abi: uint256
-  chain_id: 137
+  chain_id: 1
   coins:
-  - '0x268f78793f20b11615ed5c4e076b288826e299ce'
-  - '0x192ef3fff1708456d3a1f21354fa8d6bfd86b45c'
+  - '0x96e61422b6a9ba0e068b6c5add4ffabc6a4aae27'
+  - '0xd71ecff9342a5ced620049e616c5035f1db98620'
   dy_abi: int128
   fee: '0.0004'
   is_crypto: false
   is_factory: true
   is_meta: false
   is_underlying: false
-  lp_token: '0x027ab3d4a5f74475a4199344e3e81289af324449'
-  name: 2gold (cache)
-  pool_address: '0x027ab3d4a5f74475a4199344e3e81289af324449'
+  lp_token: '0x19b080fe1ffa0553469d20ca36219f17fcf03859'
+  name: ibeur/seur
+  pool_address: '0x19b080fe1ffa0553469d20ca36219f17fcf03859'
   underlying_coins: []
   venue: curve
   zap_address: null
 - balance_abi: uint256
-  chain_id: 137
+  chain_id: 1
   coins:
-  - '0xe6469ba6d2fd6130788e0ea9c0a0515900563b59'
-  - '0xe7a24ef0c5e95ffb0f6684b813a78f2a3ad7d171'
+  - '0xd533a949740bb3306d119cc777fa900ba034cd52'
+  - '0x9d409a0a012cfba9b15f6d4b36ac57a46966ab9a'
+  - '0x62b9c7356a2dc64a1969e19c23e4f579f9810aa7'
+  - '0xd38aeb759891882e78e957c80656572503d8c1b1'
+  dy_abi: int128
+  fee: '0.0004'
+  is_crypto: false
+  is_factory: true
+  is_meta: false
+  is_underlying: false
+  lp_token: '0xda5b670ccd418a187a3066674a8002adc9356ad1'
+  name: ahead of the curve
+  pool_address: '0xda5b670ccd418a187a3066674a8002adc9356ad1'
+  underlying_coins: []
+  venue: curve
+  zap_address: null
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0x2a8e1e676ec238d8a992307b495b45b3feaa5e86'
+  - '0x6c3f90f043a72fa612cbac8115ee7e52bde6e490'
   dy_abi: int128
   fee: '0.0004'
   is_crypto: false
   is_factory: true
   is_meta: true
   is_underlying: true
-  lp_token: '0xd0d0f4db3e22764778c84c50838d1401870f89cd'
-  name: 3crvust
-  pool_address: '0xd0d0f4db3e22764778c84c50838d1401870f89cd'
+  lp_token: '0x87650d7bbfc3a9f10587d7778206671719d9910d'
+  name: origin dollar
+  pool_address: '0x87650d7bbfc3a9f10587d7778206671719d9910d'
   underlying_coins:
-  - '0xe6469ba6d2fd6130788e0ea9c0a0515900563b59'
-  - '0x8f3cf7ad23cd3cadbd9735aff958023239c6a063'
-  - '0x2791bca1f2de4661ed88a30c99a7a9449aa84174'
-  - '0xc2132d05d31c914a87c6611c10748aeb04b58e8f'
+  - '0x2a8e1e676ec238d8a992307b495b45b3feaa5e86'
+  - '0x6b175474e89094c44da98b954eedeac495271d0f'
+  - '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'
+  - '0xdac17f958d2ee523a2206206994597c13d831ec7'
   venue: curve
-  zap_address: '0x5ab5c56b9db92ba45a0b46a207286cd83c15c939'
+  zap_address: '0xa79828df1850e8a3a3064576f380d90aecdd3359'
 - balance_abi: uint256
-  chain_id: 137
+  chain_id: 1
   coins:
-  - '0x18ec0a6e18e5bc3784fdd3a3634b31245ab704f6'
-  - '0x4e3decbb3645551b8a19f0ea1678079fcb33fb4c'
+  - '0xbcca60bb61934080951369a648fb03df4f96263c'
+  - '0x028171bca77440897b824ca71d1c56cac55b68a3'
   dy_abi: int128
   fee: '0.0004'
   is_crypto: false
   is_factory: true
   is_meta: false
   is_underlying: false
-  lp_token: '0x2f3e9ca3bff85b91d9fe6a9f3e8f9b1a6a4c3cf4'
-  name: 2eur (eure)
-  pool_address: '0x2f3e9ca3bff85b91d9fe6a9f3e8f9b1a6a4c3cf4'
+  lp_token: '0x6a274de3e2462c7614702474d64d376729831dca'
+  name: aave untethered
+  pool_address: '0x6a274de3e2462c7614702474d64d376729831dca'
   underlying_coins: []
   venue: curve
   zap_address: null
 - balance_abi: uint256
-  chain_id: 137
+  chain_id: 1
   coins:
-  - '0x776758a8592c7cba28842ee1880a9b46ea7dde66'
-  - '0xdb70c4a8369043c3c4fd21b89ebd8cbe20423856'
-  dy_abi: int128
-  fee: '0.0004'
-  is_crypto: false
-  is_factory: true
-  is_meta: false
-  is_underlying: false
-  lp_token: '0xe3c19e77447ef20f0e96c61fa94e6eb9f810a50c'
-  name: susd1/susd91
-  pool_address: '0xe3c19e77447ef20f0e96c61fa94e6eb9f810a50c'
-  underlying_coins: []
-  venue: curve
-  zap_address: null
-- balance_abi: uint256
-  chain_id: 137
-  coins:
-  - '0x4d9e99efbd2ed279b2668289005d0071a79fd62b'
-  - '0x8f3cf7ad23cd3cadbd9735aff958023239c6a063'
-  dy_abi: int128
-  fee: '0.0004'
-  is_crypto: false
-  is_factory: true
-  is_meta: false
-  is_underlying: false
-  lp_token: '0x3de21cca8f4e5fedce156f8bd4ed6e74fe85ab2f'
-  name: susdr/dai
-  pool_address: '0x3de21cca8f4e5fedce156f8bd4ed6e74fe85ab2f'
-  underlying_coins: []
-  venue: curve
-  zap_address: null
-- balance_abi: uint256
-  chain_id: 137
-  coins:
-  - '0x4d9e99efbd2ed279b2668289005d0071a79fd62b'
-  - '0xe7a24ef0c5e95ffb0f6684b813a78f2a3ad7d171'
+  - '0x956f47f50a910163d8bf957cf5846d573e7f87ca'
+  - '0x6c3f90f043a72fa612cbac8115ee7e52bde6e490'
   dy_abi: int128
   fee: '0.0004'
   is_crypto: false
   is_factory: true
   is_meta: true
   is_underlying: true
-  lp_token: '0xef978c32151f3fbdbca825a5de8011d29a84b7d9'
-  name: susdr+3pool
-  pool_address: '0xef978c32151f3fbdbca825a5de8011d29a84b7d9'
+  lp_token: '0x06cb22615ba53e60d67bf6c341a0fd5e718e1655'
+  name: fei metapool
+  pool_address: '0x06cb22615ba53e60d67bf6c341a0fd5e718e1655'
   underlying_coins:
-  - '0x4d9e99efbd2ed279b2668289005d0071a79fd62b'
-  - '0x8f3cf7ad23cd3cadbd9735aff958023239c6a063'
-  - '0x2791bca1f2de4661ed88a30c99a7a9449aa84174'
-  - '0xc2132d05d31c914a87c6611c10748aeb04b58e8f'
+  - '0x956f47f50a910163d8bf957cf5846d573e7f87ca'
+  - '0x6b175474e89094c44da98b954eedeac495271d0f'
+  - '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'
+  - '0xdac17f958d2ee523a2206206994597c13d831ec7'
   venue: curve
-  zap_address: '0x5ab5c56b9db92ba45a0b46a207286cd83c15c939'
+  zap_address: '0xa79828df1850e8a3a3064576f380d90aecdd3359'
 - balance_abi: uint256
-  chain_id: 137
+  chain_id: 1
   coins:
-  - '0xa411c9aa00e020e4f88bc19996d29c5b7adb4acf'
-  - '0xbd1fe73e1f12bd2bc237de9b626f056f21f86427'
+  - '0x853d955acef822db058eb8505911ed77f175b99e'
+  - '0x6c3f90f043a72fa612cbac8115ee7e52bde6e490'
+  dy_abi: int128
+  fee: '0.0004'
+  is_crypto: false
+  is_factory: true
+  is_meta: true
+  is_underlying: true
+  lp_token: '0xd632f22692fac7611d2aa1c0d552930d43caed3b'
+  name: frax
+  pool_address: '0xd632f22692fac7611d2aa1c0d552930d43caed3b'
+  underlying_coins:
+  - '0x853d955acef822db058eb8505911ed77f175b99e'
+  - '0x6b175474e89094c44da98b954eedeac495271d0f'
+  - '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'
+  - '0xdac17f958d2ee523a2206206994597c13d831ec7'
+  venue: curve
+  zap_address: '0xa79828df1850e8a3a3064576f380d90aecdd3359'
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0x1bef2e5de862034fb0ed456df59d29ecadc9934c'
+  - '0x6c3f90f043a72fa612cbac8115ee7e52bde6e490'
+  dy_abi: int128
+  fee: '0.0004'
+  is_crypto: false
+  is_factory: true
+  is_meta: true
+  is_underlying: true
+  lp_token: '0x67d9eae741944d4402eb0d1cb3bc3a168ec1764c'
+  name: naos usd
+  pool_address: '0x67d9eae741944d4402eb0d1cb3bc3a168ec1764c'
+  underlying_coins:
+  - '0x1bef2e5de862034fb0ed456df59d29ecadc9934c'
+  - '0x6b175474e89094c44da98b954eedeac495271d0f'
+  - '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'
+  - '0xdac17f958d2ee523a2206206994597c13d831ec7'
+  venue: curve
+  zap_address: '0xa79828df1850e8a3a3064576f380d90aecdd3359'
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0xd533a949740bb3306d119cc777fa900ba034cd52'
+  - '0x62b9c7356a2dc64a1969e19c23e4f579f9810aa7'
+  dy_abi: int128
+  fee: '0.0015'
+  is_crypto: false
+  is_factory: true
+  is_meta: false
+  is_underlying: false
+  lp_token: '0x9d0464996170c6b9e75eed71c68b99ddedf279e8'
+  name: cvxcrv
+  pool_address: '0x9d0464996170c6b9e75eed71c68b99ddedf279e8'
+  underlying_coins: []
+  venue: curve
+  zap_address: null
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0x31d4eb09a216e181ec8a43ce79226a487d6f0ba9'
+  - '0x6c3f90f043a72fa612cbac8115ee7e52bde6e490'
+  dy_abi: int128
+  fee: '0.0004'
+  is_crypto: false
+  is_factory: true
+  is_meta: true
+  is_underlying: true
+  lp_token: '0x5b3b5df2bf2b6543f78e053bd91c4bdd820929f1'
+  name: usdm
+  pool_address: '0x5b3b5df2bf2b6543f78e053bd91c4bdd820929f1'
+  underlying_coins:
+  - '0x31d4eb09a216e181ec8a43ce79226a487d6f0ba9'
+  - '0x6b175474e89094c44da98b954eedeac495271d0f'
+  - '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'
+  - '0xdac17f958d2ee523a2206206994597c13d831ec7'
+  venue: curve
+  zap_address: '0xa79828df1850e8a3a3064576f380d90aecdd3359'
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0x68037790a0229e9ce6eaa8a99ea92964106c4703'
+  - '0xc581b735a1688071a1746c968e0798d642ede491'
+  - '0xdb25f211ab05b1c97d595516f45794528a807ad8'
+  - '0xd71ecff9342a5ced620049e616c5035f1db98620'
   dy_abi: int128
   fee: '0.0004'
   is_crypto: false
   is_factory: true
   is_meta: false
   is_underlying: false
-  lp_token: '0xc8d95f04415c28ab7d5bb7cc402cfe80de6a3bfe'
-  name: 2mxn (xoc)
-  pool_address: '0xc8d95f04415c28ab7d5bb7cc402cfe80de6a3bfe'
+  lp_token: '0x3cfaa1596777cad9f5004f9a0c443d912e262243'
+  name: meta eur
+  pool_address: '0x3cfaa1596777cad9f5004f9a0c443d912e262243'
   underlying_coins: []
   venue: curve
   zap_address: null
 - balance_abi: uint256
-  chain_id: 137
+  chain_id: 1
   coins:
-  - '0xc2132d05d31c914a87c6611c10748aeb04b58e8f'
-  - '0x2791bca1f2de4661ed88a30c99a7a9449aa84174'
+  - '0xc2db4c131adaf01c15a1db654c040c8578929d55'
+  - '0x6c3f90f043a72fa612cbac8115ee7e52bde6e490'
+  dy_abi: int128
+  fee: '0.0004'
+  is_crypto: false
+  is_factory: true
+  is_meta: true
+  is_underlying: true
+  lp_token: '0x9f6664205988c3bf4b12b851c075102714869535'
+  name: wasabi usd
+  pool_address: '0x9f6664205988c3bf4b12b851c075102714869535'
+  underlying_coins:
+  - '0xc2db4c131adaf01c15a1db654c040c8578929d55'
+  - '0x6b175474e89094c44da98b954eedeac495271d0f'
+  - '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'
+  - '0xdac17f958d2ee523a2206206994597c13d831ec7'
+  venue: curve
+  zap_address: '0xa79828df1850e8a3a3064576f380d90aecdd3359'
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0x865377367054516e17014ccded1e7d814edc9ce4'
+  - '0x6c3f90f043a72fa612cbac8115ee7e52bde6e490'
+  dy_abi: int128
+  fee: '0.0004'
+  is_crypto: false
+  is_factory: true
+  is_meta: true
+  is_underlying: true
+  lp_token: '0xaa5a67c256e27a5d80712c51971408db3370927d'
+  name: dola-3pool curve lp
+  pool_address: '0xaa5a67c256e27a5d80712c51971408db3370927d'
+  underlying_coins:
+  - '0x865377367054516e17014ccded1e7d814edc9ce4'
+  - '0x6b175474e89094c44da98b954eedeac495271d0f'
+  - '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'
+  - '0xdac17f958d2ee523a2206206994597c13d831ec7'
+  venue: curve
+  zap_address: '0xa79828df1850e8a3a3064576f380d90aecdd3359'
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0x5555f75e3d5278082200fb451d1b6ba946d8e13b'
+  - '0xf6b1c627e95bfc3c1b4c9b825a032ff0fbf3e07d'
   dy_abi: int128
   fee: '0.0004'
   is_crypto: false
   is_factory: true
   is_meta: false
   is_underlying: false
-  lp_token: '0xe968dc04927e43fd3a93aabfd4f385c4dcd367ff'
-  name: usdt/usdc
-  pool_address: '0xe968dc04927e43fd3a93aabfd4f385c4dcd367ff'
+  lp_token: '0x8818a9bb44fbf33502be7c15c500d0c783b73067'
+  name: ibjpy/sjpy
+  pool_address: '0x8818a9bb44fbf33502be7c15c500d0c783b73067'
   underlying_coins: []
   venue: curve
   zap_address: null
 - balance_abi: uint256
-  chain_id: 137
+  chain_id: 1
   coins:
-  - '0x9a058f205173b06dc288afba0f13aa9bc0fdf49c'
-  - '0x624f468a020719b0c550508595f3b3eb3390a9cd'
+  - '0xfafdf0c4c1cb09d430bf88c75d88bb46dae09967'
+  - '0xf48e200eaf9906362bb1442fca31e0835773b8b4'
+  dy_abi: int128
+  fee: '0.0004'
+  is_crypto: false
+  is_factory: true
+  is_meta: false
+  is_underlying: false
+  lp_token: '0x3f1b0278a9ee595635b61817630cc19de792f506'
+  name: ibaud/saud
+  pool_address: '0x3f1b0278a9ee595635b61817630cc19de792f506'
+  underlying_coins: []
+  venue: curve
+  zap_address: null
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0x69681f8fde45345c3870bcd5eaf4a05a60e7d227'
+  - '0x97fe22e7341a0cd8db6f6c021a24dc8f4dad855f'
+  dy_abi: int128
+  fee: '0.0004'
+  is_crypto: false
+  is_factory: true
+  is_meta: false
+  is_underlying: false
+  lp_token: '0xd6ac1cb9019137a896343da59dde6d097f710538'
+  name: ibgbp/sgbp
+  pool_address: '0xd6ac1cb9019137a896343da59dde6d097f710538'
+  underlying_coins: []
+  venue: curve
+  zap_address: null
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0x1cc481ce2bd2ec7bf67d1be64d4878b16078f309'
+  - '0x0f83287ff768d1c1e17a42f44d644d7f22e8ee1d'
+  dy_abi: int128
+  fee: '0.0004'
+  is_crypto: false
+  is_factory: true
+  is_meta: false
+  is_underlying: false
+  lp_token: '0x9c2c8910f113181783c249d8f6aa41b51cde0f0c'
+  name: ibchf/schf
+  pool_address: '0x9c2c8910f113181783c249d8f6aa41b51cde0f0c'
+  underlying_coins: []
+  venue: curve
+  zap_address: null
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0x69e8b9528cabda89fe846c67675b5d73d463a916'
+  - '0x7d1afa7b718fb893db30a3abc0cfc608aacfebb0'
+  dy_abi: int128
+  fee: '0.0004'
+  is_crypto: false
+  is_factory: true
+  is_meta: false
+  is_underlying: false
+  lp_token: '0xc8a7c1c4b748970f57ca59326bcd49f5c9dc43e3'
+  name: open matic
+  pool_address: '0xc8a7c1c4b748970f57ca59326bcd49f5c9dc43e3'
+  underlying_coins: []
+  venue: curve
+  zap_address: null
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0x9fcf418b971134625cdf38448b949c8640971671'
+  - '0xc581b735a1688071a1746c968e0798d642ede491'
+  dy_abi: int128
+  fee: '0.0004'
+  is_crypto: false
+  is_factory: true
+  is_meta: false
+  is_underlying: false
+  lp_token: '0x3fb78e61784c9c637d560ede23ad57ca1294c14a'
+  name: neutrino eur
+  pool_address: '0x3fb78e61784c9c637d560ede23ad57ca1294c14a'
+  underlying_coins: []
+  venue: curve
+  zap_address: null
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'
+  - '0x0100546f2cd4c9d97f798ffc9755e47865ff7ee6'
+  dy_abi: int128
+  fee: '0.0004'
+  is_crypto: false
+  is_factory: true
+  is_meta: false
+  is_underlying: false
+  lp_token: '0xc4c319e2d4d66cca4464c0c2b32c9bd23ebe784e'
+  name: aleth
+  pool_address: '0xc4c319e2d4d66cca4464c0c2b32c9bd23ebe784e'
+  underlying_coins: []
+  venue: curve
+  zap_address: null
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0x18084fba666a33d37592fa2633fd49a74dd93a88'
+  - '0x075b1bb99792c9e1041ba13afef80c91a1e70fb3'
+  dy_abi: int128
+  fee: '0.0004'
+  is_crypto: false
+  is_factory: true
+  is_meta: true
+  is_underlying: true
+  lp_token: '0xfa65aa60a9d45623c57d383fb4cf8fb8b854cc4d'
+  name: tbtc2
+  pool_address: '0xfa65aa60a9d45623c57d383fb4cf8fb8b854cc4d'
+  underlying_coins:
+  - '0x18084fba666a33d37592fa2633fd49a74dd93a88'
+  - '0xeb4c2781e4eba804ce9a9803c67d0893436bb27d'
+  - '0x2260fac5e5542a773aa44fbcfedf7c193bc2c599'
+  - '0xfe18be6b3bd88a2d2a7f928d00292e7a9963cfc6'
+  venue: curve
+  zap_address: '0x7abdbaf29929e7f8621b757d2a7c04d78d633834'
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0xef779cf3d260dbe6177b30ff08b10db591a6dd9c'
+  - '0x6c3f90f043a72fa612cbac8115ee7e52bde6e490'
+  dy_abi: int128
+  fee: '0.0004'
+  is_crypto: false
+  is_factory: true
+  is_meta: true
+  is_underlying: true
+  lp_token: '0xac5f019a302c4c8caac0a7f28183ac62e6e80034'
+  name: tusd-3pool
+  pool_address: '0xac5f019a302c4c8caac0a7f28183ac62e6e80034'
+  underlying_coins:
+  - '0xef779cf3d260dbe6177b30ff08b10db591a6dd9c'
+  - '0x6b175474e89094c44da98b954eedeac495271d0f'
+  - '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'
+  - '0xdac17f958d2ee523a2206206994597c13d831ec7'
+  venue: curve
+  zap_address: '0xa79828df1850e8a3a3064576f380d90aecdd3359'
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0xf0a93d4994b3d98fb5e3a2f90dbc2d69073cb86b'
+  - '0x6c3f90f043a72fa612cbac8115ee7e52bde6e490'
+  dy_abi: int128
+  fee: '0.0004'
+  is_crypto: false
+  is_factory: true
+  is_meta: true
+  is_underlying: true
+  lp_token: '0xbcb91e689114b9cc865ad7871845c95241df4105'
+  name: pwrd metapool
+  pool_address: '0xbcb91e689114b9cc865ad7871845c95241df4105'
+  underlying_coins:
+  - '0xf0a93d4994b3d98fb5e3a2f90dbc2d69073cb86b'
+  - '0x6b175474e89094c44da98b954eedeac495271d0f'
+  - '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'
+  - '0xdac17f958d2ee523a2206206994597c13d831ec7'
+  venue: curve
+  zap_address: '0xa79828df1850e8a3a3064576f380d90aecdd3359'
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0x42ef9077d8e79689799673ae588e046f8832cb95'
+  - '0x6c3f90f043a72fa612cbac8115ee7e52bde6e490'
+  dy_abi: int128
+  fee: '0.0004'
+  is_crypto: false
+  is_factory: true
+  is_meta: true
+  is_underlying: true
+  lp_token: '0xc2f5fea5197a3d92736500fd7733fcc7a3bbdf3f'
+  name: fusd-3pool
+  pool_address: '0xc2f5fea5197a3d92736500fd7733fcc7a3bbdf3f'
+  underlying_coins:
+  - '0x42ef9077d8e79689799673ae588e046f8832cb95'
+  - '0x6b175474e89094c44da98b954eedeac495271d0f'
+  - '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'
+  - '0xdac17f958d2ee523a2206206994597c13d831ec7'
+  venue: curve
+  zap_address: '0xa79828df1850e8a3a3064576f380d90aecdd3359'
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0x4185cf99745b2a20727b37ee798193dd4a56cdfa'
+  - '0x6c3f90f043a72fa612cbac8115ee7e52bde6e490'
+  dy_abi: int128
+  fee: '0.0004'
+  is_crypto: false
+  is_factory: true
+  is_meta: true
+  is_underlying: true
+  lp_token: '0x705da2596cf6aaa2fea36f2a59985ec9e8aec7e2'
+  name: test pool d
+  pool_address: '0x705da2596cf6aaa2fea36f2a59985ec9e8aec7e2'
+  underlying_coins:
+  - '0x4185cf99745b2a20727b37ee798193dd4a56cdfa'
+  - '0x6b175474e89094c44da98b954eedeac495271d0f'
+  - '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'
+  - '0xdac17f958d2ee523a2206206994597c13d831ec7'
+  venue: curve
+  zap_address: '0xa79828df1850e8a3a3064576f380d90aecdd3359'
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0xde12c7959e1a72bbe8a5f7a1dc8f8eef9ab011b3'
+  - '0x6c3f90f043a72fa612cbac8115ee7e52bde6e490'
+  dy_abi: int128
+  fee: '0.0004'
+  is_crypto: false
+  is_factory: true
+  is_meta: true
+  is_underlying: true
+  lp_token: '0x6870f9b4dd5d34c7fc53d0d85d9dbd1aab339bf7'
+  name: dei
+  pool_address: '0x6870f9b4dd5d34c7fc53d0d85d9dbd1aab339bf7'
+  underlying_coins:
+  - '0xde12c7959e1a72bbe8a5f7a1dc8f8eef9ab011b3'
+  - '0x6b175474e89094c44da98b954eedeac495271d0f'
+  - '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'
+  - '0xdac17f958d2ee523a2206206994597c13d831ec7'
+  venue: curve
+  zap_address: '0xa79828df1850e8a3a3064576f380d90aecdd3359'
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0x99d8a9c45b2eca8864373a26d1459e3dff1e17f3'
+  - '0xa47c8bf37f92abed4a126bda807a7b7498661acd'
+  dy_abi: int128
+  fee: '0.0004'
+  is_crypto: false
+  is_factory: true
+  is_meta: false
+  is_underlying: false
+  lp_token: '0x55a8a39bc9694714e2874c1ce77aa1e599461e18'
+  name: mim-ust
+  pool_address: '0x55a8a39bc9694714e2874c1ce77aa1e599461e18'
+  underlying_coins: []
+  venue: curve
+  zap_address: null
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0x898bad2774eb97cf6b94605677f43b41871410b1'
+  - '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2'
+  dy_abi: int128
+  fee: '0.0004'
+  is_crypto: false
+  is_factory: true
+  is_meta: false
+  is_underlying: false
+  lp_token: '0xf03bd3cfe85f00bf5819ac20f0870ce8a8d1f0d8'
+  name: sharedstake eth/veth2
+  pool_address: '0xf03bd3cfe85f00bf5819ac20f0870ce8a8d1f0d8'
+  underlying_coins: []
+  venue: curve
+  zap_address: null
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0x4e3fbd56cd56c3e72c1403e103b45db9da5b9d2b'
+  - '0xfd05d3c7fe2924020620a8be4961bbaa747e6305'
+  dy_abi: int128
+  fee: '0.0004'
+  is_crypto: false
+  is_factory: true
+  is_meta: false
+  is_underlying: false
+  lp_token: '0x04c90c198b2eff55716079bc06d7ccc4aa4d7512'
+  name: badger locked cvx
+  pool_address: '0x04c90c198b2eff55716079bc06d7ccc4aa4d7512'
+  underlying_coins: []
+  venue: curve
+  zap_address: null
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0xa693b19d2931d498c5b318df961919bb4aee87a5'
+  - '0x6c3f90f043a72fa612cbac8115ee7e52bde6e490'
+  dy_abi: int128
+  fee: '0.0004'
+  is_crypto: false
+  is_factory: true
+  is_meta: true
+  is_underlying: true
+  lp_token: '0xceaf7747579696a2f0bb206a14210e3c9e6fb269'
+  name: wormhole v2 ust-3pool
+  pool_address: '0xceaf7747579696a2f0bb206a14210e3c9e6fb269'
+  underlying_coins:
+  - '0xa693b19d2931d498c5b318df961919bb4aee87a5'
+  - '0x6b175474e89094c44da98b954eedeac495271d0f'
+  - '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'
+  - '0xdac17f958d2ee523a2206206994597c13d831ec7'
+  venue: curve
+  zap_address: '0xa79828df1850e8a3a3064576f380d90aecdd3359'
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'
+  - '0xd01ef7c0a5d8c432fc2d1a85c66cf2327362e5c6'
+  dy_abi: int128
+  fee: '0.0004'
+  is_crypto: false
+  is_factory: true
+  is_meta: false
+  is_underlying: false
+  lp_token: '0xfb9a265b5a1f52d97838ec7274a0b1442efacc87'
+  name: ankr reward-earning staked eth
+  pool_address: '0xfb9a265b5a1f52d97838ec7274a0b1442efacc87'
+  underlying_coins: []
+  venue: curve
+  zap_address: null
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0x853d955acef822db058eb8505911ed77f175b99e'
+  - '0x956f47f50a910163d8bf957cf5846d573e7f87ca'
+  - '0xbc6da0fe9ad5f3b0d58160288917aa56653660e9'
+  dy_abi: int128
+  fee: '0.0004'
+  is_crypto: false
+  is_factory: true
+  is_meta: false
+  is_underlying: false
+  lp_token: '0xbaaa1f5dba42c3389bdbc2c9d2de134f5cd0dc89'
+  name: d3pool
+  pool_address: '0xbaaa1f5dba42c3389bdbc2c9d2de134f5cd0dc89'
+  underlying_coins: []
+  venue: curve
+  zap_address: null
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0x7d1afa7b718fb893db30a3abc0cfc608aacfebb0'
+  - '0x99534ef705df1fff4e4bd7bbaaf9b0dff038ebfe'
+  dy_abi: int128
+  fee: '0.0004'
+  is_crypto: false
+  is_factory: true
+  is_meta: false
+  is_underlying: false
+  lp_token: '0x1f6bb2a7a2a84d08bb821b89e38ca651175aedd4'
+  name: ankr reward-earning staked matic
+  pool_address: '0x1f6bb2a7a2a84d08bb821b89e38ca651175aedd4'
+  underlying_coins: []
+  venue: curve
+  zap_address: null
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0x8e870d67f660d95d5be530380d0ec0bd388289e1'
+  - '0x6c3f90f043a72fa612cbac8115ee7e52bde6e490'
+  dy_abi: int128
+  fee: '0.0004'
+  is_crypto: false
+  is_factory: true
+  is_meta: true
+  is_underlying: true
+  lp_token: '0xc270b3b858c335b6ba5d5b10e2da8a09976005ad'
+  name: paxos dollar (usdp)
+  pool_address: '0xc270b3b858c335b6ba5d5b10e2da8a09976005ad'
+  underlying_coins:
+  - '0x8e870d67f660d95d5be530380d0ec0bd388289e1'
+  - '0x6b175474e89094c44da98b954eedeac495271d0f'
+  - '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'
+  - '0xdac17f958d2ee523a2206206994597c13d831ec7'
+  venue: curve
+  zap_address: '0xa79828df1850e8a3a3064576f380d90aecdd3359'
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0x8751d4196027d4e6da63716fa7786b5174f04c15'
+  - '0x075b1bb99792c9e1041ba13afef80c91a1e70fb3'
+  dy_abi: int128
+  fee: '0.0004'
+  is_crypto: false
+  is_factory: true
+  is_meta: true
+  is_underlying: true
+  lp_token: '0xfbdca68601f835b27790d98bbb8ec7f05fdeaa9b'
+  name: ibbtc
+  pool_address: '0xfbdca68601f835b27790d98bbb8ec7f05fdeaa9b'
+  underlying_coins:
+  - '0x8751d4196027d4e6da63716fa7786b5174f04c15'
+  - '0xeb4c2781e4eba804ce9a9803c67d0893436bb27d'
+  - '0x2260fac5e5542a773aa44fbcfedf7c193bc2c599'
+  - '0xfe18be6b3bd88a2d2a7f928d00292e7a9963cfc6'
+  venue: curve
+  zap_address: '0x7abdbaf29929e7f8621b757d2a7c04d78d633834'
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0x8cb24ed2e4f7e2065f4eb2be5f6b0064b1919850'
+  - '0x81d66d255d47662b6b16f3c5bbfbb15283b05bc2'
+  dy_abi: int128
+  fee: '0.0004'
+  is_crypto: false
+  is_factory: true
+  is_meta: false
+  is_underlying: false
+  lp_token: '0xcbd5cc53c5b846671c6434ab301ad4d210c21184'
+  name: ibzar/zarp
+  pool_address: '0xcbd5cc53c5b846671c6434ab301ad4d210c21184'
+  underlying_coins: []
+  venue: curve
+  zap_address: null
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0x1a7e4e63778b4f12a199c062f3efdd288afcbce8'
+  - '0xc581b735a1688071a1746c968e0798d642ede491'
+  - '0xdb25f211ab05b1c97d595516f45794528a807ad8'
+  dy_abi: int128
+  fee: '0.0004'
+  is_crypto: false
+  is_factory: true
+  is_meta: false
+  is_underlying: false
+  lp_token: '0xb9446c4ef5ebe66268da6700d26f96273de3d571'
+  name: 3eurpool
+  pool_address: '0xb9446c4ef5ebe66268da6700d26f96273de3d571'
+  underlying_coins: []
+  venue: curve
+  zap_address: null
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0xc7d9c108d4e1dd1484d3e2568d7f74bfd763d356'
+  - '0x6c3f90f043a72fa612cbac8115ee7e52bde6e490'
+  dy_abi: int128
+  fee: '0.0004'
+  is_crypto: false
+  is_factory: true
+  is_meta: true
+  is_underlying: true
+  lp_token: '0x1033812efec8716bbae0c19e5678698d25e26edf'
+  name: sora xstusd
+  pool_address: '0x1033812efec8716bbae0c19e5678698d25e26edf'
+  underlying_coins:
+  - '0xc7d9c108d4e1dd1484d3e2568d7f74bfd763d356'
+  - '0x6b175474e89094c44da98b954eedeac495271d0f'
+  - '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'
+  - '0xdac17f958d2ee523a2206206994597c13d831ec7'
+  venue: curve
+  zap_address: '0xa79828df1850e8a3a3064576f380d90aecdd3359'
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0x573d2505a7ee69d136a8667b4cd915f039ac54e5'
+  - '0x6c3f90f043a72fa612cbac8115ee7e52bde6e490'
+  dy_abi: int128
+  fee: '0.0004'
+  is_crypto: false
+  is_factory: true
+  is_meta: true
+  is_underlying: true
+  lp_token: '0x6d8ff88973b15df3e2dc6abb9af29cad8c2b5ef5'
+  name: xim
+  pool_address: '0x6d8ff88973b15df3e2dc6abb9af29cad8c2b5ef5'
+  underlying_coins:
+  - '0x573d2505a7ee69d136a8667b4cd915f039ac54e5'
+  - '0x6b175474e89094c44da98b954eedeac495271d0f'
+  - '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'
+  - '0xdac17f958d2ee523a2206206994597c13d831ec7'
+  venue: curve
+  zap_address: '0xa79828df1850e8a3a3064576f380d90aecdd3359'
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0xb8919522331c59f5c16bdfaa6a121a6e03a91f62'
+  - '0x6c3f90f043a72fa612cbac8115ee7e52bde6e490'
+  dy_abi: int128
+  fee: '0.0004'
+  is_crypto: false
+  is_factory: true
+  is_meta: true
+  is_underlying: true
+  lp_token: '0x3b22b869ba3c0a495cead0b8a009b70886d37fac'
+  name: bhome
+  pool_address: '0x3b22b869ba3c0a495cead0b8a009b70886d37fac'
+  underlying_coins:
+  - '0xb8919522331c59f5c16bdfaa6a121a6e03a91f62'
+  - '0x6b175474e89094c44da98b954eedeac495271d0f'
+  - '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'
+  - '0xdac17f958d2ee523a2206206994597c13d831ec7'
+  venue: curve
+  zap_address: '0xa79828df1850e8a3a3064576f380d90aecdd3359'
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0x2370f9d504c7a6e775bf6e14b3f12846b594cd53'
+  - '0x5555f75e3d5278082200fb451d1b6ba946d8e13b'
+  dy_abi: int128
+  fee: '0.0004'
+  is_crypto: false
+  is_factory: true
+  is_meta: false
+  is_underlying: false
+  lp_token: '0xbb2dc673e1091abca3eadb622b18f6d4634b2cd9'
+  name: jpyc/ibjpy
+  pool_address: '0xbb2dc673e1091abca3eadb622b18f6d4634b2cd9'
+  underlying_coins: []
+  venue: curve
+  zap_address: null
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0x4e3fbd56cd56c3e72c1403e103b45db9da5b9d2b'
+  - '0x9e0441e084f5db0606565737158aa6ab6b970fe0'
+  dy_abi: int128
+  fee: '0.0015'
+  is_crypto: false
+  is_factory: true
+  is_meta: false
+  is_underlying: false
+  lp_token: '0xf083fba98ded0f9c970e5a418500bad08d8b9732'
+  name: bentcvx
+  pool_address: '0xf083fba98ded0f9c970e5a418500bad08d8b9732'
+  underlying_coins: []
+  venue: curve
+  zap_address: null
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0x0a5e677a6a24b2f1a2bf4f3bffc443231d2fdec8'
+  - '0x6c3f90f043a72fa612cbac8115ee7e52bde6e490'
+  dy_abi: int128
+  fee: '0.0004'
+  is_crypto: false
+  is_factory: true
+  is_meta: true
+  is_underlying: true
+  lp_token: '0x76264772707c8bc24261516b560cbf3cbe6f7819'
+  name: dforce
+  pool_address: '0x76264772707c8bc24261516b560cbf3cbe6f7819'
+  underlying_coins:
+  - '0x0a5e677a6a24b2f1a2bf4f3bffc443231d2fdec8'
+  - '0x6b175474e89094c44da98b954eedeac495271d0f'
+  - '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'
+  - '0xdac17f958d2ee523a2206206994597c13d831ec7'
+  venue: curve
+  zap_address: '0xa79828df1850e8a3a3064576f380d90aecdd3359'
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0x96e61422b6a9ba0e068b6c5add4ffabc6a4aae27'
+  - '0x1a7e4e63778b4f12a199c062f3efdd288afcbce8'
+  dy_abi: int128
+  fee: '0.0004'
+  is_crypto: false
+  is_factory: true
+  is_meta: false
+  is_underlying: false
+  lp_token: '0xb37d6c07482bc11cd28a1f11f1a6ad7b66dec933'
+  name: ageur/ibeur
+  pool_address: '0xb37d6c07482bc11cd28a1f11f1a6ad7b66dec933'
+  underlying_coins: []
+  venue: curve
+  zap_address: null
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0x94671a3cee8c7a12ea72602978d1bb84e920efb2'
+  - '0x853d955acef822db058eb8505911ed77f175b99e'
+  dy_abi: int128
+  fee: '0.0004'
+  is_crypto: false
+  is_factory: true
+  is_meta: false
+  is_underlying: false
+  lp_token: '0x694650a0b2866472c2eea27827ce6253c1d13074'
+  name: tfrax/frax test
+  pool_address: '0x694650a0b2866472c2eea27827ce6253c1d13074'
+  underlying_coins: []
+  venue: curve
+  zap_address: null
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0x815b4ce34fac32b951bd26ea85901e3b834204b6'
+  - '0x6c3f90f043a72fa612cbac8115ee7e52bde6e490'
+  dy_abi: int128
+  fee: '0.0004'
+  is_crypto: false
+  is_factory: true
+  is_meta: true
+  is_underlying: true
+  lp_token: '0x8ed10e4e307822b969bcdaffd49095235f6f892b'
+  name: elonx pool
+  pool_address: '0x8ed10e4e307822b969bcdaffd49095235f6f892b'
+  underlying_coins:
+  - '0x815b4ce34fac32b951bd26ea85901e3b834204b6'
+  - '0x6b175474e89094c44da98b954eedeac495271d0f'
+  - '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'
+  - '0xdac17f958d2ee523a2206206994597c13d831ec7'
+  venue: curve
+  zap_address: '0xa79828df1850e8a3a3064576f380d90aecdd3359'
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0xdc59ac4fefa32293a95889dc396682858d52e5db'
+  - '0x6c3f90f043a72fa612cbac8115ee7e52bde6e490'
+  dy_abi: int128
+  fee: '0.0004'
+  is_crypto: false
+  is_factory: true
+  is_meta: true
+  is_underlying: true
+  lp_token: '0x3a70dfa7d2262988064a2d051dd47521e43c9bdd'
+  name: bean
+  pool_address: '0x3a70dfa7d2262988064a2d051dd47521e43c9bdd'
+  underlying_coins:
+  - '0xdc59ac4fefa32293a95889dc396682858d52e5db'
+  - '0x6b175474e89094c44da98b954eedeac495271d0f'
+  - '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'
+  - '0xdac17f958d2ee523a2206206994597c13d831ec7'
+  venue: curve
+  zap_address: '0xa79828df1850e8a3a3064576f380d90aecdd3359'
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0xea3fb6f331735252e7bfb0b24b3b761301293dbe'
+  - '0x6c3f90f043a72fa612cbac8115ee7e52bde6e490'
+  dy_abi: int128
+  fee: '0.0004'
+  is_crypto: false
+  is_factory: true
+  is_meta: true
+  is_underlying: true
+  lp_token: '0x7abd51bba7f9f6ae87ac77e1ea1c5783ada56e5c'
+  name: usdv
+  pool_address: '0x7abd51bba7f9f6ae87ac77e1ea1c5783ada56e5c'
+  underlying_coins:
+  - '0xea3fb6f331735252e7bfb0b24b3b761301293dbe'
+  - '0x6b175474e89094c44da98b954eedeac495271d0f'
+  - '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'
+  - '0xdac17f958d2ee523a2206206994597c13d831ec7'
+  venue: curve
+  zap_address: '0xa79828df1850e8a3a3064576f380d90aecdd3359'
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0x7945b0a6674b175695e5d1d08ae1e6f13744abb0'
+  - '0x6c3f90f043a72fa612cbac8115ee7e52bde6e490'
+  dy_abi: int128
+  fee: '0.0004'
+  is_crypto: false
+  is_factory: true
+  is_meta: true
+  is_underlying: true
+  lp_token: '0x0fafafd3c393ead5f5129cfc7e0e12367088c473'
+  name: baousd
+  pool_address: '0x0fafafd3c393ead5f5129cfc7e0e12367088c473'
+  underlying_coins:
+  - '0x7945b0a6674b175695e5d1d08ae1e6f13744abb0'
+  - '0x6b175474e89094c44da98b954eedeac495271d0f'
+  - '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'
+  - '0xdac17f958d2ee523a2206206994597c13d831ec7'
+  venue: curve
+  zap_address: '0xa79828df1850e8a3a3064576f380d90aecdd3359'
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0x2fc6e9c1b2c07e18632efe51879415a580ad22e1'
+  - '0x6bea7cfef803d1e3d5f7c0103f7ded065644e197'
+  dy_abi: int128
+  fee: '0.0004'
+  is_crypto: false
+  is_factory: true
+  is_meta: false
+  is_underlying: false
+  lp_token: '0x9462f2b3c9beea8afc334cdb1d1382b072e494ea'
+  name: tokemak tgamma/gamma
+  pool_address: '0x9462f2b3c9beea8afc334cdb1d1382b072e494ea'
+  underlying_coins: []
+  venue: curve
+  zap_address: null
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0xeff721eae19885e17f5b80187d6527aad3ffc8de'
+  - '0xc011a73ee8576fb46f5e1c5751ca3b9fe0af2a6f'
+  dy_abi: int128
+  fee: '0.0004'
+  is_crypto: false
+  is_factory: true
+  is_meta: false
+  is_underlying: false
+  lp_token: '0x50b0d9171160d6eb8aa39e090da51e7e078e81c4'
+  name: tokemak tsnx/snx
+  pool_address: '0x50b0d9171160d6eb8aa39e090da51e7e078e81c4'
+  underlying_coins: []
+  venue: curve
+  zap_address: null
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0xae78736cd615f374d3085123a210448e74fc6393'
+  - '0x7f39c581f595b53c5cb19bd0b3f8da6c935e2ca0'
+  dy_abi: int128
+  fee: '0.0004'
+  is_crypto: false
+  is_factory: true
+  is_meta: false
+  is_underlying: false
+  lp_token: '0x447ddd4960d9fdbf6af9a790560d0af76795cb08'
+  name: reth/wsteth
+  pool_address: '0x447ddd4960d9fdbf6af9a790560d0af76795cb08'
+  underlying_coins: []
+  venue: curve
+  zap_address: null
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0xdc0b02849bb8e0f126a216a2840275da829709b0'
+  - '0x4104b135dbc9609fc1a9490e61369036497660c8'
+  dy_abi: int128
+  fee: '0.0004'
+  is_crypto: false
+  is_factory: true
+  is_meta: false
+  is_underlying: false
+  lp_token: '0xcaf8703f8664731ced11f63bb0570e53ab4600a9'
+  name: tokemak tapw/apw
+  pool_address: '0xcaf8703f8664731ced11f63bb0570e53ab4600a9'
+  underlying_coins: []
+  venue: curve
+  zap_address: null
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0x15a629f0665a3eb97d7ae9a7ce7abf73aeb79415'
+  - '0x9c4a4204b79dd291d6b6571c5be8bbcd0622f050'
+  dy_abi: int128
+  fee: '0.0004'
+  is_crypto: false
+  is_factory: true
+  is_meta: false
+  is_underlying: false
+  lp_token: '0x01fe650ef2f8e2982295489ae6adc1413bf6011f'
+  name: tokemak ttcr/tcr
+  pool_address: '0x01fe650ef2f8e2982295489ae6adc1413bf6011f'
+  underlying_coins: []
+  venue: curve
+  zap_address: null
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0x808d3e6b23516967ceae4f17a5f9038383ed5311'
+  - '0xc770eefad204b5180df6a14ee197d99d808ee52d'
+  dy_abi: int128
+  fee: '0.0004'
+  is_crypto: false
+  is_factory: true
+  is_meta: false
+  is_underlying: false
+  lp_token: '0xc250b22d15e43d95fbe27b12d98b6098f8493eac'
+  name: tokemak tfox/fox
+  pool_address: '0xc250b22d15e43d95fbe27b12d98b6098f8493eac'
+  underlying_coins: []
+  venue: curve
+  zap_address: null
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0xf49764c9c5d644ece6ae2d18ffd9f1e902629777'
+  - '0x6b3595068778dd592e39a122f4f5a5cf09c90fe2'
+  dy_abi: int128
+  fee: '0.0004'
+  is_crypto: false
+  is_factory: true
+  is_meta: false
+  is_underlying: false
+  lp_token: '0x0437ac6109e8a366a1f4816edf312a36952db856'
+  name: tokemak tsushi/sushi
+  pool_address: '0x0437ac6109e8a366a1f4816edf312a36952db856'
+  underlying_coins: []
+  venue: curve
+  zap_address: null
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0xd3b5d9a561c293fb42b446fe7e237daa9bf9aa84'
+  - '0xdbdb4d16eda451d0503b854cf79d55697f90c8df'
+  dy_abi: int128
+  fee: '0.0004'
+  is_crypto: false
+  is_factory: true
+  is_meta: false
+  is_underlying: false
+  lp_token: '0x9001a452d39a8710d27ed5c2e10431c13f5fba74'
+  name: tokemak talcx/alcx
+  pool_address: '0x9001a452d39a8710d27ed5c2e10431c13f5fba74'
+  underlying_coins: []
+  venue: curve
+  zap_address: null
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0xadf15ec41689fc5b6dca0db7c53c9bfe7981e655'
+  - '0x3432b6a60d23ca0dfca7761b7ab56459d9c964d0'
+  dy_abi: int128
+  fee: '0.0004'
+  is_crypto: false
+  is_factory: true
+  is_meta: false
+  is_underlying: false
+  lp_token: '0x961226b64ad373275130234145b96d100dc0b655'
+  name: tokemak tfxs/fxs
+  pool_address: '0x961226b64ad373275130234145b96d100dc0b655'
+  underlying_coins: []
+  venue: curve
+  zap_address: null
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0xadf15ec41689fc5b6dca0db7c53c9bfe7981e655'
+  - '0x3432b6a60d23ca0dfca7761b7ab56459d9c964d0'
+  dy_abi: int128
+  fee: '0.0004'
+  is_crypto: false
+  is_factory: true
+  is_meta: false
+  is_underlying: false
+  lp_token: '0xe7e4366f6ed6afd23e88154c00b532bdc0352333'
+  name: test only
+  pool_address: '0xe7e4366f6ed6afd23e88154c00b532bdc0352333'
+  underlying_coins: []
+  venue: curve
+  zap_address: null
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0x92d6c1e31e14520e676a687f0a93788b716beff5'
+  - '0x65f7ba4ec257af7c55fd5854e5f6356bbd0fb8ec'
+  dy_abi: int128
+  fee: '0.0004'
+  is_crypto: false
+  is_factory: true
+  is_meta: false
+  is_underlying: false
+  lp_token: '0x04ecd49246bf5143e43e2305136c46aeb6fad400'
+  name: dydx/stkdydx
+  pool_address: '0x04ecd49246bf5143e43e2305136c46aeb6fad400'
+  underlying_coins: []
+  venue: curve
+  zap_address: null
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0x62199b909fb8b8cf870f97bef2ce6783493c4908'
+  - '0x075b1bb99792c9e1041ba13afef80c91a1e70fb3'
+  dy_abi: int128
+  fee: '0.0004'
+  is_crypto: false
+  is_factory: true
+  is_meta: true
+  is_underlying: true
+  lp_token: '0xc9467e453620f16b57a34a770c6bcebece002587'
+  name: pbtc
+  pool_address: '0xc9467e453620f16b57a34a770c6bcebece002587'
+  underlying_coins:
+  - '0x62199b909fb8b8cf870f97bef2ce6783493c4908'
+  - '0xeb4c2781e4eba804ce9a9803c67d0893436bb27d'
+  - '0x2260fac5e5542a773aa44fbcfedf7c193bc2c599'
+  - '0xfe18be6b3bd88a2d2a7f928d00292e7a9963cfc6'
+  venue: curve
+  zap_address: '0x7abdbaf29929e7f8621b757d2a7c04d78d633834'
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0x3432b6a60d23ca0dfca7761b7ab56459d9c964d0'
+  - '0x402f878bdd1f5c66fdaf0fababcf74741b68ac36'
+  dy_abi: int128
+  fee: '0.0004'
+  is_crypto: false
+  is_factory: true
+  is_meta: false
+  is_underlying: false
+  lp_token: '0x8c524635d52bd7b1bd55e062303177a7d916c046'
+  name: sdfxs
+  pool_address: '0x8c524635d52bd7b1bd55e062303177a7d916c046'
+  underlying_coins: []
+  venue: curve
+  zap_address: null
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0x31429d1856ad1377a8a0079410b297e1a9e214c2'
+  - '0x752b4c6e92d96467fe9b9a2522ef07228e00f87c'
+  dy_abi: int128
+  fee: '0.0004'
+  is_crypto: false
+  is_factory: true
+  is_meta: false
+  is_underlying: false
+  lp_token: '0x48ff31bbbd8ab553ebe7cbd84e1ea3dba8f54957'
+  name: sdangle
+  pool_address: '0x48ff31bbbd8ab553ebe7cbd84e1ea3dba8f54957'
+  underlying_coins: []
+  venue: curve
+  zap_address: null
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0xfe32747d0251ba92bcb80b6d16c8257ecf25ab1c'
+  - '0xcadc0acd4b445166f12d2c07eac6e2544fbe2eef'
+  dy_abi: int128
+  fee: '0.0004'
+  is_crypto: false
+  is_factory: true
+  is_meta: false
+  is_underlying: false
+  lp_token: '0x9ca41a2dab3cee15308998868ca644e2e3be5c59'
+  name: dfxcad/cadc
+  pool_address: '0x9ca41a2dab3cee15308998868ca644e2e3be5c59'
+  underlying_coins: []
+  venue: curve
+  zap_address: null
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0xfe2e637202056d30016725477c5da089ab0a043a'
+  - '0xae7ab96520de3a18e5e111b5eaab095312d7fe84'
+  dy_abi: int128
+  fee: '0.0004'
+  is_crypto: false
+  is_factory: true
+  is_meta: false
+  is_underlying: false
+  lp_token: '0xe95e4c2dac312f31dc605533d5a4d0af42579308'
+  name: seth2/steth
+  pool_address: '0xe95e4c2dac312f31dc605533d5a4d0af42579308'
+  underlying_coins: []
+  venue: curve
+  zap_address: null
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0x586aa273f262909eef8fa02d90ab65f5015e0516'
+  - '0x6c3f90f043a72fa612cbac8115ee7e52bde6e490'
+  dy_abi: int128
+  fee: '0.0004'
+  is_crypto: false
+  is_factory: true
+  is_meta: true
+  is_underlying: true
+  lp_token: '0xdb8cc7eced700a4bffde98013760ff31ff9408d8'
+  name: fiat
+  pool_address: '0xdb8cc7eced700a4bffde98013760ff31ff9408d8'
+  underlying_coins:
+  - '0x586aa273f262909eef8fa02d90ab65f5015e0516'
+  - '0x6b175474e89094c44da98b954eedeac495271d0f'
+  - '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'
+  - '0xdac17f958d2ee523a2206206994597c13d831ec7'
+  venue: curve
+  zap_address: '0xa79828df1850e8a3a3064576f380d90aecdd3359'
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0xd533a949740bb3306d119cc777fa900ba034cd52'
+  - '0xd1b5651e55d4ceed36251c61c50c889b36f6abb5'
+  dy_abi: int128
+  fee: '0.0004'
+  is_crypto: false
+  is_factory: true
+  is_meta: false
+  is_underlying: false
+  lp_token: '0xf7b55c3732ad8b2c2da7c24f30a69f55c54fb717'
+  name: sdcrv
+  pool_address: '0xf7b55c3732ad8b2c2da7c24f30a69f55c54fb717'
+  underlying_coins: []
+  venue: curve
+  zap_address: null
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0x973f054edbecd287209c36a2651094fa52f99a71'
+  - '0x853d955acef822db058eb8505911ed77f175b99e'
+  dy_abi: int128
+  fee: '0.0004'
+  is_crypto: false
+  is_factory: true
+  is_meta: false
+  is_underlying: false
+  lp_token: '0x5a59fd6018186471727faaeae4e57890abc49b08'
+  name: frax/arth.usd
+  pool_address: '0x5a59fd6018186471727faaeae4e57890abc49b08'
+  underlying_coins: []
+  venue: curve
+  zap_address: null
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0x466a756e9a7401b5e2444a3fcb3c2c12fbea0a54'
+  - '0x6c3f90f043a72fa612cbac8115ee7e52bde6e490'
+  dy_abi: int128
+  fee: '0.0004'
+  is_crypto: false
+  is_factory: true
+  is_meta: true
+  is_underlying: true
+  lp_token: '0x8ee017541375f6bcd802ba119bddc94dad6911a1'
+  name: pusd
+  pool_address: '0x8ee017541375f6bcd802ba119bddc94dad6911a1'
+  underlying_coins:
+  - '0x466a756e9a7401b5e2444a3fcb3c2c12fbea0a54'
+  - '0x6b175474e89094c44da98b954eedeac495271d0f'
+  - '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'
+  - '0xdac17f958d2ee523a2206206994597c13d831ec7'
+  venue: curve
+  zap_address: '0xa79828df1850e8a3a3064576f380d90aecdd3359'
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0x0c10bf8fcb7bf5412187a595ab97a3609160b5c6'
+  - '0x6c3f90f043a72fa612cbac8115ee7e52bde6e490'
+  dy_abi: int128
+  fee: '0.0004'
+  is_crypto: false
+  is_factory: true
+  is_meta: true
+  is_underlying: true
+  lp_token: '0xe6b5cc1b4b47305c58392ce3d359b10282fc36ea'
+  name: usdd/3crv
+  pool_address: '0xe6b5cc1b4b47305c58392ce3d359b10282fc36ea'
+  underlying_coins:
+  - '0x0c10bf8fcb7bf5412187a595ab97a3609160b5c6'
+  - '0x6b175474e89094c44da98b954eedeac495271d0f'
+  - '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'
+  - '0xdac17f958d2ee523a2206206994597c13d831ec7'
+  venue: curve
+  zap_address: '0xa79828df1850e8a3a3064576f380d90aecdd3359'
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2'
+  - '0xae7ab96520de3a18e5e111b5eaab095312d7fe84'
+  dy_abi: int128
+  fee: '0.0004'
+  is_crypto: false
+  is_factory: true
+  is_meta: false
+  is_underlying: false
+  lp_token: '0x828b154032950c8ff7cf8085d841723db2696056'
+  name: steth concentrated
+  pool_address: '0x828b154032950c8ff7cf8085d841723db2696056'
+  underlying_coins: []
+  venue: curve
+  zap_address: null
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0xff709449528b6fb6b88f557f7d93dece33bca78d'
+  - '0x853d955acef822db058eb8505911ed77f175b99e'
+  dy_abi: int128
+  fee: '0.0004'
+  is_crypto: false
+  is_factory: true
+  is_meta: false
+  is_underlying: false
+  lp_token: '0x1977870a4c18a728c19dd4eb6542451df06e0a4b'
+  name: apeusd-frax
+  pool_address: '0x1977870a4c18a728c19dd4eb6542451df06e0a4b'
+  underlying_coins: []
+  venue: curve
+  zap_address: null
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0xb8919522331c59f5c16bdfaa6a121a6e03a91f62'
+  - '0x6c3f90f043a72fa612cbac8115ee7e52bde6e490'
+  dy_abi: int128
+  fee: '0.0004'
+  is_crypto: false
+  is_factory: true
+  is_meta: true
+  is_underlying: true
+  lp_token: '0x5c6a6cf9ae657a73b98454d17986af41fc7b44ee'
+  name: home
+  pool_address: '0x5c6a6cf9ae657a73b98454d17986af41fc7b44ee'
+  underlying_coins:
+  - '0xb8919522331c59f5c16bdfaa6a121a6e03a91f62'
+  - '0x6b175474e89094c44da98b954eedeac495271d0f'
+  - '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'
+  - '0xdac17f958d2ee523a2206206994597c13d831ec7'
+  venue: curve
+  zap_address: '0xa79828df1850e8a3a3064576f380d90aecdd3359'
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0xbcb8b7fc9197feda75c101fa69d3211b5a30dcd9'
+  - '0x6021444f1706f15465bee85463bcc7d7cc17fc03'
+  dy_abi: int128
+  fee: '0.00294'
+  is_crypto: false
+  is_factory: true
+  is_meta: false
+  is_underlying: false
+  lp_token: '0xdadfd00a2bbeb1abc4936b1644a3033e1b653228'
+  name: stax frax/temple xlp + lp
+  pool_address: '0xdadfd00a2bbeb1abc4936b1644a3033e1b653228'
+  underlying_coins: []
+  venue: curve
+  zap_address: null
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0x04969cd041c0cafb6ac462bd65b536a5bdb3a670'
+  - '0xed35af169af46a02ee13b9d79eb57d6d68c1749e'
+  dy_abi: int128
+  fee: '0.001'
+  is_crypto: false
+  is_factory: true
+  is_meta: false
+  is_underlying: false
+  lp_token: '0xee98d56f60a5905cbb52348c8719b247dafe60ec'
+  name: womi/omi
+  pool_address: '0xee98d56f60a5905cbb52348c8719b247dafe60ec'
+  underlying_coins: []
+  venue: curve
+  zap_address: null
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0xed35af169af46a02ee13b9d79eb57d6d68c1749e'
+  - '0x6c3f90f043a72fa612cbac8115ee7e52bde6e490'
+  dy_abi: int128
+  fee: '0.004'
+  is_crypto: false
+  is_factory: true
+  is_meta: true
+  is_underlying: true
+  lp_token: '0x8116e7c29f60fdacf3954891a038f845565ef5a0'
+  name: omi/usd
+  pool_address: '0x8116e7c29f60fdacf3954891a038f845565ef5a0'
+  underlying_coins:
+  - '0xed35af169af46a02ee13b9d79eb57d6d68c1749e'
+  - '0x6b175474e89094c44da98b954eedeac495271d0f'
+  - '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'
+  - '0xdac17f958d2ee523a2206206994597c13d831ec7'
+  venue: curve
+  zap_address: '0xa79828df1850e8a3a3064576f380d90aecdd3359'
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0x45fdb1b92a649fb6a64ef1511d3ba5bf60044838'
+  - '0x6c3f90f043a72fa612cbac8115ee7e52bde6e490'
+  dy_abi: int128
+  fee: '0.0004'
+  is_crypto: false
+  is_factory: true
+  is_meta: true
+  is_underlying: true
+  lp_token: '0xde495223f7cd7ee0cde1addbd6836046bbdf3ad3'
+  name: usds/3crv
+  pool_address: '0xde495223f7cd7ee0cde1addbd6836046bbdf3ad3'
+  underlying_coins:
+  - '0x45fdb1b92a649fb6a64ef1511d3ba5bf60044838'
+  - '0x6b175474e89094c44da98b954eedeac495271d0f'
+  - '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'
+  - '0xdac17f958d2ee523a2206206994597c13d831ec7'
+  venue: curve
+  zap_address: '0xa79828df1850e8a3a3064576f380d90aecdd3359'
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0x2a54ba2964c8cd459dc568853f79813a60761b58'
+  - '0x6c3f90f043a72fa612cbac8115ee7e52bde6e490'
+  dy_abi: int128
+  fee: '0.0004'
+  is_crypto: false
+  is_factory: true
+  is_meta: true
+  is_underlying: true
+  lp_token: '0x63594b2011a0f2616586bf3eef8096d42272f916'
+  name: usdi
+  pool_address: '0x63594b2011a0f2616586bf3eef8096d42272f916'
+  underlying_coins:
+  - '0x2a54ba2964c8cd459dc568853f79813a60761b58'
+  - '0x6b175474e89094c44da98b954eedeac495271d0f'
+  - '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'
+  - '0xdac17f958d2ee523a2206206994597c13d831ec7'
+  venue: curve
+  zap_address: '0xa79828df1850e8a3a3064576f380d90aecdd3359'
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0x99899399c097a55afb6b48f797dc5acfa7d343b1'
+  - '0x6c3f90f043a72fa612cbac8115ee7e52bde6e490'
+  dy_abi: int128
+  fee: '0.0004'
+  is_crypto: false
+  is_factory: true
+  is_meta: true
+  is_underlying: true
+  lp_token: '0x67c7f0a63ba70a2dac69477b716551fc921aed00'
+  name: 3crv/lvusd
+  pool_address: '0x67c7f0a63ba70a2dac69477b716551fc921aed00'
+  underlying_coins:
+  - '0x99899399c097a55afb6b48f797dc5acfa7d343b1'
+  - '0x6b175474e89094c44da98b954eedeac495271d0f'
+  - '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'
+  - '0xdac17f958d2ee523a2206206994597c13d831ec7'
+  venue: curve
+  zap_address: '0xa79828df1850e8a3a3064576f380d90aecdd3359'
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0x0c10bf8fcb7bf5412187a595ab97a3609160b5c6'
+  - '0x3175df0976dfa876431c2e9ee6bc45b65d3473cc'
+  dy_abi: int128
+  fee: '0.0004'
+  is_crypto: false
+  is_factory: true
+  is_meta: true
+  is_underlying: true
+  lp_token: '0x4606326b4db89373f5377c316d3b0f6e55bc6a20'
+  name: usddfraxbp
+  pool_address: '0x4606326b4db89373f5377c316d3b0f6e55bc6a20'
+  underlying_coins:
+  - '0x0c10bf8fcb7bf5412187a595ab97a3609160b5c6'
+  - '0x853d955acef822db058eb8505911ed77f175b99e'
+  - '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'
+  venue: curve
+  zap_address: '0x08780fb7e580e492c1935bee4fa5920b94aa95da'
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0x57ab1ec28d129707052df4df418d58a2d46d5f51'
+  - '0x3175df0976dfa876431c2e9ee6bc45b65d3473cc'
+  dy_abi: int128
+  fee: '0.0004'
+  is_crypto: false
+  is_factory: true
+  is_meta: true
+  is_underlying: true
+  lp_token: '0xe3c190c57b5959ae62efe3b6797058b76ba2f5ef'
+  name: susdfraxbp
+  pool_address: '0xe3c190c57b5959ae62efe3b6797058b76ba2f5ef'
+  underlying_coins:
+  - '0x57ab1ec28d129707052df4df418d58a2d46d5f51'
+  - '0x853d955acef822db058eb8505911ed77f175b99e'
+  - '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'
+  venue: curve
+  zap_address: '0x08780fb7e580e492c1935bee4fa5920b94aa95da'
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0x5f98805a4e8be255a32880fdec7f6728c6568ba0'
+  - '0x3175df0976dfa876431c2e9ee6bc45b65d3473cc'
+  dy_abi: int128
+  fee: '0.0004'
+  is_crypto: false
+  is_factory: true
+  is_meta: true
+  is_underlying: true
+  lp_token: '0x497ce58f34605b9944e6b15ecafe6b001206fd25'
+  name: lusdfraxbp
+  pool_address: '0x497ce58f34605b9944e6b15ecafe6b001206fd25'
+  underlying_coins:
+  - '0x5f98805a4e8be255a32880fdec7f6728c6568ba0'
+  - '0x853d955acef822db058eb8505911ed77f175b99e'
+  - '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'
+  venue: curve
+  zap_address: '0x08780fb7e580e492c1935bee4fa5920b94aa95da'
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0xff709449528b6fb6b88f557f7d93dece33bca78d'
+  - '0x3175df0976dfa876431c2e9ee6bc45b65d3473cc'
+  dy_abi: int128
+  fee: '0.0004'
+  is_crypto: false
+  is_factory: true
+  is_meta: true
+  is_underlying: true
+  lp_token: '0x04b727c7e246ca70d496ecf52e6b6280f3c8077d'
+  name: apeusdfraxbp
+  pool_address: '0x04b727c7e246ca70d496ecf52e6b6280f3c8077d'
+  underlying_coins:
+  - '0xff709449528b6fb6b88f557f7d93dece33bca78d'
+  - '0x853d955acef822db058eb8505911ed77f175b99e'
+  - '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'
+  venue: curve
+  zap_address: '0x08780fb7e580e492c1935bee4fa5920b94aa95da'
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0x056fd409e1d7a124bd7017459dfea2f387b6d5cd'
+  - '0x3175df0976dfa876431c2e9ee6bc45b65d3473cc'
+  dy_abi: int128
+  fee: '0.0004'
+  is_crypto: false
+  is_factory: true
+  is_meta: true
+  is_underlying: true
+  lp_token: '0x4e43151b78b5fbb16298c1161fcbf7531d5f8d93'
+  name: gusdfraxbp
+  pool_address: '0x4e43151b78b5fbb16298c1161fcbf7531d5f8d93'
+  underlying_coins:
+  - '0x056fd409e1d7a124bd7017459dfea2f387b6d5cd'
+  - '0x853d955acef822db058eb8505911ed77f175b99e'
+  - '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'
+  venue: curve
+  zap_address: '0x08780fb7e580e492c1935bee4fa5920b94aa95da'
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0x4fabb145d64652a948d72533023f6e7a623c7c53'
+  - '0x3175df0976dfa876431c2e9ee6bc45b65d3473cc'
+  dy_abi: int128
+  fee: '0.0004'
+  is_crypto: false
+  is_factory: true
+  is_meta: true
+  is_underlying: true
+  lp_token: '0x8fdb0bb9365a46b145db80d0b1c5c5e979c84190'
+  name: busdfraxbp
+  pool_address: '0x8fdb0bb9365a46b145db80d0b1c5c5e979c84190'
+  underlying_coins:
+  - '0x4fabb145d64652a948d72533023f6e7a623c7c53'
+  - '0x853d955acef822db058eb8505911ed77f175b99e'
+  - '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'
+  venue: curve
+  zap_address: '0x08780fb7e580e492c1935bee4fa5920b94aa95da'
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0x0000000000085d4780b73119b644ae5ecd22b376'
+  - '0x3175df0976dfa876431c2e9ee6bc45b65d3473cc'
+  dy_abi: int128
+  fee: '0.0004'
+  is_crypto: false
+  is_factory: true
+  is_meta: true
+  is_underlying: true
+  lp_token: '0x33baeda08b8afacc4d3d07cf31d49fc1f1f3e893'
+  name: tusdfraxbp
+  pool_address: '0x33baeda08b8afacc4d3d07cf31d49fc1f1f3e893'
+  underlying_coins:
+  - '0x0000000000085d4780b73119b644ae5ecd22b376'
+  - '0x853d955acef822db058eb8505911ed77f175b99e'
+  - '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'
+  venue: curve
+  zap_address: '0x08780fb7e580e492c1935bee4fa5920b94aa95da'
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0xee586e7eaad39207f0549bc65f19e336942c992f'
+  - '0x1a7e4e63778b4f12a199c062f3efdd288afcbce8'
+  - '0x1abaea1f7c830bd89acc67ec4af516284b1bc33c'
+  dy_abi: int128
+  fee: '0.0004'
+  is_crypto: false
+  is_factory: true
+  is_meta: false
+  is_underlying: false
+  lp_token: '0xe7a3b38c39f97e977723bd1239c3470702568e7b'
+  name: euro pool
+  pool_address: '0xe7a3b38c39f97e977723bd1239c3470702568e7b'
+  underlying_coins: []
+  venue: curve
+  zap_address: null
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0xfd56a3dcfc0690881a466ae432d71bb2db588083'
+  - '0x7d1afa7b718fb893db30a3abc0cfc608aacfebb0'
+  dy_abi: int128
+  fee: '0.0004'
+  is_crypto: false
+  is_factory: true
+  is_meta: false
+  is_underlying: false
+  lp_token: '0xd7c10449a6d134a9ed37e2922f8474eac6e5c100'
+  name: matic/fleet
+  pool_address: '0xd7c10449a6d134a9ed37e2922f8474eac6e5c100'
+  underlying_coins: []
+  venue: curve
+  zap_address: null
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0xbc6da0fe9ad5f3b0d58160288917aa56653660e9'
+  - '0x3175df0976dfa876431c2e9ee6bc45b65d3473cc'
+  dy_abi: int128
+  fee: '0.0004'
+  is_crypto: false
+  is_factory: true
+  is_meta: true
+  is_underlying: true
+  lp_token: '0xb30da2376f63de30b42dc055c93fa474f31330a5'
+  name: alusdfraxbp
+  pool_address: '0xb30da2376f63de30b42dc055c93fa474f31330a5'
+  underlying_coins:
+  - '0xbc6da0fe9ad5f3b0d58160288917aa56653660e9'
+  - '0x853d955acef822db058eb8505911ed77f175b99e'
+  - '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'
+  venue: curve
+  zap_address: '0x08780fb7e580e492c1935bee4fa5920b94aa95da'
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0x213ecae6b3cbc0ad976f7d82626546d5b63a71cb'
+  - '0x1456688345527be1f37e9e627da0837d6f08c925'
+  dy_abi: int128
+  fee: '0.0004'
+  is_crypto: false
+  is_factory: true
+  is_meta: false
+  is_underlying: false
+  lp_token: '0x649c1b0e70a80210bcfb3c4eb5ddad175b90be4d'
+  name: gcd / usdp
+  pool_address: '0x649c1b0e70a80210bcfb3c4eb5ddad175b90be4d'
+  underlying_coins: []
+  venue: curve
+  zap_address: null
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0xae7ab96520de3a18e5e111b5eaab095312d7fe84'
+  - '0xd01ef7c0a5d8c432fc2d1a85c66cf2327362e5c6'
+  dy_abi: int128
+  fee: '0.0004'
+  is_crypto: false
+  is_factory: true
+  is_meta: false
+  is_underlying: false
+  lp_token: '0x875df0ba24ccd867f8217593ee27253280772a97'
+  name: steth/aethb
+  pool_address: '0x875df0ba24ccd867f8217593ee27253280772a97'
+  underlying_coins: []
+  venue: curve
+  zap_address: null
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0xb620be8a1949aa9532e6a3510132864ef9bc3f82'
+  - '0x0879c1a344910c2944c29b892a1cf0c216122c66'
+  dy_abi: int128
+  fee: '0.0004'
+  is_crypto: false
+  is_factory: true
+  is_meta: false
+  is_underlying: false
+  lp_token: '0xc69b00366f07840ff939cc9fdf866c3dccb10804'
+  name: sdlft
+  pool_address: '0xc69b00366f07840ff939cc9fdf866c3dccb10804'
+  underlying_coins: []
+  venue: curve
+  zap_address: null
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0xbea0000029ad1c77d3d5d23ba2d8893db9d1efab'
+  - '0x6c3f90f043a72fa612cbac8115ee7e52bde6e490'
+  dy_abi: int128
+  fee: '0.0004'
+  is_crypto: false
+  is_factory: true
+  is_meta: true
+  is_underlying: true
+  lp_token: '0xc9c32cd16bf7efb85ff14e0c8603cc90f6f2ee49'
+  name: bean
+  pool_address: '0xc9c32cd16bf7efb85ff14e0c8603cc90f6f2ee49'
+  underlying_coins:
+  - '0xbea0000029ad1c77d3d5d23ba2d8893db9d1efab'
+  - '0x6b175474e89094c44da98b954eedeac495271d0f'
+  - '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'
+  - '0xdac17f958d2ee523a2206206994597c13d831ec7'
+  venue: curve
+  zap_address: '0xa79828df1850e8a3a3064576f380d90aecdd3359'
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0x99d8a9c45b2eca8864373a26d1459e3dff1e17f3'
+  - '0x3175df0976dfa876431c2e9ee6bc45b65d3473cc'
+  dy_abi: int128
+  fee: '0.0004'
+  is_crypto: false
+  is_factory: true
+  is_meta: true
+  is_underlying: true
+  lp_token: '0xb3bc1833ac51aacea92acd551fbe1ab7edc59edf'
+  name: mimfraxbp
+  pool_address: '0xb3bc1833ac51aacea92acd551fbe1ab7edc59edf'
+  underlying_coins:
+  - '0x99d8a9c45b2eca8864373a26d1459e3dff1e17f3'
+  - '0x853d955acef822db058eb8505911ed77f175b99e'
+  - '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'
+  venue: curve
+  zap_address: '0x08780fb7e580e492c1935bee4fa5920b94aa95da'
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'
+  - '0x00000000008fd4f395ec6f12920bae9cb6c722e4'
+  dy_abi: int128
+  fee: '0.0004'
+  is_crypto: false
+  is_factory: true
+  is_meta: false
+  is_underlying: false
+  lp_token: '0x7c0316c925e12ebfc55e0f325794b43ead425157'
+  name: frxeth
+  pool_address: '0x7c0316c925e12ebfc55e0f325794b43ead425157'
+  underlying_coins: []
+  venue: curve
+  zap_address: null
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0x061aee9ab655e73719577ea1df116d7139b2a7e7'
+  - '0x4b13006980acb09645131b91d259eaa111eaf5ba'
+  dy_abi: int128
+  fee: '0.0004'
+  is_crypto: false
+  is_factory: true
+  is_meta: false
+  is_underlying: false
+  lp_token: '0x83d78bf3f861e898cca47bd076b3839ab5469d70'
+  name: tokemak tmyc/myc
+  pool_address: '0x83d78bf3f861e898cca47bd076b3839ab5469d70'
+  underlying_coins: []
+  venue: curve
+  zap_address: null
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0x8616e8ea83f048ab9a5ec513c9412dd2993bce3f'
+  - '0x3175df0976dfa876431c2e9ee6bc45b65d3473cc'
+  dy_abi: int128
+  fee: '0.0004'
+  is_crypto: false
+  is_factory: true
+  is_meta: true
+  is_underlying: true
+  lp_token: '0x0aace9b6c491d5cd9f80665a2fcc1af09e9ccf00'
+  name: handleusd
+  pool_address: '0x0aace9b6c491d5cd9f80665a2fcc1af09e9ccf00'
+  underlying_coins:
+  - '0x8616e8ea83f048ab9a5ec513c9412dd2993bce3f'
+  - '0x853d955acef822db058eb8505911ed77f175b99e'
+  - '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'
+  venue: curve
+  zap_address: '0x08780fb7e580e492c1935bee4fa5920b94aa95da'
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0xbfef1f07018b3a87fc1e12877038f9616512d587'
+  - '0x6c3f90f043a72fa612cbac8115ee7e52bde6e490'
+  dy_abi: int128
+  fee: '0.0004'
+  is_crypto: false
+  is_factory: true
+  is_meta: true
+  is_underlying: true
+  lp_token: '0x92da88e2e6f96cc7c667cd1367bd090adf3c6053'
+  name: xusd1
+  pool_address: '0x92da88e2e6f96cc7c667cd1367bd090adf3c6053'
+  underlying_coins:
+  - '0xbfef1f07018b3a87fc1e12877038f9616512d587'
+  - '0x6b175474e89094c44da98b954eedeac495271d0f'
+  - '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'
+  - '0xdac17f958d2ee523a2206206994597c13d831ec7'
+  venue: curve
+  zap_address: '0xa79828df1850e8a3a3064576f380d90aecdd3359'
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0xbfef1f07018b3a87fc1e12877038f9616512d587'
+  - '0x6c3f90f043a72fa612cbac8115ee7e52bde6e490'
+  dy_abi: int128
+  fee: '0.0004'
+  is_crypto: false
+  is_factory: true
+  is_meta: true
+  is_underlying: true
+  lp_token: '0xc5481720517e1b170cf1d19ceaabe07c37896eb2'
+  name: xusd1
+  pool_address: '0xc5481720517e1b170cf1d19ceaabe07c37896eb2'
+  underlying_coins:
+  - '0xbfef1f07018b3a87fc1e12877038f9616512d587'
+  - '0x6b175474e89094c44da98b954eedeac495271d0f'
+  - '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'
+  - '0xdac17f958d2ee523a2206206994597c13d831ec7'
+  venue: curve
+  zap_address: '0xa79828df1850e8a3a3064576f380d90aecdd3359'
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0x1a7e4e63778b4f12a199c062f3efdd288afcbce8'
+  - '0x1abaea1f7c830bd89acc67ec4af516284b1bc33c'
+  dy_abi: int128
+  fee: '0.0004'
+  is_crypto: false
+  is_factory: true
+  is_meta: false
+  is_underlying: false
+  lp_token: '0xba3436fd341f2c8a928452db3c5a3670d1d5cc73'
+  name: ageur/euroc
+  pool_address: '0xba3436fd341f2c8a928452db3c5a3670d1d5cc73'
+  underlying_coins: []
+  venue: curve
+  zap_address: null
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0x4104b135dbc9609fc1a9490e61369036497660c8'
+  - '0x26f01fe3be55361b0643bc9d5d60980e37a2770d'
+  dy_abi: int128
+  fee: '0.0004'
+  is_crypto: false
+  is_factory: true
+  is_meta: false
+  is_underlying: false
+  lp_token: '0x6788f608cfe5cfcd02e6152ec79505341e0774be'
+  name: sdapw
+  pool_address: '0x6788f608cfe5cfcd02e6152ec79505341e0774be'
+  underlying_coins: []
+  venue: curve
+  zap_address: null
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0x466a756e9a7401b5e2444a3fcb3c2c12fbea0a54'
+  - '0x3175df0976dfa876431c2e9ee6bc45b65d3473cc'
+  dy_abi: int128
+  fee: '0.0004'
+  is_crypto: false
+  is_factory: true
+  is_meta: true
+  is_underlying: true
+  lp_token: '0xc47ebd6c0f68fd5963005d28d0ba533750e5c11b'
+  name: pusdfraxbp
+  pool_address: '0xc47ebd6c0f68fd5963005d28d0ba533750e5c11b'
+  underlying_coins:
+  - '0x466a756e9a7401b5e2444a3fcb3c2c12fbea0a54'
+  - '0x853d955acef822db058eb8505911ed77f175b99e'
+  - '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'
+  venue: curve
+  zap_address: '0x08780fb7e580e492c1935bee4fa5920b94aa95da'
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0x8d6cebd76f18e1558d4db88138e2defb3909fad6'
+  - '0x3175df0976dfa876431c2e9ee6bc45b65d3473cc'
+  dy_abi: int128
+  fee: '0.0004'
+  is_crypto: false
+  is_factory: true
+  is_meta: true
+  is_underlying: true
+  lp_token: '0x66e335622ad7a6c9c72c98dbfcce684996a20ef9'
+  name: mai+fraxbp
+  pool_address: '0x66e335622ad7a6c9c72c98dbfcce684996a20ef9'
+  underlying_coins:
+  - '0x8d6cebd76f18e1558d4db88138e2defb3909fad6'
+  - '0x853d955acef822db058eb8505911ed77f175b99e'
+  - '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'
+  venue: curve
+  zap_address: '0x08780fb7e580e492c1935bee4fa5920b94aa95da'
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0x865377367054516e17014ccded1e7d814edc9ce4'
+  - '0x3175df0976dfa876431c2e9ee6bc45b65d3473cc'
+  dy_abi: int128
+  fee: '0.0004'
+  is_crypto: false
+  is_factory: true
+  is_meta: true
+  is_underlying: true
+  lp_token: '0xe57180685e3348589e9521aa53af0bcd497e884d'
+  name: dola/fraxbp
+  pool_address: '0xe57180685e3348589e9521aa53af0bcd497e884d'
+  underlying_coins:
+  - '0x865377367054516e17014ccded1e7d814edc9ce4'
+  - '0x853d955acef822db058eb8505911ed77f175b99e'
+  - '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'
+  venue: curve
+  zap_address: '0x08780fb7e580e492c1935bee4fa5920b94aa95da'
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0x0ec9f76202a7061eb9b3a7d6b59d36215a7e37da'
+  - '0x825ba129b3ea1ddc265708fcbb9dd660fdd2ef73'
+  dy_abi: int128
+  fee: '0.0004'
+  is_crypto: false
+  is_factory: true
+  is_meta: false
+  is_underlying: false
+  lp_token: '0x9d259ca698746586107c234e9e9461d385ca1041'
+  name: sdbpt
+  pool_address: '0x9d259ca698746586107c234e9e9461d385ca1041'
+  underlying_coins: []
+  venue: curve
+  zap_address: null
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0x8d6cebd76f18e1558d4db88138e2defb3909fad6'
+  - '0x5f98805a4e8be255a32880fdec7f6728c6568ba0'
+  dy_abi: int128
+  fee: '0.0004'
+  is_crypto: false
+  is_factory: true
+  is_meta: false
+  is_underlying: false
+  lp_token: '0xf8048e871df466bd187078cb38cb914476319d33'
+  name: mai/lusd
+  pool_address: '0xf8048e871df466bd187078cb38cb914476319d33'
+  underlying_coins: []
+  venue: curve
+  zap_address: null
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0xd533a949740bb3306d119cc777fa900ba034cd52'
+  - '0xfcc5c47be19d06bf83eb04298b026f81069ff65b'
+  dy_abi: int128
+  fee: '0.0015'
+  is_crypto: false
+  is_factory: true
+  is_meta: false
+  is_underlying: false
+  lp_token: '0x453d92c7d4263201c69aacfaf589ed14202d83a4'
+  name: ycrv
+  pool_address: '0x453d92c7d4263201c69aacfaf589ed14202d83a4'
+  underlying_coins: []
+  venue: curve
+  zap_address: null
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'
+  - '0x836a808d4828586a69364065a1e064609f5078c7'
+  dy_abi: int128
+  fee: '0.0004'
+  is_crypto: false
+  is_factory: true
+  is_meta: false
+  is_underlying: false
+  lp_token: '0x9848482da3ee3076165ce6497eda906e66bb85c5'
+  name: peth
+  pool_address: '0x9848482da3ee3076165ce6497eda906e66bb85c5'
+  underlying_coins: []
+  venue: curve
+  zap_address: null
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0x1ee4de3cd1505ddb2e60c20651a4ab7ffabdc8f6'
+  - '0x246be97fda42375c39e21377ad80d8290afdb994'
   dy_abi: int128
   fee: '0.003'
   is_crypto: false
   is_factory: true
   is_meta: false
   is_underlying: false
-  lp_token: '0x03af5b72c0304defa28debabab49fb6cd66ef371'
-  name: tclevcvx/cvx
-  pool_address: '0x03af5b72c0304defa28debabab49fb6cd66ef371'
+  lp_token: '0xd0e24cb3e766581952dbf258b78e89c63a37f5fb'
+  name: tclever test
+  pool_address: '0xd0e24cb3e766581952dbf258b78e89c63a37f5fb'
   underlying_coins: []
   venue: curve
   zap_address: null
 - balance_abi: uint256
-  chain_id: 137
+  chain_id: 1
   coins:
-  - '0xb0b195aefa3650a6908f15cdac7d92f8a5791b0b'
-  - '0xe7a24ef0c5e95ffb0f6684b813a78f2a3ad7d171'
+  - '0x4e3fbd56cd56c3e72c1403e103b45db9da5b9d2b'
+  - '0xf05e58fcea29ab4da01a495140b349f8410ba904'
+  dy_abi: int128
+  fee: '0.0004'
+  is_crypto: false
+  is_factory: true
+  is_meta: false
+  is_underlying: false
+  lp_token: '0xf9078fb962a7d13f55d40d49c8aa6472abd1a5a6'
+  name: clever clevcvx/cvx
+  pool_address: '0xf9078fb962a7d13f55d40d49c8aa6472abd1a5a6'
+  underlying_coins: []
+  venue: curve
+  zap_address: null
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0xe661493a2f94cca7f0a7c0566290f9c12e69bd52'
+  - '0x6c3f90f043a72fa612cbac8115ee7e52bde6e490'
   dy_abi: int128
   fee: '0.0004'
   is_crypto: false
   is_factory: true
   is_meta: true
   is_underlying: true
-  lp_token: '0xd8a2e3b6d9a5bd592022c3481ec57dd8cfc15226'
-  name: bob+3pool
-  pool_address: '0xd8a2e3b6d9a5bd592022c3481ec57dd8cfc15226'
+  lp_token: '0xc0ec468c1b6b94a107b0a83c7a0f6529b388f43a'
+  name: us/3crv
+  pool_address: '0xc0ec468c1b6b94a107b0a83c7a0f6529b388f43a'
   underlying_coins:
-  - '0xb0b195aefa3650a6908f15cdac7d92f8a5791b0b'
-  - '0x8f3cf7ad23cd3cadbd9735aff958023239c6a063'
-  - '0x2791bca1f2de4661ed88a30c99a7a9449aa84174'
-  - '0xc2132d05d31c914a87c6611c10748aeb04b58e8f'
+  - '0xe661493a2f94cca7f0a7c0566290f9c12e69bd52'
+  - '0x6b175474e89094c44da98b954eedeac495271d0f'
+  - '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'
+  - '0xdac17f958d2ee523a2206206994597c13d831ec7'
   venue: curve
-  zap_address: '0x5ab5c56b9db92ba45a0b46a207286cd83c15c939'
+  zap_address: '0xa79828df1850e8a3a3064576f380d90aecdd3359'
 - balance_abi: uint256
-  chain_id: 137
+  chain_id: 1
   coins:
-  - '0xf2f77fe7b8e66571e0fca7104c4d670bf1c8d722'
-  - '0x6c060ce95131427550201cb296fb09f3a52150d0'
-  - '0x491a4eb4f1fc3bff8e1d2fc856a6a46663ad556f'
-  dy_abi: int128
-  fee: '0.0004'
-  is_crypto: false
-  is_factory: true
-  is_meta: false
-  is_underlying: false
-  lp_token: '0x2c04a1638643ed586268542bd05af7bae7096057'
-  name: 3brl
-  pool_address: '0x2c04a1638643ed586268542bd05af7bae7096057'
-  underlying_coins: []
-  venue: curve
-  zap_address: null
-- balance_abi: uint256
-  chain_id: 137
-  coins:
-  - '0xb5dfabd7ff7f83bab83995e72a52b97abb7bcf63'
-  - '0xe7a24ef0c5e95ffb0f6684b813a78f2a3ad7d171'
+  - '0x015b94ab2b0a14a96030573fbcd0f3d3d763541f'
+  - '0x6c3f90f043a72fa612cbac8115ee7e52bde6e490'
   dy_abi: int128
   fee: '0.0004'
   is_crypto: false
   is_factory: true
   is_meta: true
   is_underlying: true
-  lp_token: '0xa138341185a9d0429b0021a11fb717b225e13e1f'
-  name: usdr+3pool
-  pool_address: '0xa138341185a9d0429b0021a11fb717b225e13e1f'
+  lp_token: '0xbedca4252b27cc12ed7daf393f331886f86cd3ce'
+  name: zunami uzd/3crv
+  pool_address: '0xbedca4252b27cc12ed7daf393f331886f86cd3ce'
   underlying_coins:
-  - '0xb5dfabd7ff7f83bab83995e72a52b97abb7bcf63'
-  - '0x8f3cf7ad23cd3cadbd9735aff958023239c6a063'
-  - '0x2791bca1f2de4661ed88a30c99a7a9449aa84174'
-  - '0xc2132d05d31c914a87c6611c10748aeb04b58e8f'
+  - '0x015b94ab2b0a14a96030573fbcd0f3d3d763541f'
+  - '0x6b175474e89094c44da98b954eedeac495271d0f'
+  - '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'
+  - '0xdac17f958d2ee523a2206206994597c13d831ec7'
   venue: curve
-  zap_address: '0x5ab5c56b9db92ba45a0b46a207286cd83c15c939'
+  zap_address: '0xa79828df1850e8a3a3064576f380d90aecdd3359'
 - balance_abi: uint256
-  chain_id: 137
+  chain_id: 1
   coins:
-  - '0xa926db7a4cc0cb1736d5ac60495ca8eb7214b503'
-  - '0xdc3326e71d45186f113a2f448984ca0e8d201995'
-  dy_abi: int128
-  fee: '0.0004'
-  is_crypto: false
-  is_factory: true
-  is_meta: false
-  is_underlying: false
-  lp_token: '0x9aab2fc6e8142e5deb706a4440390d4211a8d449'
-  name: jsgd/xsgd
-  pool_address: '0x9aab2fc6e8142e5deb706a4440390d4211a8d449'
-  underlying_coins: []
-  venue: curve
-  zap_address: null
-- balance_abi: uint256
-  chain_id: 137
-  coins:
-  - '0x9de41aff9f55219d5bf4359f167d1d0c772a396d'
-  - '0x8ca194a3b22077359b5732de53373d4afc11dee3'
-  dy_abi: int128
-  fee: '0.0004'
-  is_crypto: false
-  is_factory: true
-  is_meta: false
-  is_underlying: false
-  lp_token: '0x1798289afb8f55fe3782513df3bbb3ebba1e31dc'
-  name: 2cad-2
-  pool_address: '0x1798289afb8f55fe3782513df3bbb3ebba1e31dc'
-  underlying_coins: []
-  venue: curve
-  zap_address: null
-- balance_abi: uint256
-  chain_id: 137
-  coins:
-  - '0xdc3326e71d45186f113a2f448984ca0e8d201995'
-  - '0xa926db7a4cc0cb1736d5ac60495ca8eb7214b503'
-  dy_abi: int128
-  fee: '0.0004'
-  is_crypto: false
-  is_factory: true
-  is_meta: false
-  is_underlying: false
-  lp_token: '0x159f772ff9b8d8a75486f21e172c5571ba38a0e7'
-  name: 2sgd-2
-  pool_address: '0x159f772ff9b8d8a75486f21e172c5571ba38a0e7'
-  underlying_coins: []
-  venue: curve
-  zap_address: null
-- balance_abi: uint256
-  chain_id: 137
-  coins:
-  - '0x39d2204d3262d6fe66cb52b2e0220a7b412d329a'
-  - '0x8f3cf7ad23cd3cadbd9735aff958023239c6a063'
-  - '0x2791bca1f2de4661ed88a30c99a7a9449aa84174'
-  - '0xc2132d05d31c914a87c6611c10748aeb04b58e8f'
-  dy_abi: int128
-  fee: '0.0004'
-  is_crypto: false
-  is_factory: true
-  is_meta: false
-  is_underlying: false
-  lp_token: '0xf7c3dbd6bb38285412c02d3fdecef317fdcfb5b4'
-  name: zaloop/stb
-  pool_address: '0xf7c3dbd6bb38285412c02d3fdecef317fdcfb5b4'
-  underlying_coins: []
-  venue: curve
-  zap_address: null
-- balance_abi: uint256
-  chain_id: 137
-  coins:
-  - '0x39d2204d3262d6fe66cb52b2e0220a7b412d329a'
-  - '0xc2132d05d31c914a87c6611c10748aeb04b58e8f'
-  - '0x2791bca1f2de4661ed88a30c99a7a9449aa84174'
-  - '0x8f3cf7ad23cd3cadbd9735aff958023239c6a063'
-  dy_abi: int128
-  fee: '0.0004'
-  is_crypto: false
-  is_factory: true
-  is_meta: false
-  is_underlying: false
-  lp_token: '0xe58c0a2c26fd644e02eef5c87904318b405be079'
-  name: zlp/stb
-  pool_address: '0xe58c0a2c26fd644e02eef5c87904318b405be079'
-  underlying_coins: []
-  venue: curve
-  zap_address: null
-- balance_abi: uint256
-  chain_id: 137
-  coins:
-  - '0x39d2204d3262d6fe66cb52b2e0220a7b412d329a'
-  - '0xe7a24ef0c5e95ffb0f6684b813a78f2a3ad7d171'
+  - '0x72dfe359150984c8013105bbbaee9a152335bd23'
+  - '0x6c3f90f043a72fa612cbac8115ee7e52bde6e490'
   dy_abi: int128
   fee: '0.0004'
   is_crypto: false
   is_factory: true
   is_meta: true
   is_underlying: true
-  lp_token: '0xda10c3f360dc741e7359d561fb4b4e008c37b356'
-  name: zal/sta
-  pool_address: '0xda10c3f360dc741e7359d561fb4b4e008c37b356'
+  lp_token: '0x8d35ece39566d65d06c9207c571934dd3c3a3916'
+  name: 3crv/cealv
+  pool_address: '0x8d35ece39566d65d06c9207c571934dd3c3a3916'
   underlying_coins:
-  - '0x39d2204d3262d6fe66cb52b2e0220a7b412d329a'
-  - '0x8f3cf7ad23cd3cadbd9735aff958023239c6a063'
-  - '0x2791bca1f2de4661ed88a30c99a7a9449aa84174'
-  - '0xc2132d05d31c914a87c6611c10748aeb04b58e8f'
+  - '0x72dfe359150984c8013105bbbaee9a152335bd23'
+  - '0x6b175474e89094c44da98b954eedeac495271d0f'
+  - '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'
+  - '0xdac17f958d2ee523a2206206994597c13d831ec7'
   venue: curve
-  zap_address: '0x5ab5c56b9db92ba45a0b46a207286cd83c15c939'
+  zap_address: '0xa79828df1850e8a3a3064576f380d90aecdd3359'
 - balance_abi: uint256
-  chain_id: 137
+  chain_id: 1
   coins:
-  - '0x0b3154a7648a822b918a29ea2807f154ae39e11f'
-  - '0xe7a24ef0c5e95ffb0f6684b813a78f2a3ad7d171'
+  - '0xd7c9f0e536dc865ae858b0c0453fe76d13c3beac'
+  - '0x3175df0976dfa876431c2e9ee6bc45b65d3473cc'
   dy_abi: int128
   fee: '0.0004'
   is_crypto: false
   is_factory: true
   is_meta: true
   is_underlying: true
-  lp_token: '0xbbda65cfa2f90308da20572e391f03a0cc6b4a9c'
-  name: zaloopensk
-  pool_address: '0xbbda65cfa2f90308da20572e391f03a0cc6b4a9c'
+  lp_token: '0x326290a1b0004eee78fa6ed4f1d8f4b2523ab669'
+  name: xai/fraxbp
+  pool_address: '0x326290a1b0004eee78fa6ed4f1d8f4b2523ab669'
   underlying_coins:
-  - '0x0b3154a7648a822b918a29ea2807f154ae39e11f'
-  - '0x8f3cf7ad23cd3cadbd9735aff958023239c6a063'
-  - '0x2791bca1f2de4661ed88a30c99a7a9449aa84174'
-  - '0xc2132d05d31c914a87c6611c10748aeb04b58e8f'
+  - '0xd7c9f0e536dc865ae858b0c0453fe76d13c3beac'
+  - '0x853d955acef822db058eb8505911ed77f175b99e'
+  - '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'
   venue: curve
-  zap_address: '0x5ab5c56b9db92ba45a0b46a207286cd83c15c939'
+  zap_address: '0x08780fb7e580e492c1935bee4fa5920b94aa95da'
 - balance_abi: uint256
-  chain_id: 137
+  chain_id: 1
   coins:
-  - '0xc948ee9a0687c292ac4d8c1e2557ad652d6baf44'
-  - '0xe7a24ef0c5e95ffb0f6684b813a78f2a3ad7d171'
+  - '0xc22956c3cfec3ee9a9925abee044f05bc47f6632'
+  - '0x3175df0976dfa876431c2e9ee6bc45b65d3473cc'
   dy_abi: int128
   fee: '0.0004'
   is_crypto: false
   is_factory: true
   is_meta: true
   is_underlying: true
-  lp_token: '0x56223d41bb919c9be6b3764cb302e426ddab890c'
-  name: 4usd
-  pool_address: '0x56223d41bb919c9be6b3764cb302e426ddab890c'
+  lp_token: '0xa500cd4e520682e1b1113e1055d55bacead61122'
+  name: cusd/fraxbp
+  pool_address: '0xa500cd4e520682e1b1113e1055d55bacead61122'
   underlying_coins:
-  - '0xc948ee9a0687c292ac4d8c1e2557ad652d6baf44'
-  - '0x8f3cf7ad23cd3cadbd9735aff958023239c6a063'
-  - '0x2791bca1f2de4661ed88a30c99a7a9449aa84174'
-  - '0xc2132d05d31c914a87c6611c10748aeb04b58e8f'
+  - '0xc22956c3cfec3ee9a9925abee044f05bc47f6632'
+  - '0x853d955acef822db058eb8505911ed77f175b99e'
+  - '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'
   venue: curve
-  zap_address: '0x5ab5c56b9db92ba45a0b46a207286cd83c15c939'
+  zap_address: '0x08780fb7e580e492c1935bee4fa5920b94aa95da'
 - balance_abi: uint256
-  chain_id: 137
+  chain_id: 1
   coins:
-  - '0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270'
-  - '0x1bfd67037b42cf73acf2047067bd4f2c47d9bfd6'
+  - '0x6967299e9f3d5312740aa61dee6e9ea658958e31'
+  - '0x6c3f90f043a72fa612cbac8115ee7e52bde6e490'
+  dy_abi: int128
+  fee: '0.0004'
+  is_crypto: false
+  is_factory: true
+  is_meta: true
+  is_underlying: true
+  lp_token: '0xa77d09743f77052950c4eb4e6547e9665299becd'
+  name: titanium dollar
+  pool_address: '0xa77d09743f77052950c4eb4e6547e9665299becd'
+  underlying_coins:
+  - '0x6967299e9f3d5312740aa61dee6e9ea658958e31'
+  - '0x6b175474e89094c44da98b954eedeac495271d0f'
+  - '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'
+  - '0xdac17f958d2ee523a2206206994597c13d831ec7'
+  venue: curve
+  zap_address: '0xa79828df1850e8a3a3064576f380d90aecdd3359'
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0x1a7e4e63778b4f12a199c062f3efdd288afcbce8'
+  - '0x3231cb76718cdef2155fc47b5286d82e6eda273f'
+  dy_abi: int128
+  fee: '0.0004'
+  is_crypto: false
+  is_factory: true
+  is_meta: false
+  is_underlying: false
+  lp_token: '0x413928a25d6ea1a26f2625d633207755f67bf97c'
+  name: ageur/eure
+  pool_address: '0x413928a25d6ea1a26f2625d633207755f67bf97c'
+  underlying_coins: []
+  venue: curve
+  zap_address: null
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0x6b8734ad31d42f5c05a86594314837c416ada984'
+  - '0x6c3f90f043a72fa612cbac8115ee7e52bde6e490'
+  dy_abi: int128
+  fee: '0.0004'
+  is_crypto: false
+  is_factory: true
+  is_meta: true
+  is_underlying: true
+  lp_token: '0x066b6e1e93fa7dcd3f0eb7f8bac7d5a747ce0bf9'
+  name: reusd/3crv
+  pool_address: '0x066b6e1e93fa7dcd3f0eb7f8bac7d5a747ce0bf9'
+  underlying_coins:
+  - '0x6b8734ad31d42f5c05a86594314837c416ada984'
+  - '0x6b175474e89094c44da98b954eedeac495271d0f'
+  - '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'
+  - '0xdac17f958d2ee523a2206206994597c13d831ec7'
+  venue: curve
+  zap_address: '0xa79828df1850e8a3a3064576f380d90aecdd3359'
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0xd533a949740bb3306d119cc777fa900ba034cd52'
+  - '0x62b9c7356a2dc64a1969e19c23e4f579f9810aa7'
+  - '0xfcc5c47be19d06bf83eb04298b026f81069ff65b'
+  - '0xd1b5651e55d4ceed36251c61c50c889b36f6abb5'
+  dy_abi: int128
+  fee: '0.0004'
+  is_crypto: false
+  is_factory: true
+  is_meta: false
+  is_underlying: false
+  lp_token: '0xaf25ffe6ba5a8a29665adcfa6d30c5ae56ca0cd3'
+  name: crv booster
+  pool_address: '0xaf25ffe6ba5a8a29665adcfa6d30c5ae56ca0cd3'
+  underlying_coins: []
+  venue: curve
+  zap_address: null
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2'
+  - '0x3432b6a60d23ca0dfca7761b7ab56459d9c964d0'
   dy_abi: uint256
   fee: variable
   is_crypto: true
   is_factory: true
   is_meta: false
   is_underlying: false
-  lp_token: '0x6c9578402a3ace046a12839f45f84aa5448e9c30'
-  name: matic/wbtc
-  pool_address: '0xec5afc9590964f2fa0feed54f0fbb2a34480908d'
+  lp_token: '0x90244f43d548a4f8dfecfad91a193465b1fad6f7'
+  name: fxs/eth
+  pool_address: '0x941eb6f616114e4ecaa85377945ea306002612fe'
   underlying_coins: []
   venue: curve
   zap_address: null
 - balance_abi: uint256
-  chain_id: 137
+  chain_id: 1
   coins:
-  - '0x172370d5cd63279efa6d502dab29171933a610af'
-  - '0xdad97f7713ae9437fa9249920ec8507e5fbb23d3'
-  dy_abi: uint256
-  fee: variable
-  is_crypto: true
-  is_factory: true
-  is_meta: true
-  is_underlying: true
-  lp_token: '0xa73edcf18421b56d9af1ce08a34e102e23b2c4b6'
-  name: crv/tricrypto
-  pool_address: '0xc7c939a474cb10eb837894d1ed1a77c61b268fa7'
-  underlying_coins:
-  - '0x172370d5cd63279efa6d502dab29171933a610af'
-  - '0x8f3cf7ad23cd3cadbd9735aff958023239c6a063'
-  - '0x2791bca1f2de4661ed88a30c99a7a9449aa84174'
-  - '0xc2132d05d31c914a87c6611c10748aeb04b58e8f'
-  - '0x1bfd67037b42cf73acf2047067bd4f2c47d9bfd6'
-  - '0x7ceb23fd6bc0add59e62ac25578270cff1b9f619'
-  venue: curve
-  zap_address: '0x3d8eadb739d1ef95dd53d718e4810721837c69c1'
-- balance_abi: uint256
-  chain_id: 137
-  coins:
-  - '0x361a5a4993493ce00f61c32d4ecca5512b82ce90'
-  - '0x7ceb23fd6bc0add59e62ac25578270cff1b9f619'
+  - '0x3472a5a71965499acd81997a54bba8d852c6e53d'
+  - '0x2260fac5e5542a773aa44fbcfedf7c193bc2c599'
   dy_abi: uint256
   fee: variable
   is_crypto: true
   is_factory: true
   is_meta: false
   is_underlying: false
-  lp_token: '0xd5fac46705cd3455efcd71694258226c0e37038b'
+  lp_token: '0x137469b55d1f15651ba46a89d0588e97dd0b6562'
+  name: badger/wbtc
+  pool_address: '0x50f3752289e1456bfa505afd37b241bca23e685d'
+  underlying_coins: []
+  venue: curve
+  zap_address: null
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2'
+  - '0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e'
+  dy_abi: uint256
+  fee: variable
+  is_crypto: true
+  is_factory: true
+  is_meta: false
+  is_underlying: false
+  lp_token: '0x29059568bb40344487d62f7450e78b8e6c74e0e5'
+  name: yfi/eth
+  pool_address: '0xc26b89a667578ec7b3f11b2f98d6fd15c07c54ba'
+  underlying_coins: []
+  venue: curve
+  zap_address: null
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0x7fc66500c84a76ad7e9c93437bfc5ac33e2ddae9'
+  - '0x24e79e946dea5482212c38aab2d0782f04cdb0e0'
+  dy_abi: uint256
+  fee: variable
+  is_crypto: true
+  is_factory: true
+  is_meta: false
+  is_underlying: false
+  lp_token: '0x6085def4343a0b5d97820f131a362dae9fe59841'
+  name: aave/palstkaave
+  pool_address: '0x48536ec5233297c367fd0b6979b75d9270bb6b15'
+  underlying_coins: []
+  venue: curve
+  zap_address: null
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0x92d6c1e31e14520e676a687f0a93788b716beff5'
+  - '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2'
+  dy_abi: uint256
+  fee: variable
+  is_crypto: true
+  is_factory: true
+  is_meta: false
+  is_underlying: false
+  lp_token: '0x4acc1bf7d6a591016641325aa6664a1cd178f002'
+  name: dydx/eth
+  pool_address: '0x8b0afa4b63a3581b731da9d79774a3eae63b5abd'
+  underlying_coins: []
+  venue: curve
+  zap_address: null
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2'
+  - '0x73968b9a57c6e53d41345fd57a6e6ae27d6cdb2f'
+  dy_abi: uint256
+  fee: variable
+  is_crypto: true
+  is_factory: true
+  is_meta: false
+  is_underlying: false
+  lp_token: '0x6359b6d3e327c497453d4376561ee276c6933323'
   name: sdt/eth
-  pool_address: '0x36becdcbdf49255f366a45b861b4223b482d35e4'
+  pool_address: '0xfb8814d005c5f32874391e888da6eb2fe7a27902'
   underlying_coins: []
   venue: curve
   zap_address: null
 - balance_abi: uint256
-  chain_id: 137
+  chain_id: 1
   coins:
-  - '0xa417507141ba12247651c873b1bea3465b282918'
-  - '0xdad97f7713ae9437fa9249920ec8507e5fbb23d3'
+  - '0xcadc0acd4b445166f12d2c07eac6e2544fbe2eef'
+  - '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'
   dy_abi: uint256
   fee: variable
   is_crypto: true
   is_factory: true
   is_meta: false
   is_underlying: false
-  lp_token: '0xa0158cd105075585650399cce17d686ab713e3b6'
-  name: arth
-  pool_address: '0x36bec0732c913c87a558d6a16f077d5b3d7476c7'
+  lp_token: '0x1054ff2ffa34c055a13dcd9e0b4c0ca5b3aeceb9'
+  name: cadc/usdc
+  pool_address: '0xe07bde9eb53deffa979dae36882014b758111a78'
   underlying_coins: []
   venue: curve
   zap_address: null
 - balance_abi: uint256
-  chain_id: 137
+  chain_id: 1
   coins:
-  - '0x89c90e480a39fbe3886bb5bd53ba5b1acc69d4fb'
-  - '0x172370d5cd63279efa6d502dab29171933a610af'
+  - '0x03ab458634910aad20ef5f1c8ee96f1d6ac54919'
+  - '0x1a7e4e63778b4f12a199c062f3efdd288afcbce8'
   dy_abi: uint256
   fee: variable
   is_crypto: true
   is_factory: true
   is_meta: false
   is_underlying: false
-  lp_token: '0xbed1d474dda97edceb7b9af13be4cbf1bb98a2d3'
+  lp_token: '0xca7c3ac4e5fb7b2ae60472c80344ea9403c6d2b1'
+  name: rai/ageur
+  pool_address: '0xb6d9b32407bfa562d9211acdba2631a46c850956'
+  underlying_coins: []
+  venue: curve
+  zap_address: null
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0x68037790a0229e9ce6eaa8a99ea92964106c4703'
+  - '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'
+  dy_abi: uint256
+  fee: variable
+  is_crypto: true
+  is_factory: true
+  is_meta: false
+  is_underlying: false
+  lp_token: '0x030cafae2ece75ed411aeb53633fbed3092c3e32'
+  name: par/usdc
+  pool_address: '0xdad60c5b748306ba5a0c9a3c3482a8d1153dad2a'
+  underlying_coins: []
+  venue: curve
+  zap_address: null
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2'
+  - '0x92e187a03b6cd19cb6af293ba17f2745fd2357d5'
+  dy_abi: uint256
+  fee: variable
+  is_crypto: true
+  is_factory: true
+  is_meta: false
+  is_underlying: false
+  lp_token: '0x91f2f1b9d9c7d838c87b687d2accd1f0be8fae5d'
+  name: duck/eth
+  pool_address: '0xd8c49617e6a2c7584ddbeab652368ee84954bf5c'
+  underlying_coins: []
+  venue: curve
+  zap_address: null
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2'
+  - '0xc0d4ceb216b3ba9c3701b291766fdcba977cec3a'
+  dy_abi: uint256
+  fee: variable
+  is_crypto: true
+  is_factory: true
+  is_meta: false
+  is_underlying: false
+  lp_token: '0xe160364fd8407ffc8b163e278300c6c5d18ff61d'
+  name: btrfly/eth
+  pool_address: '0xf43b15ab692fde1f9c24a9fce700adcc809d5391'
+  underlying_coins: []
+  venue: curve
+  zap_address: null
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0x3432b6a60d23ca0dfca7761b7ab56459d9c964d0'
+  - '0xfeef77d3f69374f66429c91d732a244f074bdf74'
+  dy_abi: uint256
+  fee: variable
+  is_crypto: true
+  is_factory: true
+  is_meta: false
+  is_underlying: false
+  lp_token: '0xf3a43307dcafa93275993862aae628fcb50dc768'
+  name: cvxfxs/fxs
+  pool_address: '0xd658a338613198204dca1143ac3f01a722b5d94a'
+  underlying_coins: []
+  venue: curve
+  zap_address: null
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0x64aa3364f17a4d01c6f1751fd97c2bd3d7e7f1d5'
+  - '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2'
+  dy_abi: uint256
+  fee: variable
+  is_crypto: true
+  is_factory: true
+  is_meta: false
+  is_underlying: false
+  lp_token: '0x3660bd168494d61ffdac21e403d0f6356cf90fd7'
+  name: ohm/eth
+  pool_address: '0x6ec38b3228251a0c5d491faf66858e2e23d7728b'
+  underlying_coins: []
+  venue: curve
+  zap_address: null
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0x6f80310ca7f2c654691d1383149fa1a57d8ab1f8'
+  - '0x853d955acef822db058eb8505911ed77f175b99e'
+  dy_abi: uint256
+  fee: variable
+  is_crypto: true
+  is_factory: true
+  is_meta: false
+  is_underlying: false
+  lp_token: '0x2302aabe69e6e7a1b0aa23aac68fccb8a4d2b460'
+  name: silo/frax
+  pool_address: '0x9a22cdb1ca1cdd2371cd5bb5199564c4e89465eb'
+  underlying_coins: []
+  venue: curve
+  zap_address: null
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0x6a445e9f40e0b97c92d0b8a3366cef1d67f700bf'
+  - '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'
+  dy_abi: uint256
+  fee: variable
+  is_crypto: true
+  is_factory: true
+  is_meta: false
+  is_underlying: false
+  lp_token: '0x42ec68ca5c2c80036044f3eead675447ab3a8065'
+  name: goldfinch fidu/usdc
+  pool_address: '0x80aa1a80a30055daa084e599836532f3e58c95e2'
+  underlying_coins: []
+  venue: curve
+  zap_address: null
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0x96e61422b6a9ba0e068b6c5add4ffabc6a4aae27'
+  - '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'
+  dy_abi: uint256
+  fee: variable
+  is_crypto: true
+  is_factory: true
+  is_meta: false
+  is_underlying: false
+  lp_token: '0x8682fbf0cbf312c891532ba9f1a91e44f81ad7df'
+  name: ibeur/usdc
+  pool_address: '0x1570af3df649fc74872c5b8f280a162a3bdd4eb6'
+  underlying_coins: []
+  venue: curve
+  zap_address: null
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0xfafdf0c4c1cb09d430bf88c75d88bb46dae09967'
+  - '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'
+  dy_abi: uint256
+  fee: variable
+  is_crypto: true
+  is_factory: true
+  is_meta: false
+  is_underlying: false
+  lp_token: '0x54c8ecf46a81496eeb0608bd3353388b5d7a2a33'
+  name: ibaud/usdc
+  pool_address: '0x5b692073f141c31384fae55856cfb6cbffe91e60'
+  underlying_coins: []
+  venue: curve
+  zap_address: null
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0x1cc481ce2bd2ec7bf67d1be64d4878b16078f309'
+  - '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'
+  dy_abi: uint256
+  fee: variable
+  is_crypto: true
+  is_factory: true
+  is_meta: false
+  is_underlying: false
+  lp_token: '0x08cea8e5b4551722deb97113c139dd83c26c5398'
+  name: ibchf/usdc
+  pool_address: '0x6df0d77f0496ce44e72d695943950d8641fca5cf'
+  underlying_coins: []
+  venue: curve
+  zap_address: null
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0x69681f8fde45345c3870bcd5eaf4a05a60e7d227'
+  - '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'
+  dy_abi: uint256
+  fee: variable
+  is_crypto: true
+  is_factory: true
+  is_meta: false
+  is_underlying: false
+  lp_token: '0x22cf19eb64226e0e1a79c69b345b31466fd273a7'
+  name: ibgbp/usdc
+  pool_address: '0xacce4fe9ce2a6fe9af83e7cf321a3ff7675e0ab6'
+  underlying_coins: []
+  venue: curve
+  zap_address: null
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0x5555f75e3d5278082200fb451d1b6ba946d8e13b'
+  - '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'
+  dy_abi: uint256
+  fee: variable
+  is_crypto: true
+  is_factory: true
+  is_meta: false
+  is_underlying: false
+  lp_token: '0x127091ede112aed7bae281747771b3150bb047bb'
+  name: ibjpy/usdc
+  pool_address: '0xeb0265938c1190ab4e3e1f6583bc956df47c0f93'
+  underlying_coins: []
+  venue: curve
+  zap_address: null
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0x95dfdc8161832e4ff7816ac4b6367ce201538253'
+  - '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'
+  dy_abi: uint256
+  fee: variable
+  is_crypto: true
+  is_factory: true
+  is_meta: false
+  is_underlying: false
+  lp_token: '0x80caccdbd3f07bbdb558db4a9e146d099933d677'
+  name: ibkrw/usdc
+  pool_address: '0xef04f337fcb2ea220b6e8db5edbe2d774837581c'
+  underlying_coins: []
+  venue: curve
+  zap_address: null
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0xaf5191b0de278c7286d6c7cc6ab6bb8a73ba2cd6'
+  - '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'
+  dy_abi: uint256
+  fee: variable
+  is_crypto: true
+  is_factory: true
+  is_meta: false
+  is_underlying: false
+  lp_token: '0xdf55670e27be5cde7228dd0a6849181891c9eba1'
+  name: stg/usdc
+  pool_address: '0x3211c6cbef1429da3d0d58494938299c92ad5860'
+  underlying_coins: []
+  venue: curve
+  zap_address: null
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2'
+  - '0xab846fb6c81370327e784ae7cbb6d6a6af6ff4bf'
+  dy_abi: uint256
+  fee: variable
+  is_crypto: true
+  is_factory: true
+  is_meta: false
+  is_underlying: false
+  lp_token: '0xbe4f3ad6c9458b901c81b734cb22d9eae9ad8b50'
+  name: pal/eth
+  pool_address: '0x75a6787c7ee60424358b449b539a8b774c9b4862'
+  underlying_coins: []
+  venue: curve
+  zap_address: null
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2'
+  - '0x1ceb5cb57c4d4e2b2433641b95dd330a33185a44'
+  dy_abi: uint256
+  fee: variable
+  is_crypto: true
+  is_factory: true
+  is_meta: false
+  is_underlying: false
+  lp_token: '0x4647b6d835f3b393c7a955df51eefcf0db961606'
+  name: kp3r/eth
+  pool_address: '0x21410232b484136404911780bc32756d5d1a9fa9'
+  underlying_coins: []
+  venue: curve
+  zap_address: null
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2'
+  - '0xb620be8a1949aa9532e6a3510132864ef9bc3f82'
+  dy_abi: uint256
+  fee: variable
+  is_crypto: true
+  is_factory: true
+  is_meta: false
+  is_underlying: false
+  lp_token: '0x401322b9fddba8c0a8d40fbcece1d1752c12316b'
+  name: lft/eth
+  pool_address: '0xfe4a08f22fe65759ba91db2e2cada09b4415b0d7'
+  underlying_coins: []
+  venue: curve
+  zap_address: null
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2'
+  - '0xe80c0cd204d654cebe8dd64a4857cab6be8345a3'
+  dy_abi: uint256
+  fee: variable
+  is_crypto: true
+  is_factory: true
+  is_meta: false
+  is_underlying: false
+  lp_token: '0x34ed182d0812d119c92907852d2b429f095a9b07'
+  name: jpeg/eth
+  pool_address: '0x7e050cf658777cc1da4a4508e79d71859044b60e'
+  underlying_coins: []
+  venue: curve
+  zap_address: null
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2'
+  - '0x9ae380f0272e2162340a5bb646c354271c0f5cfc'
+  dy_abi: uint256
+  fee: variable
+  is_crypto: true
+  is_factory: true
+  is_meta: false
+  is_underlying: false
+  lp_token: '0xc0f888d0987287aa1d09cac49f2cca89f7bbe774'
+  name: cnc/eth
+  pool_address: '0x782115c863a05abf8795df377d89aad1aadf4dfa'
+  underlying_coins: []
+  venue: curve
+  zap_address: null
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2'
+  - '0x9ae380f0272e2162340a5bb646c354271c0f5cfc'
+  dy_abi: uint256
+  fee: variable
+  is_crypto: true
+  is_factory: true
+  is_meta: false
+  is_underlying: false
+  lp_token: '0xf9835375f6b268743ea0a54d742aa156947f8c06'
+  name: cnc/eth
+  pool_address: '0x838af967537350d2c44abb8c010e49e32673ab94'
+  underlying_coins: []
+  venue: curve
+  zap_address: null
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0x853d955acef822db058eb8505911ed77f175b99e'
+  - '0x5ca135cb8527d76e932f34b5145575f9d8cbe08e'
+  dy_abi: uint256
+  fee: variable
+  is_crypto: true
+  is_factory: true
+  is_meta: false
+  is_underlying: false
+  lp_token: '0x4704ab1fb693ce163f7c9d3a31b3ff4eaf797714'
+  name: fpi2pool
+  pool_address: '0xf861483fa7e511fbc37487d91b6faa803af5d37c'
+  underlying_coins: []
+  venue: curve
+  zap_address: null
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2'
+  - '0x9416ba76e88d873050a06e5956a3ebf10386b863'
+  dy_abi: uint256
+  fee: variable
+  is_crypto: true
+  is_factory: true
+  is_meta: false
+  is_underlying: false
+  lp_token: '0x94f6c0201e1bfcba290345338c3c4abc1901d336'
+  name: eth/virtue
+  pool_address: '0xd0a1d2a9350824516ae8729b8311557ba7e55bff'
+  underlying_coins: []
+  venue: curve
+  zap_address: null
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2'
+  - '0x5a56da75c50aa2733f5fa9a2442aaefcbc60b2e6'
+  dy_abi: uint256
+  fee: variable
+  is_crypto: true
+  is_factory: true
+  is_meta: false
+  is_underlying: false
+  lp_token: '0x1979f8296492ff9e6527eca47fc44bb30c391139'
+  name: cxd/eth
+  pool_address: '0x5d898fd41875b14c1781fb497aecab8e9b24dfc9'
+  underlying_coins: []
+  venue: curve
+  zap_address: null
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'
+  - '0x5a56da75c50aa2733f5fa9a2442aaefcbc60b2e6'
+  dy_abi: uint256
+  fee: variable
+  is_crypto: true
+  is_factory: true
+  is_meta: false
+  is_underlying: false
+  lp_token: '0x70a03471b4f2dee5174ade1165742e2d3fed2e27'
+  name: cxd/usdc
+  pool_address: '0x4535913573d299a6372ca43b90aa6be1cf68f779'
+  underlying_coins: []
+  venue: curve
+  zap_address: null
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2'
+  - '0x2e9d63788249371f1dfc918a52f8d799f4a38c94'
+  dy_abi: uint256
+  fee: variable
+  is_crypto: true
+  is_factory: true
+  is_meta: false
+  is_underlying: false
+  lp_token: '0x7ea4ad8c803653498bf6ac1d2debc04dce8fd2ad'
+  name: toke/eth
+  pool_address: '0xe0e970a99bc4f53804d8145bebbc7ebc9422ba7f'
+  underlying_coins: []
+  venue: curve
+  zap_address: null
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0x6b175474e89094c44da98b954eedeac495271d0f'
+  - '0x5ee08f40b637417bcc9d2c51b62f4820ec9cf5d8'
+  dy_abi: uint256
+  fee: variable
+  is_crypto: true
+  is_factory: true
+  is_meta: false
+  is_underlying: false
+  lp_token: '0x7657ceb382013f1ce9ac7b08dd8db4f28d3a7538'
+  name: bstbl/dai
+  pool_address: '0xa148bd19e26ff9604f6a608e22bfb7b772d0d1a3'
+  underlying_coins: []
+  venue: curve
+  zap_address: null
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0x4e3fbd56cd56c3e72c1403e103b45db9da5b9d2b'
+  - '0xbce0cf87f513102f22232436cca2ca49e815c3ac'
+  dy_abi: uint256
+  fee: variable
+  is_crypto: true
+  is_factory: true
+  is_meta: false
+  is_underlying: false
+  lp_token: '0xace78d9bab82b6b4783120dba82aa10b040a14d9'
+  name: pxcvx/cvx
+  pool_address: '0xf3456e8061461e144b3f252e69dcd5b6070fdee0'
+  underlying_coins: []
+  venue: curve
+  zap_address: null
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0xb4bd4628e6efb0cb521d9ec35050c75840320374'
+  - '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2'
+  dy_abi: uint256
+  fee: variable
+  is_crypto: true
+  is_factory: true
+  is_meta: false
+  is_underlying: false
+  lp_token: '0x517e47a2e8c38e5a96708ed866a39ccbaa105640'
+  name: freth/weth
+  pool_address: '0x6e77889ff348a16547caba3ce011cb120ed73bfc'
+  underlying_coins: []
+  venue: curve
+  zap_address: null
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0x2b95a1dcc3d405535f9ed33c219ab38e8d7e0884'
+  - '0xd533a949740bb3306d119cc777fa900ba034cd52'
+  dy_abi: uint256
+  fee: variable
+  is_crypto: true
+  is_factory: true
+  is_meta: false
+  is_underlying: false
+  lp_token: '0x2c97c40c24e2ff11c6965dc40ca77967bcec4719'
   name: acrv/crv
-  pool_address: '0xd9f354177edd66e7a6669f33d0ec64c14e153b38'
+  pool_address: '0x95f3672a418230c5664b7154dfce0acfa7eed68d'
   underlying_coins: []
   venue: curve
   zap_address: null
 - balance_abi: uint256
-  chain_id: 137
+  chain_id: 1
   coins:
-  - '0x3a58a54c066fdc0f2d55fc9c89f0415c92ebf3c4'
-  - '0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270'
+  - '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2'
+  - '0xd6242e984e6db6b5286fb2c26c69330da639da12'
   dy_abi: uint256
   fee: variable
   is_crypto: true
   is_factory: true
   is_meta: false
   is_underlying: false
-  lp_token: '0xe7cea2f6d7b120174bf3a9bc98efaf1ff72c997d'
-  name: stmatic/wmatic
-  pool_address: '0xfb6fe7802ba9290ef8b00ca16af4bc26eb663a28'
+  lp_token: '0xaf47ced866c824fdbd3e00f651bdde19ac9cbd03'
+  name: rarepepe
+  pool_address: '0xddbdcebb989b1ef804338d6c9a902f91c2738936'
   underlying_coins: []
   venue: curve
   zap_address: null
 - balance_abi: uint256
-  chain_id: 137
+  chain_id: 1
   coins:
-  - '0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270'
-  - '0x2c89bbc92bd86f8075d1decc58c7f4e0107f286b'
+  - '0x7d1afa7b718fb893db30a3abc0cfc608aacfebb0'
+  - '0x95ad61b0a150d79219dcf64e1e6cc01f0b64c4ce'
   dy_abi: uint256
   fee: variable
   is_crypto: true
   is_factory: true
   is_meta: false
   is_underlying: false
-  lp_token: '0xbfd47bfc332dda8f41db4230c13b9f7243adae2e'
-  name: 2mscl l2
-  pool_address: '0x12fa77685728abcbe1d5c7c11638d2c8df250478'
+  lp_token: '0x38f730b5a96fd79b97bb64210021fa67db1ed147'
+  name: matic/shib
+  pool_address: '0xb2c248c0b0db7d28dfa0123438b40bb31fb8aa05'
   underlying_coins: []
   venue: curve
   zap_address: null
 - balance_abi: uint256
-  chain_id: 137
+  chain_id: 1
   coins:
-  - '0x7b88977ccd37af6d0951dd368a46a2fd33eb26ac'
-  - '0x7979917b2b4b1a596fbccfd15f7d5d905862603c'
+  - '0x7d1afa7b718fb893db30a3abc0cfc608aacfebb0'
+  - '0xfd56a3dcfc0690881a466ae432d71bb2db588083'
   dy_abi: uint256
   fee: variable
   is_crypto: true
   is_factory: true
   is_meta: false
   is_underlying: false
-  lp_token: '0x4b5619c85e59efda11264241fe37220fca56bc10'
-  name: mscl/rok
-  pool_address: '0x8e6692b6fc3bce7d5291c96ff02ba24e1a329c60'
+  lp_token: '0x359b630ef33a40b0abeeeed5467fe839f9f7e561'
+  name: matic/fleet
+  pool_address: '0x799d141e83d88996c48b98a4f8eb3d96ab422dd3'
   underlying_coins: []
   venue: curve
   zap_address: null
 - balance_abi: uint256
-  chain_id: 137
+  chain_id: 1
   coins:
-  - '0x776758a8592c7cba28842ee1880a9b46ea7dde66'
-  - '0xdb70c4a8369043c3c4fd21b89ebd8cbe20423856'
+  - '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2'
+  - '0xc55126051b22ebb829d00368f4b12bde432de5da'
   dy_abi: uint256
   fee: variable
   is_crypto: true
   is_factory: true
   is_meta: false
   is_underlying: false
-  lp_token: '0x562a0c260c6bd20fd25d6dc5aa0d73b8111ae3ba'
-  name: usd1
-  pool_address: '0x6908d971a43edbaf8e1ac29aa62b604e030fee30'
+  lp_token: '0x7483dd57f6488b0e194a151c57df6ec85c00ace9'
+  name: btrfly/eth
+  pool_address: '0x6e314039f4c56000f4ebb3a7854a84cc6225fb92'
   underlying_coins: []
   venue: curve
   zap_address: null
 - balance_abi: uint256
-  chain_id: 137
+  chain_id: 1
   coins:
-  - '0x776758a8592c7cba28842ee1880a9b46ea7dde66'
-  - '0xdb70c4a8369043c3c4fd21b89ebd8cbe20423856'
+  - '0x03ab458634910aad20ef5f1c8ee96f1d6ac54919'
+  - '0x5f98805a4e8be255a32880fdec7f6728c6568ba0'
   dy_abi: uint256
   fee: variable
   is_crypto: true
   is_factory: true
   is_meta: false
   is_underlying: false
-  lp_token: '0x4140c799d1f72b60c90de01552b6d3c9a0de443b'
-  name: usd91
-  pool_address: '0x73c1537fe5b506172da6ce5ede31b57501608fdd'
+  lp_token: '0xd29f1a967441ae1a4ff2ea35ede54fe01cf6b95f'
+  name: rai/lusd-3
+  pool_address: '0xc58fdb8a50ab921a73535656a7c69387dd863ff6'
   underlying_coins: []
   venue: curve
   zap_address: null
 - balance_abi: uint256
-  chain_id: 137
+  chain_id: 1
   coins:
-  - '0x776758a8592c7cba28842ee1880a9b46ea7dde66'
-  - '0xdb70c4a8369043c3c4fd21b89ebd8cbe20423856'
+  - '0x3432b6a60d23ca0dfca7761b7ab56459d9c964d0'
+  - '0xc2544a32872a91f4a553b404c6950e89de901fdb'
   dy_abi: uint256
   fee: variable
   is_crypto: true
   is_factory: true
   is_meta: false
   is_underlying: false
-  lp_token: '0x2997ff0ffcac6e24c4b8e4922d58947b0f77c236'
-  name: usd1/pusd91
-  pool_address: '0x12fa7d6d6158e985016147a985b24a5bc6584760'
+  lp_token: '0xb83e5af00b321d2280382b8634625826fbd75c5b'
+  name: fxsfpis
+  pool_address: '0xd4e2fdc354c5dffb865798ca98c2b9d5382f687c'
   underlying_coins: []
   venue: curve
   zap_address: null
 - balance_abi: uint256
-  chain_id: 137
+  chain_id: 1
   coins:
-  - '0x9a058f205173b06dc288afba0f13aa9bc0fdf49c'
-  - '0x624f468a020719b0c550508595f3b3eb3390a9cd'
+  - '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2'
+  - '0xbe9895146f7af43049ca1c1ae358b0541ea49704'
   dy_abi: uint256
   fee: variable
   is_crypto: true
   is_factory: true
   is_meta: false
   is_underlying: false
-  lp_token: '0x5af9840a5ace0b99d3dfe57d07212e375ae4124c'
+  lp_token: '0x5b6c539b224014a09b3388e51caaa8e354c959c8'
+  name: cbeth/eth
+  pool_address: '0x5fae7e604fc3e24fd43a72867cebac94c65b404a'
+  underlying_coins: []
+  venue: curve
+  zap_address: null
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0x1a7e4e63778b4f12a199c062f3efdd288afcbce8'
+  - '0x3175df0976dfa876431c2e9ee6bc45b65d3473cc'
+  dy_abi: uint256
+  fee: variable
+  is_crypto: true
+  is_factory: true
+  is_meta: false
+  is_underlying: false
+  lp_token: '0x22e859ee894c2068920858a60b51dc03ac5581c1'
+  name: ageur/fraxbp
+  pool_address: '0x58257e4291f95165184b4bea7793a1d6f8e7b627'
+  underlying_coins: []
+  venue: curve
+  zap_address: null
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0xfeef77d3f69374f66429c91d732a244f074bdf74'
+  - '0x3175df0976dfa876431c2e9ee6bc45b65d3473cc'
+  dy_abi: uint256
+  fee: variable
+  is_crypto: true
+  is_factory: true
+  is_meta: false
+  is_underlying: false
+  lp_token: '0xf57ccad8122b898a147cc8601b1eca88b1662c7e'
+  name: cvxfxs/fraxbp
+  pool_address: '0x21d158d95c2e150e144c36fc64e3653b8d6c6267'
+  underlying_coins: []
+  venue: curve
+  zap_address: null
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0x4e3fbd56cd56c3e72c1403e103b45db9da5b9d2b'
+  - '0x3175df0976dfa876431c2e9ee6bc45b65d3473cc'
+  dy_abi: uint256
+  fee: variable
+  is_crypto: true
+  is_factory: true
+  is_meta: false
+  is_underlying: false
+  lp_token: '0x7f17a6c77c3938d235b014818092eb6305bda110'
+  name: cvx/fraxbp
+  pool_address: '0xbec570d92afb7ffc553bdd9d4b4638121000b10d'
+  underlying_coins: []
+  venue: curve
+  zap_address: null
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0xdbdb4d16eda451d0503b854cf79d55697f90c8df'
+  - '0x3175df0976dfa876431c2e9ee6bc45b65d3473cc'
+  dy_abi: uint256
+  fee: variable
+  is_crypto: true
+  is_factory: true
+  is_meta: false
+  is_underlying: false
+  lp_token: '0xf985005a3793dba4cce241b3c19ddcd3fe069ff4'
+  name: alcx/fraxbp
+  pool_address: '0x4149d1038575ce235e03e03b39487a80fd709d31'
+  underlying_coins: []
+  venue: curve
+  zap_address: null
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0x62b9c7356a2dc64a1969e19c23e4f579f9810aa7'
+  - '0x3175df0976dfa876431c2e9ee6bc45b65d3473cc'
+  dy_abi: uint256
+  fee: variable
+  is_crypto: true
+  is_factory: true
+  is_meta: false
+  is_underlying: false
+  lp_token: '0x527331f3f550f6f85acfecab9cc0889180c6f1d5'
+  name: cvxcrv/fraxbp
+  pool_address: '0x31c325a01861c7dbd331a9270296a31296d797a0'
+  underlying_coins: []
+  venue: curve
+  zap_address: null
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0xc08512927d12348f6620a698105e1baac6ecd911'
+  - '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'
+  dy_abi: uint256
+  fee: variable
+  is_crypto: true
+  is_factory: true
+  is_meta: false
+  is_underlying: false
+  lp_token: '0xbb839df3b6dfbc5956bcb484f91f1c555075a642'
+  name: jpyusd
+  pool_address: '0x611a95bf3cc0ef593f22c4e4d8eb4d6c937e006c'
+  underlying_coins: []
+  venue: curve
+  zap_address: null
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0x3472a5a71965499acd81997a54bba8d852c6e53d'
+  - '0x3175df0976dfa876431c2e9ee6bc45b65d3473cc'
+  dy_abi: uint256
+  fee: variable
+  is_crypto: true
+  is_factory: true
+  is_meta: false
+  is_underlying: false
+  lp_token: '0x09b2e090531228d1b8e3d948c73b990cb6e60720'
+  name: badger/fraxbp
+  pool_address: '0x13b876c26ad6d21cb87ae459eaf6d7a1b788a113'
+  underlying_coins: []
+  venue: curve
+  zap_address: null
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0x8cb24ed2e4f7e2065f4eb2be5f6b0064b1919850'
+  - '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'
+  dy_abi: uint256
+  fee: variable
+  is_crypto: true
+  is_factory: true
+  is_meta: false
+  is_underlying: false
+  lp_token: '0x0d1d69876b55080e92119c9e2c3c8ff46667e7fe'
+  name: zarp/usdc
+  pool_address: '0x4d19e7fd118fd751fea7c0324d7e7b0a3d05eba4'
+  underlying_coins: []
+  venue: curve
+  zap_address: null
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0x01597e397605bf280674bf292623460b4204c375'
+  - '0x3175df0976dfa876431c2e9ee6bc45b65d3473cc'
+  dy_abi: uint256
+  fee: variable
+  is_crypto: true
+  is_factory: true
+  is_meta: false
+  is_underlying: false
+  lp_token: '0xa620c45a2b723c2b44de1412dd8adee19ec16a57'
+  name: bent/fraxbp
+  pool_address: '0x825722af244432319c1e32b6b18aded2d4a014df'
+  underlying_coins: []
+  venue: curve
+  zap_address: null
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0x9e0441e084f5db0606565737158aa6ab6b970fe0'
+  - '0x3175df0976dfa876431c2e9ee6bc45b65d3473cc'
+  dy_abi: uint256
+  fee: variable
+  is_crypto: true
+  is_factory: true
+  is_meta: false
+  is_underlying: false
+  lp_token: '0xbb23c0361d3e436fb7942a0e103edecab3afa917'
+  name: bentcvx/fraxbp
+  pool_address: '0x02dfa5c793a9ce4d767a86259245a162a57f2db4'
+  underlying_coins: []
+  venue: curve
+  zap_address: null
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0x64aa3364f17a4d01c6f1751fd97c2bd3d7e7f1d5'
+  - '0x8cc0f052fff7ead7f2edcccac895502e884a8a71'
+  dy_abi: uint256
+  fee: variable
+  is_crypto: true
+  is_factory: true
+  is_meta: false
+  is_underlying: false
+  lp_token: '0x025d7dce7ad345bd55c4c972614e720ab67e1b2b'
+  name: arth/ohm
+  pool_address: '0x27a8697fbd2ed137d88e74132a5558fa43656175'
+  underlying_coins: []
+  venue: curve
+  zap_address: null
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0x03ab458634910aad20ef5f1c8ee96f1d6ac54919'
+  - '0x5f98805a4e8be255a32880fdec7f6728c6568ba0'
+  dy_abi: uint256
+  fee: variable
+  is_crypto: true
+  is_factory: true
+  is_meta: false
+  is_underlying: false
+  lp_token: '0x02438b7eb7e2ab61fb1a1ea0f6761f6dd5a7badf'
+  name: rai/lusd-4
+  pool_address: '0x167de3887edebe5012544373c5871481bd95cc4e'
+  underlying_coins: []
+  venue: curve
+  zap_address: null
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2'
+  - '0x853d955acef822db058eb8505911ed77f175b99e'
+  dy_abi: uint256
+  fee: variable
+  is_crypto: true
+  is_factory: true
+  is_meta: false
+  is_underlying: false
+  lp_token: '0x19a0d1d428425ef397966bce6c798bedc3030035'
+  name: eth/frax
+  pool_address: '0x1631d0e588d475cee4be0f51b7410daaaabd7034'
+  underlying_coins: []
+  venue: curve
+  zap_address: null
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0x03ab458634910aad20ef5f1c8ee96f1d6ac54919'
+  - '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'
+  dy_abi: uint256
+  fee: variable
+  is_crypto: true
+  is_factory: true
+  is_meta: false
+  is_underlying: false
+  lp_token: '0x4a699ed946615f67e2d0d7fb3264e22e1fccfdcc'
+  name: rai/usdc
+  pool_address: '0x96a3f551c99797998dc33e2d816d567db61ee1c2'
+  underlying_coins: []
+  venue: curve
+  zap_address: null
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0x92e187a03b6cd19cb6af293ba17f2745fd2357d5'
+  - '0x1456688345527be1f37e9e627da0837d6f08c925'
+  dy_abi: uint256
+  fee: variable
+  is_crypto: true
+  is_factory: true
+  is_meta: false
+  is_underlying: false
+  lp_token: '0x0852035a7cb0c67c5f3a3a1ed38f3e673dc01158'
+  name: duck/usdp
+  pool_address: '0xf039050dc36fd59ff1117b14bfdff92dfa9de9fc'
+  underlying_coins: []
+  venue: curve
+  zap_address: null
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0x92e187a03b6cd19cb6af293ba17f2745fd2357d5'
+  - '0xdac17f958d2ee523a2206206994597c13d831ec7'
+  dy_abi: uint256
+  fee: variable
+  is_crypto: true
+  is_factory: true
+  is_meta: false
+  is_underlying: false
+  lp_token: '0x82abdc39e7207555bc81ad58e8aedcd6fcc96b98'
+  name: duck/usdt
+  pool_address: '0xfeb0784f5d0940686143b3a025af731ee6a81197'
+  underlying_coins: []
+  venue: curve
+  zap_address: null
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0x045da4bfe02b320f4403674b3b7d121737727a36'
+  - '0x6c3f90f043a72fa612cbac8115ee7e52bde6e490'
+  dy_abi: uint256
+  fee: variable
+  is_crypto: true
+  is_factory: true
+  is_meta: false
+  is_underlying: false
+  lp_token: '0x8bc3f1e82ca3d63987dc12f90538c6bf818fcd0f'
+  name: dchf/3crv
+  pool_address: '0xdcb11e81c8b8a1e06bf4b50d4f6f3bb31f7478c3'
+  underlying_coins: []
+  venue: curve
+  zap_address: null
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0x1e2391a261217c93d09ff3ae9ab1903ea237bda8'
+  - '0xed279fdd11ca84beef15af5d39bb4d4bee23f0ca'
+  dy_abi: uint256
+  fee: variable
+  is_crypto: true
+  is_factory: true
+  is_meta: false
+  is_underlying: false
+  lp_token: '0xeeb7a7120cdf4440f08a9fd646cca9d78e463f01'
+  name: bll3
+  pool_address: '0xf4a3cca34470b5ba21e2bb1ed365acf68b4d4598'
+  underlying_coins: []
+  venue: curve
+  zap_address: null
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0xb9d7dddca9a4ac480991865efef82e01273f79c3'
+  - '0xed279fdd11ca84beef15af5d39bb4d4bee23f0ca'
+  dy_abi: uint256
+  fee: variable
+  is_crypto: true
+  is_factory: true
+  is_meta: false
+  is_underlying: false
+  lp_token: '0x5ca0313d44551e32e0d7a298ec024321c4bc59b4'
+  name: blusd_lusd3crv
+  pool_address: '0x74ed5d42203806c8cdcf2f04ca5f60dc777b901c'
+  underlying_coins: []
+  venue: curve
+  zap_address: null
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0x73968b9a57c6e53d41345fd57a6e6ae27d6cdb2f'
+  - '0x3175df0976dfa876431c2e9ee6bc45b65d3473cc'
+  dy_abi: uint256
+  fee: variable
+  is_crypto: true
+  is_factory: true
+  is_meta: false
+  is_underlying: false
+  lp_token: '0x893da8a02b487fef2f7e3f35df49d7625ae549a3'
+  name: sdt / fraxbp
+  pool_address: '0x3e3c6c7db23cddef80b694679aaf1bcd9517d0ae'
+  underlying_coins: []
+  venue: curve
+  zap_address: null
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2'
+  - '0x72953a5c32413614d24c29c84a66ae4b59581bbf'
+  dy_abi: uint256
+  fee: variable
+  is_crypto: true
+  is_factory: true
+  is_meta: false
+  is_underlying: false
+  lp_token: '0x6c280db098db673d30d5b34ec04b6387185d3620'
   name: clev/eth
-  pool_address: '0x78af761a6030b1011296becada3068eeedd97795'
+  pool_address: '0x342d1c4aa76ea6f5e5871b7f11a019a0eb713a4f'
   underlying_coins: []
   venue: curve
   zap_address: null
 - balance_abi: uint256
-  chain_id: 137
+  chain_id: 1
   coins:
-  - '0x624f468a020719b0c550508595f3b3eb3390a9cd'
-  - '0x9a058f205173b06dc288afba0f13aa9bc0fdf49c'
+  - '0x8cc0f052fff7ead7f2edcccac895502e884a8a71'
+  - '0x6c3f90f043a72fa612cbac8115ee7e52bde6e490'
   dy_abi: uint256
   fee: variable
   is_crypto: true
   is_factory: true
   is_meta: false
   is_underlying: false
-  lp_token: '0xc60a82d0382bc8f8714f3ca7b0e665531697daff'
-  name: clever locked cvx v2
-  pool_address: '0xd1f6ee081f7afd7bc8a4ccd4cfc2112a61429e62'
+  lp_token: '0xbcceb5b710e3eb07d1ac6a079e87d799be30a71f'
+  name: arth/3pool
+  pool_address: '0x96f34bb82fca57e475e6ad218b0dd0c5c78df423'
   underlying_coins: []
   venue: curve
   zap_address: null
 - balance_abi: uint256
-  chain_id: 137
+  chain_id: 1
   coins:
-  - '0x624f468a020719b0c550508595f3b3eb3390a9cd'
-  - '0x9a058f205173b06dc288afba0f13aa9bc0fdf49c'
+  - '0x8cc0f052fff7ead7f2edcccac895502e884a8a71'
+  - '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2'
   dy_abi: uint256
   fee: variable
   is_crypto: true
   is_factory: true
   is_meta: false
   is_underlying: false
-  lp_token: '0x7b361438c200876c3507f6d82ce011ce516a5e7f'
-  name: clever locked cvx v2 price 1.057
-  pool_address: '0x63923c573e1f5c1ece24cedf45226e1be2c5d170'
+  lp_token: '0x2c448c8e13b7866ac35fda46a605429c48362818'
+  name: arth/eth
+  pool_address: '0x19a0ca9a0dc2a5034f47dcc164169cffd7ed2410'
   underlying_coins: []
   venue: curve
   zap_address: null
 - balance_abi: uint256
-  chain_id: 137
+  chain_id: 1
   coins:
-  - '0x624f468a020719b0c550508595f3b3eb3390a9cd'
-  - '0x9a058f205173b06dc288afba0f13aa9bc0fdf49c'
+  - '0x28a7190805c3646f7bf63b00c569f7bf06145268'
+  - '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2'
   dy_abi: uint256
   fee: variable
   is_crypto: true
   is_factory: true
   is_meta: false
   is_underlying: false
-  lp_token: '0x760e0cf22327654b53b2985d4cfec76494e5fbb4'
-  name: clever locked cvx v2 price 0.945
-  pool_address: '0x152c96b8bfa478d311eea46f2bf1f6dbdeb4a36b'
+  lp_token: '0x0ba6d8e30a13b7692d88368c79faf68ced356859'
+  name: schmeckles / eth
+  pool_address: '0x4e6706889d519ba6e6ced330d76582f875df3c9c'
   underlying_coins: []
   venue: curve
   zap_address: null
 - balance_abi: uint256
-  chain_id: 137
+  chain_id: 1
   coins:
-  - '0xcd56a03d6cc06c501450fd51f79cbc05cf973c53'
-  - '0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270'
+  - '0x2e60f6c4ca05bc55a8e577deebd61fce727c4a6e'
+  - '0x03ab458634910aad20ef5f1c8ee96f1d6ac54919'
   dy_abi: uint256
   fee: variable
   is_crypto: true
   is_factory: true
   is_meta: false
   is_underlying: false
-  lp_token: '0x131333bb665cdf678d52cae1529925a735311087'
-  name: litra ft poolarchebase nft
-  pool_address: '0x95ab1a82af29bdcbc64176d83f4cb1667afd8517'
+  lp_token: '0x4f018c06810ea979f0e8a5d73cb8aa977ba17aba'
+  name: ethertulip.com
+  pool_address: '0x29b2178f5f9fb4f775a2f1a7fea685ffba0fae32'
   underlying_coins: []
   venue: curve
   zap_address: null
 - balance_abi: uint256
-  chain_id: 137
+  chain_id: 1
   coins:
-  - '0x75b599a1bb53df2911b97c69614ae09bbc546c15'
-  - '0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270'
+  - '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2'
+  - '0xb3ad645db386d7f6d753b2b9c3f4b853da6890b8'
   dy_abi: uint256
   fee: variable
   is_crypto: true
   is_factory: true
   is_meta: false
   is_underlying: false
-  lp_token: '0xd28fc769ac4af7862a6dd3abf9810b9c63973a29'
-  name: litra ft poolarchebase nft
-  pool_address: '0x2d4708d2aabb53b8d95b5753cd14930cd5a64f99'
+  lp_token: '0x3f0e7916681452d23cd36b1281457da721f2e5df'
+  name: concentrator ctr/eth
+  pool_address: '0xf2f12b364f614925ab8e2c8bfc606edb9282ba09'
   underlying_coins: []
   venue: curve
   zap_address: null
 - balance_abi: uint256
-  chain_id: 137
+  chain_id: 1
   coins:
-  - '0x9c28da9cf42c5429e4b73c63637da9b00c62db0a'
-  - '0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270'
+  - '0xe80c0cd204d654cebe8dd64a4857cab6be8345a3'
+  - '0x836a808d4828586a69364065a1e064609f5078c7'
   dy_abi: uint256
   fee: variable
   is_crypto: true
   is_factory: true
   is_meta: false
   is_underlying: false
-  lp_token: '0x9afb362b515239bcacc27e06c71019f67658310c'
-  name: litra ft poolarchebase nft
-  pool_address: '0x1b79e223eb51978a39d3bb9d1b96b313fc300050'
+  lp_token: '0x23e7817bc73645063fb2fa85c1d098effe84be90'
+  name: jpeg/peth
+  pool_address: '0x808db6e464279c6a77a1164e0b34d64bd6fb526e'
+  underlying_coins: []
+  venue: curve
+  zap_address: null
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0x64aa3364f17a4d01c6f1751fd97c2bd3d7e7f1d5'
+  - '0x3175df0976dfa876431c2e9ee6bc45b65d3473cc'
+  dy_abi: uint256
+  fee: variable
+  is_crypto: true
+  is_factory: true
+  is_meta: false
+  is_underlying: false
+  lp_token: '0x5271045f7b73c17825a7a7aee6917ee46b0b7520'
+  name: ohm/fraxbp
+  pool_address: '0xfc1e8bf3e81383ef07be24c3fd146745719de48d'
+  underlying_coins: []
+  venue: curve
+  zap_address: null
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0x86b4dbe5d203e634a12364c0e428fa242a3fba98'
+  - '0x6c3f90f043a72fa612cbac8115ee7e52bde6e490'
+  dy_abi: uint256
+  fee: variable
+  is_crypto: true
+  is_factory: true
+  is_meta: false
+  is_underlying: false
+  lp_token: '0x60bb61a8c5456678713a15134cf1f2cb0fdd4d95'
+  name: gbpt
+  pool_address: '0x6575ad173801f2d58961b3d7f3628c72346ea84a'
+  underlying_coins: []
+  venue: curve
+  zap_address: null
+- balance_abi: uint256
+  chain_id: 1
+  coins:
+  - '0xaf5191b0de278c7286d6c7cc6ab6bb8a73ba2cd6'
+  - '0x3175df0976dfa876431c2e9ee6bc45b65d3473cc'
+  dy_abi: uint256
+  fee: variable
+  is_crypto: true
+  is_factory: true
+  is_meta: false
+  is_underlying: false
+  lp_token: '0x9de1c3d446237ab9baff74127eb4f303802a2683'
+  name: stg/frax-usdc
+  pool_address: '0x867fe27fc2462cff8890b54dfd64e6d42a9d1ac8'
   underlying_coins: []
   venue: curve
   zap_address: null
