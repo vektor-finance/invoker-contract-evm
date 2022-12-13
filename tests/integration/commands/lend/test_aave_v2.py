@@ -74,7 +74,7 @@ def test_supply(clend_aave, pool, aave_token: AaveAssetInfo, invoker, alice, int
 
 
 def test_withdraw(clend_aave, pool, invoker, aave_token: AaveAssetInfo, alice, interface):
-    if aave_token.symbol in ["UST", "AMPL", "FEI"]:
+    if aave_token.symbol in ["UST", "AMPL", "FEI", "renFIL"]:
         return
     token = interface.ERC20Detailed(aave_token.address)
     atoken = aave_token.aTokenAddress
