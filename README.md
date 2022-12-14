@@ -28,12 +28,12 @@ TODO
 
 | name           | address                                       |
 |----------------|-----------------------------------------------|
-| Invoker        | 0xA7dAC6938b17c4ac0BF879F4Bf8d2020c2c1EdB1    |
-| CMove          | 0x1d868fD27f92a490142F1Fc8583104573CE8f191    |
+| Invoker        | 0x805337bC5195f2BfEa531665eDa46516fa493949    |
+| CMove          | 0x03E64b667B0DDdABb2972dF49C318E96D414E87f    |
 | CWrap          | 0xC2cA82f0A8E904C648E85b1ebbC92051Fb53399e    |
-| CSwapUniswapV2 | 0x68DF154F0ac49f7eD1A4CbDf6c5Fa70DB2Cb91Fb    |
-| CSwapUniswapV3 | 0x7DC7274c3b27542685fb093582955ABCf57987f4    |
-| CSwapCurve     | 0xf004CbD67d02166157f30A8085c69842ad556b24    |
+| CSwapUniswapV2 | 0x094FcB456687382c836aD61c46DcEcC3C2b88911    |
+| CSwapUniswapV3 | 0x8b9cE67DC4367EbC13025cA352277b2b4A1B30Ee    |
+| CSwapCurve     | 0x6C7Cd683949Dcd5A39486390c7F7C59a55309ce1    |
 | CLendAave      | 0x565562e7CFF1c10F5Fa1D2F67Eb17F92b846b490    |
 | CLPUniswapV2   | 0x17e21Cfb1c7B2E6f6740D675e565809D357E38E9    |
 
