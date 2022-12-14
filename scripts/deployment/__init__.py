@@ -2,6 +2,7 @@ from brownie import (
     ZERO_ADDRESS,
     CLendAave,
     CLendCompoundV3,
+    CLPCurve,
     CLPUniswapV2,
     CMove,
     Contract,
@@ -35,6 +36,7 @@ ALL_COMMANDS = [
     CLendAave,
     CLendCompoundV3,
     CLPUniswapV2,
+    CLPCurve,
 ]
 ALL_CONTRACTS = [Invoker, *ALL_COMMANDS]
 CONTRACTS_TO_DEPLOY = ALL_CONTRACTS
