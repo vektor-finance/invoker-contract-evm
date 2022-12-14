@@ -8,6 +8,14 @@ import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
 contract CMove {
     using SafeERC20 for IERC20;
 
+    function _validateBalance(
+        uint256 balanceBefore,
+        uint256 balanceAfter,
+        uint256 amount
+    ) internal view {
+        require(balanceAfter == (balanceBefore + amount), "CMove: Deflationary token");
+    }
+
     /**
         @notice Allows a user to move their tokens to the invoker
         @dev Uses OpenZepellin SafeERC20, and validates balance before and after transfer
@@ -16,12 +24,29 @@ contract CMove {
             Please note: user needs to approve invoker contract first
         @param _token The contract address for the ERC20 token
         @param _amount The amount of tokens to transfer
+        @param strict Whether to check the balance after the transfer to ensure full amount transferred
     **/
-    function moveERC20In(IERC20 _token, uint256 _amount) external payable {
-        uint256 balanceBefore = _token.balanceOf(address(this));
+    function moveERC20In(
+        IERC20 _token,
+        uint256 _amount,
+        bool strict
+    ) public payable {
+        uint256 balanceBefore;
+        if (strict) {
+            balanceBefore = _token.balanceOf(address(this));
+        }
         _token.safeTransferFrom(msg.sender, address(this), _amount);
-        uint256 balanceAfter = _token.balanceOf(address(this));
-        require(balanceAfter == balanceBefore + _amount, "CMove: Deflationary token");
+        if (strict) {
+            uint256 balanceAfter = _token.balanceOf(address(this));
+            _validateBalance(balanceBefore, balanceAfter, _amount);
+        }
+    }
+
+    /**
+        @dev Function overload to default strict as true
+     */
+    function moveERC20In(IERC20 _token, uint256 _amount) external payable {
+        moveERC20In(_token, _amount, true);
     }
 
     /**
@@ -32,16 +57,34 @@ contract CMove {
         @param _token The contract address for the ERC20 token
         @param _to  The address you wish to send the tokens to
         @param _amount The amount of tokens to transfer
+        @param strict Whether to check the balance after the transfer to ensure full amount transferred
     **/
+    function moveERC20Out(
+        IERC20 _token,
+        address _to,
+        uint256 _amount,
+        bool strict
+    ) public payable {
+        uint256 balanceBefore;
+        if (strict) {
+            balanceBefore = _token.balanceOf(_to);
+        }
+        _token.safeTransfer(_to, _amount);
+        if (strict) {
+            uint256 balanceAfter = _token.balanceOf(_to);
+            _validateBalance(balanceBefore, balanceAfter, _amount);
+        }
+    }
+
+    /**
+        @dev Function overload to default strict as true
+     */
     function moveERC20Out(
         IERC20 _token,
         address _to,
         uint256 _amount
     ) external payable {
-        uint256 balanceBefore = _token.balanceOf(_to);
-        _token.safeTransfer(_to, _amount);
-        uint256 balanceAfter = _token.balanceOf(_to);
-        require(balanceAfter == balanceBefore + _amount, "CMove: Deflationary token");
+        moveERC20Out(_token, _to, _amount, true);
     }
 
     /**
@@ -51,15 +94,32 @@ contract CMove {
             Solidity compiler 0.8 has built in overflow checks
         @param _token The contract address for the ERC20 token
         @param _to  The address you wish to send the tokens to
+        @param strict Whether to check the balance after the transfer to ensure full amount transferred
     **/
-    function moveAllERC20Out(IERC20 _token, address _to) external payable {
+    function moveAllERC20Out(
+        IERC20 _token,
+        address _to,
+        bool strict
+    ) public payable {
         uint256 amount = _token.balanceOf(address(this));
         if (amount > 0) {
-            uint256 balanceBefore = _token.balanceOf(_to);
+            uint256 balanceBefore;
+            if (strict) {
+                balanceBefore = _token.balanceOf(_to);
+            }
             _token.safeTransfer(_to, amount);
-            uint256 balanceAfter = _token.balanceOf(_to);
-            require(balanceAfter == balanceBefore + amount, "CMove: Deflationary token");
+            if (strict) {
+                uint256 balanceAfter = _token.balanceOf(_to);
+                _validateBalance(balanceBefore, balanceAfter, amount);
+            }
         }
+    }
+
+    /**
+        @dev Function overload to default strict as true
+     */
+    function moveAllERC20Out(IERC20 _token, address _to) external payable {
+        moveAllERC20Out(_token, _to, true);
     }
 
     /**

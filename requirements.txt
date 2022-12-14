@@ -1,2 +1,2 @@
-git+https://github.com/vektor-finance/brownie.git@0222570060bad6401a29ca1a7a32cb5bb343ebe9#egg=eth-brownie
+git+https://github.com/vektor-finance/brownie.git@104ffb275005caddcfabc6afeec9ea213198d762
 PyYAML==5.4.1

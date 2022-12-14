@@ -1,6 +1,8 @@
 from brownie import (
     ZERO_ADDRESS,
     CLendAave,
+    CLendCompoundV3,
+    CLPUniswapV2,
     CMove,
     Contract,
     Create2Deployer,
@@ -24,7 +26,16 @@ TRUSTED_USER = "vektor_trusted_deployer"
 REGISTRY_DEPLOYER = "0xFB47e88C3FFF913D48F8EB08DdD96f86338E2568"  # hardcoded
 TRUSTED_DEPLOYER = "0x3302dBdD355fDfA7A439598885E189a4E9ad6B9b"  # hardcoded
 
-ALL_COMMANDS = [CMove, CWrap, CSwapUniswapV2, CSwapUniswapV3, CSwapCurve, CLendAave]
+ALL_COMMANDS = [
+    CMove,
+    CWrap,
+    CSwapUniswapV2,
+    CSwapUniswapV3,
+    CSwapCurve,
+    CLendAave,
+    CLendCompoundV3,
+    CLPUniswapV2,
+]
 ALL_CONTRACTS = [Invoker, *ALL_COMMANDS]
 CONTRACTS_TO_DEPLOY = ALL_CONTRACTS
 

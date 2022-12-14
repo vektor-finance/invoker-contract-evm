@@ -1,4 +1,4 @@
-//SPDX-License-Identifier: Unlicensed
+// SPDX-License-Identifier: Unlicensed
 
 pragma solidity ^0.8.6;
 
@@ -14,7 +14,6 @@ contract CSwapUniswapV3 is CSwapBase, ICSwapUniswapV3 {
     /** @notice Use this function to SELL a fixed amount of an asset.
         @dev This function sells an EXACT amount of `tokenIn` to receive `tokenOut`.
         If the price is worse than a threshold, the transaction will revert.
-        This function was previously known as 'swapUniswapIn'
         @param amountIn The exact amount of `tokenIn` to sell.
         @param tokenIn The token to sell. Note: This must be an ERC20 token.
         @param tokenOut The token that the user wishes to receive. Note: This must be an ERC20 token.
@@ -28,9 +27,16 @@ contract CSwapUniswapV3 is CSwapBase, ICSwapUniswapV3 {
         uint256 minAmountOut,
         UniswapV3SwapParams calldata params
     ) external payable {
-        uint256 balanceBefore = _preSwap(tokenIn, tokenOut, address(params.router), amountIn);
-
         address receiver = params.receiver == address(0) ? address(this) : params.receiver;
+
+        uint256 balanceBefore = _preSwap(
+            tokenIn,
+            tokenOut,
+            address(params.router),
+            amountIn,
+            receiver
+        );
+
         //solhint-disable-next-line not-rely-on-time
         uint256 deadline = params.deadline == 0 ? block.timestamp + 1 : params.deadline;
 
@@ -63,9 +69,16 @@ contract CSwapUniswapV3 is CSwapBase, ICSwapUniswapV3 {
         uint256 maxAmountIn,
         UniswapV3SwapParams calldata params
     ) external payable {
-        uint256 balanceBefore = _preSwap(tokenIn, tokenOut, address(params.router), maxAmountIn);
-
         address receiver = params.receiver == address(0) ? address(this) : params.receiver;
+
+        uint256 balanceBefore = _preSwap(
+            tokenIn,
+            tokenOut,
+            address(params.router),
+            maxAmountIn,
+            receiver
+        );
+
         //solhint-disable-next-line not-rely-on-time
         uint256 deadline = params.deadline == 0 ? block.timestamp + 1 : params.deadline;
 

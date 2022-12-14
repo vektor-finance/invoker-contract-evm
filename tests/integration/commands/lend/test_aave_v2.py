@@ -56,12 +56,19 @@ def test_supply(clend_aave, aave_token: AaveAssetInfo, invoker, alice, interface
 
     calldata_supply = clend_aave.supply.encode_input(aave_token.pool, token, amount, alice)
 
-    invoker.invoke([clend_aave], [calldata_supply], {"from": alice})
+    try:
+        invoker.invoke([clend_aave], [calldata_supply], {"from": alice})
+    except VirtualMachineError as e:
+        if e.revert_msg in ["3"]:
+            # 3: "Reserve is frozen"
+            return
+        else:
+            raise e from None
     assert_approx(atoken.balanceOf(alice), amount)
 
 
-def test_withdraw(clend_aave, invoker, aave_token: AaveAssetInfo, alice, interface):
-    if aave_token.symbol in ["UST", "AMPL"]:
+def test_withdraw(clend_aave, pool, invoker, aave_token: AaveAssetInfo, alice, interface):
+    if aave_token.symbol in ["UST", "AMPL", "FEI", "renFIL"]:
         return
     token = interface.ERC20Detailed(aave_token.address)
     atoken = aave_token.aTokenAddress
@@ -112,7 +119,8 @@ def test_borrow_and_repay(
     try:
         invoker.invoke([clend_aave, cmove], [calldata_borrow, calldata_move_out], {"from": alice})
     except VirtualMachineError as e:
-        if e.revert_msg in ["7", "12"]:
+        if e.revert_msg in ["3", "7", "12"]:
+            # 3: "Reserve is frozen"
             # 7: "Borrowing is not enabled"
             # 12: "Stable borrowing not enabled"
             return

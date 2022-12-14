@@ -11,7 +11,6 @@ interface Deployer {
 contract CWrap {
     IWETH public immutable WNATIVE;
 
-    // When deploying on alternate networks, the WNATIVE address should be specified in constructor
     constructor() {
         WNATIVE = IWETH(abi.decode(Deployer(msg.sender).deployArgs(), (address)));
     }

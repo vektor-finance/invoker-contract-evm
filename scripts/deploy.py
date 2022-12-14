@@ -15,6 +15,7 @@ import os
 import time
 
 from brownie import (
+    CLendCompoundV3,
     CMove,
     CSwapCurve,
     CSwapUniswapV2,
@@ -29,7 +30,7 @@ from data.access_control import APPROVED_COMMAND
 from data.chain import get_chain_from_network_name, get_wnative_address
 from data.git import get_git_revision_hash, get_git_revision_short_hash
 
-commands = [CMove, CWrap, CSwapUniswapV2, CSwapUniswapV3, CSwapCurve]
+commands = [CMove, CWrap, CSwapUniswapV2, CSwapUniswapV3, CSwapCurve, CLendCompoundV3]
 
 OUTPUTS_DEPLOYMENT_DIR = "deployments"
 

@@ -19,8 +19,12 @@ class _DeferredStrategyRepr(DeferredStrategy):
 
 
 def _uniswapv3_fee_strategy() -> SearchStrategy:
+    # very low fees are cripplingly slow in tests
     return _DeferredStrategyRepr(
-        lambda: st.sampled_from(UniswapV3FeeAmount.list()), "Uniswap V3 FeeAmount"
+        lambda: st.sampled_from(
+            [i for i in UniswapV3FeeAmount.list() if i != UniswapV3FeeAmount.VERY_LOW]
+        ),
+        "Uniswap V3 FeeAmount",
     )
 
 

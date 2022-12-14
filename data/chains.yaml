@@ -53,6 +53,10 @@ mainnet:
       decimals: 18
       address: "0x1f9840a85d5af5bf1d1762f925bdaddc4201f984"
       benefactor: "0x1a9c8182c09f50c8318d769245bea52c32be35bc"
+    - name: Compound
+      symbol: COMP
+      decimals: 18
+      address: "0xc00e94cb662c3520282e6f5717214004a7f26888"
     - name: yearn.finance
       symbol: YFI
       decimals: 18
@@ -306,6 +310,9 @@ arbitrum:
     - venue: uniswap_v3
       interfaces: [uniswap_router_v3]
       address: "0xE592427A0AEce92De3Edee1F18E0157C05861564"
+    - venue: zipswap
+      interfaces: [uniswap_router_v2_02]
+      address: "0x4D70D768f5E1e6a7062973aFB0c7FBDa9bBb42b3"
 
 fantom:
   id: fantom
@@ -498,6 +505,9 @@ optimism:
     - venue: uniswap_v3
       interfaces: [uniswap_router_v3]
       address: "0xE592427A0AEce92De3Edee1F18E0157C05861564"
+    - venue: zipswap
+      interfaces: [uniswap_router_v2_02]
+      address: "0xE6Df0BB08e5A97b40B21950a0A51b94c4DbA0Ff6"
 
 optimism_kovan:
   id: optimism-kovan
