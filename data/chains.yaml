@@ -310,6 +310,9 @@ arbitrum:
     - venue: uniswap_v3
       interfaces: [uniswap_router_v3]
       address: "0xE592427A0AEce92De3Edee1F18E0157C05861564"
+    - venue: zipswap
+      interfaces: [uniswap_router_v2_02]
+      address: "0x4D70D768f5E1e6a7062973aFB0c7FBDa9bBb42b3"
 
 fantom:
   id: fantom
@@ -502,6 +505,9 @@ optimism:
     - venue: uniswap_v3
       interfaces: [uniswap_router_v3]
       address: "0xE592427A0AEce92De3Edee1F18E0157C05861564"
+    - venue: zipswap
+      interfaces: [uniswap_router_v2_02]
+      address: "0xE6Df0BB08e5A97b40B21950a0A51b94c4DbA0Ff6"
 
 optimism_kovan:
   id: optimism-kovan
