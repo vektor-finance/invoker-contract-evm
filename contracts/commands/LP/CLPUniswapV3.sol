@@ -65,14 +65,17 @@ contract CLPUniswapV3 is CLPBase, ICLPUniswapV3 {
         UniswapV3LPDepositParams calldata params
     ) external payable {
         address receiver = _getReceiver(params.receiver);
-        _approveToken(IERC20(pool.token0()), params.router, amountA);
-        _approveToken(IERC20(pool.token1()), params.router, amountB);
+        address token0 = pool.token0();
+        address token1 = pool.token1();
+
+        _approveToken(IERC20(token0), params.router, amountA);
+        _approveToken(IERC20(token1), params.router, amountB);
 
         // receiver needs to be able to receive NFT
         INonfungiblePositionManager(params.router).mint(
             INonfungiblePositionManager.MintParams({
-                token0: pool.token0(),
-                token1: pool.token1(),
+                token0: token0,
+                token1: token1,
                 fee: pool.fee(),
                 tickLower: tickLower,
                 tickUpper: tickUpper,
