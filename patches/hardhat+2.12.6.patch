@@ -1,0 +1,32 @@
+diff --git a/node_modules/hardhat/src/internal/hardhat-network/jsonrpc/client.ts b/node_modules/hardhat/src/internal/hardhat-network/jsonrpc/client.ts
+index 21d3c93..c89f021 100644
+--- a/node_modules/hardhat/src/internal/hardhat-network/jsonrpc/client.ts
++++ b/node_modules/hardhat/src/internal/hardhat-network/jsonrpc/client.ts
+@@ -257,6 +257,19 @@ export class JsonRpcClient {
+     );
+   }
+ 
++  // addAccessList isn't included with the block
++  private addAccessList(method, rawResult) {
++    if (
++      method.startsWith('eth_getBlock') &&
++      rawResult &&
++      rawResult.transactions?.length
++    ) {
++      rawResult.transactions.forEach((t) => {
++          if (t.accessList == null) t.accessList = [];
++      });
++    }
++  }
++
+   private async _perform<T>(
+     method: string,
+     params: any[],
+@@ -283,6 +296,7 @@ export class JsonRpcClient {
+     }
+ 
+     const rawResult = await this._send(method, params);
++    this.addAccessList(method,rawResult);
+     const decodedResult = decodeJsonRpcResponse(rawResult, tType);
+ 
+     const blockNumber = getMaxAffectedBlockNumber(decodedResult);
