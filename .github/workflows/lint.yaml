@@ -6,7 +6,6 @@ on:
       - main
 
 env:
-
   CACHED_NODE_DEPENDENCY_PATHS: |
     ${{ github.workspace }}/node_modules
 
@@ -19,17 +18,17 @@ jobs:
     steps:
       - name: Checkout current commit (${{ github.sha }})
         id: checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Setup Node.js
         id: setup_node
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
           node-version-file: ".nvmrc"
 
       - name: Cache Node dependencies
         id: cache_node_dependencies
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: ${{ env.CACHED_NODE_DEPENDENCY_PATHS }}
           key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
