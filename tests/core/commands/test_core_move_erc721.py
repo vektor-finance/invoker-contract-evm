@@ -18,6 +18,24 @@ def test_move_erc721_in(alice, mock_erc721, invoker, cmove):
     assert mock_erc721.ownerOf(0) == invoker
 
 
+def test_hacker_cant_use_approval(alice, bob, mock_erc721, invoker, cmove):
+    mock_erc721.mint(alice, 0, {"from": alice})
+    calldata_move_in = cmove.moveERC721In.encode_input(mock_erc721, 0)
+    mock_erc721.approve(invoker, 0, {"from": alice})
+
+    with brownie.reverts("ERC721: transfer of token that is not own"):
+        invoker.invoke([cmove], [calldata_move_in], {"from": bob})
+
+
+def test_hacker_cant_use_approval_all(alice, bob, mock_erc721, invoker, cmove):
+    mock_erc721.mint(alice, 0, {"from": alice})
+    calldata_move_in = cmove.moveERC721In.encode_input(mock_erc721, 0)
+    mock_erc721.setApprovalForAll(invoker, True, {"from": alice})
+
+    with brownie.reverts("ERC721: transfer of token that is not own"):
+        invoker.invoke([cmove], [calldata_move_in], {"from": bob})
+
+
 def test_erc721_move_requires_approval(alice, mock_erc721, invoker, cmove):
     mock_erc721.mint(alice, 0, {"from": alice})
 
