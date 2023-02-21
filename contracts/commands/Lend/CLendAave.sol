@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: Unlicensed
 pragma solidity ^0.8.9;
 
-import {CLendBase, IERC20} from "./CLendBase.sol";
+import {CLendBase, IERC20, SafeERC20} from "./CLendBase.sol";
 import {IAaveLendingPool as ILendingPool} from "../../../interfaces/Commands/Lend/IAaveLendingPool.sol";
 import {IAaveToken} from "../../../interfaces/Commands/Lend/IAaveToken.sol";
 
@@ -12,6 +12,13 @@ contract CLendAave is CLendBase {
         return "CLendAave";
     }
 
+    /**
+        @notice Deposits `asset` from Invoker into LendingPool, where receiver receives the aToken
+        @param lendingPool Address of `LendingPool`
+        @param asset Underlying asset to be deposited
+        @param amount Amount of asset to supply
+        @param receiver Address that receives aToken
+     */
     function supply(
         ILendingPool lendingPool,
         IERC20 asset,
@@ -22,16 +29,47 @@ contract CLendAave is CLendBase {
         lendingPool.deposit(address(asset), amount, receiver, REFERRAL_CODE);
     }
 
+    /**
+        @notice Withdraws supplied `asset` from LendingPool to the `receiver`. Invoker must have aToken
+        @param lendingPool Address of `LendingPool`
+        @param aToken aToken that is being withdrawn
+        @param amount Amount of asset to withdraws
+        @param receiver Address that receives underlying token
+     */
     function withdraw(
         ILendingPool lendingPool,
-        IAaveToken aAsset,
+        IAaveToken aToken,
         uint256 amount,
         address receiver
     ) external payable {
-        address underlyingAsset = aAsset.UNDERLYING_ASSET_ADDRESS();
+        address underlyingAsset = aToken.UNDERLYING_ASSET_ADDRESS();
         lendingPool.withdraw(underlyingAsset, amount, receiver);
     }
 
+    /**
+        @notice Withdraws all supplied `asset` from LendingPool to the `receiver`. Sender must have aToken
+        @param lendingPool Address of `LendingPool`
+        @param aToken aToken that is being withdrawn
+        @param receiver Address that receives underlying token
+     */
+    function withdrawAllUser(
+        ILendingPool lendingPool,
+        IAaveToken aToken,
+        address receiver
+    ) external payable {
+        address underlyingAsset = aToken.UNDERLYING_ASSET_ADDRESS();
+        uint256 amount = aToken.balanceOf(msg.sender);
+        SafeERC20.safeTransferFrom(IERC20(address(aToken)), msg.sender, address(this), amount);
+        lendingPool.withdraw(underlyingAsset, amount, receiver);
+    }
+
+    /**
+        @notice Borrows `asset` from LendingPool. Sender must first call `approveDelegation()`
+        @param lendingPool Address of `LendingPool`
+        @param asset Underlying asset to be borrowed
+        @param amount Amount of asset to borrow
+        @param interestRateMode 1 = STABLE. 2 = VARIABLE.
+     */
     function borrow(
         ILendingPool lendingPool,
         IERC20 asset,
@@ -41,6 +79,13 @@ contract CLendAave is CLendBase {
         lendingPool.borrow(address(asset), amount, interestRateMode, REFERRAL_CODE, msg.sender);
     }
 
+    /**
+        @notice Repays `asset` to LendingPool. Invoker must have asset.
+        @param lendingPool Address of `LendingPool`
+        @param asset Underlying asset to be repayed
+        @param amount Amount of asset to repay
+        @param interestRateMode 1 = STABLE. 2 = VARIABLE.
+     */
     function repay(
         ILendingPool lendingPool,
         IERC20 asset,
