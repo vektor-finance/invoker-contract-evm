@@ -151,7 +151,12 @@ class DeployRegistryContainer:
 
     def deploy(self, contract: Contract) -> Contract:
         if contract._name != "Invoker":
-            assert self.init_code_hash(contract.bytecode) == registered_init_code_hash(contract)
+            if self.init_code_hash(contract.bytecode) != registered_init_code_hash(contract):
+                raise ValueError(
+                    f"Init code hashes for {contract._name} don't match.\n"
+                    f"Calculated: {self.init_code_hash(contract.bytecode)} \n"
+                    f"Expected: {registered_init_code_hash(contract)}"
+                )
         args = self.get_deployment_args(contract)
         tx = self.contract.deployNewContract(
             contract.bytecode, "0", 0, args, {"from": self.trusted_deployers[0]}

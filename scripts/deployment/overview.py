@@ -3,6 +3,7 @@ from brownie.exceptions import ContractNotFound
 from tabulate import tabulate
 
 from data.access_control import APPROVED_COMMAND
+from data.chain import get_chain_id
 from scripts.deployment import (
     ALL_CONTRACTS,
     REGISTRY_DEPLOYER,
@@ -30,7 +31,7 @@ def get_network_deployment_info():
     else:
         network_deployments["registry"] = "NO REGISTRY DEPLOYED"
 
-    chain_id = network.chain.id
+    chain_id = get_chain_id()
     contracts_to_deploy = chain_id_to_contracts(chain_id)
 
     for contract in ALL_CONTRACTS:
