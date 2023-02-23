@@ -6,6 +6,7 @@ import {IAaveLendingPool as ILendingPool} from "../../../interfaces/Commands/Len
 import {IAaveToken} from "../../../interfaces/Commands/Lend/IAaveToken.sol";
 
 contract CLendAave is CLendBase {
+    using SafeERC20 for IERC20;
     uint16 public constant REFERRAL_CODE = 0;
 
     function _getContractName() internal pure override returns (string memory) {
@@ -59,7 +60,7 @@ contract CLendAave is CLendBase {
     ) external payable {
         address underlyingAsset = aToken.UNDERLYING_ASSET_ADDRESS();
         uint256 amount = aToken.balanceOf(msg.sender);
-        SafeERC20.safeTransferFrom(IERC20(address(aToken)), msg.sender, address(this), amount);
+        IERC20(address(aToken)).safeTransferFrom(msg.sender, address(this), amount);
         lendingPool.withdraw(underlyingAsset, amount, receiver);
     }
 
