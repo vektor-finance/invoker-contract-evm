@@ -1,0 +1,36 @@
+# Blockchain IDs
+# 1: Ethereum mainnet
+# 5: Ethereum goerli
+# 137: Polygon mainnet
+# 80001: Polygon mumbai
+# 42161: Arbitrum mainnet
+# 250: Fantom Opera
+# 43114: Avalanche C-chain
+# 56: BNBChain mainnet
+# 10: Optimism mainnet
+# 69: Optimism kovan
+# 1284: Moonbeam mainnet
+# 1285: Moonriver mainnet
+# 100: Gnosis mainnet
+---
+contracts:
+  - name: CLendAave
+    supported_chains: [1, 137, 42161, 250, 43114, 10, 5]
+  - name: CLendCompound
+    supported_chains: [1, 5]
+  - name: CLPCurve
+    supported_chains: [1, 137, 42161, 250, 43114, 10, 1284, 100]
+  - name: CLPUniswapV2
+    supported_chains: [1, 137, 42161, 250, 43114, 56, 10, 1284, 1285, 100]
+  - name: CLPUniswapV3
+    supported_chains: [1, 137, 42161, 10, 56]
+  - name: CMove
+    supported_chains: [1, 137, 42161, 250, 43114, 56, 10, 1284, 1285, 100]
+  - name: CWrap
+    supported_chains: [1, 137, 42161, 250, 43114, 56, 10, 1284, 1285, 100]
+  - name: CSwapCurve
+    supported_chains: [1, 137, 42161, 250, 43114, 10, 1284, 100]
+  - name: CSwapUniswapV2
+    supported_chains: [1, 137, 42161, 250, 43114, 56, 10, 1284, 1285, 100]
+  - name: CSwapUniswapV3
+    supported_chains: [1, 137, 42161, 10, 56]

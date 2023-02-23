@@ -1,3 +1,7 @@
+import os
+from typing import Dict, List
+
+import yaml
 from brownie import (
     ZERO_ADDRESS,
     CLendAave,
@@ -16,6 +20,7 @@ from brownie import (
     network,
     web3,
 )
+from brownie.network.contract import ContractContainer
 from eth_abi import encode_single
 from eth_utils import keccak
 
@@ -52,6 +57,31 @@ def strip_0x(hex_str: str):
     if hex_str.startswith("0x"):
         return hex_str[2:]
     return hex_str
+
+
+def chain_id_to_contracts(chain_id: int) -> List[ContractContainer]:
+    data = []
+    with open(os.path.join("scripts/deployment", "setup.yaml"), "r") as infile:
+        data: Dict = yaml.safe_load(infile)
+    all_contracts = data.get("contracts", [])
+    contracts_to_deploy = [
+        CONTRACT_MAP[c["name"]] for c in all_contracts if chain_id in c.get("supported_chains", [])
+    ]
+    return contracts_to_deploy
+
+
+CONTRACT_MAP: Dict[str, ContractContainer] = {
+    "CMove": CMove,
+    "CWrap": CWrap,
+    "CSwapCurve": CSwapCurve,
+    "CSwapUniswapV2": CSwapUniswapV2,
+    "CSwapUniswapV3": CSwapUniswapV3,
+    "CLendAave": CLendAave,
+    "CLendCompound": CLendCompoundV3,
+    "CLPCurve": CLPCurve,
+    "CLPUniswapV2": CLPUniswapV2,
+    "CLPUniswapV3": CLPUniswapV3,
+}
 
 
 class DeployRegistryContainer:
