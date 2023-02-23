@@ -30,9 +30,8 @@ def data_provider(Contract, interface):
     )
 
 
-def assert_approx(a, b):
-    # equivalent to assert b == a +- 2
-    assert a - 2 <= b <= a + 2
+def assert_approx(a, b, rel=2):
+    assert a - rel <= b <= a + rel
 
 
 def pytest_generate_tests(metafunc):
@@ -101,9 +100,10 @@ def test_withdraw_all(clend_aave, pool, invoker, aave_token: AaveAssetInfo, alic
     calldata_withdraw_all = clend_aave.withdrawAllUser.encode_input(pool, atoken, alice)
     invoker.invoke([clend_aave], [calldata_withdraw_all], {"from": alice})
 
-    assert token.balanceOf(alice) >= amount - 1
+    assert_approx(token.balanceOf(alice), amount, rel=3)
     assert token.balanceOf(invoker) == 0
-    assert atoken.balanceOf(invoker) == 0
+    # Invoker can be left with 1 token of asteth due to aave rounding
+    assert atoken.balanceOf(invoker) <= 1
 
 
 @pytest.mark.parametrize("mode", InterestRateMode.list(), ids=InterestRateMode.keys())
