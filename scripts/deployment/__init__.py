@@ -87,7 +87,7 @@ CONTRACT_MAP: Dict[str, ContractContainer] = {
     "CSwapUniswapV2": CSwapUniswapV2,
     "CSwapUniswapV3": CSwapUniswapV3,
     "CLendAave": CLendAave,
-    "CLendCompound": CLendCompoundV3,
+    "CLendCompoundV3": CLendCompoundV3,
     "CLPCurve": CLPCurve,
     "CLPUniswapV2": CLPUniswapV2,
     "CLPUniswapV3": CLPUniswapV3,
