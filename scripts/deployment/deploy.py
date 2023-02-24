@@ -10,7 +10,6 @@ from scripts.deployment import (
     TRUSTED_USER,
     DeployRegistryContainer,
     chain_id_to_contracts,
-    overview,
 )
 
 
@@ -62,5 +61,3 @@ def main():
         cumulative_gas += gas_used
 
     print(f"Total Gas Used: {cumulative_gas}")
-
-    overview.main()
