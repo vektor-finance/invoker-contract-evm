@@ -20,7 +20,7 @@ class AaveAssetInfo:
 def get_aave_tokens(chain_id: str, version: int):
     try:
         file_name = {
-            "1": {"2": "mainnet_v2.json"},
+            "1": {"2": "mainnet_v2.json", "3": "mainnet_v3.json"},
             "137": {"2": "polygon_v2.json", "3": "polygon_v3.json"},
         }
         with open(os.path.join("data/aave", file_name[chain_id][version]), "r") as infile:
