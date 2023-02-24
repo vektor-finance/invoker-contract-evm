@@ -61,7 +61,7 @@ contract CLendAave is CLendBase {
         address underlyingAsset = aToken.UNDERLYING_ASSET_ADDRESS();
         uint256 amount = aToken.balanceOf(msg.sender);
         IERC20(address(aToken)).safeTransferFrom(msg.sender, address(this), amount);
-        lendingPool.withdraw(underlyingAsset, amount, receiver);
+        lendingPool.withdraw(underlyingAsset, type(uint256).max, receiver);
     }
 
     /**

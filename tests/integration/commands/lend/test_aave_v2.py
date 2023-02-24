@@ -100,10 +100,20 @@ def test_withdraw_all(clend_aave, pool, invoker, aave_token: AaveAssetInfo, alic
     calldata_withdraw_all = clend_aave.withdrawAllUser.encode_input(pool, atoken, alice)
     invoker.invoke([clend_aave], [calldata_withdraw_all], {"from": alice})
 
-    assert_approx(token.balanceOf(alice), amount, rel=3)
-    assert token.balanceOf(invoker) == 0
-    # Invoker can be left with 1 token of asteth due to aave rounding
-    assert atoken.balanceOf(invoker) <= 1
+    assert token.balanceOf(alice) >= (
+        amount - 3
+    )  # user gets 1 block of yield - allow rounding for steth # noqa: 501
+
+    if aave_token.symbol == "stETH":
+        # asteth is a rebasing asset of steth which is rebasing
+        # calculation in `IAStEth.burn` can result in 1 token remaining
+        assert atoken.balanceOf(alice) <= 1
+        assert token.balanceOf(invoker) <= 1
+        assert atoken.balanceOf(invoker) <= 1
+    else:
+        assert atoken.balanceOf(alice) == 0
+        assert token.balanceOf(invoker) == 0
+        assert atoken.balanceOf(invoker) == 0
 
 
 @pytest.mark.parametrize("mode", InterestRateMode.list(), ids=InterestRateMode.keys())
