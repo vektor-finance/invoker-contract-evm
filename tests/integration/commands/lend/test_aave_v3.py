@@ -78,8 +78,6 @@ def test_withdraw(clend_aave, pool, invoker, aave_token: AaveAssetInfo, alice, i
 
 
 def test_withdraw_all(clend_aave, pool, invoker, aave_token: AaveAssetInfo, alice, interface):
-    if aave_token.symbol in ["UST", "AMPL", "FEI", "renFIL", "GUSD"]:
-        return
     token = interface.ERC20Detailed(aave_token.address)
     atoken = interface.IAaveToken(aave_token.aTokenAddress)
     amount = 10**aave_token.decimals
@@ -99,9 +97,6 @@ def test_withdraw_all(clend_aave, pool, invoker, aave_token: AaveAssetInfo, alic
 def test_borrow_and_repay(
     clend_aave, pool, cmove, invoker, aave_token: AaveAssetInfo, alice, mode, interface
 ):
-    if aave_token.symbol in ["AAVE", "xSUSHI"]:
-        return
-
     token = interface.ERC20Detailed(aave_token.address)
     vdebt = interface.AaveV2DebtToken(aave_token.variableDebtTokenAddress)
     sdebt = interface.AaveV2DebtToken(aave_token.stableDebtTokenAddress)
