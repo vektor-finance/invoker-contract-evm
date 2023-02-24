@@ -76,9 +76,8 @@ def chain_id_to_contracts(chain_id: int) -> List[ContractContainer]:
 
 def registered_init_code_hash(contract: ContractContainer):
     data = _contract_config()
-    return [c["init_code_hash"] for c in data.get("contracts", []) if c["name"] == contract._name][
-        0
-    ]
+    contracts = [c for c in data.get("contracts", []) if c["name"] == contract._name]
+    return contracts[0]["init_code_hash"]
 
 
 CONTRACT_MAP: Dict[str, ContractContainer] = {

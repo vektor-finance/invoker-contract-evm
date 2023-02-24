@@ -96,9 +96,8 @@ def test_withdraw_all(clend_aave, pool, invoker, aave_token: AaveAssetInfo, alic
     calldata_withdraw_all = clend_aave.withdrawAllUser.encode_input(pool, atoken, alice)
     invoker.invoke([clend_aave], [calldata_withdraw_all], {"from": alice})
 
-    assert token.balanceOf(alice) >= (
-        amount - 3
-    )  # user gets 1 block of yield - allow rounding for steth # noqa: 501
+    # user gets 1 block of yield - allow rounding for steth
+    assert token.balanceOf(alice) >= (amount - 3)
 
     if aave_token.symbol == "stETH":
         # asteth is a rebasing asset of steth which is rebasing
