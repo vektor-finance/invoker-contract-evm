@@ -2,3 +2,4 @@
 *.vy linguist-language=Python
 
 .env* filter=git-crypt diff=git-crypt
+cache/**/*.json linguist-generated=true
