@@ -8,7 +8,7 @@ def main():
     data = {}
     data["proto"] = []
 
-    ADP = interface.AaveV3DataProvider("0x69FA688f1Dc47d4B5d8029D5a35FB7a548310654")
+    ADP = interface.AaveV3DataProvider("0x7B4EB56E7CD4b454BA8ff71E4518426369a138a3")
     reserve_tokens = ADP.getAllReservesTokens()
 
     for (symbol, token_address) in reserve_tokens:

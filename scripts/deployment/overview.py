@@ -3,11 +3,13 @@ from brownie.exceptions import ContractNotFound
 from tabulate import tabulate
 
 from data.access_control import APPROVED_COMMAND
+from data.chain import get_chain_id
 from scripts.deployment import (
     ALL_CONTRACTS,
     REGISTRY_DEPLOYER,
     TRUSTED_DEPLOYER,
     DeployRegistryContainer,
+    chain_id_to_contracts,
 )
 
 
@@ -29,26 +31,36 @@ def get_network_deployment_info():
     else:
         network_deployments["registry"] = "NO REGISTRY DEPLOYED"
 
+    chain_id = get_chain_id()
+    contracts_to_deploy = chain_id_to_contracts(chain_id)
+
     for contract in ALL_CONTRACTS:
-        if registry:
-            try:
-                status = ""
-                deployed_contract = registry.get_deployed_contract(contract)
-                if contract != Invoker:
-                    is_approved = False
-                    try:
-                        invoker = registry.get_deployed_contract(Invoker)
-                        is_approved = invoker.hasRole(APPROVED_COMMAND, deployed_contract.address)
-                    except ContractNotFound:
-                        pass
-                    status = "✅ " if is_approved else "❌ "
-                network_deployments[contract._name] = status + shorten_address(
-                    deployed_contract.address
-                )
-            except ContractNotFound:
-                network_deployments[contract._name] = "not deployed"
-        else:
+        if not registry:
             network_deployments[contract._name] = "-"
+            continue
+
+        if contract != Invoker and contract not in contracts_to_deploy:
+            network_deployments[contract._name] = "not required"
+            continue
+
+        try:
+            status = ""
+            deployed_contract = registry.get_deployed_contract(contract)
+
+            if contract != Invoker:
+                is_approved = False
+                try:
+                    invoker = registry.get_deployed_contract(Invoker)
+                    is_approved = invoker.hasRole(APPROVED_COMMAND, deployed_contract.address)
+                except ContractNotFound:
+                    pass
+                status = "✅ " if is_approved else "❌ "
+
+            network_deployments[contract._name] = status + shorten_address(
+                deployed_contract.address
+            )
+        except ContractNotFound:
+            network_deployments[contract._name] = "not deployed"
 
     return network_deployments
 
