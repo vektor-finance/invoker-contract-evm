@@ -15,7 +15,7 @@
 ---
 contracts:
   - name: CLendAave
-    supported_chains: [1, 5, 137, 42161, 250, 43114, 10]
+    supported_chains: [1, 5, 137, 42161, 250, 43114, 56, 10, 100]
     init_code_hash: "0xf999b19ff065b876928d795bb3df5abe8b4a3d77efbe34eb207581ee2502ce6b"
   - name: CLendCompoundV3
     supported_chains: [1, 5]
