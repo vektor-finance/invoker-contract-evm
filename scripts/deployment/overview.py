@@ -16,16 +16,16 @@ from scripts.deployment import (
 def get_network_deployment_info():
     registry_deployed = DeployRegistryContainer.is_registry_deployed()
 
-    network_deployments = {"network": network.show_active()}
+    network_deployments = {"Network": network.show_active()}
 
     registry = None
     if registry_deployed:
         registry = DeployRegistryContainer(
             REGISTRY_DEPLOYER, TRUSTED_DEPLOYER, ensure_deployed=True
         )
-        network_deployments["registry"] = registry.contract.address
+        network_deployments["Registry"] = registry.contract.address
     else:
-        network_deployments["registry"] = "NO REGISTRY DEPLOYED"
+        network_deployments["Registry"] = "NO REGISTRY DEPLOYED"
 
     chain_id = get_chain_id()
     contracts_to_deploy = chain_id_to_contracts(chain_id)
