@@ -13,10 +13,6 @@ from scripts.deployment import (
 )
 
 
-def shorten_address(address):
-    return address[0:6] + "..." + address[-4:]
-
-
 def get_network_deployment_info():
     registry_deployed = DeployRegistryContainer.is_registry_deployed()
 
@@ -27,7 +23,7 @@ def get_network_deployment_info():
         registry = DeployRegistryContainer(
             REGISTRY_DEPLOYER, TRUSTED_DEPLOYER, ensure_deployed=True
         )
-        network_deployments["registry"] = shorten_address(registry.contract.address)
+        network_deployments["registry"] = registry.contract.address
     else:
         network_deployments["registry"] = "NO REGISTRY DEPLOYED"
 
@@ -56,9 +52,7 @@ def get_network_deployment_info():
                     pass
                 status = "✅ " if is_approved else "❌ "
 
-            network_deployments[contract._name] = status + shorten_address(
-                deployed_contract.address
-            )
+            network_deployments[contract._name] = status + deployed_contract.address
         except ContractNotFound:
             network_deployments[contract._name] = "🚧 not deployed"
 
@@ -66,10 +60,7 @@ def get_network_deployment_info():
 
 
 def main():
-
-    deployment_table = []
-
     hardhat_table = get_network_deployment_info()
-    deployment_table.append(hardhat_table)
-
-    print(tabulate(deployment_table, headers="keys", tablefmt="github"))
+    data = list(hardhat_table.items())
+    table = tabulate(data, tablefmt="grid")
+    print(table)
