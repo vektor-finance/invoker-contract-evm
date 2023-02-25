@@ -40,7 +40,7 @@ def get_network_deployment_info():
             continue
 
         if contract != Invoker and contract not in contracts_to_deploy:
-            network_deployments[contract._name] = "not required"
+            network_deployments[contract._name] = "🚫 not required"
             continue
 
         try:
@@ -60,7 +60,7 @@ def get_network_deployment_info():
                 deployed_contract.address
             )
         except ContractNotFound:
-            network_deployments[contract._name] = "not deployed"
+            network_deployments[contract._name] = "🚧 not deployed"
 
     return network_deployments
 
