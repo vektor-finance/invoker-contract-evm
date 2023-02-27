@@ -11,5 +11,3 @@ outputs/
 
 # JavaScript
 node_modules/
-
-cache/

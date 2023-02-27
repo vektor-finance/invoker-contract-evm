@@ -77,13 +77,26 @@ def test_withdraw(clend_aave, pool, invoker, aave_token: AaveAssetInfo, alice, i
     assert_approx(token.balanceOf(alice), amount)
 
 
+def test_withdraw_all(clend_aave, pool, invoker, aave_token: AaveAssetInfo, alice, interface):
+    token = interface.ERC20Detailed(aave_token.address)
+    atoken = interface.IAaveToken(aave_token.aTokenAddress)
+    amount = 10**aave_token.decimals
+
+    interface.ERC20Detailed(atoken).approve(invoker, 2**256 - 1, {"from": alice})
+    mint_tokens_for(atoken, alice, amount)
+
+    calldata_withdraw_all = clend_aave.withdrawAllUser.encode_input(pool, atoken, alice)
+    invoker.invoke([clend_aave], [calldata_withdraw_all], {"from": alice})
+
+    assert token.balanceOf(alice) >= amount - 1
+    assert token.balanceOf(invoker) == 0
+    assert atoken.balanceOf(invoker) == 0
+
+
 @pytest.mark.parametrize("mode", InterestRateMode.list(), ids=InterestRateMode.keys())
 def test_borrow_and_repay(
     clend_aave, pool, cmove, invoker, aave_token: AaveAssetInfo, alice, mode, interface
 ):
-    if aave_token.symbol in ["AAVE", "xSUSHI"]:
-        return
-
     token = interface.ERC20Detailed(aave_token.address)
     vdebt = interface.AaveV2DebtToken(aave_token.variableDebtTokenAddress)
     sdebt = interface.AaveV2DebtToken(aave_token.stableDebtTokenAddress)
