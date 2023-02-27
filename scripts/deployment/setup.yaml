@@ -21,7 +21,7 @@ contracts:
     supported_chains: [1, 5]
     init_code_hash: "0x93bda1e89e510905ccb95d17b5cda2d28ef0b51542d1d17f06508c8d0ffe60af"
   - name: CLPCurve
-    supported_chains: [1, 5, 137, 42161, 250, 43114, 10, 1284, 100]
+    supported_chains: [1, 137, 42161, 250, 43114, 10, 1284, 100]
     init_code_hash: "0x238c1509576df59a514e9c5a13b27ceea0fbd730469ec7897e31067361ad27ec"
   - name: CLPUniswapV2
     supported_chains: [1, 5, 137, 42161, 250, 43114, 56, 10, 1284, 1285, 100]
@@ -36,7 +36,7 @@ contracts:
     supported_chains: [1, 5, 137, 42161, 250, 43114, 56, 10, 1284, 1285, 100]
     init_code_hash: "0xd8be7f1a0507c029f16250e6f6f2160d589fd2bc7172ae22f8c86779bfbf81b5"
   - name: CSwapCurve
-    supported_chains: [1, 5, 137, 42161, 250, 43114, 10, 1284, 100]
+    supported_chains: [1, 137, 42161, 250, 43114, 10, 1284, 100]
     init_code_hash: "0x013b210531a3ec4be47c48ef31e72348fb0d98e43758f42d8ed6ce161ce41af6"
   - name: CSwapUniswapV2
     supported_chains: [1, 5, 137, 42161, 250, 43114, 56, 10, 1284, 1285, 100]
