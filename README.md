@@ -1,7 +1,6 @@
 # invoker-contract-evm
 
 [![lint](https://github.com/vektor-finance/invoker-contract-evm/actions/workflows/lint.yaml/badge.svg)](https://github.com/vektor-finance/invoker-contract-evm/actions/workflows/lint.yaml)
-[![docker](https://github.com/vektor-finance/invoker-contract-evm/actions/workflows/docker.yaml/badge.svg)](https://github.com/vektor-finance/invoker-contract-evm/actions/workflows/docker.yaml)
 [![core](https://github.com/vektor-finance/invoker-contract-evm/actions/workflows/core.yaml/badge.svg)](https://github.com/vektor-finance/invoker-contract-evm/actions/workflows/core.yaml)
 [![integration](https://github.com/vektor-finance/invoker-contract-evm/actions/workflows/integration.yaml/badge.svg)](https://github.com/vektor-finance/invoker-contract-evm/actions/workflows/integration.yaml)
 
@@ -38,7 +37,7 @@ TODO
 | CLendCompound  | 0xf9783c52C250b4bDBE2F4B0bc5A9a424569e5794    |
 | CLPUniswapV2   | 0x17e21Cfb1c7B2E6f6740D675e565809D357E38E9    |
 | CLPUniswapV3   | 0xfABEC98dBaB8A86Bee8413A45c89204CcB8bc865    |
-| CLPCurve       | 0x91fb92d0c69F0EbBab584F9Fc38177F79711b705    | 
+| CLPCurve       | 0x91fb92d0c69F0EbBab584F9Fc38177F79711b705    |
 
 ## Testing and Development
 

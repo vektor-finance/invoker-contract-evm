@@ -1,9 +1,0 @@
-# Everything
-*
-
-# Except
-!contracts
-!interfaces
-!scripts
-!brownie-config.yaml
-!requirements.txt
