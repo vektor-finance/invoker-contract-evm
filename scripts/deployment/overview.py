@@ -13,23 +13,19 @@ from scripts.deployment import (
 )
 
 
-def shorten_address(address):
-    return address[0:6] + "..." + address[-4:]
-
-
 def get_network_deployment_info():
     registry_deployed = DeployRegistryContainer.is_registry_deployed()
 
-    network_deployments = {"network": network.show_active()}
+    network_deployments = {"Network": network.show_active()}
 
     registry = None
     if registry_deployed:
         registry = DeployRegistryContainer(
             REGISTRY_DEPLOYER, TRUSTED_DEPLOYER, ensure_deployed=True
         )
-        network_deployments["registry"] = shorten_address(registry.contract.address)
+        network_deployments["Registry"] = registry.contract.address
     else:
-        network_deployments["registry"] = "NO REGISTRY DEPLOYED"
+        network_deployments["Registry"] = "NO REGISTRY DEPLOYED"
 
     chain_id = get_chain_id()
     contracts_to_deploy = chain_id_to_contracts(chain_id)
@@ -40,7 +36,7 @@ def get_network_deployment_info():
             continue
 
         if contract != Invoker and contract not in contracts_to_deploy:
-            network_deployments[contract._name] = "not required"
+            network_deployments[contract._name] = "🚫 not required"
             continue
 
         try:
@@ -56,20 +52,15 @@ def get_network_deployment_info():
                     pass
                 status = "✅ " if is_approved else "❌ "
 
-            network_deployments[contract._name] = status + shorten_address(
-                deployed_contract.address
-            )
+            network_deployments[contract._name] = status + deployed_contract.address
         except ContractNotFound:
-            network_deployments[contract._name] = "not deployed"
+            network_deployments[contract._name] = "🚧 not deployed"
 
     return network_deployments
 
 
 def main():
-
-    deployment_table = []
-
     hardhat_table = get_network_deployment_info()
-    deployment_table.append(hardhat_table)
-
-    print(tabulate(deployment_table, headers="keys", tablefmt="github"))
+    data = list(hardhat_table.items())
+    table = tabulate(data, tablefmt="grid")
+    print(table)
