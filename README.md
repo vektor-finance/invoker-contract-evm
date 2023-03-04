@@ -25,19 +25,19 @@ TODO
 
 ## Deployments
 
-| name           | address                                       |
-|----------------|-----------------------------------------------|
-| Invoker        | 0x805337bC5195f2BfEa531665eDa46516fa493949    |
-| CMove          | 0x03E64b667B0DDdABb2972dF49C318E96D414E87f    |
-| CWrap          | 0xC2cA82f0A8E904C648E85b1ebbC92051Fb53399e    |
-| CSwapUniswapV2 | 0x094FcB456687382c836aD61c46DcEcC3C2b88911    |
-| CSwapUniswapV3 | 0x8b9cE67DC4367EbC13025cA352277b2b4A1B30Ee    |
-| CSwapCurve     | 0x6C7Cd683949Dcd5A39486390c7F7C59a55309ce1    |
-| CLendAave      | 0x565562e7CFF1c10F5Fa1D2F67Eb17F92b846b490    |
-| CLendCompound  | 0xf9783c52C250b4bDBE2F4B0bc5A9a424569e5794    |
-| CLPUniswapV2   | 0x17e21Cfb1c7B2E6f6740D675e565809D357E38E9    |
-| CLPUniswapV3   | 0xfABEC98dBaB8A86Bee8413A45c89204CcB8bc865    |
-| CLPCurve       | 0x91fb92d0c69F0EbBab584F9Fc38177F79711b705    |
+| name            | address                                       |
+|-----------------|-----------------------------------------------|
+| Invoker         | 0x805337bC5195f2BfEa531665eDa46516fa493949    |
+| CMove           | 0x03E64b667B0DDdABb2972dF49C318E96D414E87f    |
+| CWrap           | 0xC2cA82f0A8E904C648E85b1ebbC92051Fb53399e    |
+| CSwapUniswapV2  | 0x094FcB456687382c836aD61c46DcEcC3C2b88911    |
+| CSwapUniswapV3  | 0x8b9cE67DC4367EbC13025cA352277b2b4A1B30Ee    |
+| CSwapCurve      | 0x6C7Cd683949Dcd5A39486390c7F7C59a55309ce1    |
+| CLendAave       | 0x565562e7CFF1c10F5Fa1D2F67Eb17F92b846b490    |
+| CLendCompoundV3 | 0xf9783c52C250b4bDBE2F4B0bc5A9a424569e5794    |
+| CLPUniswapV2    | 0x17e21Cfb1c7B2E6f6740D675e565809D357E38E9    |
+| CLPUniswapV3    | 0xfABEC98dBaB8A86Bee8413A45c89204CcB8bc865    |
+| CLPCurve        | 0x91fb92d0c69F0EbBab584F9Fc38177F79711b705    |
 
 ## Testing and Development
 
