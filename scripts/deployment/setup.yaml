@@ -15,32 +15,32 @@
 ---
 contracts:
   - name: CLendAave
-    supported_chains: [1, 5, 137, 42161, 250, 43114, 56, 10, 100]
+    supported_chains: [1, 5, 137, 80001, 42161, 250, 43114, 56, 10, 100]
     init_code_hash: "0xf999b19ff065b876928d795bb3df5abe8b4a3d77efbe34eb207581ee2502ce6b"
   - name: CLendCompoundV3
-    supported_chains: [1, 5]
+    supported_chains: [1, 5, 137, 80001]
     init_code_hash: "0x93bda1e89e510905ccb95d17b5cda2d28ef0b51542d1d17f06508c8d0ffe60af"
   - name: CLPCurve
-    supported_chains: [1, 137, 42161, 250, 43114, 10, 1284, 100]
+    supported_chains: [1, 137, 80001, 42161, 250, 43114, 10, 1284, 100]
     init_code_hash: "0x238c1509576df59a514e9c5a13b27ceea0fbd730469ec7897e31067361ad27ec"
   - name: CLPUniswapV2
-    supported_chains: [1, 5, 137, 42161, 250, 43114, 56, 10, 1284, 1285, 100]
+    supported_chains: [1, 5, 137, 80001, 42161, 250, 43114, 56, 10, 1284, 1285, 100]
     init_code_hash: "0x8f9790f1a4d5e1c344a118164a1e3f752f93f7c2912200fe08ed734fd5b98f5f"
   - name: CLPUniswapV3
-    supported_chains: [1, 5, 137, 42161, 10, 56]
+    supported_chains: [1, 5, 137, 80001, 42161, 10, 56]
     init_code_hash: "0x04ff10cbbb5f76fd710fac6e68c877fab4b372eb3b71689d97680d51d9520adc"
   - name: CMove
-    supported_chains: [1, 5, 137, 42161, 250, 43114, 56, 10, 1284, 1285, 100]
+    supported_chains: [1, 5, 137, 80001, 42161, 250, 43114, 56, 10, 1284, 1285, 100]
     init_code_hash: "0x50f98ac17bdf0a3121d8d97090f1ee60bfc6f6d5a47b6233f3ae449e212acba8"
   - name: CWrap
-    supported_chains: [1, 5, 137, 42161, 250, 43114, 56, 10, 1284, 1285, 100]
+    supported_chains: [1, 5, 137, 80001, 42161, 250, 43114, 56, 10, 1284, 1285, 100]
     init_code_hash: "0xd8be7f1a0507c029f16250e6f6f2160d589fd2bc7172ae22f8c86779bfbf81b5"
   - name: CSwapCurve
-    supported_chains: [1, 137, 42161, 250, 43114, 10, 1284, 100]
+    supported_chains: [1, 5, 137, 80001, 42161, 250, 43114, 10, 1284, 100]
     init_code_hash: "0x013b210531a3ec4be47c48ef31e72348fb0d98e43758f42d8ed6ce161ce41af6"
   - name: CSwapUniswapV2
-    supported_chains: [1, 5, 137, 42161, 250, 43114, 56, 10, 1284, 1285, 100]
+    supported_chains: [1, 5, 137, 80001, 42161, 250, 43114, 56, 10, 1284, 1285, 100]
     init_code_hash: "0x276e29e675425dc9d790224024f8f7f9b705c9628e5f6dd7718a7f7438b9202f"
   - name: CSwapUniswapV3
-    supported_chains: [1, 5, 137, 42161, 10, 56]
+    supported_chains: [1, 5, 137, 80001, 42161, 10, 56]
     init_code_hash: "0xf2f0c2bcc3d9bba5b7d3892352002e3ee87f6c5103674818dd6da6758b313450"
