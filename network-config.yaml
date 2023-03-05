@@ -208,3 +208,10 @@ live:
         host: $NODE_GNOSIS_MAINNET_URL
         id: gnosis-mainnet-prod
         name: Mainnet
+  - name: Base
+    networks:
+      - chainid: 84531
+        explorer: https://goerli.basescan.org
+        host: $NODE_BASE_GOERLI_URL
+        id: base-goerli-test
+        name: Base Goerli Testnet

@@ -11,7 +11,7 @@ on:
 env:
   # Node URLS
   NODE_ETHEREUM_MAINNET_URL: ${{ secrets.NODE_ETHEREUM_MAINNET_URL }}
-  NODE_ETHEREUM_RINKEBY_URL: ${{ secrets.NODE_ETHEREUM_RINKEBY_URL }}
+  NODE_ETHEREUM_GOERLI_URL: ${{ secrets.NODE_ETHEREUM_GOERLI_URL }}
   NODE_POLYGON_MAINNET_URL: ${{ secrets.NODE_POLYGON_MAINNET_URL }}
   NODE_POLYGON_MUMBAI_URL: ${{ secrets.NODE_POLYGON_MUMBAI_URL }}
   NODE_ARBITRUM_MAINNET_URL: ${{ secrets.NODE_ARBITRUM_MAINNET_URL }}
@@ -24,6 +24,7 @@ env:
   NODE_MOONBEAM_MAINNET_URL: ${{ secrets.NODE_MOONBEAM_MAINNET_URL }}
   NODE_MOONRIVER_MAINNET_URL: ${{ secrets.NODE_MOONRIVER_MAINNET_URL }}
   NODE_GNOSIS_MAINNET_URL: ${{ secrets.NODE_GNOSIS_MAINNET_URL }}
+  NODE_BASE_GOERLI_URL: ${{ secrets.NODE_BASE_GOERLI_URL }}
 
   NODE_OPTIONS: --max_old_space_size=4096
 
@@ -59,6 +60,7 @@ jobs:
           # - moonbeam-mainnet-hardhat-fork
           # - moonriver-mainnet-hardhat-fork
           # - gnosis-mainnet-hardhat-fork
+          # - base-goerli-hardhat-fork
 
     steps:
       - uses: actions/checkout@v3
