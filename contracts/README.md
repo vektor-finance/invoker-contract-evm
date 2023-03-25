@@ -2,22 +2,17 @@
 
 **TABLE OF CONTENTS**
 
-- [Bridge](#bridge)
 - [LP](#lp)
-    - [Uniswap V2](#uniswap-v2)
-    - [Curve](#curve)
-    - [Uniswap V3](#uniswap-v3)
+  - [Uniswap V2](#uniswap-v2)
+  - [Curve](#curve)
+  - [Uniswap V3](#uniswap-v3)
 - [Move](#move)
-    - [Supported Assets](#supported-asset-types)
-    - [Compatability Issues](#known-compatability-issues)
+  - [Supported Assets](#supported-asset-types)
+  - [Compatability Issues](#known-compatability-issues)
 - [Swap](#swap)
-    - [Uniswap V2](#uniswap-v2-1)
-    - [Curve](#curve-1)
-    - [Uniswap V3](#uniswap-v3-1)
-
-# Bridge
-
-**UNSUPPORTED**
+  - [Uniswap V2](#uniswap-v2-1)
+  - [Curve](#curve-1)
+  - [Uniswap V3](#uniswap-v3-1)
 
 # LP
 
@@ -41,7 +36,7 @@ All Uniswap V2 pools are supported. Pools with Fee-on-Transfer tokens are not su
 
 ## Curve
 
-Curve pools consist of up to eight ERC20 tokens. Assets within a pool are often stable priced, with minimal deviation in price. The price of an individual asset is determined by the StableSwap invariant, rather than the ratio of assets within the pool. Users also receive an `LP token` when adding liquidity which represents their share of the liquidity pool. Trading fees result in the number of underlying assets per LP token increasing, and are therefore handled automatically. 
+Curve pools consist of up to eight ERC20 tokens. Assets within a pool are often stable priced, with minimal deviation in price. The price of an individual asset is determined by the StableSwap invariant, rather than the ratio of assets within the pool. Users also receive an `LP token` when adding liquidity which represents their share of the liquidity pool. Trading fees result in the number of underlying assets per LP token increasing, and are therefore handled automatically.
 
 ### Supported Pools
 
@@ -51,11 +46,10 @@ Each Curve Pool has a custom implementation. Although they broadly follow the sa
 | --- | --- | --- |
 | 3pool | DAI, USDC, USDT | Able to add/withdraw liquidity |
 | slink | LINK, SLINK | Able to add/withdraw liquidity |
-| compound | cDAI, cUSDC | Able to add/withdraw liquidity indirectly (via DAI/USDC) 
+| compound | cDAI, cUSDC | Able to add/withdraw liquidity indirectly (via DAI/USDC)
 | aave | aDAI, aUSDC, aUSDT | Able to add/withdraw liquidity indirectly (via DAI, USDC, USDT)
 | busd | yvDAI, yvUSDC, yvUSDT, yvBUSD | Able to add/withdraw liquidity indirectly (Via DAI, USDC, USDT, BUSD)
 | gusd | GUSD, 3CRV | Able to add/withdraw liquidity indirectly indirectly (via GUSD, DAI, USDC, USDT)
-
 
 ### Known Compatability Issues
 
@@ -78,10 +72,12 @@ Adding liquidity to a Uniswap V3 pool within a specific range results in a `posi
 Because of this NFT structure, there are different functions for interacting with positions. These include:
 
 Adding liquidity to a Uniswap V3 pool has two meanings:
+
 - Creating a new position
 - Adding liquidity to a pre-existing position (must be within the same range)
 
 Removing liquidity can also mean two different things:
+
 - Remove *some* liquidity from a position, keeping the original position
 - Removing *all* liquidity from a position, burning the NFT in the process
 
@@ -106,39 +102,41 @@ For security purposes, we do not allow users to transfer assets directly between
 ## Supported Asset types
 
 - Native Token - This is the token used to pay for gas/network fees.
-        
+
     Unsure compatibility for blockchain networks which utilise ERC20 tokens to pay for gas
 
 - Standard ERC20 Token - This includes tokens which conform to [EIP-20](https://eips.ethereum.org/EIPS/eip-20). Note: some tokens do not follow the behaviour in an expected manner. These are listed below.
-    - Non-confirming ERC20 tokens which do not return a `bool` on transfer/approval are supported. Tokens of this type include: USDT, OmiseGo, BNB(mainnet).
+  - Non-confirming ERC20 tokens which do not return a `bool` on transfer/approval are supported. Tokens of this type include: USDT, OmiseGo, BNB(mainnet).
 
 - Standard ERC721 Token (NFT) - This includes tokens which conform to [EIP-721](https://eips.ethereum.org/EIPS/eip-721).
 
 ## Known compatability issues
 
 ### ERC20
-     
+
 #### Deflationary / Fee-on-transfer tokens
 
 These include tokens where the transferred amount and received amount are not identical. Any transfer using these tokens will revert. It is possible to enable this token class in the future. Possible causes could include:
+
 - Percentage of tokens transferred is burned (deflationary)
 - Percentage of tokens transferred is sent to a separate address (fee-on-transfer)
 
 #### Rebasing / Elastic Supply tokens
 
-There are many flavours of rebasing tokens, some of which are advertised as rebasing tokens (AMPL or OHM), others which are not immediately obvious (stETH). 
-    
-A standard ERC20 token uses a `mapping (address => uint256) balance`. Rebasing tokens instead issue a 'share' such that `share * shareMultiplier == balance`. Due to rounding errors, this causes the same issue with fee-on-transfer tokens.  
-Consider the following example: 
-    
-> The current shareMultiplier ratio is `1.1`  
-A user mints himself a balance of `100`. The contract performs `100/1.1` which issues the user with `90` shares (rounding is truncated).  
-When attempting to transfer his `100` tokens, he actually only has a balance of `99` as `90` shares * `1.1` multipler  
+There are many flavours of rebasing tokens, some of which are advertised as rebasing tokens (AMPL or OHM), others which are not immediately obvious (stETH).
+
+A standard ERC20 token uses a `mapping (address => uint256) balance`. Rebasing tokens instead issue a 'share' such that `share * shareMultiplier == balance`. Due to rounding errors, this causes the same issue with fee-on-transfer tokens.
+Consider the following example:
+
+> The current shareMultiplier ratio is `1.1`
+A user mints himself a balance of `100`. The contract performs `100/1.1` which issues the user with `90` shares (rounding is truncated).
+When attempting to transfer his `100` tokens, he actually only has a balance of `99` as `90` shares * `1.1` multipler
 Contract reverts
 
 # Swap
 
 Allows assets to be swapped for other assets. We define the following:
+
 - SELL: The user specifies an exact amount of an input token
 - BUY: The user specifies an exact amount of an output token
 
@@ -186,10 +184,10 @@ A recent update to Curve has allowed for permisionless pool creation. These are 
 
 ### Supported pools
 
-All Uniswap V3 pools are supported. 
+All Uniswap V3 pools are supported.
 
 ### Known compatability issues
 
 No known issues
 
-It is unknown whether there exists any compatibility issue with fee-on-transfer tokens as in uniswap V2. 
+It is unknown whether there exists any compatibility issue with fee-on-transfer tokens as in uniswap V2.
