@@ -99,9 +99,6 @@ mainnet:
     - venue: sushiswap
       interfaces: [uniswap_router_v2_02]
       address: "0xd9e1cE17f2641f24aE83637ab66a2cca9C378B9F"
-    - venue: anyswap
-      interfaces: [anyswap_router_v4]
-      address: "0x6b7a87899490EcE95443e979cA9485CBE7E71522"
     - venue: uniswap_v3
       interfaces: [uniswap_router_v3]
       address: "0xE592427A0AEce92De3Edee1F18E0157C05861564"
@@ -155,7 +152,7 @@ goerli:
       address: "0x1b02dA8Cb0d097eB8D57A175b88c7D8b47997506"
     - venue: uniswap_v3
       interfaces: [uniswap_router_v3]
-      address: "0xE592427A0AEce92De3Edee1F18E0157C05861564"   
+      address: "0xE592427A0AEce92De3Edee1F18E0157C05861564"
 
 polygon:
   id: polygon
@@ -205,12 +202,6 @@ polygon:
     - venue: quickswap
       interfaces: [uniswap_router_v2_02]
       address: "0xa5E0829CaCEd8fFDD4De3c43696c57F7D7A678ff"
-    - venue: anyswap
-      interfaces: [anyswap_router_v4]
-      address: "0x4f3aff3a747fcade12598081e80c6605a8be192f"
-    - venue: anyswap
-      interfaces: [anyswap_router_v4, anyswap_router_v6]
-      address: "0x2ef4a574b72e1f555185afa8a09c6d1a8ac4025c"
     - venue: uniswap_v3
       interfaces: [uniswap_router_v3]
       address: "0xE592427A0AEce92De3Edee1F18E0157C05861564"
