@@ -27,6 +27,8 @@ Vektor's EVM Invoker contracts
 
 ## Deployments
 
+Contracts are deployed to the same addresses on all chains.
+
 | name            | address                                       |
 |-----------------|-----------------------------------------------|
 | Invoker         | 0x805337bC5195f2BfEa531665eDa46516fa493949    |
@@ -40,6 +42,19 @@ Vektor's EVM Invoker contracts
 | CLPUniswapV2    | 0x17e21Cfb1c7B2E6f6740D675e565809D357E38E9    |
 | CLPUniswapV3    | 0xfABEC98dBaB8A86Bee8413A45c89204CcB8bc865    |
 | CLPCurve        | 0x91fb92d0c69F0EbBab584F9Fc38177F79711b705    |
+
+## Chains
+
+- Ethereum
+- Polygon
+- Arbitrum
+- Optimism
+- Gnosis
+- BNBChain
+- Fantom
+- Avalanche
+- Moonbeam
+- Moonriver
 
 ## Testing and Development
 
