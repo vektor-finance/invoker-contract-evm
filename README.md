@@ -1,4 +1,6 @@
-# invoker-contract-evm
+# invoker-contract-evm [archived]
+
+`THIS REPOSITORY IS NOT IN USE OR UNDER DEVELOPMENT`
 
 [![lint](https://github.com/vektor-finance/invoker-contract-evm/actions/workflows/lint.yaml/badge.svg)](https://github.com/vektor-finance/invoker-contract-evm/actions/workflows/lint.yaml)
 [![core](https://github.com/vektor-finance/invoker-contract-evm/actions/workflows/core.yaml/badge.svg)](https://github.com/vektor-finance/invoker-contract-evm/actions/workflows/core.yaml)
@@ -21,7 +23,7 @@ Solidity contracts for Vektor's EVM invoker.
 
 ## Overview
 
-TODO
+Vektor's EVM Invoker contracts
 
 ## Deployments
 
@@ -59,24 +61,6 @@ cd invoker-contract-evm
 pip install -r requirements.txt -r requirements.dev.txt
 yarn install
 ```
-
-### Create and Setup GPG key on macOS
-
-1. Install `gnugpg` and `pinentry-mac` - `brew install gnupg pinentry-mac`
-2. Generate a GPG key - `gpg --full-generate-key`. Use defaults, your `@vektor.finance` email and add a passphrase
-3. Get the key id by using - `gpg --list-secret-keys --keyid-format=long`. It's the value after the encryption format e.g. `sec ed25519/<key-id>`
-4. Configure git with the GPG key - `git config --global user.signingkey <key-id>`
-5. Add the GPG key to GitHub [here](https://github.com/settings/gpg/new) - `gpg --armor --export <key-id> | pbcopy`
-6. Open the file `~/.gnupg/gpg-agent.conf` and add `pinentry-program /opt/homebrew/bin/pinentry-mac`
-7. Tell `git` to use your GPG key for all signing going forward `git config --global commit.gpgsign true`
-
-Some other useful steps for debugging can be found [here](https://gist.github.com/troyfontaine/18c9146295168ee9ca2b30c00bd1b41e)
-
-### Setup git-encrypt
-
-1. Install [git-encrypt](https://github.com/AGWA/git-crypt/blob/master/INSTALL.md) - `brew install git-crypt`
-2. Ensure your `GPG` Key identifier is added - e.g. key ID, a full fingerprint, an email address - speak to @akramhussein
-3. Once your `GPG` key has been added to the repo, you can pull the latest repo and run `git-crypt unlock`
 
 ### Configuring Pre-commit
 
